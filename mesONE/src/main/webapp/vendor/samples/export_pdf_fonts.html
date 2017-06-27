@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<!-- AUIGrid JS -->
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+
+<!-- AUIGrid PDF 저장 JS -->
+<script type="text/javascript" src="../pdfkit/AUIGrid.pdfkit.js"></script>
+
+<!-- 브라우저 다운로딩 할 수 있는 JS 추가 -->
+<script type="text/javascript" src="../pdfkit/FileSaver.min.js"></script>
+
+<style type="text/css">
+
+/* 커스텀 칼럼 스타일 정의 */
+.my-color {
+	color:#00aa00;
+}
+
+/* 커스텀 스타일 */
+.underline {
+	text-decoration:underline;
+	cursor:pointer;
+}
+.my-custom1 {
+	color:#0000FF;
+	text-align:right;
+}
+.my-custom2 {
+	color:#FF0000;
+	text-align:right;
+}
+.my-custom3 {
+	color:#000000;
+	text-align:right;
+}
+.right {
+	text-align:right;
+}
+
+</style>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/stock_list.json");
+	
+};
+
+// AUIGrid 칼럼 설정
+// AUIGrid 칼럼 설정
+var columnLayout = [ {
+		dataField : "name",
+		headerText : "종목명",
+		style: "underline"
+}, {
+	    dataField: "vars",
+	    headerText: "등락율",
+		postfix : "%",
+		width:100,
+		styleFunction : function(rowIndex, columnIndex, value, headerText, item, dataField) {
+			if(item.vars < 0)
+				return "my-custom1";
+			else if(item.vars > 0)
+				return "my-custom2";
+			return "my-custom3";
+		}
+}, {
+		dataField : "close",
+		headerText : "현재가",
+		width : 140,
+		dataType:"numeric",
+		formatString : "#,##0",
+		style : "right",
+		renderer : {
+			type : "IconRenderer",
+			iconPosition:"aisle",
+			iconWidth : 7, // icon 가로 사이즈, 지정하지 않으면 24로 기본값 적용됨
+			iconHeight : 6,
+			iconFunction : function(rowIndex, columnIndex, value, item) {
+				if(item.vars < 0)
+					return "./assets/ico_down.gif";
+				else if(item.vars > 0)
+					return "./assets/ico_up.gif";
+				return "./assets/ico_flat.gif";
+			}
+		},
+		styleFunction : function(rowIndex, columnIndex, value, headerText, item, dataField) {
+			if(item.vars < 0)
+				return "my-custom1";
+			else if(item.vars > 0)
+				return "my-custom2";
+			return "my-custom3";
+		}
+}, {
+		dataField: "volume",
+		headerText: "거래량",
+		dataType:"numeric",
+		formatString : "#,##0",
+		width : 100,
+		style : "right"
+}, {
+		dataField: "total",
+		headerText: "시가 총액",
+		dataType:"numeric",
+		formatString : "#,##0",
+		width : 100,
+		style : "right"
+}, {
+		dataField: "size",
+		headerText: "상장 주식수",
+		dataType:"numeric",
+		formatString : "#,##0",
+		width : 100,
+		style : "right"
+}];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+			editable : true,
+			showEditedCellMarker : false,
+			selectionMode : "multipleRows"
+	};
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+};
+
+
+// PDF 내보내기(Export), AUIGrid.pdfkit.js 파일을 추가하십시오.
+function exportPdfClick(fontName) {
+	
+	// 완전한 HTML5 를 지원하는 브라우저에서만 PDF 저장 가능( IE=10부터 가능 )
+	if(!AUIGrid.isAvailabePdf(myGridID)) {
+		alert("PDF 저장은 HTML5를 지원하는 최신 브라우저에서 가능합니다.(IE는 10부터 가능)");
+		return;
+	}
+	
+	// 그리드가 작성한 엑셀, CSV 등의 데이터를 다운로드 처리할 서버 URL을 지시합니다.
+	// 서버 사이드 스크립트가 JSP 이라면 ./export/export.jsp 로 변환해 주십시오.
+	// 스프링 또는 MVC 프레임워크로 프로젝트가 구축된 경우 해당 폴더의 export.jsp 파일을 참고하여 작성하십시오.
+	AUIGrid.setProp(myGridID, "exportURL", "./server_script/export.php");
+	
+	// 내보내기 실행
+	AUIGrid.exportToPdf(myGridID, {
+		// 폰트 경로 지정
+		fontPath : "../pdfkit/" + fontName
+	});
+};
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>PDF 출력은 폰트 파일(.ttf)을 임베드해야 가능합니다. 지정한 폰트 파일에 없는 글꼴은 PDF에 출력할 수 없습니다</p>
+		<p>다음 3개의 한글 폰트(SIL Open Font License)를 사용할 수 있으며 다른 폰트를 사용할 때는 필히 폰트 라이선스를 확인 후 사용해야 합니다.</p>
+		<p>PDF 출력을 위해서는 폰트 파일을 읽어 들여야 하므로 파일 사이즈가 작은 폰트를 사용하십시오.</p>
+		<ul class="nav_u">
+			<li><span class="btn"  onclick="exportPdfClick('jejugothic-regular.ttf')">제주고딕 PDF 저장</span></li>
+			<li><span class="btn"  onclick="exportPdfClick('bm-hanna.ttf')">하나체 PDF 저장</span></li>
+			<li><span class="btn"  onclick="exportPdfClick('nanumgothic-light.ttf')">나눔고딕Light PDF 저장</span></li>
+		</ul>
+		<p>폰트 출처</p>
+		<ul class="nav_u" >
+			<li>■ 제주고딕 : 구글 폰트(<a href="https://www.google.com/fonts/earlyaccess" target="_blank">https://www.google.com/fonts/earlyaccess</a>) SIL Open Font License, 1.1</li>
+			<li>■ 하나체 : 구글 폰트(<a href="https://www.google.com/fonts/earlyaccess" target="_blank">https://www.google.com/fonts/earlyaccess</a>) SIL Open Font License, 1.1</li>
+			<li>■ 나눔고딕Light : 네이버 나눔글꼴(<a href="http://hangeul.naver.com/2014/nanum" target="_blank">http://hangeul.naver.com/2014/nanum</a>) SIL Open Font License, 1.1</li>
+		</ul>
+	</div>
+	
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:400px; margin:0 auto;"></div>
+		
+	</div>
+	<div class="desc_bottom">
+		<div id="descInfo"></div>
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

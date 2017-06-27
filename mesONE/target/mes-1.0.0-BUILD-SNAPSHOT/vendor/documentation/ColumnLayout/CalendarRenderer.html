@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../style.css" type="text/css" media="screen">
+<meta content="CalendarRenderer,ColumnLayout.CalendarRenderer" name="keywords">
+<title>ColumnLayout.CalendarRenderer</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript">
+<!--
+				function loadClassListFrame(classListFrameURL) {
+				return;
+				}
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">AUIGrid 2.11 Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../all-classes.html')" href="../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../all-classes.html')" href="../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a href="../index.html?ColumnLayout/CalendarRenderer.html&amp;ColumnLayout/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="AUISoft Logo" title="AUISoft Logo" class="logoImage" src="../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;CalendarRenderer</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#styleSummary">Styles</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<div class="classDescContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable"></table>
+<span class="className">CalendarRenderer</span>
+<p></p>
+<p>달력 렌더러는 칼럼의 editRenderer 속성으로 편집 시 달력을 출력하여 날짜를 선택할 수 있게 정의된 렌더러입니다.</p>
+<p>달력 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 editRenderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 editRenderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+<p></p>
+<a name="mxmlSyntaxSummary"></a><span class="classHeaderTableLabel">아래는 설정 예제 입니다.</span>
+<div class="mxmlSyntax" id="mxmlSyntax"><pre>
+var columnLayout = [ {
+     dataField : "name",
+     headerText : "Name",
+     width : 140
+  }, {
+     dataField : "date",
+     headerText : "달력",
+     width:120,
+     dataType : "date",
+     formatString : "yyyy년 mm월 dd일",
+     editRenderer : {
+           type : "CalendarRenderer",
+           showExtraDays : true,
+           titles : ["S", "M", "T", "W", "T", "F", "S"]
+     }
+  }
+}];
+</pre>
+</div>
+<br>
+</div>
+<div class="summarySection">
+<table id="summaryTableStyle" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>NAME</th><th>Description</th>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">defaultFormat</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>String<br>
+<p>달력으로 날짜를 선택했을 때 실제로 적용될 날짜 형식을 임의로 지정합니다.</p>
+<p>예를 들어 기존 데이터의 날짜 형식이 yyyymmdd 형식인 경우, 달력으로 날짜를 선택하면 기본 형식인 yyyy/mm/dd 로 데이터에 적용 됩니다.</p>
+<p>이런 경우 기존 데이터 형식과 맞지 않기 때문에 일치 시킬 필요가 있습니다.</p>
+<p>유효값은 "yyyy/mm/dd", "yyyy-mm-dd", "yyyymmdd" 등 의 일반적인 형식을 지원합니다.</p>
+<p>만약 "UTCTIME" 을 설정하면 UTC 기준 Time 값이 반환됩니다.</p>
+<p><strong>참고 : setGridData 로 삽입된 데이터의 날짜 필드 값 포맷 형식과 일치 시키면 편리합니다.</strong></p>
+ 기본값(default) : <code>"yyyy/mm/dd"</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">formatMonthString</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>String<br>
+ <p>일(days) 단위 달력의 상단 월의 포맷 스트링을 지정합니다.</p>
+  기본값(default) : <code>"yyyy년 mm월"</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">formatYearString</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>String<br>
+ <p>연(years) 단위 달력의 연 포맷 스트링을 지정합니다.</p>
+  기본값(default) : <code>"yyyy년"</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">maxlength</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Number<br>
+<p>사용자가 입력 할 수 있는 글자수를 제한하도록 지시합니다.</p>
+ 기본값(default) : <code>10000</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">monthTitleString</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>String<br>
+<p>월(months) 단위 달력의 월 포맷 스트링을 지정합니다.</p>
+ 기본값(default) : <code>"m월"</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">onlyCalendar</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Boolean<br>
+<p>사용자에게 직접 입력이 아닌 달력으로만 수정할 수 있도록 할지 여부를 지정합니다.</p>
+<p>만약 true 라면 사용자는 오직 출력된 달력에서만 날짜를 선택해서 입력할 수 있습니다.</p>
+<p>즉, 이 속성이 true 라면 사용자가 직접 입력해서 날짜(값) 변경을 허용하지 않습니다. 오직 출력된 달력에 의해서만 값을 수정할 수 있습니다.</p>
+ 기본값(default) : <code>true</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">onlyMonthMode</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Boolean<br>
+<p>달력 출력 시 월(Month) 까지만 표시하는 속성입니다.</p>
+<p>이 값이 true 이면 일(day) 선택이 아닌 월 선택 달력으로 표시됩니다. 월 선택 시 유용합니다.</p>
+ 기본값(default) : <code>false</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">openDirectly</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Boolean<br>
+ <p>에디팅 진입 시 자동으로 달력을 열지 여부를 지정합니다.</p>
+  기본값(default) : <code>false</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">showEditorBtnOver</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Boolean<br>
+<p> 마우스 오버 시 해당 셀에 에디터 버턴을 출력시킬지 여부를 지정합니다.</p>
+<p> 에디터 버턴을 클릭하면 직접으로 수정 모드로 진입하는 역할을 합니다.</p>
+ 기본값(default) : <code>false</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">showEditorBtnOver</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Boolean<br>
+<p>이 속성이 true 라면 셀에 마우스 오버 시 에디터 버턴이 출력됩니다.</p>
+ 기본값(default) : <code>false</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">showExtraDays</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Boolean<br>
+<p>달력 출력 시 이전 달, 다음 달의 여분의 날짜를 출력 할지 여부를 나타냅니다.</p>
+<p>이 값이 true 이면 달력에 앞뒤로 여분의 날짜가 출력됩니다.</p>
+ 기본값(default) : <code>false</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">showTodayBtn</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Boolean<br>
+<p>달력 출력 시 오늘 날짜 선택 버턴을 하단에 출력 할지 여부를 나타냅니다.</p>
+ 기본값(default) : <code>false</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">showUncheckDateBtn</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Boolean<br>
+<p>달력 출력 시 날짜 선택 해제 버턴을 하단에 출력 할지 여부를 나타냅니다.</p>
+<p>"날짜 선택 해제" 란 어느 날짜도 선택되지 않은 값을 말합니다. 즉, 이 값은 공백이 될 수도 있고 사용자가 지정한 값(속성명 : uncheckDateValue) 가 될 수가 있습니다.</p>
+ 기본값(default) : <code>false</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">titles</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Array<br>
+<p>달력 상단의 요일 출력 텍스트들의 배열입니다.</p>
+ 기본값(default) : <code>["일", "월", "화", "수", "목", "금", "토"]</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">todayText</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>String<br>
+<p>showTodayBtn = true 설정 한 경우 오늘 날짜 선택 버턴에 출력할 텍스트를 지정합니다.</p>
+ 기본값(default) : <code>"오늘 선택"</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">uncheckDateText</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>String<br>
+<p>showUncheckDateBtn = true 설정 한 경우 날짜 선택 해제 버턴에 출력할 텍스트를 지정합니다.</p>
+ 기본값(default) : <code>"날짜 선택 해제"</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">uncheckDateValue</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>String<br>
+<p>showUncheckDateBtn = true 설정 한 경우 날짜 선택 해제 버턴 클릭 시 날짜(Date) 대신 적용될 텍스트를 지정합니다.</p>
+ 기본값(default) : <code>"-"</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">validator</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Function<br>
+<p>사용자가 입력을 완료하고 실제로 적용하기 전에 유효성 검사를 할 수 있는 함수입니다.</p>
+<p>파라메터 설명</p>
+ <ul>
+ <li>oldValue : (String) 수정 전 값</li>
+ <li>newValue : (String) 사용자가 수정 한 값. 즉, 이 값이 유효한지 검사해야 함</li>
+ <li>item : (Object) 해당 행에 출력되고 있는 행 아이템 객체 </li>
+ <li>dataField : (String) 해당 칼럼의 데이터필드명</li>
+  <li>fromClipboard : (Boolean) 클립보드(붙여넣기)로 셀 수정한지 여부</li>
+ </ul>
+ <p>함수의 리턴값은 Object 이며 해당 Object 는 validate 와 message 를 작성해 주십시오.</p>
+ <p>예를 들면 사용자가 입력한 newValue 가 유효하지 않다면 다음과 같이 return 값을 설정하십시오.</p>
+ <pre>return  { "validate" : false, "message"  : "2016/02/01 형식으로 입력해주세요." }; </pre>
+ <p>validate 가 false 인 경우 message 로 설정한 메세지가 사용자에게 출력됩니다.</p>
+ <p>함수 전체 작성 예는 다음과 같습니다.</p>
+ <pre>
+ validator : function(oldValue, newValue, item, dataField, fromClipboard) {
+      var date, isValid = true;
+      if(isNaN(Number(newValue)) ) { //20160201 형태 또는 그냥 1, 2 로 입력한 경우는 허락함.
+            if(isNaN(Date.parse(newValue))) { // 그냥 막 입력한 경우 인지 조사. 즉, JS 가 Date 로 파싱할 수 있는 형식인지 조사
+                   isValid = false;
+            } else {
+                   isValid = true;
+            }
+       }
+       // 리턴값은 Object 이며 validate 의 값이 true 라면 패스, false 라면 message 를 띄움
+       return { "validate" : isValid, "message"  : "2016/02/01 형식으로 입력해주세요." };
+ }</pre>
+ <p>참고 : 클립보드(붙여넣기)인 경우, 유효성 검사 실패 할 때 메세지 출력은 생략됩니다.</p>
+  기본값(default) : <code>null</code>.</td>
+</tr>
+</table>
+</div>
+<div class="MainContent">
+<p></p>
+<center class="copyright">Copyright(c) 2014-2017 AUISoft. All Right Reserved</center>
+</div>
+</body>
+</html>
+<!--Copyright(c) 2014-2017 AUISoft. All Right Reserved-->

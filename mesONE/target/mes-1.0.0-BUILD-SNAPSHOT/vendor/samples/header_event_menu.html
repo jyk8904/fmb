@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+
+<!-- jQuery , jQuery UI 사용 -->
+<script type="text/javascript"	src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+
+
+<style type="text/css">
+
+/* 커스텀 칼럼 스타일 정의 */
+.my-column {
+	text-align:right;
+}
+
+/* 헤더 메뉴 스타일 정의 */
+#headerMenu {
+	position:absolute;
+	display:none;
+	z-index:999;
+}
+
+/* jQuery UI Menu 스타일 재정의 */
+.ui-menu { 
+	width: 160px;
+	font-size:12px;
+	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+}
+.ui-widget-header { 
+	padding: 0.2em; 
+}
+</style>
+
+<script type="text/javascript">
+function documentReady() {};
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// 헤더  메뉴가 현재 보이고 있는지 여부
+var nowHeaderMenuVisible = false;
+
+// 헤더 클릭 여부
+var headerClicked = false;
+
+// 헤더  메뉴 생성된 곳의 dataField 보관 변수
+var currentDataField;
+
+// document ready 이벤트
+$(document).ready(function() {
+	
+	// 그리드 칼럼 구조에 따라 체크박스 메뉴 아이템 만들기
+	var chkHtml = genColumnHtml(columnLayout);
+	$("#h_item_ul").append(chkHtml);
+	
+	// 헤더 에서 사용할 메뉴 위젯 구성
+	$("#headerMenu").menu({ 
+		select: headerMenuSelectHandler
+	});
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/normal_100.json");
+});
+
+// document 이벤트
+$(document).on("click", function(event) {
+	if($(event.target).attr("aria-haspopup")) { // 서브 메뉴 아이템 클릭 한 경우
+		return;
+	}
+	hideMenu();
+});
+
+// AUIGrid 칼럼 설정
+var columnLayout = [ {
+		dataField : "id",
+		headerText : "ID",
+		width : 120
+	}, {
+	headerText : "헤더 그룹",
+	children : [{
+					dataField : "name",
+					headerText : "이름",
+					width:100
+				}, {
+					dataField : "country",
+					headerText : "나라",
+					width:100
+				}, {
+					dataField : "product",
+					headerText : "제품명",
+					width:100
+				}]
+	}, {
+		dataField : "flag",
+		headerText : "이미지",
+		width : 120
+	}, {
+		dataField : "color",
+		headerText : "색상",
+		width : 120
+	}, {
+		dataField : "price",
+		headerText : "가격",
+		dataType : "numeric",
+		style : "my-column",
+		width : 120
+	}, {
+		dataField : "quantity",
+		headerText : "개수",
+		width : 120
+	}, {
+		dataField : "date",
+		headerText : "날짜",
+		width : 120
+}];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+			selectionMode : "singleRow"
+	};
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 헤더 클릭 이벤트 바인딩
+	AUIGrid.bind(myGridID, "headerClick", auiGridHeaderClickHandler);
+	
+	// 스크롤 체인지 핸들러.
+	AUIGrid.bind(myGridID, "vScrollChange", function(event) {
+		hideMenu(); //  메뉴 감추기
+	});
+	AUIGrid.bind(myGridID, "hScrollChange", function(event) {
+		hideMenu(); //  메뉴 감추기
+	});
+};
+
+//  메뉴 감추기
+function hideMenu() {
+	if(nowHeaderMenuVisible && !headerClicked) { // 메뉴 감추기
+		$("#headerMenu").menu("destroy");
+		$("#headerMenu").hide();
+		nowHeaderMenuVisible = false;
+	}
+	headerClicked = false;
+};
+
+//  그리드 헤더 클릭 이벤트 핸들러
+function auiGridHeaderClickHandler(event) {
+	
+	if(nowHeaderMenuVisible) {
+		hideMenu();
+	}
+	
+	// 헤더 그룹 클릭 한 경우
+	if(event.item.isBranch) {
+		currentDataField = "headerGroup";
+	} else {
+		//  메뉴 생성된 dataField 보관.
+		currentDataField = event.dataField;
+	}
+	
+	if(event.dataField == "id") { // ID 칼럼은 숨기기 못하게 설정
+		$("#h_item_4").addClass("ui-state-disabled");
+	} else {
+		$("#h_item_4").removeClass("ui-state-disabled");
+	}
+	
+	// 헤더 에서 사용할 메뉴 위젯 구성
+	$("#headerMenu").menu({ 
+		select: headerMenuSelectHandler
+	});
+	$("#headerMenu").css({
+		left : event.pageX,
+		top : event.pageY
+	}).show();
+	
+	nowHeaderMenuVisible = true;
+	headerClicked = true;
+	
+	return false; // 기본 행위(소팅) 하지 않기.
+};
+
+// 헤더  메뉴 아이템 선택 핸들러
+function headerMenuSelectHandler(event, ui) {
+	var selectedId = ui.item.prop("id");
+	
+	switch(selectedId) {
+	case "h_item_1": // 오름 차순 정렬
+		if(currentDataField == "headerGroup") {
+			AUIGrid.setSorting(myGridID, [{"dataField" : "name", "sortType" : 1}, {"dataField" : "country", "sortType" : 1}, {"dataField" : "product", "sortType" : 1}]);
+		} else {
+			// currentDataField 로 오름차순 정렬 실행
+			AUIGrid.setSorting(myGridID, [{"dataField" : currentDataField, "sortType" : 1}]);
+		}
+		break;
+	case "h_item_2": // 내림 차순 정렬
+		if(currentDataField == "headerGroup") {
+			AUIGrid.setSorting(myGridID, [{"dataField" : "name", "sortType" : -1}, {"dataField" : "country", "sortType" : -1}, {"dataField" : "product", "sortType" : -1}]);
+		} else {
+			AUIGrid.setSorting(myGridID, [{"dataField" : currentDataField, "sortType" : -1}]);
+		}
+		break;
+	case "h_item_3": // 정렬 초기화
+		AUIGrid.clearSortingAll(myGridID);
+		break;
+	case "h_item_4": // 현재 칼럼 숨기기
+		if(currentDataField == "headerGroup") {
+			AUIGrid.hideColumnByDataField(myGridID, ["name", "country", "product"]);
+			$("#h_item_ul span.ui-icon[data=name]").removeClass("ui-icon-check")
+			.addClass("ui-icon-blank");
+			$("#h_item_ul span.ui-icon[data=country]").removeClass("ui-icon-check")
+			.addClass("ui-icon-blank");
+			$("#h_item_ul span.ui-icon[data=product]").removeClass("ui-icon-check")
+			.addClass("ui-icon-blank");
+		} else {
+			AUIGrid.hideColumnByDataField(myGridID, currentDataField);
+			$("#h_item_ul span.ui-icon[data=" + currentDataField + "]").removeClass("ui-icon-check")
+			.addClass("ui-icon-blank");
+		}
+		break;
+	case "h_item_6": // 모든 칼럼 보이기
+		AUIGrid.showAllColumns(myGridID);
+		$("#h_item_ul span.ui-icon[data]").addClass("ui-icon-check")
+		.removeClass("ui-icon-blank");
+		break;
+	default: // 헤더 보이기 / 숨기기
+		var kids = ui.item.children();
+		var dataField = kids.attr("data"); // data 속성에서 dataField 얻기
+		if(typeof dataField != "undefined") {
+			var checked = kids.hasClass("ui-icon-check");
+			if(checked) {
+				AUIGrid.hideColumnByDataField(myGridID, dataField);
+				kids.removeClass("ui-icon-check")
+				.addClass("ui-icon-blank");
+			} else {
+				AUIGrid.showColumnByDataField(myGridID, dataField);
+				kids.addClass("ui-icon-check");
+				kids.removeClass("ui-icon-blank");
+			}
+		}
+		break;
+	}
+}
+  
+
+// AUIGrid 칼럼 레이아웃을 기반으로  메뉴 구성 위해 html 문자 만들어 반환.
+function genColumnHtml(columns) {
+	var arr = [];
+	for(var i=0, len=columns.length; i<len; i++) {
+		recursiveParse(columns[i]);
+	}
+	return arr.join('');
+	
+	// 재귀함수
+	function recursiveParse(column) {
+		if(typeof column.children != "undefined") {
+			arr.push('<li>' + column.headerText + '<ul>');
+			for(var i=0, l=column.children.length; i<l; i++) {
+				recursiveParse(column.children[i]);
+			}
+			arr.push('</ul></li>');
+		} else {
+			if(column.dataField == "id") { // ID 칼럼은 숨기기 못하게 설정
+				arr.push('<li class="ui-state-disabled"><span class="ui-icon ui-icon-check"/>' + column.headerText + '</li>');
+			} else {
+				arr.push('<li><span class="ui-icon ui-icon-check" data="' + column.dataField + '"/>' + column.headerText + '</li>');
+			}
+			
+		}
+	};
+};
+
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>칼럼 헤더를 마우스 클릭(또는 터치) 하면 기본적으로 정렬을 실행합니다.</p>
+		<p>이 정렬 기능을 사용하지 않고, 헤더 클릭(또는 터치) 시 메뉴를 구성한 예제입니다.</p>
+		<p>헤더 메뉴는 데모에서 jQuery UI 의 Menu 위젯을 활용하여 작성되었습니다. 또는 사용자가 다른 JS 라이브러리로 작성해도 무관합니다.</p>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:480px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<ul id="headerMenu">
+	<li id="h_item_1">오름 차순 정렬</li>
+	<li id="h_item_2">내림 차순 정렬</li>
+	<li id="h_item_3">정렬 초기화</li>
+	<li></li>
+	<li id="h_item_4">현재 칼럼 숨기기</li>
+	<li id="h_item_5">칼럼 보이기/숨기기<ul id="h_item_ul">
+	</ul></li>
+	<li></li>
+	<li id="h_item_6">모든 칼럼 보이기</li>
+</ul>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

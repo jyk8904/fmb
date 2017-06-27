@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+
+<!-- 사용자가 작성한 렌더러 JS -->
+<script type="text/javascript" src="../AUIGrid/renderers/AUIGrid.MyCalendarRenderer.js"></script>
+
+<style type="text/css">
+
+/* CustomRenderer 스타일....AUIGrid.MyClientRenderer.js 에서 사용할 사용자가 정의해야 할 스타일입니다.*/
+.aui-grid-renderer-custom .my-child1 {
+	position:absolute;
+	display: block;
+	left: 4px;
+	top: 4px;
+	font-size:13px;
+	background:#eee;
+	border:1px solid #ddd;
+	width:20px;
+	height:20px;
+	border-radius:10px;
+	font-weight:bold;
+}
+.aui-grid-renderer-custom .my-child2 {
+	position:absolute;
+	top: 4px;
+	right: 4px;
+	width:20px;
+	height:20px;
+	background: url(./assets/info-icon.png) 50% 50% no-repeat;
+	cursor:pointer;
+}
+.aui-grid-renderer-custom .my-chart-base { /* 차트 베이스*/
+	position:absolute;
+	display : block;
+	top:50px;
+	width:90px;
+	height:15px;
+	border:1px solid #ccc;
+	left : 10px;
+}
+.aui-grid-renderer-custom .my-chart { /* 차트 */
+	display : block;
+	top:22px;
+	width:80px;
+	height:15px;
+}
+
+.aui-grid-renderer-custom .my-chart-label { /* 차트 텍스트 */
+	position:absolute;
+	display : inline;
+	font-size:18px;
+	color:#000;
+	top:30px;
+	left:45px;
+}
+/* CustomRenderer 스타일 끝*/
+
+.my-saturday-style {
+	color:#0000FF;
+}
+
+.my-sunday-style {
+	color:#FF0000;
+}
+</style>
+
+<script type="text/javascript">
+
+// 오늘 날짜
+var originDate = new Date();
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	var columnLayout = [{
+		dataField : "0",
+		headerText : "일",
+		style : "my-sunday-style",
+		headerStyle : "my-sunday-style",
+		renderer : {
+			type : "CustomRenderer",
+			jsClass : AUIGrid.MyCalendarRenderer
+		}
+	}, {
+		dataField : "1",
+		headerText : "월",
+		renderer : {
+			type : "CustomRenderer",
+			jsClass : AUIGrid.MyCalendarRenderer
+		}
+	}, {
+		dataField : "2",
+		headerText : "화",
+		renderer : {
+			type : "CustomRenderer",
+			jsClass : AUIGrid.MyCalendarRenderer
+		}
+	}, {
+		dataField : "3",
+		headerText : "수",
+		renderer : {
+			type : "CustomRenderer",
+			jsClass : AUIGrid.MyCalendarRenderer
+		}
+	}, {
+		dataField : "4",
+		headerText : "목",
+		renderer : {
+			type : "CustomRenderer",
+			jsClass : AUIGrid.MyCalendarRenderer
+		}
+	}, {
+		dataField : "5",
+		headerText : "금",
+		renderer : {
+			type : "CustomRenderer",
+			jsClass : AUIGrid.MyCalendarRenderer
+		}
+	}, {
+		dataField : "6",
+		headerText : "토",
+		style : "my-saturday-style",
+		headerStyle : "my-saturday-style",
+		renderer : {
+			type : "CustomRenderer",
+			jsClass : AUIGrid.MyCalendarRenderer
+		}
+	}];
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+};
+
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	// 그리드 속성
+	var auiGridProps = {
+		
+		selectionMode : "none",
+		
+		enableSorting : false,
+		
+		showRowNumColumn : false,
+		
+		enableColumnResize : false,
+		
+		//rowHeight 80으로 설정
+		rowHeight : 80
+	};
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 데이터 생성
+	var gridData = genGridData(originDate);
+	
+	// 그리드에 데이터 삽입
+	AUIGrid.setGridData(myGridID, gridData);
+};
+
+
+function genGridData(d) {
+	var date = originDate = new Date(d);
+	var thisYear = date.getFullYear();
+	var thisMonth = date.getMonth() + 1; // 실제 보이는 월 
+	var startDay = new Date(thisYear,  thisMonth - 1, 1);
+	var endDay = new Date(thisYear,  thisMonth, 0); // 말일
+	var startDay = startDay.getDay();
+	var endCount = endDay.getDate();
+	var weekArray = [];
+	var data = [];
+
+	// 달력 앞의 빈 날짜들
+	for(var i=0; i<startDay; i++) {
+		weekArray.push(null);
+	}
+	
+	// 진짜 날짜들
+	for(i=1; i<=endCount; i++) {
+		
+		if(weekArray.length == 7) {
+			data.push(weekArray);
+			weekArray = [];
+		}
+		weekArray.push({
+			"date" : i,
+			"value" : Math.floor(Math.random() * 100)
+		})
+	}
+	
+	// 달력 마지막 주의 날짜들
+	if(weekArray.length != 0) {
+		data.push(weekArray);
+	}
+	
+	document.getElementById("dateText").innerHTML = date.getFullYear() + "년 " + (date.getMonth() + 1) + "월";
+	
+	//console.log(JSON.stringify(data));
+	return data;
+};
+
+// 데이터 변경
+function changeData(direction) {
+	
+	var gridData;
+	if(direction > 0) { // 다음 달
+		gridData = genGridData(originDate.setMonth(originDate.getMonth() + 1));
+	} else { // 이전 달
+		gridData = genGridData(originDate.setMonth(originDate.getMonth() - 1));
+	}
+	
+	// 그리드에 데이터 삽입
+	AUIGrid.setGridData(myGridID, gridData);
+}
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>달력에 개별 날짜마다 목표치 달성률을 표시한 데모입니다.</p>
+		<p>그리드에 출력되는 셀은 사용자 정의 렌더러(CustomRenderer)를 사용하였습니다.</p>
+		<p>이와 같이 사용자가 원하는 셀 형식을 자바스크립트로 작성할 수 있습니다.</p>
+		<p style="text-align:center;margin-top:50px;">
+			<input type="button" class="btn" onclick="changeData(-1)" value="이전 달">
+			<span id="dateText" style="font-size:1.3em; margin:20px 50px;"></span>
+			<input type="button" class="btn" onclick="changeData(1)" value="다음 달">
+		</p>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:430px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid();
+	
+	// AUIGrid 에 데이터 삽입합니다.
+	createRandomData(100);
+
+};
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid() {
+	
+	var columnLayout = [];
+	var chars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+	var column;
+	for(var i=0; i<26; i++) {
+		columnLayout.push( {
+			headerText : chars[i],
+			dataField : i,
+			width:80
+		});
+	}
+	
+	var auiGridProps = {
+			editable : true, // 수정 모드
+			
+			selectionMode : "multipleCells",
+			
+			editingOnKeyDown : true, // 키보드 입력으로 편집 모드 진입 (기본값:true임;)
+	
+			showRowCheckColumn : false,
+			
+			enableSorting : false,
+			
+			// 엔터키는 수정 완료 역할만 할뿐, 선택을 다음 행으로 떨구지 않음.
+			onlyEnterKeyEditEnd : true,
+			
+			//softRemoveRowMode 적용을 원래 데이터에만 적용 즉, 새 행인 경우 적용 안시킴
+			softRemovePolicy :"exceptNew",
+			
+			// 상태 칼럼 사용
+			showStateColumn : true,
+			
+			// 칼럼 끝에서 오른쪽 이동 시 다음 행, 처음 칼럼으로 이동할지 여부
+			wrapSelectionMove : true,
+			
+			// "F2 또는 (더블)클릭" 으로 편집 상태로 들어간 경우 위, 아래 화살표가 편집 완료 역할 할지 여부
+			updownArrowEditEnd : false
+	};
+	
+	// 에디팅 설정
+	auiGridProps.editable = true;
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 에디팅 시작 이벤트 바인딩
+	// 에디팅 정상 종료 직전 이벤트 바인딩
+	// 에디팅 정상 종료 이벤트 바인딩
+	// 에디팅 취소 이벤트 바인딩
+	AUIGrid.bind(myGridID, ["cellEditBegin", "cellEditEndBefore", "cellEditEnd", "cellEditCancel"], auiCellEditingHandler);
+}
+
+// 주어진 개수만큼 랜덤 데이터 생성하여 그리드에 삽입
+function createRandomData(count) {
+	var data = [];
+	var row;
+	for(var i=0; i<count; i++) {
+		
+		row = {};
+		for(var j=0; j<26; j++) {
+			row[j] = "";
+		}
+		data[i] = row;
+	}
+	// 데이터 삽입
+	AUIGrid.setGridData(myGridID, data);
+}
+
+function openInputer() {
+	
+	// 현재 선택 셀에 편집 인풋터를 강제로 오픈합니다.
+	AUIGrid.openInputer(myGridID);
+}
+
+
+function auiCellEditingHandler(event) {
+	if(event.type == "cellEditBegin") {
+		document.getElementById("editBeginDesc").innerHTML = "에디팅 시작(cellEditBegin) : ( " + event.rowIndex + ", " + event.columnIndex + " ) " + event.headerText + ", value : " + event.value;
+	} else if(event.type == "cellEditEnd") {
+		document.getElementById("editBeginEnd").innerHTML = "에디팅 종료(cellEditEnd) : ( " + event.rowIndex + ", " + event.columnIndex + " ) " + event.headerText + ", value : " + event.value;
+	} else if(event.type == "cellEditCancel") {
+		document.getElementById("editBeginEnd").innerHTML = "에디팅 취소(cellEditCancel) : ( " + event.rowIndex + ", " + event.columnIndex + " ) " + event.headerText + ", value : " + event.value;
+	} else if(event.type == "cellEditEndBefore") {
+		// 여기서 반환하는 값이 곧 에디팅 완료 값입니다.
+		// 개발자가 입력한 값을 변경할 수 있습니다.
+		return event.value; // 원래 값으로 적용 시킴
+	}
+};
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>편집 가능 상태(editable=true)에서 키보드로 바로 입력이 가능합니다.(editingOnKeyDown=true, 기본값 true)</p>
+		<p>편집 가능 상태로 들어가기 위해서는 "F2 키 또는 (더블)클릭" 과 "키보드 바로 입력" 2가지가 존재합니다.</p>
+		<p>두 가지의 차이는 키보드 방향 키가 하는 일이 다릅니다.</p>
+		<p>■"F2 또는 (더블)클릭" 으로 편집 상태로 들어간 경우 키보드 방향키는 편집 Input 에서 커서가 이동합니다.</p> 
+		<p>■"키보드 바로 입력" 으로 편집 상태로 들어간 경우 키보드 방향 키는 엑셀과 같이 수정 완료 상태가 됩니다.</p>
+		<p>참고 : "F2 또는 (더블)클릭" 으로 편집 상태로 들어간 경우 위, 아래 화살표에 한해 엑셀처럼 수정 완료 상태를 만들고자 한다면 updownArrowEditEnd=true 설정하십시오.(기본값:true)</p>
+		<p><span class="btn" onclick="openInputer()">강제로 편집 모드 진입하기(셀 편집기) 열기</span> 
+		: 셀 기본 편집기 뿐 아니라 editRenderer 의 type 을 DropDownListRenderer 로 설정하면, 리스트가 열립니다. 즉, 편집 모드로 진입합니다.</p>
+	</div>
+	<div style="clear:both;"></div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:420px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="editBeginDesc"></p>
+		<p id="editBeginEnd"></p>
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

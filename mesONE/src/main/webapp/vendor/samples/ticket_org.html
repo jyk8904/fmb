@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<script type="text/javascript" src="../pdfkit/AUIGrid.pdfkit.js"></script>
+<script type="text/javascript" src="../pdfkit/FileSaver.min.js"></script>
+<script type="text/javascript">
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid();
+};
+
+// 칼럼 레이아웃
+var columnLayout = [{
+    dataField: "창구번호",
+    headerText: "창구 번호",
+    width: 100
+}, {
+    headerText: "판매 상품 목록",
+    children: [{
+        dataField: "상품명",
+        headerText: "상품명",
+        cellMerge: true,
+        width: 220
+    }, {
+        dataField: "장소(관/홀)",
+        headerText: "장소(관/홀)",
+        cellMerge: true,
+        width: 220
+    }, {
+        dataField: "기간",
+        headerText: "기간",
+        cellMerge: true,
+        width: 220
+    }, {
+        dataField: "부가상품명",
+        headerText: "부가상품명",
+        width: 220
+    }]
+}, {
+    headerText: "총 판매금액",
+    children: [{
+        dataField: "현금",
+        headerText: "현금",
+        dataType: "numeric",
+        cellMerge: true,
+        formatString: "#,##0",
+        style: "right"
+    }, {
+        dataField: "카드",
+        headerText: "카드",
+        dataType: "numeric",
+        cellMerge: true,
+        formatString: "#,##0",
+        style: "right"
+    }, {
+        dataField: "합계",
+        headerText: "합계",
+        dataType: "numeric",
+        cellMerge: true,
+        formatString: "#,##0",
+        style: "right"
+    }]
+}, {
+    headerText: "티켓상품",
+    children: [{
+        headerText: "판매",
+        children: [{
+            headerText: "현금",
+            children: [{
+                dataField: "매수1",
+                headerText: "매수",
+                dataType: "numeric",
+                cellMerge: true,
+                formatString: "#,##0",
+                style: "right"
+            }, {
+                dataField: "금액1",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }, {
+            headerText: "카드",
+            children: [{
+                dataField: "매수2",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액2",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }, {
+            headerText: "합계",
+            children: [{
+                dataField: "매수3",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액3",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }]
+    }, {
+        headerText: "취소",
+        children: [{
+            headerText: "현금",
+            children: [{
+                dataField: "매수4",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액4",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }, {
+            headerText: "카드",
+            children: [{
+                dataField: "매수5",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액5",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }, {
+            headerText: "합계",
+            children: [{
+                dataField: "매수6",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액6",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }]
+    }, {
+        headerText: "순판매",
+        children: [{
+            headerText: "현금",
+            children: [{
+                dataField: "매수7",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액7",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }, {
+            headerText: "카드",
+            children: [{
+                dataField: "매수8",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액8",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }, {
+            headerText: "합계",
+            children: [{
+                dataField: "매수9",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액9",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }]
+    }]
+}, {
+    headerText: "부가상품",
+    children: [{
+        headerText: "판매",
+        children: [{
+            headerText: "현금",
+            children: [{
+                dataField: "매수10",
+                headerText: "매수",
+                dataType: "numeric",
+                cellMerge: true,
+                formatString: "#,##0",
+                style: "right"
+            }, {
+                dataField: "금액10",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }, {
+            headerText: "카드",
+            children: [{
+                dataField: "매수11",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액11",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }, {
+            headerText: "합계",
+            children: [{
+                dataField: "매수12",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액12",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }]
+    }, {
+        headerText: "취소",
+        children: [{
+            headerText: "현금",
+            children: [{
+                dataField: "매수13",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액13",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }, {
+            headerText: "카드",
+            children: [{
+                dataField: "매수14",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액14",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }, {
+            headerText: "합계",
+            children: [{
+                dataField: "매수15",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액15",
+                headerText: "금액",
+                dataType: "numeric",
+                cellMerge: true,
+                formatString: "#,##0",
+                style: "right"
+            }]
+        }]
+    }, {
+        headerText: "순판매",
+        children: [{
+            headerText: "현금",
+            children: [{
+                dataField: "매수16",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액16",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }, {
+            headerText: "카드",
+            children: [{
+                dataField: "매수17",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액17",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }, {
+            headerText: "합계",
+            children: [{
+                dataField: "매수18",
+                headerText: "매수",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }, {
+                dataField: "금액18",
+                headerText: "금액",
+                dataType: "numeric",
+                formatString: "#,##0",
+                cellMerge: true,
+                style: "right"
+            }]
+        }]
+    }]
+}];
+
+    // 푸터 설정
+    var footerObject = [ {
+        labelText : "합계",
+        positionField : "창구번호"
+    }, {
+        dataField : "현금",
+        positionField : "현금",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "카드",
+        positionField : "카드",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "합계",
+        positionField : "합계",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수1",
+        positionField : "매수1",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액1",
+        positionField : "금액1",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수2",
+        positionField : "매수2",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액2",
+        positionField : "금액2",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수3",
+        positionField : "매수3",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액3",
+        positionField : "금액3",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수4",
+        positionField : "매수4",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액4",
+        positionField : "금액4",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수5",
+        positionField : "매수5",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액5",
+        positionField : "금액5",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수6",
+        positionField : "매수6",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액6",
+        positionField : "금액6",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수7",
+        positionField : "매수7",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액7",
+        positionField : "금액7",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수8",
+        positionField : "매수8",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액8",
+        positionField : "금액8",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수9",
+        positionField : "매수9",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액9",
+        positionField : "금액9",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수10",
+        positionField : "매수10",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액10",
+        positionField : "금액10",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수11",
+        positionField : "매수11",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액11",
+        positionField : "금액11",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수12",
+        positionField : "매수12",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액12",
+        positionField : "금액12",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수13",
+        positionField : "매수13",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액13",
+        positionField : "금액13",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수14",
+        positionField : "매수14",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액14",
+        positionField : "금액14",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수15",
+        positionField : "매수15",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액15",
+        positionField : "금액15",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수16",
+        positionField : "매수16",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액16",
+        positionField : "금액16",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수17",
+        positionField : "매수17",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액17",
+        positionField : "금액17",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "매수18",
+        positionField : "매수18",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }, {
+        dataField : "금액18",
+        positionField : "금액18",
+        operation : "SUM",
+        style : "right",
+        formatString : "#,##0"
+    }];
+
+
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid() {
+	
+	var auiGridProps = {};
+        auiGridProps.selectionMode = "multipleCells";
+        auiGridProps.useGroupingPanel = false;
+        auiGridProps.enableCellMerge = true;
+        auiGridProps.displayTreeOpen = true;
+        auiGridProps.showRowNumColumn = false;
+        auiGridProps.showRowCheckColumn = false;
+        auiGridProps.showBranchOnGrouping = false;
+        auiGridProps.wheelSensitivity = 3;
+        auiGridProps.showFooter = true;
+        auiGridProps.groupingFields = ["창구번호"];
+        auiGridProps.groupingSummary = {
+				dataFields : ["현금","카드","합계","매수1","매수2"],
+				labelTexts : ["소계"]
+        };
+ 
+        auiGridProps.rowStyleFunction = function(rowIndex, item) {
+            if(item._$isGroupSumField) { // 그룹핑으로 만들어진 합계 필드인지 여부
+                switch(item._$depth) {  // 계층형의 depth 비교 연산
+                    case 2:
+                    	return "small-sum";
+                    case 3:
+                    	return "mid-sum";
+                    case 4:
+                        return "aui-grid-row-depth3-style";
+                    default:
+                        return "aui-grid-row-depth-default-style";
+                }
+            }
+            return null;
+        };
+ 
+        myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+        AUIGrid.setFooter(myGridID, footerObject);
+
+	// AUIGrid 에 데이터 삽입합니다.
+	AUIGrid.setGridData("#grid_wrap", data);
+}
+
+// 엑셀 내보내기(Export);
+function exportClick() {
+	
+	// 그리드가 작성한 엑셀, CSV 등의 데이터를 다운로드 처리할 서버 URL을 지시합니다.
+	// 서버 사이드 스크립트가 JSP 이라면 ./export/export.jsp 로 변환해 주십시오.
+	// 스프링 또는 MVC 프레임워크로 프로젝트가 구축된 경우 해당 폴더의 export.jsp 파일을 참고하여 작성하십시오.
+	AUIGrid.setProp(myGridID, "exportURL", "./server_script/export.php");
+	
+	// 내보내기 실행
+	AUIGrid.exportToXlsx(myGridID);
+};
+
+// PDF 내보내기(Export), AUIGrid.pdfkit.js 파일을 추가하십시오.
+function exportPdfClick() {
+	
+	// 그리드가 작성한 엑셀, CSV 등의 데이터를 다운로드 처리할 서버 URL을 지시합니다.
+	// 서버 사이드 스크립트가 JSP 이라면 ./export/export.jsp 로 변환해 주십시오.
+	// 스프링 또는 MVC 프레임워크로 프로젝트가 구축된 경우 해당 폴더의 export.jsp 파일을 참고하여 작성하십시오.
+	AUIGrid.setProp(myGridID, "exportURL", "./server_script/export.php");
+	
+	// 내보내기 실행
+	AUIGrid.exportToPdf(myGridID, {
+		fontPath : "../pdfkit/jejugothic-regular.ttf"
+	});
+};
+
+var data = [{
+"금액1": "1089990",
+"금액2": "1",
+"금액3": "1089990",
+"금액4": "1",
+"금액5": "1",
+"금액6": "1",
+"금액7": "1089990",
+"금액8": "1",
+"금액9": "1089990",
+"금액10": "1",
+"금액11": "1",
+"금액12": "1",
+"금액13": "1",
+"금액14": "0",
+"금액15": "0",
+"금액16": "0",
+"금액17": "0",
+"금액18": "0",
+"기간": "2015.01.29~2015.09.25",
+"매수1": "6",
+"매수2": "10",
+"매수3": "6",
+"매수4": "0",
+"매수5": "0",
+"매수6": "0",
+"매수7": "6",
+"매수8": "0",
+"매수9": "6",
+"매수10": "0",
+"매수11": "0",
+"매수12": "0",
+"매수13": "0",
+"매수14": "0",
+"매수15": "0",
+"매수16": "0",
+"매수17": "0",
+"매수18": "0",
+"부가상품명": "내부외부용, 내부용, 외부용",
+"상품명": "7년공연",
+"장소(관/홀)": "메인홀",
+"창구번호": "1번",
+"카드": "0",
+"합계": "1089990",
+"현금": "1089990"
+}, {
+"금액1": "2343600",
+"금액2": "0",
+"금액3": "2343600",
+"금액4": "0",
+"금액5": "0",
+"금액6": "0",
+"금액7": "2343600",
+"금액8": "0",
+"금액9": "2343600",
+"금액10": "0",
+"금액11": "0",
+"금액12": "0",
+"금액13": "0",
+"금액14": "0",
+"금액15": "0",
+"금액16": "0",
+"금액17": "0",
+"금액18": "0",
+"기간": "2015.01.01~2015.09.01",
+"매수1": "2604",
+"매수2": "10",
+"매수3": "2604",
+"매수4": "0",
+"매수5": "0",
+"매수6": "0",
+"매수7": "2604",
+"매수8": "0",
+"매수9": "2604",
+"매수10": "0",
+"매수11": "0",
+"매수12": "0",
+"매수13": "0",
+"매수14": "0",
+"매수15": "0",
+"매수16": "0",
+"매수17": "0",
+"매수18": "0",
+"부가상품명": "너의목소리가들려2000원치, 봄날의곰좋아하세요?3000원, 사랑이란뭘까?천원.",
+"상품명": "왈왈 으르릉 컹컹",
+"장소(관/홀)": "세종문화회관 대극장",
+"창구번호": "1번",
+"카드": "0",
+"합계": "2343600",
+"현금": "2343600"
+}, {
+"금액1": "1089990",
+"금액2": "0",
+"금액3": "1089990",
+"금액4": "0",
+"금액5": "0",
+"금액6": "0",
+"금액7": "1089990",
+"금액8": "0",
+"금액9": "1089990",
+"금액10": "0",
+"금액11": "0",
+"금액12": "0",
+"금액13": "0",
+"금액14": "0",
+"금액15": "0",
+"금액16": "0",
+"금액17": "0",
+"금액18": "0",
+"기간": "2015.01.29~2015.10.25",
+"매수1": "6",
+"매수2": "0",
+"매수3": "6",
+"매수4": "0",
+"매수5": "0",
+"매수6": "0",
+"매수7": "6",
+"매수8": "0",
+"매수9": "6",
+"매수10": "0",
+"매수11": "0",
+"매수12": "0",
+"매수13": "0",
+"매수14": "0",
+"매수15": "0",
+"매수16": "0",
+"매수17": "0",
+"매수18": "0",
+"부가상품명": "노빈손 훈민정음을 찾아라,  서울 뮤지컬 아찔한 연애, 서울뮤지컬 사의찬미, 인천 명랑토끼만만세, 비발디사계, 어떤 공연",
+"상품명": "1년공연3",
+"장소(관/홀)": "메인홀3",
+"창구번호": "3번",
+"카드": "0",
+"합계": "1089990",
+"현금": "1089990"
+}, {
+"금액1": "1089990",
+"금액2": "0",
+"금액3": "1089990",
+"금액4": "0",
+"금액5": "0",
+"금액6": "0",
+"금액7": "1089990",
+"금액8": "0",
+"금액9": "1089990",
+"금액10": "0",
+"금액11": "0",
+"금액12": "0",
+"금액13": "0",
+"금액14": "0",
+"금액15": "0",
+"금액16": "0",
+"금액17": "0",
+"금액18": "0",
+"기간": "2015.01.29~2015.11.25",
+"매수1": "6",
+"매수2": "0",
+"매수3": "6",
+"매수4": "0",
+"매수5": "0",
+"매수6": "0",
+"매수7": "6",
+"매수8": "0",
+"매수9": "6",
+"매수10": "0",
+"매수11": "0",
+"매수12": "0",
+"매수13": "0",
+"매수14": "0",
+"매수15": "0",
+"매수16": "0",
+"매수17": "0",
+"매수18": "0",
+"부가상품명": "내부외부용, 내부용, 외부용",
+"상품명": "4년공연",
+"장소(관/홀)": "메인홀4",
+"창구번호": "4번",
+"카드": "0",
+"합계": "1089990",
+"현금": "1089990"
+}, {
+"금액1": "1089990",
+"금액2": "0",
+"금액3": "1089990",
+"금액4": "0",
+"금액5": "0",
+"금액6": "0",
+"금액7": "1089990",
+"금액8": "0",
+"금액9": "1089990",
+"금액10": "0",
+"금액11": "0",
+"금액12": "0",
+"금액13": "0",
+"금액14": "0",
+"금액15": "0",
+"금액16": "0",
+"금액17": "0",
+"금액18": "0",
+"기간": "2015.01.29~2015.12.25",
+"매수1": "6",
+"매수2": "0",
+"매수3": "6",
+"매수4": "0",
+"매수5": "0",
+"매수6": "0",
+"매수7": "6",
+"매수8": "0",
+"매수9": "6",
+"매수10": "0",
+"매수11": "0",
+"매수12": "0",
+"매수13": "0",
+"매수14": "0",
+"매수15": "0",
+"매수16": "0",
+"매수17": "0",
+"매수18": "0",
+"부가상품명": "내부외부용, 내부용, 외부용",
+"상품명": "1년공연5",
+"장소(관/홀)": "메인홀5",
+"창구번호": "5번",
+"카드": "0",
+"합계": "1089990",
+"현금": "1089990"
+}, {
+"금액1": "1089990",
+"금액2": "0",
+"금액3": "1089990",
+"금액4": "0",
+"금액5": "0",
+"금액6": "0",
+"금액7": "1089990",
+"금액8": "0",
+"금액9": "1089990",
+"금액10": "0",
+"금액11": "0",
+"금액12": "0",
+"금액13": "0",
+"금액14": "0",
+"금액15": "0",
+"금액16": "0",
+"금액17": "0",
+"금액18": "0",
+"기간": "2015.01.29~2015.09.25",
+"매수1": "6",
+"매수2": "0",
+"매수3": "6",
+"매수4": "0",
+"매수5": "0",
+"매수6": "0",
+"매수7": "6",
+"매수8": "0",
+"매수9": "6",
+"매수10": "0",
+"매수11": "0",
+"매수12": "0",
+"매수13": "0",
+"매수14": "0",
+"매수15": "0",
+"매수16": "0",
+"매수17": "0",
+"매수18": "0",
+"부가상품명": "내부외부용, 내부용, 외부용",
+"상품명": "1년공연6",
+"장소(관/홀)": "메인홀6",
+"창구번호": "6번",
+"카드": "0",
+"합계": "1089990",
+"현금": "1089990"
+}, {
+"금액1": "1089990",
+"금액2": "0",
+"금액3": "1089990",
+"금액4": "0",
+"금액5": "0",
+"금액6": "0",
+"금액7": "1089990",
+"금액8": "0",
+"금액9": "1089990",
+"금액10": "0",
+"금액11": "0",
+"금액12": "0",
+"금액13": "0",
+"금액14": "0",
+"금액15": "0",
+"금액16": "0",
+"금액17": "0",
+"금액18": "0",
+"기간": "2015.01.29~2016.09.25",
+"매수1": "6",
+"매수2": "0",
+"매수3": "6",
+"매수4": "0",
+"매수5": "0",
+"매수6": "0",
+"매수7": "6",
+"매수8": "0",
+"매수9": "6",
+"매수10": "0",
+"매수11": "0",
+"매수12": "0",
+"매수13": "0",
+"매수14": "0",
+"매수15": "0",
+"매수16": "0",
+"매수17": "0",
+"매수18": "0",
+"부가상품명": "내부외부용, 내부용, 외부용",
+"상품명": "7년공연",
+"장소(관/홀)": "메인홀7",
+"창구번호": "7번",
+"카드": "0",
+"합계": "1089990",
+"현금": "1089990"
+}, {
+"금액1": "1089990",
+"금액2": "0",
+"금액3": "1089990",
+"금액4": "0",
+"금액5": "0",
+"금액6": "0",
+"금액7": "1089990",
+"금액8": "0",
+"금액9": "1089990",
+"금액10": "0",
+"금액11": "0",
+"금액12": "0",
+"금액13": "0",
+"금액14": "0",
+"금액15": "0",
+"금액16": "0",
+"금액17": "0",
+"금액18": "0",
+"기간": "2015.05.29~2015.09.25",
+"매수1": "6",
+"매수2": "0",
+"매수3": "6",
+"매수4": "0",
+"매수5": "0",
+"매수6": "0",
+"매수7": "6",
+"매수8": "0",
+"매수9": "6",
+"매수10": "0",
+"매수11": "0",
+"매수12": "0",
+"매수13": "0",
+"매수14": "0",
+"매수15": "0",
+"매수16": "0",
+"매수17": "0",
+"매수18": "0",
+"부가상품명": "내부외부용, 내부용, 외부용",
+"상품명": "8년공연",
+"장소(관/홀)": "메인홀8",
+"창구번호": "8번",
+"카드": "0",
+"합계": "1089990",
+"현금": "1089990"
+}, {
+"금액1": "1089990",
+"금액2": "0",
+"금액3": "1089990",
+"금액4": "0",
+"금액5": "0",
+"금액6": "0",
+"금액7": "1089990",
+"금액8": "0",
+"금액9": "1089990",
+"금액10": "0",
+"금액11": "0",
+"금액12": "0",
+"금액13": "0",
+"금액14": "0",
+"금액15": "0",
+"금액16": "0",
+"금액17": "0",
+"금액18": "0",
+"기간": "2015.01.29~2015.09.25",
+"매수1": "6",
+"매수2": "0",
+"매수3": "6",
+"매수4": "0",
+"매수5": "0",
+"매수6": "0",
+"매수7": "6",
+"매수8": "0",
+"매수9": "6",
+"매수10": "0",
+"매수11": "0",
+"매수12": "0",
+"매수13": "0",
+"매수14": "0",
+"매수15": "0",
+"매수16": "0",
+"매수17": "0",
+"매수18": "0",
+"부가상품명": "내부외부용, 내부용, 외부용",
+"상품명": "1년공연9",
+"장소(관/홀)": "메인홀9",
+"창구번호": "9번",
+"카드": "0",
+"합계": "1089990",
+"현금": "1089990"
+}, {
+"금액1": "1089990",
+"금액2": "0",
+"금액3": "1089990",
+"금액4": "0",
+"금액5": "0",
+"금액6": "0",
+"금액7": "1089990",
+"금액8": "0",
+"금액9": "1089990",
+"금액10": "0",
+"금액11": "0",
+"금액12": "0",
+"금액13": "0",
+"금액14": "0",
+"금액15": "0",
+"금액16": "0",
+"금액17": "0",
+"금액18": "0",
+"기간": "2015.01.29~2015.09.25",
+"매수1": "6",
+"매수2": "0",
+"매수3": "6",
+"매수4": "0",
+"매수5": "0",
+"매수6": "0",
+"매수7": "6",
+"매수8": "0",
+"매수9": "6",
+"매수10": "0",
+"매수11": "0",
+"매수12": "0",
+"매수13": "0",
+"매수14": "0",
+"매수15": "0",
+"매수16": "0",
+"매수17": "0",
+"매수18": "0",
+"부가상품명": "내부외부용, 내부용, 외부용",
+"상품명": "10년공연",
+"장소(관/홀)": "메인홀10",
+"창구번호": "10번",
+"카드": "0",
+"합계": "1089990",
+"현금": "1089990"
+}, {
+"금액1": "1089990",
+"금액2": "0",
+"금액3": "1089990",
+"금액4": "0",
+"금액5": "0",
+"금액6": "0",
+"금액7": "1089990",
+"금액8": "0",
+"금액9": "1089990",
+"금액10": "0",
+"금액11": "0",
+"금액12": "0",
+"금액13": "0",
+"금액14": "0",
+"금액15": "0",
+"금액16": "0",
+"금액17": "0",
+"금액18": "0",
+"기간": "2015.01.29~2015.09.25",
+"매수1": "6",
+"매수2": "0",
+"매수3": "6",
+"매수4": "0",
+"매수5": "0",
+"매수6": "0",
+"매수7": "6",
+"매수8": "0",
+"매수9": "6",
+"매수10": "0",
+"매수11": "0",
+"매수12": "0",
+"매수13": "0",
+"매수14": "0",
+"매수15": "0",
+"매수16": "0",
+"매수17": "0",
+"매수18": "0",
+"부가상품명": "내부외부용, 내부용, 외부용",
+"상품명": "11년공연",
+"장소(관/홀)": "메인홀11",
+"창구번호": "11번",
+"카드": "0",
+"합계": "1089990",
+"현금": "1089990"
+}, {
+"금액1": "1089990",
+"금액2": "0",
+"금액3": "1089990",
+"금액4": "0",
+"금액5": "0",
+"금액6": "0",
+"금액7": "1089990",
+"금액8": "0",
+"금액9": "1089990",
+"금액10": "0",
+"금액11": "0",
+"금액12": "0",
+"금액13": "0",
+"금액14": "0",
+"금액15": "0",
+"금액16": "0",
+"금액17": "0",
+"금액18": "0",
+"기간": "2015.01.29~2015.09.25",
+"매수1": "6",
+"매수2": "0",
+"매수3": "6",
+"매수4": "0",
+"매수5": "0",
+"매수6": "0",
+"매수7": "6",
+"매수8": "0",
+"매수9": "6",
+"매수10": "0",
+"매수11": "0",
+"매수12": "0",
+"매수13": "0",
+"매수14": "0",
+"매수15": "0",
+"매수16": "0",
+"매수17": "0",
+"매수18": "0",
+"부가상품명": "내부외부용, 내부용, 외부용",
+"상품명": "12년공연",
+"장소(관/홀)": "메인홀12",
+"창구번호": "1번",
+"카드": "0",
+"합계": "1089990",
+"현금": "1089990"
+}];
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<span class="btn" onclick="exportClick()">엑셀(xlsx)로 저장</span>
+		<span class="btn" onclick="exportPdfClick()">PDF로 저장</span>
+		
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:1000px; height:600px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

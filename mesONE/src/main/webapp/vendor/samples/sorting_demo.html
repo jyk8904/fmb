@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/normal_500.json");
+
+};
+
+// AUIGrid 칼럼 설정
+// 데이터 형태는 다음과 같은 형태임,
+//[{"id":"#Cust0","date":"2014-09-03","name":"Han","country":"USA","product":"Apple","color":"Red","price":746400}, { .....} ];
+var columnLayout = [ {
+		dataField : "name",
+		headerText : "Name",
+		width : 140
+	}, {
+		dataField : "country",
+		headerText : "Country",
+		width : 120
+
+	}, {
+		dataField : "product",
+		headerText : "Product",
+		width: 120
+	}, {
+		dataField : "quantity",
+		headerText : "Quantity",
+		dataType : "numeric"
+	}, {
+		dataField : "price",
+		headerText : "Price",
+		dataType : "numeric"
+	}, {
+		dataField : "date",
+		headerText : "Date"
+	}
+];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	// 그리드 속성 설정
+	var gridPros = {
+		
+		editable : true,
+		
+		// 그룹핑 패널 사용
+		useGroupingPanel : true,
+		
+		displayTreeOpen : true,
+		
+		noDataMessage : "출력할 데이터가 없습니다.",
+		
+		groupingMessage : "여기에 칼럼을 드래그하면 그룹핑이 됩니다."
+	};
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, gridPros);
+	
+	// 정렬 이벤트 바인딩
+	AUIGrid.bind(myGridID, "sorting", function(event) {
+		var sortingStr = "";
+		var sortingFields = event.sortingFields;
+		var sortingField;
+		if(sortingFields.length > 0) {
+			for(var i=0, len=sortingFields.length; i<len; i++) {
+				sortingField = sortingFields[i].dataField;
+				sortingType = sortingFields[i].sortType == 1 ? "오름차순" : "내림차순";
+				sortingStr += sortingField + " : " + sortingType + ", ";
+			}
+		} else {
+			sortingStr = "정렬 필드 없음";
+		}
+		
+		document.getElementById("sorting_info").innerHTML = "이벤트명 : " + event.type + ", 정렬 필드들 : " + sortingStr; 
+	});
+}
+
+
+function changeMultiSortingKey(keyName) {
+	// multiSortingKey 속성 변경
+	AUIGrid.setProp(myGridID, "multiSortingKey", keyName);
+	
+	document.getElementById("key_info").innerHTML = keyName;
+}
+
+// 소팅 JS 함수로 실행하기
+function setSorting() {
+	
+	var sortingInfo = [];
+	// 차례로 Country, Name, Price 에 대하여 각각 오름차순, 내림차순, 오름차순 지정.
+	sortingInfo[0] = { dataField : "country", sortType : 1 }; // 오름차순 1
+	sortingInfo[1] = { dataField : "name", sortType : -1 }; // 내림 차순 -1
+	sortingInfo[2] = { dataField : "price", sortType : 1 };
+	
+	AUIGrid.setSorting(myGridID, sortingInfo);
+}
+
+// 모든 정렬 초기화
+function clearSortingAll() {
+	AUIGrid.clearSortingAll(myGridID);
+}
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>enableMultipleSorting 을 true 로 설정하면 다중 칼럼 정렬을 할 수 있습니다.(기본값 : true)</p>
+		<p>다중 칼럼 정렬을 하기 위한 방법은 다음 3가지가 존재합니다.</p>
+		<p>■ shiftKey : 쉬프트 키를 누른 상태에서 복수의 칼럼 헤더 클릭 시 다중 정렬이 실행됩니다.(기본값)</p>
+		<p>■ ctrlKey : 컨트롤 키를 누른 상태에서 복수의 칼럼 헤더 클릭 시 다중 정렬이 실행됩니다.</p>
+		<p>■ always : enableMultipleSorting = true 인 경우 그냥 클릭만으로 다중 정렬이 실행됩니다.</p>
+		<ul class="nav_u">
+			<li><span onclick="changeMultiSortingKey('shiftKey')" class="btn">shiftKey</span></li>
+			<li><span onclick="changeMultiSortingKey('ctrlKey')" class="btn">ctrlKey</span></li>
+			<li><span onclick="changeMultiSortingKey('always')" class="btn">always</span></li>
+			<li><span>현재 다중 정렬 키 : <span id="key_info">shiftKey</span></span></li>
+		</ul>
+		<ul class="nav_u">
+			<li><span onclick="setSorting()" class="btn" title="차례로 Country, Name, Price 에 대하여 각각 오름차순, 내림차순, 오름차순 지정.">사용자 정의 정렬하기</span></li>
+			<li><span onclick="clearSortingAll()" class="btn">모든 정렬 초기화</span></li>
+		</ul>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:480px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="sorting_info"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

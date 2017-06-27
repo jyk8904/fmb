@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+
+/*  셀력션 백그라운드 스타일 재정의 */
+.aui-grid-selection-bg {
+	background: #1D8B15 !important;
+}
+
+/* 커스텀 칼럼 스타일 정의 */
+.aui-grid-user-custom-left {
+	text-align:left;
+}
+.aui-grid-user-custom-right {
+	text-align:right;
+}
+/* 커스텀 summary total  스타일 */
+.aui-grid-my-footer-sum-total {
+	font-weight:bold;
+	text-align:right;
+	color:#4374D9;
+}
+.aui-grid-my-footer-sum-total2 {
+	text-align:right;
+}
+</style>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/normal_100.json");
+
+};
+
+// AUIGrid 칼럼 설정
+// 데이터 형태는 다음과 같은 형태임,
+var columnLayout = [ {
+		dataField : "name",
+		headerText : "Name",
+		width : 120
+	}, {
+		dataField : "country",
+		headerText : "Country",
+		width: 100
+	}, {
+		dataField : "product",
+		headerText : "Product",
+		width: 140
+	}, {
+		dataField : "color",
+		headerText : "Color",
+		width : 120
+	}, {
+		dataField : "price",
+		headerText : "Price",
+		dataType : "numeric",
+		style : "aui-grid-user-custom-right"
+	}, {
+		dataField : "date",
+		headerText : "Date"
+	}
+];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+			
+			rowIdField : "id",
+			
+			editable : true,
+			
+			softRemoveRowMode : true,
+			
+			// 사용자가 추가한 새행은 softRemoveRowMode 적용 안함. 
+			// 즉, 바로 삭제함.
+			softRemovePolicy : "exceptNew",
+			
+			selectionMode : "multipleRows",
+			
+			showStateColumn : true
+	};
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// ready 이벤트 바인딩
+	AUIGrid.bind(myGridID, "ready", function(event) {
+		
+		// 최초 데이터 삽입 후 추가로 행 아이템 넣고, 삭제 시킴
+		addMyRows();
+		
+		// 최초에 행 2개 삭제 시킴
+		removeMyRows();
+		
+		// 0, 0 에 선택되도록 
+		AUIGrid.setSelectionByIndex(event.pid, 0, 0);
+	});
+	
+};
+
+// 행 아이템 만들어 추가하기
+function addMyRows() {
+	var items = [];
+	
+	for(var i=1, len=5; i<=len; i++) {
+		items.push({
+				"name": "New " + i,
+				"country": "New Country " + i,
+				"product": "New Product " + i,
+				"color": "New Color " + i,
+				"quantity": Math.ceil(Math.random() * 10),
+				"price": Math.ceil(Math.random() * 10000),
+				"date": "2015/10/01",
+		});
+	}
+	
+	// parameter
+	// item : 삽입하고자 하는 아이템 Object 또는 배열(배열인 경우 다수가 삽입됨)
+	// rowPos : rowIndex 인 경우 해당 index 에 삽입, first : 최상단, last : 최하단, selectionUp : 선택된 곳 위, selectionDown : 선택된 곳 아래
+	AUIGrid.addRow(myGridID, items, 3);
+};
+
+// 초기에 행 아이템들 강제로 삭제
+function removeMyRows(items) {
+	var rowIds = [];
+	
+	// id 가 #Cust5, #Cust6 인 것도 강제로 삭제
+	rowIds.push( "#Cust5" );
+	rowIds.push( "#Cust6" );
+	
+	// rowId 값들이 삭제되었다면 그리드에서 제거함.
+	AUIGrid.removeRowByRowId(myGridID, rowIds);
+};
+
+// 선택행 삭제
+function removeRows() {
+	AUIGrid.removeRow(myGridID, "selectedIndex");
+};
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>softRemoveRowMode=true 설정인 경우 삭제된 행 아이템은 삭제 표시가 남습니다.</p>
+		<p>이 때 원래 그리드의 데이터가 아닌 사용자가 추가한 그리드의 데이터를 삭제한 경우에도 삭제 표시가 남겨집니다.(기본값임)</p>
+		<p>때로는, 원래 서버에서 가져온 행이 아닌 사용자가 Insert 키나 addRow 메소드로 행을 추가하고, 필요 없어 삭제하고자 하는 경우 삭제 표시가 아닌 자체적으로 없애고 싶을 때가 있습니다.</p>
+		<p>즉, softRemoveRowMode 적용을 원래 데이터에만 적용하고자 할 때 softRemovePolicy="exceptNew" 를 설정하십시오.</p>
+		<p>데모는 그리드 데이터 삽입 후 강제로 추가로 5개의 행을 삽입하였습니다. (사용자가 행을 추가 했다고 가정하기 위한 것임)</p>
+		<p>이 5개의 추가된 행을 삭제하면 바로 그리드에서 제거됩니다.(softRemoveRowMode 적용 안시킴)</p>
+		<p>그러나 원래 데이터를 삭제하는 경우에는 softRemoveRowMode 를 적용 시켜 삭제 표시를 남깁니다. 추후 그래서 복원(삭제 취소)이 가능합니다.</p>
+		
+		<p><span class="btn" onclick="removeRows();">선택행 삭제(Ctrl+Del키)</span>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:400px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="rowInfo"></p>
+		<p id="editBeginDesc"></p>
+		<p id="editBeginEnd"></p>
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

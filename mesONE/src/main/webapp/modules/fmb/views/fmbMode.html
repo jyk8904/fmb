@@ -1,0 +1,211 @@
+<!-- 
+/**  
+ * @Class Name : fmbMode.html
+ * @Description : fmbDevelopementMode
+ * @Modification Information  
+ * @
+
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.05  
+
+ * css: assets/css/fmb.css
+ * controller : fmbModeCtrl.js
+ *
+ */
+ -->
+
+<!-- ngview 내부 페이지 -->
+<div class='md-screen'>
+    
+<md-form-header>
+	<!--     좌상단 버튼   -->
+	<md-config-btn></md-config-btn>
+	<!--     좌상단 끝   -->
+</md-form-header>
+<md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4">
+
+      <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">설비 (버튼) 설정</h1>
+        <md-button ng-click="vm.crtEqptModal()" class="md-accent">생성</md-button>
+        <md-button ng-click="vm.saveConfig(configSetting)" class="md-accent">저장</md-button>
+        <md-button ng-click="vm.toggleLeft()" class="md-accent">닫기</md-button>
+      </md-toolbar>
+
+      <md-content class="md-padding">
+		<div layout="row">
+			<div flex>
+				<div class='listTitle'>
+					<div class='first'>
+						<h4>상태</h4>
+					</div>
+					<div class='second'>
+						<h4>ID</h4>
+					</div>
+					<div class='third'>
+						<h4>삭제</h4>
+					</div>
+				</div>
+				<ul>
+		      		<li ng-repeat="eqpts in vm.eqptList" ng-click="vm.setSelectedData(eqpts)" ng-hide="eqpts.status == 'delete'">
+						<label class='first'>{{eqpts.status}}</label>
+						<label class='second'>{{eqpts.plcId}}</label>
+						<md-checkbox class='third' ng-model="checkData.cb" ng-init="checkData.cb = false;" aria-label="1"
+							ng-change="vm.exists(eqpts, checkData.cb, $index)" class="md-warn md-align-top-left" flex>
+          				</md-checkbox>
+		      		</li>
+		      	</ul>
+	      	</div>
+		<div flex>
+		<md-tabs class="md-accent" md-selected="0">
+			<md-tab id="tab1">
+		      	<md-tab-label>Basic</md-tab-label>
+		        <md-tab-body>
+	   				<md-input-container>
+          				<label>Class 명</label>
+          				<input ng-model="configSetting.cnm" readonly>
+        			</md-input-container>
+	   				
+	   				<md-input-container>
+          				<label>Type</label>
+          				<md-select ng-model="configSetting.type">
+            				<md-option><em>None</em></md-option>
+            				<md-option value="PLC"> PLC </md-option>
+            				<md-option value="SPC"> SPC </md-option>
+            				<md-option value="ETC"> ETC </md-option>
+          				</md-select>
+          			</md-input-container>
+        			
+	   				<md-input-container>
+          				<label>PLC_ID</label>
+          				<md-select ng-model="configSetting.plcId">
+            				<md-option><em>None</em></md-option>
+            				<md-option ng-repeat="eqpt in vm.eqptList" value="{{eqpt.plcId}}">
+              					{{eqpt.plcId}}
+            				</md-option>
+          				</md-select>
+          			</md-input-container>
+          			
+          			<md-input-container>
+          				<label>FACT_ID</label>
+          				<md-select ng-model="configSetting.factId" required>
+            				<md-option><em>None</em></md-option>
+            				<md-option value="A"> A </md-option>
+            				<md-option value="B"> B </md-option>
+            				<md-option value="C"> C </md-option>
+          				</md-select>
+          			</md-input-container>
+		        </md-tab-body>
+			</md-tab>
+		   	<md-tab id="tab2">
+				<md-tab-label>Detail</md-tab-label>
+		        <md-tab-body>
+		        	<md-input-container>
+          				<label>Top</label>
+          				<input ng-model="configSetting.top">
+        			</md-input-container>
+        			<md-input-container>
+          				<label>Left</label>
+          				<input ng-model="configSetting.left">
+        			</md-input-container>
+        			<md-input-container>
+          				<label>Width</label>
+          				<input ng-model="configSetting.width">
+        			</md-input-container>
+        			<md-input-container>
+          				<label>Height</label>
+          				<input ng-model="configSetting.height">
+        			</md-input-container>
+        			<md-input-container>
+          				<label>zIndex</label>
+          				<input ng-model="configSetting.zIndex">
+        			</md-input-container>
+        			<md-input-container>
+          				<label>Image</label>
+          				<input ng-model="configSetting.imgUrl">
+        			</md-input-container>
+	   				<div class="prev" style='margin:10px 0 0 0'>
+	   					<img class='prevImg' src="{{configSetting.imgUrl}}" />
+	   				</div>
+		        </md-tab-body>
+		      </md-tab>
+		    </md-tabs>
+	    </div> 
+    </div>
+  </md-content>
+
+</md-sidenav>
+<bc-form-body>
+   <!--설비클래스 삽입 시작-->
+   <bc-back-panel>
+   	<div bg-inner-ctrl class='bg-panel'></div>
+   <div class="EQPT">   
+   <!-- 설비이미지 repeat -->
+       <ul>
+         <li ng-repeat="eqpt in vm.eqptList" ng-hide="eqpt.status == 'delete'">
+          <div u-ctrl task-data="vm.eqptList" target-data="$index" ng-draggable='dragOptions' class="{{eqpt.eqptCnm}}" status="{{eqpt.status}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
+              style="top:{{eqpt.cssTop}}; left: {{eqpt.cssLeft}}; 
+                     width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}}; 
+                     z-index:{{eqpt.cssZindex}};">
+               <img class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
+            </div>
+         </li>
+      </ul>
+    </div>
+   </bc-back-panel>
+      <!--설비클래스 삽입 끝-->
+</bc-form-body>
+
+</div>
+<!------------------------------------------ modal body start------------------------------------------------------->
+<modal title="신규 생성" visible="vm.showModal">
+<form role="form" ng-submit="submit()">
+   <ul>
+      <li>
+         <div class="form-group">
+            <md-input-container>
+   				<label>Class 명</label>
+   				<input ng-model="crtEqpt.cnm">
+ 			</md-input-container>
+         </div>
+         <div class="form-group">
+            <md-input-container>
+  				<label>Type</label>
+  				<md-select ng-model="crtEqpt.type">
+    				<md-option><em>None</em></md-option>
+    				<md-option value="PLC"> PLC </md-option>
+    				<md-option value="SPC"> SPC </md-option>
+    				<md-option value="ETC"> ETC </md-option>
+  				</md-select>
+  			</md-input-container>
+         </div>
+         <div class="form-group">
+            <md-input-container>
+   				<label>PLC_ID</label>
+   				<md-select ng-model="crtEqpt.plcId">
+     				<md-option><em>None</em></md-option>
+     				<md-option ng-repeat="eqpt in vm.eqptList" value="{{eqpt.plcId}}">
+       					{{eqpt.plcId}}
+     				</md-option>
+   				</md-select>
+   			</md-input-container>
+         </div>
+         <div class="form-group">
+            <md-input-container>
+   				<label>FACT_ID</label>
+   				<md-select ng-model="crtEqpt.factId">
+     				<md-option><em>None</em></md-option>
+     				<md-option value="A"> A </md-option>
+     				<md-option value="B"> B </md-option>
+     				<md-option value="C"> C </md-option>
+   				</md-select>
+   			</md-input-container>   
+         </div>			      
+      </li>
+   </ul>
+   <input type="submit" value="Save" />
+<button type="submit" class="btn btn-default" data-dismiss="modal"
+      aria-hidden="true">저장</button>
+</form>
+</modal>
+
+<!-------------------------------------------modal body end------------------------------------------------------->

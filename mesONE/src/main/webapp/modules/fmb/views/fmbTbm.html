@@ -1,0 +1,91 @@
+<!-- 
+/**  
+ * @Class Name : fmbTbm.html
+ * @Description : fmbTbm
+ * @Modification Information  
+ * @
+
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.06.16	 정유경
+ * 
+
+ * css: assets/css/fmb.css
+ * controller : fmbTmbCtrl.js
+ *
+ */
+ -->
+<!-- ngview 내부 페이지 -->
+<div class='bc-screen'>
+	]
+	<!-- ngview 내부 header -->
+	<bc-form-header title="TBM">	 </bc-form-header>
+
+
+	<!-- ngview 내부 body -->
+	<bc-form-body>
+	<table class="bc-table tbm-table">
+		<tr>
+			<td>구분</td>
+			<td>A동</td>
+			<td>B동</td>
+			<td>C동</td>
+			<td>기타</td>
+			<td>합계</td>
+		</tr>
+		<tr>
+			<td>금일 점검예정</td>
+			<td>{{vm.Tbm[0].factA}}</td>
+			<td>{{vm.Tbm[0].factB}}</td>
+			<td>{{vm.Tbm[0].factC}}</td>
+			<td>{{vm.Tbm[0].factX}}</td>
+			<td>{{vm.Tbm[0].total}}</td>
+		</tr>
+		<tr>
+			<td>점검 진행중</td>
+			<td>{{vm.Tbm[1].factA}}</td>
+			<td>{{vm.Tbm[1].factB}}</td>
+			<td>{{vm.Tbm[1].factC}}</td>
+			<td>{{vm.Tbm[1].factX}}</td>
+			<td>{{vm.Tbm[1].total}}</td>
+		</tr>
+		<tr>
+			<td>금일 점검완료</td>
+			<td>{{vm.Tbm[2].factA}}</td>
+			<td>{{vm.Tbm[2].factB}}</td>
+			<td>{{vm.Tbm[2].factC}}</td>
+			<td>{{vm.Tbm[2].factX}}</td>
+			<td>{{vm.Tbm[2].total}}</td>
+		</tr>
+
+		<tr>
+			<td>금주 점검예정</td>
+			<td>{{vm.Tbm[3].factA}}</td>
+			<td>{{vm.Tbm[3].factB}}</td>
+			<td>{{vm.Tbm[3].factC}}</td>
+			<td>{{vm.Tbm[3].factX}}</td>
+			<td>{{vm.Tbm[3].total}}</td>
+		</tr>
+		<tr>
+			<td>금주 점검완료</td>
+			<td>{{vm.Tbm[4].factA}}</td>
+			<td>{{vm.Tbm[4].factB}}</td>
+			<td>{{vm.Tbm[4].factC}}</td>
+			<td>{{vm.Tbm[4].factX}}</td>
+			<td>{{vm.Tbm[4].total}}</td>
+		</tr>
+	</table>
+	</bc-form-body>
+
+
+	<!-- ngview 내부 footer -->
+	<bc-form-footer> <!--알람정보 하단 바 시작-->
+<!-- 	<div class="alarm_data">
+		<marquee>
+			<ul id="banner" class="simply-scroll-list">
+				<li ng-repeat="alarm in vm.alarmList">{{alarm.plcId}} 알람발생
+					{{alarm.stsDttm}}</li>
+			</ul>
+		</marquee>
+	</div> -->
+	</bc-form-footer>
+</div>

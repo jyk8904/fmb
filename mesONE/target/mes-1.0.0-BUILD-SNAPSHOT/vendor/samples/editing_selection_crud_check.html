@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<style type="text/css">
+
+/* 커스텀 칼럼 스타일 정의 */
+.aui-grid-user-custom-left {
+	text-align:left;
+}
+.aui-grid-user-custom-right {
+	text-align:right;
+}
+
+</style>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/country_phone_8.json");
+
+};
+
+// AUIGrid 칼럼 설정
+// 데이터 형태는 다음과 같은 형태임,
+//[{"id":"#Cust0","date":"2014-09-03","name":"Han","country":"USA","product":"Apple","color":"Red","price":746400}, { .....} ];
+var columnLayout = [ {
+		dataField : "name",
+		headerText : "Name",
+		width : 120,
+		style : "aui-grid-user-custom-left",
+		renderer : {
+			type : "IconRenderer",
+			iconWidth : 20, // icon 가로 사이즈, 지정하지 않으면 24로 기본값 적용됨
+			iconHeight : 20,
+			iconTableRef :  { // icon 값 참조할 테이블 레퍼런스
+				"default" : "./assets/office_man.png" // default
+			}
+		}
+	}, {
+		dataField : "country",
+		headerText : "Country",
+		width: 100,
+		style :"aui-grid-user-custom-left",
+		renderer : {
+			type : "IconRenderer",
+			iconWidth : 20, // icon 가로 사이즈, 지정하지 않으면 24로 기본값 적용됨
+			iconHeight : 16,
+			iconTableRef :  { // icon 값 참조할 테이블 레퍼런스
+				"Korea" : "./assets/korea.png",
+				"USA" : "./assets/usa.png",
+				"UK" : "./assets/uk.png",
+				"Japan" : "./assets/japan.png", 
+				"China" : "./assets/china.png",
+				"France" : "./assets/france.png",
+				"Italy" : "./assets/italy.png",
+				"Singapore" : "./assets/singapore.png",
+				"Taiwan" : "./assets/taiwan.png",
+				"Ireland" : "./assets/ireland.png",
+				"default" : "./assets/korea.png" // default
+			}
+		}
+	}, {
+		dataField : "color",
+		headerText : "Color",
+		width : 100,
+		renderer : {
+			type : "IconRenderer",
+			iconWidth : 20, // icon 가로 사이즈, 지정하지 않으면 24로 기본값 적용됨
+			iconHeight : 20,
+			iconTableRef :  { // icon 값 참조할 테이블 레퍼런스
+				"Blue" : "./assets/blue_circle.png",
+				"Gray" : "./assets/gray_circle.png",
+				"Green" : "./assets/green_circle.png",
+				"Orange" : "./assets/orange2_circle.png",
+				"Pink" : "./assets/pink_circle.png",
+				"Violet" : "./assets/violet_circle.png",
+				"Yellow" : "./assets/yellow_circle.png",
+				"Red" : "./assets/orange_circle.png",
+				"default" : "./assets/glider.png" //default
+			}
+		}
+	}, {
+		dataField : "product",
+		headerText : "Product",
+		width: 100
+	}, {
+		dataField : "price",
+		headerText : "Price",
+		dataType : "numeric",
+		postfix : "원",
+		width: 100,
+		style : "aui-grid-user-custom-right"
+	}, {
+		dataField : "date",
+		headerText : "Date"
+	}
+];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+			
+			rowIdField : "id",
+			
+			editable : true,
+			
+			selectionMode : "singleRow",
+			
+			//triggerSelectionChangeOnCell : true,
+			
+			showFooter : true,
+			
+			showStateColumn : true,
+			
+			// 칼럼 끝에서 오른쪽 이동 시 다음 행, 처음 칼럼으로 이동할지 여부
+			wrapSelectionMove : true,
+			
+			// 사용자가 추가한 새행은 softRemoveRowMode 적용 안함. 
+			// 즉, 바로 삭제함.
+			softRemovePolicy : "exceptNew"
+	};
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 셀렉션 변경 이벤트 바인딩
+	AUIGrid.bind(myGridID, "selectionChange", function(e) {
+		var selectedItems = e.selectedItems;
+		if(selectedItems.length > 0) {
+			var firstItemInfo = selectedItems[0];
+			
+			if(oldSelectedItemInfo && !isSeletionForceFlag) {
+						
+				// 이전 셀렉션 정보
+				var state = getItemState(oldSelectedItemInfo.item);
+				
+				if(state == "Added" || state == "Edited") {
+					if(!confirm('현재 행은 추가 또는 수정된 행입니다. 새로운 행으로 이동하시겠습니까?')){
+						isSeletionForceFlag = true;
+						AUIGrid.setSelectionByIndex(myGridID, oldSelectedItemInfo.rowIndex, oldSelectedItemInfo.columnIndex);
+						isSeletionForceFlag = false;
+						checkSelection();
+						return;
+					}
+				}
+			}
+			// 최근 선택 정보 보관.
+			oldSelectedItemInfo = firstItemInfo;
+		}
+		checkSelection();
+	});
+	
+	AUIGrid.bind(myGridID, "addRow", function(e) {
+		checkSelection();
+	});
+	
+	AUIGrid.bind(myGridID, "removeRow", function(e) {
+		checkSelection();
+	});
+	
+};
+
+var oldSelectedItemInfo = null;
+var isSeletionForceFlag = false;
+
+function checkSelection() {
+	var selectedItems = AUIGrid.getSelectedItems(myGridID);
+	if(selectedItems.length <= 0)
+		return;
+	
+	var firstItem = selectedItems[0];
+	
+	// 행 상태 체크하기
+	var state = getItemState(firstItem.item);
+	
+	// 하단에 행인덱스, 헤더 텍스트, 수정 가능여부 출력함.
+	document.getElementById("selectionDesc").innerHTML = "현재 행 Index : " + firstItem.rowIndex 
+	+ ",  editable : " 	+ firstItem.editable 
+	+ ", 행 고유값(PK) : " + firstItem.rowIdValue 
+	+ ", 행 상태 : " + state;
+}
+
+
+var countries = ["Korea", "USA",  "UK", "Japan", "China", "France", "Italy", "Singapore", "Ireland", "Taiwan"];
+var cnt = 0;
+function addRow() {
+	var item = new Object();
+	
+	// rowIdField 로 지정한 id 는 그리드가 row 추가 시 자동으로 중복되지 않게 생성합니다.
+	// DB 에서 Insert 시 실제 PK 값 결정하십시오.
+	
+	item.name = $("#t_name").val();
+	item.country = $("#t_country").val();
+	item.color = $("#t_color").val();
+	item.product = $("#t_product").val();
+	item.price = $("#t_price").val();
+	item.date = $("#t_date").val();
+
+	// parameter
+	// item : 삽입하고자 하는 아이템 Object
+	// rowPos : rowIndex 인 경우 해당 index 에 삽입, first : 최상단, last : 최하단, selectionUp : 선택된 곳 위, selectionDown : 선택된 곳 아래
+	AUIGrid.addRow(myGridID, item, "last");
+	
+	 $("#t_name").val("AUI-" + (++cnt));
+	 $("#t_country").val(countries[cnt % countries.length ]);
+}
+
+function removeRow(rowPos) {
+	AUIGrid.removeRow(myGridID, rowPos);
+}
+
+// 아이템 상태 반환
+function getItemState(curItem) {
+	
+	var rowIdField = AUIGrid.getProp(myGridID, "rowIdField");
+	var rowIdValue = curItem[rowIdField];
+	
+	// 추가된 행인지 여부 검사.
+	var isAdded = AUIGrid.isAddedById(myGridID, rowIdValue );
+	if(isAdded) return "Added";
+	
+	// 수정된 행인지 여부 검사
+	var isEdited = AUIGrid.isEditedById(myGridID, rowIdValue );
+	if(isEdited) return "Edited";
+	
+	// 삭제된 행인지 여부 검사
+	var isRemoved = AUIGrid.isRemovedById(myGridID, rowIdValue );
+	if(isRemoved) return "Removed";
+	
+	return "Normal";
+}
+
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<ul class="nav_u">
+			<li><span onclick="addRow('last')" class="btn">최하단에 행추가</span></li>
+			<li><span onclick="removeRow('selectedIndex')" class="btn">선택 행 삭제</span></li>
+		</ul>
+		<p><label>Name : </label><input type="text" id="t_name" value="AUI" style="width:80px;">
+		<label>Country : </label><input type="text" id="t_country" value="Korea" style="width:60px;">
+		<label>Color : </label><input type="text" id="t_color" value="Blue" style="width:50px;">
+		<label>Product : </label><input type="text" id="t_product" value="IPhone 5S" style="width:80px;">
+		<label>Price : </label><input type="text" id="t_price" value="500000" style="width:80px;">
+		<label>Date : </label><input type="text" id="t_date" value="2014-09-10" style="width:80px;">
+		</p>
+		<p>■ 추가 아이템 : 기존 데이터가 아닌 새로 사용자에 의해 추가된 아이템을 말합니다.</p>
+		<p>■ 수정 아이템 : 기존 데이터를 수정한 경우를 말합니다. 추가된 아이템을 수정한 경우 기본적으로 수정 아이템이 아닌 추가 아이템으로 등록됩니다. 
+		즉, 추가된 아이템은 DB에 없는 데이터였으므로 update 의미가 없습니다.(추가 후 수정했더라도 추가 아이템임)</p>
+		<p>■ 삭제 아이템 : 기존 데이터를 삭제한 경우를 말합니다. 추가된 아이템을 삭제한 경우 추가 아이템, 삭제 아이템에 등록되지 않습니다.(추가 후 삭제는 DB 까지 갈 필요 없음. insert, delete 의 의미가 없음.)
+		만약, 사용자가 추가한 행을 다시 삭제한 아이템 까지 얻고자 한다면 AUIGrid.getRemovedItems(myGridID, true); 를 사용하십시오.</p>
+		
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:400px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="selectionDesc"></p>
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/java/com/dsinfo/bcf/service/MBcfBizService.java=UTF-8
+encoding//src/main/java/com/dsinfo/bcf/service/impl/MBcfAbsServiceImpl.java=UTF-8
+encoding//src/main/java/com/dsinfo/bcf/service/impl/MBcfBizServiceImpl.java=UTF-8
+encoding//src/main/java/com/dsinfo/bcf/service/impl/MBcfTransactionManager.java=UTF-8
+encoding//src/main/resources=UTF-8
+encoding//src/main/webapp/modules/fmb/views/fmb001.html=UTF-8
+encoding//src/main/webapp/modules/fmb/views/fmb002.html=UTF-8
+encoding//src/main/webapp/modules/fmb/views/fmb003.html=UTF-8
+encoding//src/main/webapp/modules/fmb/views/fmb004.html=UTF-8
+encoding//src/main/webapp/modules/fmb/views/fmb005.html=UTF-8
+encoding//src/main/webapp/modules/fmb/views/fmbPopup.html=UTF-8
+encoding//src/test/java=UTF-8
+encoding//src/test/resources=UTF-8
+encoding/<project>=UTF-8

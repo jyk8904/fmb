@@ -1,0 +1,189 @@
+<!-- 
+/**  
+ * @Class Name : fmbLine.html
+ * @Description : fmbLine
+ * @Modification Information  
+ * @
+
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.06.16	 정유경
+ * 
+
+ * css: assets/css/fmb.css
+ * controller : fmbLineCtrl.js
+ *
+ */
+ -->
+<!-- ngview 내부 페이지 -->
+<div class='bc-screen'>
+	
+	<!-- ngview 내부 header -->
+	<bc-form-header title="Line별 생산실적">
+	</bc-form-header>
+
+	<!-- ngview 내부 body -->
+	<bc-form-body> 
+	<!-- 	<table class="bc-table">
+		<tr>
+			<td colspan="2">구분</td>
+			<td ng-repeat="line in vm.lineList">{{line.lineNm}}</td>
+		<tr>
+		<tr>
+			<td colspan="2">목표</td>
+			<td ng-repeat="line in vm.lineList">{{line.dgoal + line.ngoal}}
+			</td>
+		</tr>
+		<tr>
+
+			<td rowspan="3">실적</td>
+			<td>주간</td>
+			<td ng-repeat="line in vm.lineList">{{line.drate}}</td>
+		</tr>
+		<tr>
+			<td>야간</td>
+			<td ng-repeat="line in vm.lineList">{{line.nrate}}</td>
+		</tr>
+		<tr>
+			<td>합계</td>
+			<td ng-repeat="line in vm.lineList">{{line.drate + line.nrate}}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">달성률(%)
+			<td ng-repeat="line in vm.lineList">{{line.drate + line.nrate}}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">가동상태
+			<td ng-repeat="line in vm.lineList">{{line.eqptSts}}</td>
+		</tr>
+	</table>
+
+ -->
+<div class="wrap">
+ 	<div class="title">
+			<table class="line-table bc-table" ng-repeat="line in vm.lineList" ng-show="$index%7==0">
+				<tr>
+					<td colspan="2">구분</td>
+				</tr>
+				<tr>
+					<td colspan="2">목표</td>
+				</tr>
+				<tr>
+					<td rowspan="3">실적</td>
+					<td>주간</td>
+				</tr>
+				<tr>
+					<td>야간</td>
+				</tr>
+				<tr>
+					<td>합계</td>
+				</tr>
+				<tr>
+					<td colspan="2">달성률(%)</td>
+				</tr>
+				<tr>
+					<td colspan="2">가동상태</td>
+				</tr>
+			</table>
+		</div>
+		
+		
+		<div class="colList">
+			<div class="col" ng-repeat="line in vm.lineList">
+				<table class="line-table bc-table">
+					<tr>
+						<td>{{line.lineNm}}</td>
+					</tr>
+					<tr>
+						<td>{{line.dgoal + line.ngoal}}</td>
+					</tr>
+					<tr>
+						<td>{{line.drate}}</td>
+					</tr>
+					<tr>
+						<td>{{line.nrate}}</td>
+					</tr>
+					<tr>
+						<td>{{line.drate+line.nrate}}</td>
+					</tr>
+					<tr>
+						<td>{{line.drate+line.nrate}}</td>
+					</tr>
+					<tr>
+						<td>{{line.eqptSts}}</td>
+					</tr>
+				</table>
+			</div> 
+		</div>
+		</div>
+
+
+	</bc-form-body>
+
+
+	<!-- ngview 내부 footer -->
+	<bc-form-footer> <!--알람정보 하단 바 시작-->
+	<div class="alarm_data">
+		<marquee>
+			<ul id="banner" class="simply-scroll-list">
+				<li ng-repeat="alarm in vm.alarmList">{{alarm.plcId}} 알람발생
+					{{alarm.stsDttm}}</li>
+			</ul>
+		</marquee>
+	</div>
+	</bc-form-footer>
+</div>
+
+
+<!------------------------------------------ modal body start------------------------------------------------------->
+<modal title="설비 정보" visible="vm.showModal">
+<form role="form">
+
+	<ul>
+		<li ng-repeat="plc in vm.plc">
+			<div class="form-group">
+				<label for="stsImg0"></label>
+			</div>
+			<div class="form-group">
+				<label for="plcId">PlcID </label>
+				<h5>{{plc.plcId}}</h5>
+			</div>
+			<div class="form-group">
+
+				<label for="eqptCd">설비코드 </label>
+				<h5>{{plc.eqptCd}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="eqptNm">설비명</label>
+				<h5>{{plc.eqptNm}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="factId">공장ID</label>
+				<h5>{{plc.factId}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="lineNm">라인명 </label>
+				<h5>{{plc.lineNm}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="item_Cd">제품코드 </label>
+				<h5>{{plc.item_Cd}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="eqptSts">설비상태 </label>
+				<h5>{{plc.eqptSts}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="stsDttm">설비 </label>
+				<h5>{{plc.stsDttm}}</h5>
+			</div>
+
+		</li>
+	</ul>
+	<button type="button" class="btn btn-default" data-dismiss="modal"
+		aria-hidden="true">close</button>
+</form>
+</modal>
+
+<!-------------------------------------------modal body end------------------------------------------------------->

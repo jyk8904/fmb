@@ -1,0 +1,140 @@
+<!-- 
+/**  
+ * @Class Name : fmb006.html
+ * @Description : fmb006
+ * @Modification Information  
+ * @
+
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.05	 정유경
+ * 
+
+ * css: assets/css/fmb.css
+ * controller : fmbTotalCtrl.js
+ *
+ */
+ -->
+<!-- ngview 내부 페이지 -->
+<div class='bc-screen'>
+
+	<!-- ngview 내부 header -->
+	<bc-form-header title="종합현황"></bc-form-header>
+
+
+	<!-- ngview 내부 body -->
+	<bc-form-body>
+
+	<div class="stsBoard">
+		<div class="stsTitle">계획진도율</div>
+		<div class="stsBody">
+			<div id="chart" dx-chart="vm.planProgress"></div>
+		</div>
+
+	</div>
+
+	<div class="stsBoard">
+		<div class="stsTitle">공정불량현황</div>
+	</div>
+
+	<div class="stsBoard">
+		<div class="stsTitle">라인가동현황</div>
+		<div class="stsBody">
+			<div dx-circular-gauge="vm.gaugeRunRate"></div>
+			<div dx-data-grid="vm.gaugeRunInfoList"></div>
+		</div>
+		
+	</div>
+	
+	<div class="stsBoard">
+		<div class="stsTitle">알람발생추이</div>
+		<div class="stsBody">
+			<div dx-chart="vm.alarmDateRunInfo"></div>
+			<div dx-data-grid="vm.alarmRankRunInfoList"></div>
+		</div>
+	</div>
+	
+	
+	<div class="stsBoard">
+		<div class="stsTitle">대기 발생추이</div>
+		<div class="stsBody">
+			<div dx-chart="vm.standbyDateRunInfo"></div>
+			<div dx-data-grid="vm.standbyRankRunInfoList"></div>
+		</div>
+	</div>
+	
+	<div class="stsBoard">
+		<div class="stsTitle">비가동 발생추이</div>
+		<div class="stsBody">
+			<div dx-chart="vm.noRunDateRunInfo"></div>
+			<div dx-data-grid="vm.noRunRankRunInfoList"></div>
+		</div>
+	</div>
+	</bc-form-body>
+
+
+	<!-- ngview 내부 footer -->
+	<bc-form-footer> <!--알람정보 하단 바 시작-->
+	<div class="alarm_data">
+		<marquee>
+			<ul id="banner" class="simply-scroll-list">
+				<li ng-repeat="alarm in vm.alarmList">{{alarm.plcId}} 알람발생
+					{{alarm.stsDttm}}</li>
+			</ul>
+		</marquee>
+	</div>
+	</bc-form-footer>
+</div>
+
+
+<!------------------------------------------ modal body start------------------------------------------------------->
+<modal title="설비 정보" visible="vm.showModal">
+<form role="form">
+
+	<ul>
+		<li ng-repeat="plc in vm.plc">
+			<div class="form-group">
+				<label for="stsImg0"></label>
+			</div>
+			<div class="form-group">
+				<label for="plcId">PlcID </label>
+				<h5>{{plc.plcId}}</h5>
+			</div>
+			<div class="form-group">
+
+				<label for="eqptCd">설비코드 </label>
+				<h5>{{plc.eqptCd}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="eqptNm">설비명</label>
+				<h5>{{plc.eqptNm}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="factId">공장ID</label>
+				<h5>{{plc.factId}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="lineNm">라인명 </label>
+				<h5>{{plc.lineNm}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="item_Cd">제품코드 </label>
+				<h5>{{plc.item_Cd}}</h5>
+
+			</div>
+			<div class="form-group">
+				<label for="eqptSts">설비상태 </label>
+				<h5>{{plc.eqptSts}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="stsDttm">설비 </label>
+				<h5>{{plc.stsDttm}}</h5>
+			</div>
+
+		</li>
+	</ul>
+	<button type="button" class="btn btn-default" data-dismiss="modal"
+		aria-hidden="true">close</button>
+</form>
+</modal>
+
+<!-------------------------------------------modal body end------------------------------------------------------->

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+
+/* 커스텀 칼럼 스타일 정의 */
+.aui-grid-user-custom-left {
+	text-align:left;
+}
+.aui-grid-user-custom-right {
+	text-align:right;
+}
+/* 커스텀 summary total  스타일 */
+.aui-grid-my-footer-sum-total {
+	font-weight:bold;
+	text-align:right;
+	color:#4374D9;
+}
+.aui-grid-my-footer-sum-total2 {
+	text-align:right;
+}
+</style>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/normal_100.json");
+
+};
+
+// AUIGrid 칼럼 설정
+// 데이터 형태는 다음과 같은 형태임,
+//[{"id":"#Cust0","date":"2014-09-03","name":"Han","country":"USA","product":"Apple","color":"Red","price":746400}, { .....} ];
+var columnLayout = [ {
+		dataField : "name",
+		headerText : "Name",
+		width : 120,
+		style : "aui-grid-user-custom-left",
+		renderer : {
+			type : "IconRenderer",
+			iconWidth : 20, // icon 가로 사이즈, 지정하지 않으면 24로 기본값 적용됨
+			iconHeight : 20,
+			iconTableRef :  { // icon 값 참조할 테이블 레퍼런스
+				"default" : "./assets/office_man.png" // default
+			}
+		}
+	}, {
+		dataField : "country",
+		headerText : "Country",
+		width: 100
+	}, {
+		dataField : "product",
+		headerText : "Product",
+		width: 140
+	}, {
+		dataField : "color",
+		headerText : "Color",
+		width : 120
+	}, {
+		dataField : "price",
+		headerText : "Price",
+		dataType : "numeric",
+		style : "aui-grid-user-custom-right"
+	}, {
+		dataField : "date",
+		headerText : "Date"
+	}
+];
+
+// 푸터 설정
+var footerObject = [ {
+	labelText : "SUM",
+	positionField : "#base"
+}, {
+	dataField : "price",
+	positionField : "price",
+	operation : "SUM",
+	formatString : "#,##0",
+	style : "aui-grid-my-footer-sum-total"
+}, {
+	dataField : "price",
+	positionField : "date",
+	operation : "COUNT",
+	style : "aui-grid-my-footer-sum-total2"
+}, {
+	labelText : "Count=>",
+	positionField : "phone",
+	style : "aui-grid-my-footer-sum-total2"
+}];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+			
+			rowIdField : "id",
+			
+			editable : true,
+			
+			selectionMode : "multipleRows",
+			
+			showFooter : true,
+			
+			showStateColumn : true,
+			
+			// 칼럼 끝에서 오른쪽 이동 시 다음 행, 처음 칼럼으로 이동할지 여부
+			wrapSelectionMove : true,
+			
+			// 사용자가 추가한 새행은 softRemoveRowMode 적용 안함. 
+			// 즉, 바로 삭제함.
+			softRemovePolicy : "exceptNew"
+	};
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 푸터 객체 세팅
+	AUIGrid.setFooter(myGridID, footerObject);
+	
+	
+	// 에디팅 시작 이벤트 바인딩
+	AUIGrid.bind(myGridID, "cellEditBegin", auiCellEditingHandler);
+
+	// 에디팅 정상 종료 이벤트 바인딩
+	AUIGrid.bind(myGridID, "cellEditEnd", auiCellEditingHandler);
+	
+	// 에디팅 취소 이벤트 바인딩
+	AUIGrid.bind(myGridID, "cellEditCancel", auiCellEditingHandler);
+	
+	// 행 추가 이벤트 바인딩 
+	AUIGrid.bind(myGridID, "addRow", auiAddRowHandler);
+	
+	// 행 삭제 이벤트 바인딩 
+	AUIGrid.bind(myGridID, "removeRow", auiRemoveRowHandler);
+	
+	
+	// 삭제 전 확인을 하고자 한다면 주석 제거 하세요.
+	// 행 삭제 전 이벤트 바인딩 
+	/*AUIGrid.bind(myGridID, "beforeRemoveRow", function(event) {
+		var message = "삭제 확인\r" + event.type + " 이벤트 ( softRemoveRowMode : " + event.softRemoveRowMode + ")\r\n";
+		message += "삭제할 개수 : " + event.items.length;
+		
+		var retVal = confirm(message);
+		
+		return retVal;
+	});*/
+	
+}
+
+function auiCellEditingHandler(event) {
+	if(event.type == "cellEditBegin") {
+		document.getElementById("editBeginDesc").innerHTML = "에디팅 시작(cellEditBegin) : ( " + event.rowIndex + ", " + event.columnIndex + " ) " + event.headerText + ", value : " + event.value;
+	} else if(event.type == "cellEditEnd") {
+		document.getElementById("editBeginEnd").innerHTML = "에디팅 종료(cellEditEnd) : ( " + event.rowIndex + ", " + event.columnIndex + " ) " + event.headerText + ", value : " + event.value;
+	} else if(event.type == "cellEditCancel") {
+		document.getElementById("editBeginEnd").innerHTML = "에디팅 취소(cellEditCancel) : ( " + event.rowIndex + ", " + event.columnIndex + " ) " + event.headerText + ", value : " + event.value;
+	}
+};
+
+// 행 추가 이벤트 핸들러
+function auiAddRowHandler(event) {
+	//alert(event.type + " 이벤트\r\n" + "삽입된 행 인덱스 : " + event.rowIndex + "\r\n삽입된 행 개수 : " + event.items.length);
+	document.getElementById("rowInfo").innerHTML = (event.type + " 이벤트 :  " + "삽입된 행 인덱스 : " + event.rowIndex + ", 삽입된 행 개수 : " + event.items.length);
+}
+
+// 행 삭제 이벤트 핸들러
+function auiRemoveRowHandler(event) {
+	document.getElementById("rowInfo").innerHTML = (event.type + " 이벤트 :  " + ", 삭제된 행 개수 : " + event.items.length + ", softRemoveRowMode : " + event.softRemoveRowMode);
+}
+
+var countries = ["Korea", "USA",  "UK", "Japan", "China", "France", "Italy", "Singapore", "Ireland", "Taiwan"];
+var products = new Array("IPhone 5S", "Galaxy S5", "IPad Air", "Galaxy Note3", "LG G3", "Nexus 10");
+var colors = new Array("Blue", "Gray", "Green", "Orange", "Pink", "Violet", "Yellow", "Red");
+
+var cnt = 0;
+
+// 행 추가, 삽입
+function addRow() {
+	
+	var rowPos = document.getElementById("addSelect").value;
+	
+	var item = new Object();
+	item.name = "AUI-" + (++cnt),
+	item.country = countries[cnt % countries.length],
+	item.color = colors[cnt % colors.length],
+	item.product = products[cnt % products.length],
+	item.price = Math.floor(Math.random() * 1000000),
+	item.date = "2015/03/05"
+
+	// parameter
+	// item : 삽입하고자 하는 아이템 Object 또는 배열(배열인 경우 다수가 삽입됨)
+	// rowPos : rowIndex 인 경우 해당 index 에 삽입, first : 최상단, last : 최하단, selectionUp : 선택된 곳 위, selectionDown : 선택된 곳 아래
+	AUIGrid.addRow(myGridID, item, rowPos);
+}
+
+// 다수의 행 추가, 삽입
+function addRowMultiple() {
+	
+	var rowPos = document.getElementById("multipleAddSelect").value;
+	
+	var item;
+	var rowList = [];
+	var rowCnt = Math.floor(Math.random() * 10); // 랜덤 개수
+	rowCnt = Math.max(2, rowCnt);
+	
+	// 추가시킬 행 10개 작성
+	for(var i=0; i<rowCnt; i++) { 
+		rowList[i] = {
+			name : "AUI-" + (++cnt),
+			country : countries[i],
+			color : colors[cnt % colors.length],
+			product : products[cnt % products.length],
+			price : Math.floor(Math.random() * 1000000),
+			date : "2015/03/05"
+		}
+	}
+
+	// parameter
+	// item : 삽입하고자 하는 아이템 Object 또는 배열(배열인 경우 다수가 삽입됨)
+	// rowPos : rowIndex 인 경우 해당 index 에 삽입, first : 최상단, last : 최하단, selectionUp : 선택된 곳 위, selectionDown : 선택된 곳 아래
+	AUIGrid.addRow(myGridID, rowList, rowPos);
+}
+
+// 행 삭제
+function removeRow() {
+	
+	var rowPos = document.getElementById("removeSelect").value;
+		
+	AUIGrid.removeRow(myGridID, rowPos);
+}
+
+// 삭제해서 마크 된(줄이 그어진) 행을 복원 합니다.(삭제 취소)
+function restoreSoftRows() {
+	
+	var flag = document.getElementById("cacnelSelect").value;
+	
+	if(flag == "all") {
+		// 전체 삭제 취소
+		AUIGrid.restoreSoftRows(myGridID, "all");
+	} else {
+		// 선택 행 삭제 취소(선택 행이 삭제 됐다면...)
+		AUIGrid.restoreSoftRows(myGridID, "selectedIndex");
+	}
+	
+}
+
+
+function resetUpdatedItems() {
+	
+	// 모두 초기화.
+	AUIGrid.resetUpdatedItems(myGridID, "a");
+}
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<ul class="nav_u">
+			<li>■ 단일 행 추가 : </li>
+			<li><select id="addSelect">
+				<option value="first" selected="selected">최상단에 행추가</option>
+				<option value="selectionUp">선택 행 위에 추가</option>
+				<option value="selectionDown">선택 행 아래에 추가</option>
+				<option value="5">rowIndex 5에 추가</option>
+				<option value="last">최하단에 행추가</option>
+			</select></li>
+			<li><input type="button" class="btn" onclick="addRow()" value="추가하기"></li>
+		</ul>
+		
+		<ul class="nav_u">
+			<li>■ 다수의 행 추가 : </li>
+			<li><select id="multipleAddSelect">
+				<option value="first" selected="selected">다수의 행 최상단에에 삽입</option>
+				<option value="last">다수의 행 최하단 추가</option>
+			</select>	</li>
+			<li><input type="button" class="btn" onclick="addRowMultiple()" value="추가하기"></li>
+		</ul>
+		
+		<ul class="nav_u">
+			<li>■ 행 삭제 : </li>
+			<li><select id="removeSelect">
+				<option value="selectedIndex" selected="selected">선택 행(들) 삭제</option>
+				<option value="5">rowIndex 5 삭제</option>
+			</select></li>
+			<li><input type="button" class="btn" onclick="removeRow()" value="삭제하기"></li>
+			
+			<li><select id="cacnelSelect">
+				<option value="selectedIndex" selected="selected">선택행 삭제 아이템 복원(삭제 취소)</option>
+				<option value="all">전체 삭제 아이템들 복원</option>
+			</select></li>
+			<li><input type="button" class="btn" onclick="restoreSoftRows()" value="복원하기"></li>
+		</ul>
+		
+		<p><span onclick="resetUpdatedItems()" class="btn">그리드 추가, 수정, 삭제 상태 정보 초기화</span></p>
+		
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:480px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="rowInfo"></p>
+		<p id="editBeginDesc"></p>
+		<p id="editBeginEnd"></p>
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

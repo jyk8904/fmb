@@ -1,0 +1,47 @@
+<!-- 
+/**  
+ * @Class Name : fmb002.html
+ * @Description : fmb001 
+ * @Modification Information  
+ * @
+ * @ ������       ���깆��      �댁��
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.05.26  kb.shin    理�珥�����
+ * @ 
+ * 
+ * @author kb.shin
+ * @since 2017.01.01
+ * @version 1.0
+ * @see
+ * 
+ */
+ -->
+ 
+<h1>fmb004 AUIGrid Test</h1> 
+<div class='bc-screen'>
+ 
+   <!-- 타이틀 및 버튼 -->
+   	<div class='bc-form'>
+	<bc-form-header>
+	   <bc-header-label title="AUI 그리드 test"></bc-header-label>
+	   <bc-header-buttons>
+		   <bc-button ng-click='vm.btnSelectClick()' icon='fa fa-search fa-fw'	title='조회'></bc-button>
+		</bc-header-buttons>   
+	</bc-form-header>
+	
+	<!--
+	     검색조건  =>  1줄: 34px, 2줄: 68px 
+	 --> 
+ 	 
+	<bc-form-search  height='1'>
+			<bc-input class='col-sm-6' labeltext='PLC ID' ng-model='vm.vo.plcId'></bc-input>
+			<bc-input class='col-sm-6' labeltext='공장 ID' ng-model='vm.vo.factId'></bc-input> 
+			
+	</bc-form-search>
+
+	<!-- 그리드 -->
+	<div id="grid" class="auiGrid"></div>
+	
+	
+
+</div>

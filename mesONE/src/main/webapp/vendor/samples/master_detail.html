@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="pragma" content="no-cache"/>
+<meta http-equiv="cache-control" content="no-cache"/>
+<meta http-equiv="Content-Script-Type" content="text/javascript"/>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+<meta name="title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid"/>
+<meta name="url" content="http://www.auisoft.net/">
+<meta name="description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft"/>
+<title>AUIGrid 자바스크립트 데이터그리드(Javascript DataGrid  AUIGrid)</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// Details 그리드 생성 후 반환ID
+var myGridID2;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid();
+	
+	// Details 그리드를 생성합니다.
+	createDetailAUIGrid();
+	
+	// 마스터 그리드 데이터 요청
+	requestMyData("./data/getMaster.json", myGridID);
+
+};
+
+// Master 그리드 를 생성합니다.
+function createAUIGrid() {
+	
+	// AUIGrid 칼럼 설정
+	var columnLayout = [ {
+			dataField : "custId",
+			headerText : "고객 ID",
+			width : 140
+		}, {
+			dataField : "custName",
+			headerText : "고객명",
+			width : 180
+	
+		}, {
+			dataField : "phone",
+			headerText : "전화번호",
+			width: 180
+		}, {
+			dataField : "email",
+			headerText : "E-MAIL"
+		}
+	];
+	
+	// 그리드 속성 설정
+	var gridPros = {
+			
+		// singleRow 선택모드
+		selectionMode : "singleRow",
+		
+		rowIdField : "custId",
+
+		showRowCheckColumn : false,
+		
+		showRowNumColumn : false
+	};
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, gridPros);
+	
+	// 그리드 ready 이벤트 바인딩
+	AUIGrid.bind(myGridID, "ready", auiGridCompleteHandler);
+	
+	// 선택 변경 이벤트 바인딩
+	AUIGrid.bind(myGridID, "selectionChange", auiGridSelectionChangeHandler);
+}
+
+// Details 그리드 생성
+function createDetailAUIGrid() {
+	
+	// AUIGrid 칼럼 설정
+	var columnLayout = [ {
+			dataField : "custId",
+			headerText : "고객 ID",
+			width : 160
+		}, {
+			dataField : "orderId",
+			headerText : "주문번호",
+			width : 160
+		}, {
+			dataField : "product",
+			headerText : "제품명",
+			width: 180
+		}, {
+			dataField : "quantity",
+			headerText : "수량",
+			width:80
+		}, {
+			dataField : "date",
+			headerText : "주문날짜"
+		}
+	];
+	
+	// 그리드 속성 설정
+	var gridPros = {
+		showRowCheckColumn : false,
+	};
+
+	// 실제로 #detail_grid_wrap 에 그리드 생성
+	myGridID2 = AUIGrid.create("#detail_grid_wrap", columnLayout, gridPros);
+}
+
+// 그리드 ready 이벤트 핸들러
+function auiGridCompleteHandler(event) {
+	
+	// 마스터 그리드가 로딩 완료된 시점에 고객 ID 가 cust0 인 곳에 셀렉션 지정
+	AUIGrid.selectRowsByRowId(myGridID, "cust3");
+	
+	document.getElementById("detail_info").innerHTML = "고객 ID : cust3 Details";
+	
+	// 고객 ID cust3 으로 초기 디테일 그리드 작성 
+	requestMyData("./data/getDetails.json", myGridID2);
+}
+
+// Details 데이터 요청 지연 타임아웃
+var timerId = null;
+
+// 마스터 그리드선택 변경 이벤트 핸들러
+// 마스터 그리드에서 행을 선택한 경우 해당 행의 고객 ID(custId) 에 맞는
+// 데이터를 요청하여 디테일 그리드에 표시합니다.
+function auiGridSelectionChangeHandler(event) { 
+
+	// 200ms 보다 빠르게 그리드 선택자가 변경된다면 데이터 요청 안함
+	if(timerId) {
+		clearTimeout(timerId);
+	}
+	
+	timerId = setTimeout(function() {
+		var selectedItems = event.selectedItems;
+		if(selectedItems.length <= 0)
+			return;
+		
+		var rowItem = selectedItems[0].item; // 행 아이템들
+	
+		var custId = rowItem.custId; // 선택한 행의 고객 ID 값...custId 를 파라메터로 Get 요청하십시오.
+		
+		// 디테일 정보 표시
+		document.getElementById("detail_info").innerHTML = "고객 ID : " + custId + " Details";
+		
+		// rowId 에 맞는 디테일 데이터 요청 후 디테일 그리드에 삽입
+		requestMyData("./data/getDetails.json" , myGridID2);
+	}, 200);  // 현재 200ms 민감도....환경에 맞게 조절하세요.
+};
+
+// 데이터 요청 Ajax
+function requestMyData(url, gridId) {
+	
+	// ajax 요청 전 그리드에 로더 표시..원할 경우 주석 제거
+	//AUIGrid.showAjaxLoader(gridId);
+	
+	// ajax (XMLHttpRequest) 로 그리드 데이터 요청
+	ajax( {
+		url : url,
+		onSuccess : function(data) {
+			// 그리드 데이터
+			var gridData = data;
+			
+			// 그리드에 데이터 세팅
+			AUIGrid.setGridData(gridId, gridData);
+			
+			// 로더 제거.. 원할 경우 주석 제거
+			//AUIGrid.removeAjaxLoader(gridId);
+		},
+		onError : function(status, e) {
+			alert("데이터 요청에 실패하였습니다.\r status : " + status);
+			
+			// 로더 제거.. 원할 경우 주석 제거
+			//AUIGrid.removeAjaxLoader(gridId);
+		}
+	});
+}
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>Master-Details 데모입니다.</p>
+		<p>Master 그리드의 행 아이템을 선택한 경우 해당 고객 ID 에 맞는 데이터를 요청하여 Details 그리드에 출력하는 모습입니다.</p>
+		<p>Master 그리드의 행 아이템 선택 시 Details 그리드의 데이터가 변경됩니다.</p>
+		<p>최초 Details 그리드는 고객ID 가 cust3 인 고객의 주문 리스트를 표시하도록 지정한 모습입니다.</p>
+		<p style="color:red;">선택 행이 변경되어도 데이타가 변하지 않는 이유는 같은 데이터를 Details 로 지정했기 때문입니다.<br>
+		즉, Online-Demo 는 PHP Ajax 요청으로 custId 에 따라 데이터를 서버에서 가져오지만, 본 샘플은 getDetails.json 의 정적 데이터를 가져옵니다.<br>
+		실제 사용에서는 GET 또는 POST 요청에 파라메터를 구분하여 실 DB 데이터를 가져오도록 URL 주소를 변경하십시오.</p>
+		 
+	</div>
+	<div>
+		<!-- Master Grid -->
+		<div style="width:800px; margin:0 auto;"><p>Master Grid</p></div>
+		<div id="grid_wrap" style="width:800px; height:300px; margin:0 auto;"></div>
+		
+		<!-- Details Grid -->
+		<div style="width:800px; margin:0 auto;"><p id="detail_info" style="margin-top:20px;">Details</p></div>
+		<div id="detail_grid_wrap" style="width:800px; height:200px; margin:0 auto;"></div>
+	</div>
+</div>
+
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

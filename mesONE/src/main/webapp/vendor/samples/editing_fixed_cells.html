@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+.my-right-style {
+	text-align:right;
+}
+</style>
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid();
+	
+	// AUIGrid 에 데이터 삽입합니다.
+	createRandomData(20);
+
+};
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid() {
+	
+	var columnLayout = [];
+	
+	columnLayout[0] = { // 연도 칼럼 생성
+			headerText : "연도",
+			dataField : "year",
+			postfix : "년",
+			width:100
+	}
+	
+	for(var i=1; i<=12; i++) { // 1~12월 칼럼 생성
+		columnLayout.push( {
+			headerText : i + "월",
+			dataField : "col" + i,
+			dataType : "numeric",
+			formatString : "#,##0",
+			headerStyle : "my-right-style",
+			style : "my-right-style",
+			width:80
+		});
+	}
+	
+	var auiGridProps = {
+			rowIdField : "id", // 행 고유 id 에 속하는 필드명(DB의 primary key 와 일치 시키면 유용합니다.)
+			editable : true, // 수정 모드
+			editableOnFixedCell : true, // 고정 칼럼, 행에 있는 셀도 수정 가능 여부(기본값:false)
+			triggerSelectionChangeOnCell : true, // 행 선택모드에서 옆으로 칼럼 변경할 시 selectionChange 이벤트 발생 시킬지 여부(기본값 : false)
+			fixedColumnCount : 1,
+			fixedRowCount : 3,
+			showRowCheckColumn : false,
+			showStateColumn : true,
+			enableSorting : false,
+			selectionMode : "multipleCells",
+			
+			//softRemoveRowMode 적용을 원래 데이터에만 적용 즉, 새 행인 경우 적용 안시킴
+			softRemovePolicy :"exceptNew",
+			
+			// 칼럼 끝에서 오른쪽 이동 시 다음 행, 처음 칼럼으로 이동할지 여부
+			wrapSelectionMove : true
+	};
+	
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 선택 변경 이벤트 바인딩
+	AUIGrid.bind(myGridID, "selectionChange", auiSelectionChangeHandler);
+	
+	// 에디팅 시작 이벤트 바인딩
+	AUIGrid.bind(myGridID, "cellEditBegin", auiCellEditingHandler);
+
+	// 에디팅 정상 종료 이벤트 바인딩
+	AUIGrid.bind(myGridID, "cellEditEnd", auiCellEditingHandler);
+	
+	// 에디팅 취소 이벤트 바인딩
+	AUIGrid.bind(myGridID, "cellEditCancel", auiCellEditingHandler);
+}
+
+// 주어진 개수만큼 랜덤 데이터 생성하여 그리드에 삽입
+function createRandomData(count) {
+	var data = [];
+	var row;
+	var maxYear = 2015;
+	for(var i=1; i<=count; i++) {
+		
+		row = {};
+		row.id = "PK" + i; // rowIdField 로 지정할 중복되지 않는 고유값(primary key)
+		row.year = 2015 - i;
+		for(var j=1; j<=12; j++) { // 1~12월 개별 데이터 생성
+			row["col" + j] = Math.round(Math.random() * 10000); // 모든 데이터를 랜덤 데이터로 생성
+		}
+		data.push(row);
+	}
+	// 데이터 삽입
+	AUIGrid.setGridData(myGridID, data);
+}
+
+function auiCellEditingHandler(event) {
+	if(event.type == "cellEditBegin") {
+		document.getElementById("editBeginDesc").innerHTML = "에디팅 시작(cellEditBegin) : ( " + event.rowIndex + ", " + event.columnIndex + " ) " + event.headerText + ", value : " + event.value;
+	} else if(event.type == "cellEditEnd") {
+		document.getElementById("editBeginEnd").innerHTML = "에디팅 종료(cellEditEnd) : ( " + event.rowIndex + ", " + event.columnIndex + " ) " + event.headerText + ", value : " + event.value;
+	} else if(event.type == "cellEditCancel") {
+		document.getElementById("editBeginEnd").innerHTML = "에디팅 취소(cellEditCancel) : ( " + event.rowIndex + ", " + event.columnIndex + " ) " + event.headerText + ", value : " + event.value;
+	}
+};
+
+// 셀렉션 체인지 핸들러
+function auiSelectionChangeHandler(event) {
+	var selectedItems = event.selectedItems;
+	if(selectedItems.length <= 0)
+		return;
+	
+	var firstItem = selectedItems[0];
+	
+	// 하단에 행인덱스, 헤더 텍스트, 수정 가능여부 출력함.
+	document.getElementById("selectionDesc").innerHTML = "현재 셀 : ( " + firstItem.rowIndex + ", " + firstItem.headerText + " ) : editable : " + firstItem.editable + ", 행 고유값(PK) : " + firstItem.rowIdValue;
+		
+	// 해당 셀의 행 아이템 
+	//var rowItem = firstItem.item; // 행 아이템들
+	// 칼럼과 관계없이 현재 행의 Name 값을 보고자 한다면
+	//alert(rowItem.name);
+};
+
+
+// 수정 아이템들 확인하기
+function checkItems() {
+	
+	// 수정된 행의 진짜 수정된 칼럼들 배열)
+	var editedCells = AUIGrid.getEditedRowColumnItems(myGridID); 
+	
+	var i, len;
+	var str = "";
+	var row;
+	if(editedCells.length > 0) {
+		for(i=0, len=editedCells.length; i<len; i++) {
+			row = editedCells[i];
+			for(var name in row) {
+				str += name + " : " + row[name] + ", ";
+			}
+			str += "\r\n";
+		}
+	}
+	
+	if(str == "")
+		str = "변경 사항 없음";
+	
+	alert(str);
+}
+
+//editableOnFixedCell 토글
+function toggleEditableOnFixedCell() {
+	var downChkbox = document.getElementById("downChkbox");
+	AUIGrid.setProp(myGridID, "editableOnFixedCell", downChkbox.checked); //editingOnKeyDown 토글
+};
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>고정 칼럼, 고정 행에 지정된 셀을 선택, 이동할 수 있습니다. 또한 해당 셀 편집 여부(editableOnFixedCell)가 가능합니다.</p>
+		<p>고정 칼럼, 행으로 지정된 셀은 기본적으로 편집이 불가능합니다. 그러나 editableOnFixedCell = true 로 설정하면 편집이 가능합니다.</p>
+		<p style="padding-top:5px;"><input type="checkbox" id="downChkbox" checked="checked" onclick="toggleEditableOnFixedCell()" 
+			style="vertical-align:middle;">
+			<label for="downChkbox">editableOnFixedCell - 고정 칼럼, 행으로 지정된 셀 편집 가능 여부(기본값:false)</label></p>
+		<ul class="nav_u">
+			<li><span onclick="checkItems()" class="btn">수정한 셀 확인하기</span></li>
+		</ul>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:420px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="selectionDesc"></p>
+		<p id="editBeginDesc"></p>
+		<p id="editBeginEnd"></p>
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

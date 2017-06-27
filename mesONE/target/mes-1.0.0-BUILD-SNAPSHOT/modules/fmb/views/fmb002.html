@@ -1,0 +1,32 @@
+<!-- 
+/**  
+ * @Class Name : fmb002.html
+ * @Description : fmb001 
+ * @Modification Information  
+ * @
+ * @ 작업일       작성자      내용
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.05.26  kb.shin    최초생성
+ * @ 
+ * 
+ * @author kb.shin
+ * @since 2017.01.01
+ * @version 1.0
+ * @see
+ * 
+ */
+ -->
+ 
+<h1>fmb002 단일 VO출력 test</h1> 
+<ul >
+	<li ng-repeat="plc in vm.plcList">
+		<h5>PLCID {{plc.plcId}}</h5>
+		<h5>설비코드 {{plc.eqptCd}}</h5>
+		<h5>설비명 {{plc.eqptNm}}</h5>
+		<h5>공장ID {{plc.factId}}</h5>
+		<h5>라인명 {{plc.lineNm}}</h5>
+		<h5>제품코드 {{plc.item_Cd}}</h5>
+		<h5>설비상태 {{plc.eqptSts}}</h5>
+		<h5>상태시간 {{plc.stsDttm}}</h5>
+	</li>
+</ul>

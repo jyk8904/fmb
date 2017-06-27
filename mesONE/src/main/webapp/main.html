@@ -1,0 +1,174 @@
+<!-- 
+ * @Class Name : main.html
+ * @Description : 메인 화면
+ * @Modification Information
+ * @  수정일            수정자              수정내용
+ * @ ----------------------------------------------------
+ * @ 2017.04.18  kb.shin    - 정리 
+ *
+ * @author  kb.shin
+ * @since 2017.04.18
+ * @version 1.0
+ * @see
+ 
+ -->
+
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>FMB System</title>
+    
+    <!-- JQUERY -->
+    <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+    <!-- <script src="assets/js/jquery-3.1.0.min.js"></script>
+ -->   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- <script src="assets/js/jquery-3.2.1.js"></script> -->
+
+   <!-- AngularJS -->
+   <script src="//code.angularjs.org/1.6.1/angular.js"></script>
+   <script src="//code.angularjs.org/1.6.1/angular-route.js"></script>
+   <script src="//code.angularjs.org/1.6.1/angular-cookies.js"></script>
+   <script src="//code.angularjs.org/1.6.1/angular-animate.js"></script>
+   <script src="//code.angularjs.org/1.6.1/angular-sanitize.js"></script>
+   <script src="//code.angularjs.org/1.6.1/i18n/angular-locale_ko-kr.js"></script>
+
+   <script   src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+   <script   src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+   <script   src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+  
+    <!-- DevExtreme dependencies-->
+    <script src="assets/js/dx.all.js"></script>
+    <script src="assets/js/globalize.js"></script>
+    
+
+   <!-- Bootstrap -->
+   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+   <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+   
+	<!-- DevExtreme CSS -->
+	<link rel="stylesheet" type="text/css" href="assets/css/dx.common.css" />
+	<link rel="stylesheet" type="text/css" href="assets/css/dx.light.css" />
+
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+   integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"   crossorigin="anonymous">
+<link rel="stylesheet"
+   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"   integrity="sha384-rHyoN1iRsVXV4
+   nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"   crossorigin="anonymous">
+   
+<!-- AUIgrid CSS-->   
+<link rel="stylesheet" href="/mes/vendor/AUIGrid/AUIGrid_style.css">
+
+<!-- AngularJS CSS -->
+<link rel="stylesheet"
+   href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+
+<!-- custom CSS -->   
+<link rel="stylesheet" href="/mes/assets/css/fmb.css" />
+</head>
+
+
+
+<body ng-controller="MainCtrl as vm" ng-class="{loading:loadingView}" class="container" style="width: 100%;">
+<!--    <label ng-model='lbl'>angular Js test</label>
+    <p>Name : <input type="text" ng-model="name"></p>
+   <h1>Hello  {{name}}</h1> -->
+	<div class="relative">
+		<div class="mouse-over-bar"> 
+			<button class="top-btn" ng-click='vm.btnFmbModeClick()'>개발모드</button>
+			<button class="top-btn" ng-click='vm.btnFmb006Click()'>설비 가동현황</button>
+			<button class="top-btn" ng-click='vm.btnFmbTbmClick()'>Tbm</button>
+			<button class="top-btn" ng-click='vm.btnFmbSpcClick()'>SPC</button>
+			<button class="top-btn" ng-click='vm.btnFmbLineClick()'>Line별 생산실적</button>
+			<button class="top-btn" ng-click='vm.btnFmbTotalClick()'>Total</button>
+		   <button class="top-btn" ng-click='vm.btnWorkerStop()'>Stop</button>
+			<button class="top-btn" ng-click='vm.btnWorkerStart()'>Start</button>
+		   <button class="top-btn" ng-click='vm.LotationSetting()'>전환 설정 테스트</button>
+		</div>
+	</div>   
+	
+	<div p-ctrl ng-view style='width:100%; height:1025px;'></div>
+
+
+	<bc-form-footer bg-ctrl>
+	<!--알람정보 하단 바 시작-->
+	   	<div class="alarm_data">
+	  		<marquee>
+	      		<ul id="banner" class="simply-scroll-list">
+	      			<li ng-repeat="alarm in vm.alarmList">
+	       				{{alarm.plcId}} 알람발생  {{alarm.stsDttm}}
+	      			</li>
+	    		</ul>
+	     	</marquee>
+	   </div>
+	</bc-form-footer>
+	
+   <!-- 모달 body -->
+   <modal title="Login form" visible="vm.showModal">
+     <form ng-submit="vm.submit1()">
+     <div ng-repeat="page in vm.Setting">
+     
+     	<label>페이지 {{page.pageSeq}} 번</label>
+    	<input typt ="text" placeholder="페이지"+{{page.pageSeq}}+" time" name ="name" ng-model=page.rotateTime value={{page.rotateTime}}>
+  		<br>      
+   
+   </div>
+       <input type="submit" value="Save" />
+       <button type="button" class="btn btn-default" data-dismiss="modal"
+         aria-hidden="true">close</button>
+     </form>
+	</modal>
+	<!-- 모달 body -->
+   
+
+   <!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. --> 
+   <script type="text/javascript" src="/mes/vendor/AUIGrid/AUIGridLicense.js"></script>
+   <script type="text/javascript" src="/mes/vendor/AUIGrid/AUIGrid.js"></script>
+   
+   <!-- APP 전체 -->
+   <script src="app.js"></script>
+   <script src="assets/js/angular-modal-service.js"></script>
+
+   <!-- 메인 화면 관리 -->
+	<script src="mainCtrl.js"></script>
+	<script src="modules/cmm/controllers/cmmCommonsCtrl.js"></script>
+	<script src="modules/cmm/controllers/cmmMatMstCtrl.js"></script>
+	<script src="modules/cmm/services/cmmAjaxSrvc.js"></script>
+	<script src="modules/cmm/services/cmmModalSrvc.js"></script>
+	<script src="modules/cmm/services/cmmWorkerSrvc.js"></script>
+	<script src="modules/cmm/services/cmmUtilSrvc.js"></script>
+	<script src="modules/cmm/directives/cmmFormDrtv.js"></script>
+
+   <!-- FMB 관리 -->
+	<script src="modules/fmb/controllers/fmb001Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmb002Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmb003Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmb004Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmb005Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmb006Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmbModeCtrl.js"></script>
+	<script src="modules/fmb/controllers/fmbPopupCtrl.js"></script>
+	<script src="modules/fmb/controllers/fmbTbmCtrl.js"></script>
+	<script src="modules/fmb/controllers/fmbLineCtrl.js"></script>
+	<script src="modules/fmb/controllers/fmbSpcCtrl.js"></script>
+	<script src="modules/fmb/controllers/fmbTotalCtrl.js"></script>
+	<script src="vendor/pdfkit/AUIGrid.pdfkit.js"></script>
+    	
+	<!--  Modify Page 관리 -->
+	<script src="modules/cmm/directives/mdDragDrtv.js"></script>
+	<script src="modules/cmm/directives/mdDrtv.js"></script>
+	<link rel="stylesheet" href="/mes/assets/css/fmbModify.css" />
+    
+    
+   <!-- 워커 관리 -->
+   <script src="worker.js"></script>
+   <script src="worker2.js"></script>
+</body>
+</html>

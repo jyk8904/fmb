@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+
+/* 칼럼 재정의 */
+.aui-grid-default-column {
+	text-align:right;
+}
+.aui-grid-my-column {
+	text-align:center;
+}
+
+/* 푸터 재정의 */
+.aui-grid-default-footer {
+	text-align:right;
+	border-top:none;
+}
+
+.my-footer-name {
+	text-align:center;
+}
+</style>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/revenue_region.json");
+
+};
+
+// AUIGrid 칼럼 설정
+var columnLayout = [{
+    dataField: "region",
+    headerText: "지역",
+    style: "aui-grid-my-column",
+    width: 120
+}, {
+  dataField: "p1201",
+    headerText: "'12 1월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1202",
+    headerText: "'12 2월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1203",
+    headerText: "'12 3월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1204",
+    headerText: "'12 4월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1205",
+    headerText: "'12 5월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1206",
+    headerText: "'12 6월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1207",
+    headerText: "'12 7월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1208",
+    headerText: "'12 8월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1209",
+    headerText: "'12 9월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1210",
+    headerText: "'12 10월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1211",
+    headerText: "'12 11월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1212",
+    headerText: "'12 12월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}];
+
+// 푸터 설정
+var footerObject = [ {
+	labelText : "합 계",
+	positionField : "region",
+	style : "my-footer-name"
+}, {
+	dataField : "p1201",
+	positionField : "p1201",
+	operation : "SUM",
+	formatString : "#,##0"
+}, {
+	dataField : "p1202",
+	positionField : "p1202",
+	operation : "SUM",
+	formatString : "#,##0"
+}, {
+	dataField : "p1203",
+	positionField : "p1203",
+	operation : "SUM",
+	formatString : "#,##0"
+}, {
+	dataField : "p1204",
+	positionField : "p1204",
+	operation : "SUM",
+	formatString : "#,##0"
+}, {
+	dataField : "p1205",
+	positionField : "p1205",
+	operation : "SUM",
+	formatString : "#,##0"
+}, {
+	dataField : "p1206",
+	positionField : "p1206",
+	operation : "SUM",
+	formatString : "#,##0"
+}, {
+	dataField : "p1207",
+	positionField : "p1207",
+	operation : "SUM",
+	formatString : "#,##0"
+}, {
+	dataField : "p1208",
+	positionField : "p1208",
+	operation : "SUM",
+	formatString : "#,##0"
+}, {
+	dataField : "p1209",
+	positionField : "p1209",
+	operation : "SUM",
+	formatString : "#,##0"
+}, {
+	dataField : "p1210",
+	positionField : "p1210",
+	operation : "SUM",
+	formatString : "#,##0"
+}, {
+	dataField : "p1211",
+	positionField : "p1211",
+	operation : "SUM",
+	formatString : "#,##0"
+}, {
+	dataField : "p1212",
+	positionField : "p1212",
+	operation : "SUM",
+	formatString : "#,##0"
+}];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+			selectionMode : "multipleCells",
+			
+			// 고정칼럼 1 적용
+			fixedColumnCount : 1,
+			
+			editable : true,
+			
+			showRowCheckColumn : true,
+			
+			// 푸터 보이게 설정
+			showFooter : true,
+			
+			// 푸터를 상단에 출력시킴(기본값: "bottom")
+			footerPosition : "top",
+			
+			// 푸터 높이
+			footerHeight : 30,
+			
+			// 푸터와 실제 바디 사이의 갭 (기본값:4)
+			footerVGap : 2
+	};
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 푸터 객체 세팅
+	AUIGrid.setFooter(myGridID, footerObject);
+}
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>푸터의 위치를 하단이 아닌 상단에 출력한 모습입니다.)</p>
+		<p>이와 같이 출력을 원하면 footerPosition = "top" 으로 설정하십시오.(기본값:"bottom")</p>
+		<p>헤더와 푸터가 만나는 경계의 라인이 이중 라인으로 중복되어 보일 수 있습니다. </p>
+		<p>이런 경우 다음처럼 aui-grid-default-footer 스타일을 재정의 해서 상단 라인을 보이지 않게 처리하십시오.</p>
+		<pre>
+	/* footer 재정의 */
+	.aui-grid-default-footer {
+		border-top:none;
+	}
+		</pre>
+		<p>엑셀, PDF 내보내기 시 그리드처럼 푸터가 상단에 위치하여 저장됩니다.</p>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:400px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

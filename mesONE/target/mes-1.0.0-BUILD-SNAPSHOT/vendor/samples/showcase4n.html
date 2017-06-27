@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+.right_style {
+	text-align:right;
+}
+
+/* 행 갱신 시 깜빡이게 하는 스타일 */
+.my-refresh-row-flash-style {
+	background:#dfdfdf;
+}
+
+/* 주식 하락 색상*/
+.my-custom-down {
+	color:#0000ff;
+	text-align:right;
+}
+/* 주식 상승 색상*/
+.my-custom-up {
+	color:#ff0000;
+	text-align:right;
+}
+.my-custom-normal {
+	color:inherit;
+	text-align:right;
+}
+
+/* 바게이지 양수 음수 함께 사용되는 영역에서 음수 바 재정의*/
+.aui-grid-bar-renderer-negative {
+	background: #4641D9;
+	border: 1px solid #4641D9;
+}
+/* 바게이지 양수 음수 함께 사용되는 영역에서 양수 바 재정의*/
+.aui-grid-bar-renderer-positive {
+	background: #DF4D4D;
+	border: 1px solid #DF4D4D;
+}
+</style>
+<script type="text/javascript">
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid();
+};
+
+// 칼럼 레이아웃
+var columnLayout = [ { 
+		dataField : "name",
+		headerText : "종목명",
+		width:100
+	}, {
+		dataField : "price",
+		headerText : "현재가",
+		width : 80,
+		dataType:"numeric",
+		style : "right_style",
+		formatString : "#,##0"
+	}, {
+		dataField : "gap",
+		headerText : "대비",
+		dataType : "numeric",
+		formatString : "#,##0",
+		style : "right_style",
+		width:80,
+		renderer : {
+			type : "IconRenderer",
+			iconPosition:"aisle",
+			iconWidth : 7, // icon 가로 사이즈, 지정하지 않으면 24로 기본값 적용됨
+			iconHeight : 6,
+			iconFunction : function(rowIndex, columnIndex, value, item) {
+				if(item.gap < 0)
+					return "./assets/ico_down.gif";
+				else if(item.gap > 0)
+					return "./assets/ico_up.gif";
+				return "./assets/ico_flat.gif";
+			}
+		},
+		styleFunction : function(rowIndex, columnIndex, value, headerText, item, dataField) {
+			if(item.gap < 0)
+				return "my-custom-down";
+			else if(item.gap > 0)
+				return "my-custom-up";
+			return "my-custom-normal";
+		}
+	}, {
+		dataField : "rate",
+		headerText : "등락율",
+		dataType : "numeric",
+		formatString : "#,##0.00",
+		postfix : " %",
+		style : "right_style",
+		width:80,
+		expFunction : function(  rowIndex, columnIndex, item, dataField ) { // 여기서 실제로 출력할 값을 계산해서 리턴시킴.
+			// expFunction 의 리턴형은 항상 Number 여야 합니다.(즉, 수식만 가능)
+			var oldPrice = item.price - item.gap
+			var rate = Number((item.gap / oldPrice * 100).toFixed(2));
+			return rate;
+		},
+		styleFunction : function(rowIndex, columnIndex, value, headerText, item, dataField) {
+			if(item.gap < 0)
+				return "my-custom-down";
+			else if(item.gap > 0)
+				return "my-custom-up";
+			return "my-custom-normal";
+		}
+	}, {
+		dataField : "rateGraph",
+		headerText : "등락율 그래프",
+		width:90,
+		expFunction : function(  rowIndex, columnIndex, item, dataField ) { // 여기서 실제로 출력할 값을 계산해서 리턴시킴.
+			return item.rate;
+		},
+		renderer : {
+			type : "BarRenderer",
+			showLabel : false,
+			min : -30,
+			max : 30,
+			offset : 30
+		}
+	}, {
+		dataField : "volume",
+		headerText : "거래량",
+		dataType : "numeric",
+		formatString : "#,##0",
+		style : "right_style",
+		width:70
+	}, {
+		dataField : "open",
+		headerText : "시가",
+		dataType : "numeric",
+		formatString : "#,##0",
+		style : "right_style",
+		width:80
+	}, {
+		dataField : "high",
+		headerText : "고가",
+		dataType : "numeric",
+		formatString : "#,##0",
+		style : "my-custom-up",
+		expFunction : function(  rowIndex, columnIndex, item, dataField ) { // 여기서 실제로 출력할 값을 계산해서 리턴시킴.
+			return Math.max(item.high, item.price);
+		},
+		width:80
+	}, {
+		dataField : "low",
+		headerText : "저가",
+		dataType : "numeric",
+		formatString : "#,##0",
+		style : "my-custom-down",
+		expFunction : function(  rowIndex, columnIndex, item, dataField ) { // 여기서 실제로 출력할 값을 계산해서 리턴시킴.
+			return Math.min(item.price, item.low);
+		}
+		
+	}
+];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid() {
+	
+	// 그리드 속성 설정
+	var gridPros = {
+		
+		// row 를 구별짓는 유니크한 값을 갖는 필드 설정 ( 대용량인 경우 반드시 설정해야 함 )
+		rowIdField : "id"
+	};
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, gridPros);
+
+	createRandomData(1000);
+}
+
+
+var names = [ "A 전자", "B 상사", "C 철강", "D 회사", "E 통신", "F 공사", "G 주식회사", "H 인터넷", "I 식품", "J 제과", "K 연구소", "L 전자", "M 화학", "N 인터넷", "O로 통신", "P 주식회사", "Q 코스메틱", "R 청과", "S 방송", "T 자동차", "UU 엔터"];
+var prices = [ 150000, 230000, 420000,1200000,320000,100000,240000,320000,520000,820000,300000, 200000,200000,200000,200000, 200000, 200000, 200000, 200000, 200000, 200000];
+var gaps = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var volumes = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+
+// count 수만큼 랜덤 데이터 생성
+function createRandomData() {
+	var data = [];
+	var count = names.length;
+	for (var i = 0; i < count; i++) {
+		data.push({
+			id: i + 1,
+			name : names[i],
+			price : prices[i],
+			open : prices[i],
+			high : prices[i],
+			low : prices[i],
+			gap : 0,
+			volume : 0
+		});
+	}
+	
+   
+	// AUIGrid 에 데이터 삽입합니다.
+	AUIGrid.setGridData("#grid_wrap", data);
+	
+	// 0.3초 갱신
+	setInterval(refreshRows, 300);
+}
+
+// 특정 행들만 갱신
+// 주식 종목 중 랜덤하게 갱신할 종목을 선택해서...랜덤하게 상승, 하락을 결정해 그리드에 반영시킴.
+function refreshRows() {
+	var rows = [];
+	var codes = [];
+	var gap;
+	var isPlus = false;
+	var index;
+	var price;
+	var codeCount = names.length; // 종목개수
+	var limitGap;
+	
+	// 랜덤 개수만큼 갱신
+	var count = Math.floor(Math.random() * 10);
+	
+	for(var i=0; i<count; i++) {
+		code = Math.ceil(Math.random() * codeCount);
+		codes.push(code);
+	}
+	
+	
+	for (i = 0, count = codes.length; i < count; i++) {
+		isPlus = Math.random() > 0.5 ? true : false; // 상승, 하락 랜덤 결정
+		gap = 3000; // 호가
+		
+		if(!isPlus) {
+			gap *= -1;
+		}
+		
+		index = codes[i] - 1;
+		
+		price = prices[index];
+		
+		// 상하한 제한
+		limitGap = price * 0.3;
+		
+		// 대비 값(상승 또는 하락 대비 가격)
+		gaps[index] += gap;
+		gap = gaps[index];
+		
+		// 상하한가인 경우
+		if(Math.abs(gap) > limitGap) {
+			gap = gap > 0 ? limitGap : -limitGap;
+		}
+		
+		
+		price += gap;
+		volumes[index] += Math.floor(Math.random() * 10000); // 거래량 랜덤 누적
+		
+		// 갱신할 행들
+		rows.push({
+			id: codes[i], // rowIdField 로 설정한 id(중요)
+			price : price, // 현재가
+			gap : gap, // 대비가
+			volume : volumes[index] // 거래량
+		});
+	}
+	
+	// AUIGrid 에 갱신할 행들 삽입
+	// refreshRows 사용하기 전에 반드시 rowIdField 속성을 선행으로 설정해야합니다.
+	AUIGrid.refreshRows("#grid_wrap", rows, "my-refresh-row-flash-style", 200);
+}
+
+	
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<div style="text-align:right;"><a href="./showcase4.html?sh04">기존 주식 데모 보기(1.42 이하 버전)</a></div>
+		<p>실시간 주식 현황(나의 관심 종목)을 구현한 데모입니다.</p>
+		<p>주식은 가상의 주식으로 랜덤하게 로컬에서 0.3초 마다 거래가 이루어진 종목만 갱신하도록 설정한 모습입니다.</p>
+		<p>처음 데이터를 그리드에 삽입 한 후 그리드에 특정 행의 셀 값(현재가, 대비가, 거래량)만 갱신하는 모습입니다.</p>
+		<p>참고 : AUIGrid 가 서버와 통신하는 방법 및 속도까지 커버하지 않습니다. AUIGrid 는 단순히 출력해 주는 역할만 할 뿐입니다. 
+		 이 데모와 같이 빠른 속도로 주식 정보를 갱신하는 것은 일반 Ajax 통신으론 불가능합니다.</p>
+		<p>만약, 웹 상에서 주식 정보를 실시간으로 빠르게 갱신하고자 한다면 웹소켓(Web Socket)으로 구성하는 것이 최선일 것입니다.</p>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:400px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

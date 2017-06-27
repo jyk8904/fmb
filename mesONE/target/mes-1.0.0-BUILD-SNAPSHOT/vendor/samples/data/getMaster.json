@@ -1,0 +1,61 @@
+[{
+    "custId": "cust0",
+    "custName": "Steve",
+    "email": "steve@auisoft.net",
+    "phone": "010-111-2220"
+}, {
+    "custId": "cust1",
+    "custName": "Anna",
+    "email": "anna@auisoft.net",
+    "phone": "010-111-2221"
+}, {
+    "custId": "cust2",
+    "custName": "Lawrence",
+    "email": "lawrence@auisoft.net",
+    "phone": "010-111-2222"
+}, {
+    "custId": "cust3",
+    "custName": "Kim",
+    "email": "kim@auisoft.net",
+    "phone": "010-111-2223"
+}, {
+    "custId": "cust4",
+    "custName": "Emma",
+    "email": "emma@auisoft.net",
+    "phone": "010-111-2224"
+}, {
+    "custId": "cust5",
+    "custName": "Jennifer",
+    "email": "jennifer@auisoft.net",
+    "phone": "010-111-2225"
+}, {
+    "custId": "cust6",
+    "custName": "Han",
+    "email": "han@auisoft.net",
+    "phone": "010-111-2226"
+}, {
+    "custId": "cust7",
+    "custName": "Sona",
+    "email": "sona@auisoft.net",
+    "phone": "010-111-2227"
+}, {
+    "custId": "cust8",
+    "custName": "George",
+    "email": "george@auisoft.net",
+    "phone": "010-111-2228"
+}, {
+    "custId": "cust9",
+    "custName": "Tiffany",
+    "email": "tiffany@auisoft.net",
+    "phone": "010-111-2229"
+}, {
+    "custId": "cust10",
+    "custName": "Yuri",
+    "email": "yuri@auisoft.net",
+    "phone": "010-111-2220"
+}, {
+    "custId": "cust11",
+    "custName": "Ryu",
+    "email": "ryu@auisoft.net",
+    "phone": "010-111-2221"
+}]

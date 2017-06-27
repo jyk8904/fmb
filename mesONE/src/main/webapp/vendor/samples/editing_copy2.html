@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+.bg-red-style {
+	background:#FFD8D8
+}
+</style>
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid();
+	
+	// 빈 배열 삽입 (즉, 데이터 아무것도 없음)
+	// No Data 메시지 출력하기 위함
+	AUIGrid.setGridData(myGridID, []);
+	
+};
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid() {
+	
+	var chars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+	var columnLayout = [];
+	var column;
+	for(var i=0; i<26; i++) {
+		columnLayout.push( {
+			headerText : chars[i],
+			dataField : i,
+			width:100
+		});
+	}
+	
+	var auiGridProps = {
+			editable : true, // 수정 모드
+			selectionMode : "multipleCells", // 다중셀 선택
+			showStateColumn : true,
+			noDataMessage : "엑셀에서 데이터를 복사(Ctrl+C) 하여 이곳에 붙여 넣기(Ctrl+V) 하십시오.",
+			//softRemoveRowMode 적용을 원래 데이터에만 적용 즉, 새 행인 경우 적용 안시킴
+			softRemovePolicy :"exceptNew",
+			wrapSelectionMove : true // 칼럼 끝에서 오른쪽 이동 시 다음 행, 처음 칼럼으로 이동할지 여부
+	};
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// cellEditEndBefore 이벤트 바인딩
+	AUIGrid.bind(myGridID,  "cellEditEndBefore", function(event) {
+		// 여기서 반환하는 값이 곧 적용 값입니다.
+		// 개발자가 원하는 값으로 변경 가능합니다.
+		if(event.isClipboard) { 
+			return event.value + " [CP]"; // 원래값에 CP 붙이기
+		}
+		return event.value; // 원래값
+	});
+	
+	// pasteBegin, pasteEnd 이벤트 바인딩
+	AUIGrid.bind(myGridID,  ["pasteBegin", "pasteEnd"], function(event) {
+		// 완료 시 처음으로 이동시켜서 선택자 놓이도록 
+		//AUIGrid.setSelectionByIndex(event.pid, 0, 0);
+		
+		if(event.type == "pasteBegin") {
+			document.getElementById("editBeginDesc").innerHTML = "붙여 넣기 시작 : " + new Date().getTime();
+		} else if(event.type == "pasteEnd") {
+			document.getElementById("editBeginEnd").innerHTML = "붙여 넣기 완료 : " + new Date().getTime();
+		}
+	});
+};
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>비어 있는 그리드에 붙여넣기(Ctrl+V) 하는 경우, 그대로 그리드에 새행이 추가되며 붙여넣기가 진행됩니다.</p>
+		<p>또한 Ctrl+V 하는 순간, 사용자(개발자)가 클립보드 상의 값들을 가공 처리 하여 원하는 값으로 바꿀 수 있습니다.</p>
+		<p>데모는 Ctrl + V 로 붙여 넣을 때 "CP" 라는 문자를 뒤에 추가하도록 하였습니다.</p>
+		<p>테스트 파일 다운 받기 : <a href="./data/import_test.xlsx" target="_blank">import_test.xlsx</a></p>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:420px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="editBeginDesc"></p>
+		<p id="editBeginEnd"></p>
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

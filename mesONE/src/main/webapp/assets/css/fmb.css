@@ -1,0 +1,641 @@
+@CHARSET "UTF-8";
+/* css 초기화 */
+/* *{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+*/
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+li{
+	list-style: none;
+}
+img {
+	max-width:100%;
+}
+.mouse-over-bar {
+	transition: top 0.3s;
+	position: absolute;
+	top: -40px;
+	left: 0;
+	z-index: 100;
+	height: 50px;
+	width: 100%;
+	background-color: #333
+}
+
+.mouse-over-bar:hover {
+	top: 0px;
+}
+
+.top-btn {
+	float: right;
+	margin: 5px;
+	margin-right: 5px;
+}
+
+.container {
+	padding-right: 0 !important;
+	padding-left: 0 !important;
+}
+
+div[ng-view] {
+	position: absolute;
+	/*z-index: 100;*/
+	width: 100%;
+	height: 100%;
+}
+
+
+
+
+.bc-screen {
+	width: 100%;
+	height: 100%;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0px;
+	border: 1px solid #ddd;
+	/*border-radius: 4px;*/
+	background-image: url('../img/system/back.png');
+	/*box-shadow: inset 0 1px 1px rgba(0,0,0,.075);*/
+}
+
+/* 화면 내부 폼. 화면 당 1개 이상 폼으로 구성됨 
+   bc-form
+       -- bc-form-header
+          -- bc-header-label
+          -- bc-header-buttons
+             -- bc-button
+       -- bc-form-search
+       -- bc-form-body
+       -- bc-form-footer
+*/
+.bc-form {
+	width: 100%;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	/*  box-shadow: 0 0 10px black;*/
+}
+
+.bc-form-half {
+	width: 50%;
+	float: left;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	/*  box-shadow: 0 0 10px black;*/
+}
+
+/* 폼 상단의 타이틀 및 버튼 부분 */
+/*
+.bc-form-header {
+  width:100%;
+  padding: 10px 0 5px 10px;
+  border: 1px solid #ddd;
+}	
+*/
+.bc-form-header {
+  width:1920px;
+  height:125px;
+  margin-left: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 0px;
+}
+/* 폼 좌측 상단 타이틀 */
+.bc-header-label {
+font-size: 16pt;
+  	color: white;
+ /* background-image:url(../img/title_icon.png);*/
+  	background-repeat:  no-repeat;
+}
+
+/* 폼 우측 상단 버튼들. 하위에 추가,저장, 삭제 버튼등이 있음 */
+.bc-header-buttons {
+	
+}
+
+.eqpt-info-modal > li{
+	float: none;
+}
+
+/* 버튼 */
+.bc-button {
+	font-size: 9pt;
+	margin-top: 5px;
+	margin-bottom: 2px;
+	padding: 2px;
+}
+
+
+
+.bc-table{
+	/* border:black 1px solid; */
+	color:white;
+	font-size: 13pt;
+	text-align: center;
+}
+
+.bc-table tr:first-child{
+height:80px;
+	}
+
+.bc-table tr:nth-child(1){
+background-color: #404040;
+}
+.bc-table tr:nth-child(2){
+background-color: #10253F;
+}
+.bc-table tr:nth-child(3){
+background-color: #546E7A;
+}
+.bc-table tr:nth-child(4){
+background-color: #303D44;
+}
+.bc-table tr:nth-child(5){
+background-color: #262626;
+}
+.bc-table tr:nth-child(6){
+background-color: #10253F;
+}
+.bc-table > tr:nth-child(6) > td:first-child{
+color:yellow;
+}
+.bc-table tr:nth-child(7){
+background-color: #173B5D;
+}
+.bc-table td{
+	border:black 1px solid;
+}
+
+.spc-table{
+	border:1px solid #B8B813;
+	font-size:15pt;
+	background-color:#333;
+	clear:left;
+	width:1800px;
+	height:50px;
+	margin: auto;
+}
+.spc-table td{
+	padding:20px;
+	}
+.spc-table td:nth-child(odd){
+	font-weight: bold;
+	background-color: #17375E;
+}
+
+.spc-table td:nth-child(even){
+
+	background-color: #262626;
+}
+
+.line-table{
+	width:180px;
+}
+
+
+.line-table >tr{
+	height:30px;
+}
+.line-table >td{
+	height:30px;
+}
+
+.wrap{
+	width:1450px;
+	margin:auto;
+}
+.title{float: left}
+
+.colList{float: left;}
+.col{
+	float: left;
+}
+.col:nth-child(7n+1){
+	clear: left;
+}
+
+
+
+.tbm-table{
+	margin:auto;
+	width:1200px;
+	height:500px;
+	font-size: 20pt;
+}
+@media screen and (max-width:1280px) {
+	.auiGrid {
+		margin-left: 0px;
+		margin-top: 0px;
+		margin-bottom: 0px;0.
+		padding: 0px;
+		border: 1px solid #ddd;
+		height: 500px;
+		width: 100%;
+	}
+}
+
+@media screen and (min-width:1440px) and (max-width:1600px) {
+	.auiGrid {
+		margin-left: 0px;
+		margin-top: 0px;
+		margin-bottom: 0px;
+		padding: 0px;
+		border: 1px solid #ddd;
+		height: 605px;
+		width: 100%;
+	}
+}
+
+@media screen and (min-width:1680px) and (max-width:1919) {
+	.auiGrid {
+		margin-left: 0px;
+		margin-top: 0px;
+		margin-bottom: 0px;
+		padding: 0px;
+		border: 1px solid #ddd;
+		height: 800px;
+		width: 100%;
+	}
+}
+
+@media screen and (min-width:1920px) {
+	.auiGrid {
+		margin-left: 0px;
+		margin-top: 0px;
+		margin-bottom: 0px;
+		padding: 0px;
+		border: 1px solid #ddd;
+		height: 825px;
+		width: 100%;
+	}
+}
+
+.labelText {
+	float: left;
+	width: 25%;
+	padding-top: 4px;
+	text-align: right;
+	margin-right: 3%;
+}
+
+inputText {
+	float: left;
+	width: 72%;
+}
+
+/* 폼의 주요 Contents 부분. 테이블이 없을 경우만 사용  */
+.bc-form-body {
+	position: relative;
+  	width:1920px;
+ 	height:900px; !important;
+ 	margin:0; !important;
+}
+
+/* 폼의 주요 Contents 부분. 테이블이 없을 경우만 사용  */
+.bc-form-footer {
+	background-image: url('../img/system/back.png');
+	width:1920px;
+	height:55px;
+}
+
+.grey {
+	color: grey;
+}
+
+.dropdown {
+	color: grey;
+}
+
+.dropdown>a:hover {
+	/*color: #23527c;*/
+	color: white;
+	text-decoration: underline
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak,
+	.x-ng-cloak {
+	display: none !important;
+}
+
+
+.bc_nav {
+	padding-left: 0;
+	margin-bottom: 0;
+	list-style: none;
+}
+.bc_navbar-top-links {
+    margin-right: 0;
+}
+
+.bc_nav>li {
+	position: relative;
+	display: block
+}
+.bc_nav>li>a {
+	position: relative;
+	display: block;
+	padding: 10px 15px
+}
+.bc_nav>li>a:focus, .nav>li>a:hover {
+					 
+	text-decoration: none;
+}
+
+.bc_nav>li.disabled>a {
+	color: #777
+}
+.bc_nav>li.disabled>a:focus, .nav>li.disabled>a:hover {
+							  
+	color: #777;
+	text-decoration: none;
+	cursor: not-allowed;
+	background-color: transparent
+}
+.bc_nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+					 
+					  
+	background-color: #eee;
+}
+.bc_nav .nav-divider {
+	height: 1px;
+	margin: 9px 0;
+	/*overflow: hidden;*/
+	background-color: #e5e5e5
+}
+.bc_nav>li>a>img {
+	max-width: none
+}
+/* 그리드 왼쪽 정렬 */
+.column-left {
+	text-align:left;
+}
+/* 그리드 오른쪽 정렬 */
+.column-right {
+	text-align:right;
+}
+
+
+
+
+
+
+#overlay {
+	position: fixed;
+	left: 25%;
+	top: 25%;
+	padding: 25px;
+	border: 2px solid black;
+	background-color: #ffffff;
+	width: 50%;
+	height: 50%;
+	z-index: 100;
+}
+
+#fade {
+	position: fixed;
+	left: 0%;
+	top: 0%;
+	background-color: black;
+	-moz-opacity: 0.7;
+	opacity: .70;
+	filter: alpha(opacity = 70);
+	width: 100%;
+	height: 100%;
+	z-index: 9;
+}
+
+body.custom-modal-open #fade {
+	background-color: darkred;
+	-moz-opacity: 0.9;
+	opacity: .90;
+	filter: alpha(opacity = 90);
+}
+
+#custom-modal.ng-enter {
+	transition: opacity .5s ease-out;
+	opacity: 0;
+}
+
+#custom-modal.ng-enter.ng-enter-active {
+	opacity: 1;
+}
+
+#custom-modal.ng-leave {
+	transition: opacity .5s ease-out;
+	opacity: 1;
+}
+
+#custom-modal.ng-leave.ng-leave-active {
+	opacity: 0;
+}
+
+body {
+	margin: 0;
+}
+
+.dialogdemoBasicUsage #popupContainer {
+	position: relative;
+}
+
+.dialogdemoBasicUsage .footer {
+	width: 100%;
+	text-align: center;
+	margin-left: 20px;
+}
+
+.dialogdemoBasicUsage .footer, .dialogdemoBasicUsage .footer>code {
+	font-size: 0.8em;
+	margin-top: 50px;
+}
+
+.dialogdemoBasicUsage button {
+	width: 200px;
+}
+
+.dialogdemoBasicUsage div#status {
+	color: #c60008;
+}
+
+.dialogdemoBasicUsage .dialog-demo-prerendered md-checkbox {
+	margin-bottom: 0;
+}
+
+/*
+Copyright 2016 Google Inc. All Rights Reserved. 
+Use of this source code is governed by an MIT-style license that can be foundin the LICENSE file at http://material.angularjs.org/HEAD/license.
+*/
+md-dialog title {
+	border: solid black 1px;
+	margin-right: auto;
+	margin-left: auto;
+	width: 450px;
+}
+
+/****************************************************************************/
+
+/* bcFormHeader */
+
+.container {
+	padding-left:0 !important;
+	padding-right:0 !important;
+}
+}
+.color{
+	float: left;
+	width:500px;
+	
+}
+.color .txt{
+	color:white;
+	width:85px;
+	font-size:20px;
+	float: left;
+}	
+.colors{
+	margin-right: 2px;
+	float: left;
+	height: 20px;
+	width: 20px;
+	border-radius: 15px;
+	display: inline;
+}
+.g {
+	background-color: #1C7401;
+}
+
+.r {
+	background-color: #DB4D31;
+}
+
+.w {
+	background-color: #B2B4E7;
+}
+
+.y {
+	background-color: #AEAF41;
+}
+
+.b {
+	background-color: blue;
+}
+
+.line_view {
+	border-radius: 5px;
+	background-color: rgba(10, 10, 10, 0.7);
+	padding: 0 5px 0 5px;
+	width:365px;
+	height: 118px;
+	float:left
+}
+
+.line {
+	opacity: 0.4;
+	width: 100px;
+	height: 70px;
+	margin-top: 5px;
+	background-size: cover;
+	float: left;
+}
+
+.A {
+	background-image: url('/mes/assets/img/system/A.png');
+}
+
+.B {
+	background-image: url('/mes/assets/img/system/B.png');
+}
+
+.C {
+	background-image: url('/mes/assets/img/system/C.png');
+}
+
+.selected{
+	opacity: 1;
+	width: 150px;
+	height: 105px;
+}
+
+
+/* bcFormBody */
+.bg-panel {
+	position:absolute;
+	width:1600px;
+	height:900px;
+	background-image: url('/mes/assets/img/system/eqptBg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity:0.8;
+}
+
+.EQPT {
+	position:relative;
+}
+
+div[class^=eqpt] {
+	position: absolute;
+}
+
+
+/* bcFormFooter */
+.alarm_data {
+	width:100%;
+	overflow: hidden;
+	position: fixed;
+	bottom: 0px;
+}
+
+
+#banner{
+	width:5000px;
+}
+
+
+#banner>li {
+	color: white;
+	list-style: none;
+	float: left;
+	width: 300px;
+	margin-right: 20px;
+}
+
+/* dvformheader */
+.dvaNav {
+	position: absolute;
+	z-index: 1000
+}
+
+
+
+
+/*****************************************************/
+.stsTitle{
+	color:white;
+	width:100px;
+	background-color: #12253D;
+	border:1px solid white;
+	clear: both;
+}
+.stsBoard{
+	border:1px solid white;
+	width:360px;
+	float: left;
+	margin:15px;
+	
+}

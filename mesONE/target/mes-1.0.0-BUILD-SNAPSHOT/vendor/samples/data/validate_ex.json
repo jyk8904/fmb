@@ -1,0 +1,141 @@
+[{
+	"id" : 1,
+    "name": "Steve",
+    "price": 645700,
+    "zip": "265407",
+    "email": "steve@auisoft.net",
+    "phone": "0104808018"
+}, {
+	"id" : 2,
+    "name": "Jennifer",
+    "price": 733800,
+    "zip": "349310",
+    "email": "jennifer@auisoft.net",
+    "phone": "0105579588"
+}, {
+	"id" : 3,
+    "name": "Jennifer",
+    "price": 174900,
+    "zip": "856282",
+    "email": "jennifer@auisoft.net",
+    "phone": "0103561491"
+}, {
+	"id" : 4,
+    "name": "Kim",
+    "price": 862300,
+    "zip": "281548",
+    "email": "kim@auisoft.net",
+    "phone": "0109825937"
+}, {
+	"id" : 5,
+    "name": "Anna",
+    "price": 394400,
+    "zip": "167209",
+    "email": "anna@auisoft.net",
+    "phone": "0104998798"
+}, {
+	"id" : 6,
+    "name": "Steve",
+    "price": 137500,
+    "zip": "359185",
+    "email": "steve@auisoft.net",
+    "phone": "0105781622"
+}, {
+	"id" : 7,
+    "name": "Kim",
+    "price": 519700,
+    "zip": "347493",
+    "email": "kim@auisoft.net",
+    "phone": "0105112263"
+}, {
+	"id" : 8,
+    "name": "Steve",
+    "price": 663100,
+    "zip": "134304",
+    "email": "steve@auisoft.net",
+    "phone": "0103136331"
+}, {
+	"id" : 9,
+    "name": "Emma",
+    "price": 984000,
+    "zip": "740885",
+    "email": "emma@auisoft.net",
+    "phone": "0108683936"
+}, {
+	"id" : 10,
+    "name": "Steve",
+    "price": 889700,
+    "zip": "464545",
+    "email": "steve@auisoft.net",
+    "phone": "0103375028"
+}, {
+	"id" : 11,
+    "name": "Kim",
+    "price": 191200,
+    "zip": "330023",
+    "email": "kim@auisoft.net",
+    "phone": "0108903364"
+}, {
+	"id" : 12,
+    "name": "Emma",
+    "price": 360600,
+    "zip": "624213",
+    "email": "emma@auisoft.net",
+    "phone": "0106629069"
+}, {
+	"id" : 13,
+    "name": "Anna",
+    "price": 260500,
+    "zip": "180880",
+    "email": "anna@auisoft.net",
+    "phone": "0103208709"
+}, {
+	"id" : 14,
+    "name": "Steve",
+    "price": 461200,
+    "zip": "748725",
+    "email": "steve@auisoft.net",
+    "phone": "0109329528"
+}, {
+	"id" : 15,
+    "name": "Steve",
+    "price": 781900,
+    "zip": "553873",
+    "email": "steve@auisoft.net",
+    "phone": "0109018962"
+}, {
+	"id" : 16,
+    "name": "Lawrence",
+    "price": 173100,
+    "zip": "723497",
+    "email": "lawrence@auisoft.net",
+    "phone": "0102001650"
+}, {
+	"id" : 17,
+    "name": "Steve",
+    "price": 565200,
+    "zip": "681640",
+    "email": "steve@auisoft.net",
+    "phone": "0107427284"
+}, {
+	"id" : 18,
+    "name": "Anna",
+    "price": 819200,
+    "zip": "850613",
+    "email": "anna@auisoft.net",
+    "phone": "0103079288"
+}, {
+	"id" : 19,
+    "name": "Lawrence",
+    "price": 387100,
+    "zip": "324598",
+    "email": "lawrence@auisoft.net",
+    "phone": "0104039890"
+}, {
+	"id" : 20,
+    "name": "Jennifer",
+    "price": 818900,
+    "zip": "737711",
+    "email": "jennifer@auisoft.net",
+    "phone": "0102502686"
+}]
