@@ -14,7 +14,7 @@
 
 angular
     .module('app')
-    .controller('Fmb006Ctrl', ['CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc', '$http', '$scope', '$window','$q', function (CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window, $q) 
+    .controller('FmbMonCtrl', ['CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc', '$http', '$scope', '$window','$q', function (CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window, $q) 
 {
 	/*------------------------------------------
      * 변수 선언
@@ -113,31 +113,24 @@ angular
            		workerList.worker2.onmessage = function(evt){ 
            	    //설비 plc 데이터 가져오기
                	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
-               	self.alarmList = {}
+               	//self.alarmList = {}
                	plcPromise.then(function(data) {
                		
                		self.plcList = data; //fmbplcVo가 담긴 리스트 형태리턴
-               		
-               		
-               		for (var i = 0; i < data.length; i++) {
+               		/*for (var i = 0; i < data.length; i++) {
                			if(data[i].eqptSts=='0'){ //sts== 4일경우 하단바에 알람 발생 경고()
                				self.alarmList[i]=data[i];
                			}
-               		}
-               		
+               		}*/
                	}, function(data){
                		alert('fail: '+ data)
                });
-
              }  
         }
         else {
           alert("현재 브라우저는 웹 워커를 지원하지 않습니다");
         }
       }
-
-
-
 
 }]);
 

@@ -1,6 +1,6 @@
 /**  
- * @Class Name : fmb007Ctrl.js
- * @Description : fmb007 
+ * @Class Name : fmbModeCtrl.js
+ * @Description : fmbMode 
  * @Modification Information  
  * @
  * @ 작업일       작성자      내용

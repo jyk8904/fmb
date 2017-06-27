@@ -7,6 +7,7 @@ angular
 .module('app')
 .controller('MainCtrl', ['$http'
                        , '$scope'
+                       , 'CmmAjaxService'
                        , 'CmmWorkerSrvc'
                        , '$location'
                        , '$timeout'
@@ -14,6 +15,7 @@ angular
                        , '$interval'
                        ,  function ($http
                                  , $scope
+                                 , CmmAjaxService
                                  , CmmWorkerSrvc
                                  , $location
                                  , $timeout
@@ -25,11 +27,18 @@ angular
    var workerList = CmmWorkerSrvc;
    
    var self = this;
+   
+   //plc parameter
+   self.plcParamVo = {
+       	plcId: '', 
+       	factId: 'C'
+       }
+   
     self.vo = {
            PLC_ID: 'PLC-001'
         }
     
-   self.btnFmb006Click = btnFmb006ClickHandler;   
+   self.btnFmbMonClick = btnFmbMonClickHandler;   
    self.btnFmbTbmClick = btnFmbTbmClickHandler;   
    self.btnFmbLineClick = btnFmbLineClickHandler;   
    self.btnFmbSpcClick = btnFmbSpcClickHandler;
@@ -41,9 +50,9 @@ angular
    self.LotationSetting = LotationSetting;
    
    
-      function btnFmb006ClickHandler() {
+      function btnFmbMonClickHandler() {
          WorkerStop();
-         $location.url('/Fmb006');
+         $location.url('/FmbMon');
       }
       function btnFmbTbmClickHandler() {
          WorkerStop();
@@ -73,21 +82,27 @@ angular
          self.showModal = !self.showModal;
       }
       
-
+    
+      Worker3Start();
+      
+      
+      
     if(localStorage.getItem('SettingTime')!=null){
     	self.Setting = JSON.parse(localStorage.getItem('SettingTime'));
     }else{
-	  	self.Setting = [{"pageSeq":"1", "rotateTime": 10, "pageNm":"Fmb006"},
+	  	self.Setting = [{"pageSeq":"1", "rotateTime": 10, "pageNm":"FmbMon"},
 						{"pageSeq":"2", "rotateTime": 10, "pageNm":"FmbTbm"},
 						{"pageSeq":"3", "rotateTime": 10, "pageNm":"FmbLine"},
-						{"pageSeq":"4", "rotateTime": 10, "pageNm":"FmbSpc"}
+						{"pageSeq":"4", "rotateTime": 10, "pageNm":"FmbSpc"},
+						{"pageSeq":"5", "rotateTime": 10, "pageNm":"FmbTotal"},
     ]}
     
     self.submit1 = function() {
-     var SettingTime =[{"pageSeq":"1", "rotateTime": self.Setting[0].rotateTime, "pageNm":"Fmb006"},
+     var SettingTime =[{"pageSeq":"1", "rotateTime": self.Setting[0].rotateTime, "pageNm":"FmbMon"},
      					{"pageSeq":"2", "rotateTime": self.Setting[1].rotateTime, "pageNm":"FmbTbm"},
      					{"pageSeq":"3", "rotateTime": self.Setting[2].rotateTime, "pageNm":"FmbLine"},
-     					{"pageSeq":"4", "rotateTime": self.Setting[3].rotateTime, "pageNm":"FmbSpc"}
+     					{"pageSeq":"4", "rotateTime": self.Setting[3].rotateTime, "pageNm":"FmbSpc"},
+     					{"pageSeq":"5", "rotateTime": self.Setting[4].rotateTime, "pageNm":"FmbTotal"}
      				]
 
        
@@ -102,9 +117,9 @@ angular
     //Web Worker시작 함수
     function WorkerStart(){
        // 현재 페이지가 첫페이지가 아닐경우 첫페이지로 이동시킨다.
-       if ($location.absUrl().split('/')[5] != 'Fmb006')
+       if ($location.absUrl().split('/')[5] != 'FmbMon')
        {
-          $location.url('/Fmb006');
+          $location.url('/FmbMon');
        }
        
        //브라우저가 웹 워커를 지원하는지 검사한다 .
@@ -150,6 +165,11 @@ angular
         	workerList.worker1.terminate();
         	workerList.worker1=undefined;
         }
+        //알람정보가져오는 워커 중지(정신사나워서 해놓은거라서 나중에 지워야함)
+        if(workerList.worker3!=undefined){
+        	workerList.worker3.terminate();
+        	workerList.worker3=undefined;
+        }
    }
    
     
@@ -166,9 +186,9 @@ angular
            }      
            
            //새로운 워커(객체)를 생성한다.
-           workerList.worker3= new Worker("worker3.js");       
+           workerList.worker3= new Worker("worker2.js");       
          
-           //Setting 정보를 Worker로 넘긴다.
+           //Setting 정보(화면전환 시간(초))를 Worker로 넘긴다.
            workerList.worker3.postMessage(5);
            
            // 워커로부터 전달되는 메시지를 받는다.

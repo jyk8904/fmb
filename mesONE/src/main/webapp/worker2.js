@@ -16,7 +16,7 @@
     
     
     function post(){
-    	console.log('posts');
+    	console.log('알람메세지');
     	postMessage(interval);
     }
     

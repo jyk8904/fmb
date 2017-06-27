@@ -41,13 +41,7 @@
 <!-- ngview 내부 body -->
 <bc-form-body>
 	<!--설비클래스 삽입 시작-->
-	<bc-back-panel>
-		<bc-back-panel-line panelline="line1" txt="침탄로 동우"></bc-back-panel-line>
-		<bc-back-panel-line panelline="line2" txt="침탄로 오리엔탈"></bc-back-panel-line>
-		<bc-back-panel-line panelline="line3" txt="쇼트 블라스트"></bc-back-panel-line>
-		<bc-back-panel-line panelline="line4" txt="쇼트 블라스트"></bc-back-panel-line>
-		<bc-back-panel-line panelline="line5" txt="고주파"></bc-back-panel-line>
-		<bc-back-panel-line panelline="line6" txt="S/GEAR 연삭"></bc-back-panel-line>
+   	<div bg-inner-ctrl class='bg-panel'></div>
 
 	<div class="EQPT">	
 		 <ul>
@@ -62,24 +56,9 @@
 			</li>
 		</ul>
  	</div>
-	</bc-back-panel>
+	</div>
 		<!--설비클래스 삽입 끝-->
 </bc-form-body>
-
-
-<!-- ngview 내부 footer -->
-<bc-form-footer>
-<!--알람정보 하단 바 시작-->
-	<div class="alarm_data">
-		<marquee>
-		<ul id="banner" class="simply-scroll-list">
-		<li ng-repeat="alarm in vm.alarmList">
-		 {{alarm.plcId}} 알람발생  {{alarm.stsDttm}}
-		</li>
-		</ul>
-		</marquee>
-	</div>
-</bc-form-footer>
 </div>
 
 
