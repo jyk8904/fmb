@@ -628,22 +628,3 @@ div[class^=eqpt] {
 	position: absolute;
 	z-index: 1000
 }
-
-
-
-
-/*****************************************************/
-.stsTitle{
-	color:white;
-	width:100px;
-	background-color: #12253D;
-	border:1px solid white;
-	clear: both;
-}
-.stsBoard{
-	border:1px solid white;
-	width:360px;
-	float: left;
-	margin:15px;
-	
-}
