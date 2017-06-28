@@ -1,0 +1,182 @@
+<!-- 
+/**  
+ * @Class Name : fmbLine.html
+ * @Description : fmbLine
+ * @Modification Information  
+ * @
+
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.06.16	 정유경
+ * 
+
+ * css: assets/css/fmb.css
+ * controller : fmbLineCtrl.js
+ *
+ */
+ -->
+<!-- ngview 내부 페이지 -->
+<div class='bc-screen'>
+	
+	<!-- ngview 내부 header -->
+	<bc-form-header title="Line별 생산실적">
+	</bc-form-header>
+
+	<!-- ngview 내부 body -->
+	<bc-form-body> 
+	<!-- 	<table class="bc-table">
+		<tr>
+			<td colspan="2">구분</td>
+			<td ng-repeat="line in vm.lineList">{{line.lineNm}}</td>
+		<tr>
+		<tr>
+			<td colspan="2">목표</td>
+			<td ng-repeat="line in vm.lineList">{{line.dgoal + line.ngoal}}
+			</td>
+		</tr>
+		<tr>
+
+			<td rowspan="3">실적</td>
+			<td>주간</td>
+			<td ng-repeat="line in vm.lineList">{{line.drate}}</td>
+		</tr>
+		<tr>
+			<td>야간</td>
+			<td ng-repeat="line in vm.lineList">{{line.nrate}}</td>
+		</tr>
+		<tr>
+			<td>합계</td>
+			<td ng-repeat="line in vm.lineList">{{line.drate + line.nrate}}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">달성률(%)
+			<td ng-repeat="line in vm.lineList">{{line.drate + line.nrate}}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">가동상태
+			<td ng-repeat="line in vm.lineList">{{line.eqptSts}}</td>
+		</tr>
+	</table>
+
+ -->
+<div class="wrap">
+ 	<div class="title">
+			<table grid-header-ctrl data="vm.lineList" class="line-table bc-table" ng-repeat="line in vm.lineList" ng-show="$index%7==0">
+				<tr>
+					<td colspan="2">구분</td>
+				</tr>
+				<tr>
+					<td colspan="2">목표</td>
+				</tr>
+				<tr>
+					<td rowspan="3">실적</td>
+					<td>주간</td>
+				</tr>
+				<tr>
+					<td>야간</td>
+				</tr>
+				<tr>
+					<td>합계</td>
+				</tr>
+				<tr>
+					<td colspan="2">달성률(%)</td>
+				</tr>
+				<tr>
+					<td colspan="2">가동상태</td>
+				</tr>
+			</table>
+		</div>
+		
+		
+		<div class="colList" >
+			<div grid-panel-ctrl class="col" data="vm.lineList" ng-repeat="line in vm.lineList">
+				<table class="line-table bc-table">
+					<tr>
+						<td>{{line.lineNm}}</td>
+					</tr>
+					<tr>
+						<td>{{vm.parseInt(line.dgoal) + vm.parseInt(line.ngoal)}}</td>
+					</tr>
+					<tr>
+						<td>{{vm.parseInt(line.dcount)}}</td>
+					</tr>
+					<tr>
+						<td>{{vm.parseInt(line.ncount)}}</td>
+					</tr>
+					<tr>
+						<td>{{vm.parseInt(line.dcount) + vm.parseInt(line.ncount)}}</td>
+					</tr>
+					<tr>
+						<td>{{vm.parseInt(line.drate) + vm.parseInt(line.nrate)}}</td>
+					</tr>
+					<tr>
+						<td ng-switch on="line.eqptSts">
+			               <img ng-switch-when="0" class="obj" src="/mes/assets/img/button/Yellow25.png" align="center" style="width:20px; height:20px;">
+			               <img ng-switch-when="1" class="obj" src="/mes/assets/img/button/Green25.png" align="center" style="width:20px; height:20px;">
+			               <img ng-switch-when="2" class="obj" src="/mes/assets/img/button/White25.png" align="center" style="width:20px; height:20px;">
+			               <img ng-switch-when="3" class="obj" src="/mes/assets/img/button/Blue25.png" align="center" style="width:20px; height:20px;">
+			               <img ng-switch-when="4" class="obj" src="/mes/assets/img/button/Red25.gif" align="center" style="width:20px; height:20px;">
+						</td>
+					</tr>
+				</table>
+			</div> 
+		</div>
+		</div>
+
+
+	</bc-form-body>
+</div>
+
+
+<!------------------------------------------ modal body start------------------------------------------------------->
+<modal title="설비 정보" visible="vm.showModal">
+<form role="form">
+
+	<ul>
+		<li ng-repeat="plc in vm.plc">
+			<div class="form-group">
+				<label for="stsImg0"></label>
+			</div>
+			<div class="form-group">
+				<label for="plcId">PlcID </label>
+				<h5>{{plc.plcId}}</h5>
+			</div>
+			<div class="form-group">
+
+				<label for="eqptCd">설비코드 </label>
+				<h5>{{plc.eqptCd}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="eqptNm">설비명</label>
+				<h5>{{plc.eqptNm}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="factId">공장ID</label>
+				<h5>{{plc.factId}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="lineNm">라인명 </label>
+				<h5>{{plc.lineNm}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="item_Cd">제품코드 </label>
+				<h5>{{plc.item_Cd}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="eqptSts">설비상태 </label>
+				<h5>{{plc.eqptSts}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="stsDttm">설비 </label>
+				<h5>{{plc.stsDttm}}</h5>
+			</div>
+
+		</li>
+	</ul>
+	<button type="button" class="btn btn-default" data-dismiss="modal"
+		aria-hidden="true">close</button>
+</form>
+</modal>
+
+<!-------------------------------------------modal body end------------------------------------------------------->
