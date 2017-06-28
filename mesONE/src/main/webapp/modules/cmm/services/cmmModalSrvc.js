@@ -99,7 +99,6 @@ angular.module('app').factory('CmmModalSrvc', ['ModalService', '$q', function(Mo
     function showMessage(message) {
     	return getConfirm("확인", message);
 
-        var deferred = $q.defer();
 	};
 	
 	

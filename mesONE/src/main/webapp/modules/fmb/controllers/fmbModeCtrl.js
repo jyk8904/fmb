@@ -22,10 +22,24 @@ angular
      var worker= undefined;
      var self = this;
     
-
+     //설비parameter
+     self.eqptParamVo = {
+           factId: 'C',
+          plcId: '', 
+           eqptCnm: ''
+         }
+     
+     //plc parameter
+     self.plcParamVo = {
+            plcId: '', 
+            factId: 'C'
+         }
      
      self.configSetting = {};
      self.checkData = {};
+     
+     
+     self.changeFact = changeFact;
      
      self.exists = function (eqpt, modStatus, index) {
     	 if (modStatus == true) {
@@ -42,7 +56,6 @@ angular
 			
 			if (d.msgId == 'OK') {
 				alert(d.msgNm);
-				console.log("dafsdfsafd");
 			} else {
 				alert("err =" + d.msgNm);
 			}
@@ -157,20 +170,8 @@ angular
     	
      });*/
 
-    //설비parameter
-    self.eqptParamVo = {
-          factId: 'C',
-         plcId: '', 
-          eqptCnm: ''
-        }
-    
-    //plc parameter
-    self.plcParamVo = {
-           plcId: '', 
-           factId: 'C'
-        }
-    
-    self.plcParamVo.factId= CmmFactSrvc.selectedFactId;
+
+    //self.plcParamVo.factId = CmmFactSrvc ;
   	       
     self.showModal = false;
     
@@ -210,8 +211,19 @@ angular
     	}
     };
 
+    function changeFact(){
+    	//배경이미지 변경하기
+    	//설비리스트 다시불러오기
+    	getEqptList();
+
+    }
+    
+    getEqptList();
+    
+    
     //설비 이미지리스트 가져오기
-    var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
+    function getEqptList(){
+    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
     	eqptPromise.then(function(data) {
     		self.eqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
     		for(var i = 0; i < self.eqptList.length; i++){
@@ -220,6 +232,8 @@ angular
     	}, function(data){
     	alert('fail: '+ data)
     });    	
+    
+    }
     
     /*------------------------------------------
      *  EQPT Data Commit

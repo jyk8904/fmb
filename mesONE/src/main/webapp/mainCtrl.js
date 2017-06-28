@@ -9,20 +9,25 @@ angular
                        , '$scope'
                        , 'CmmAjaxService'
                        , 'CmmWorkerSrvc'
-                       , 'CmmFactSrvc'
+                       /*, 'CmmFactSrvc' 선택된 공장 데이터 공유*/
                        , '$location'
                        , '$timeout'
                        , '$q'
                        , '$interval'
+                       , '$window'
+                       /*, '$rootScope' 상위스코프접근*/
                        ,  function ($http
                                  , $scope
                                  , CmmAjaxService
                                  , CmmWorkerSrvc
-                                 , CmmFactSrvc
+                                /* , CmmFactSrvc*/
                                  , $location
                                  , $timeout
                                  , $q
-                                 , $interval) {
+                                 , $interval
+                                 , $window
+                                 /*, $rootScope*/
+                                 ) {
 
  
    var i = 1;
@@ -31,10 +36,29 @@ angular
    var self = this;
    
    //plc parameter
-   self.plcParamVo = {
-       	plcId: '', 
-       	factId: 'C'
-       }
+   self.plcParamVo={};
+   self.plcParamVo.plcId ='';
+   self.plcParamVo.factId = 'C';
+   //self.plcParamVo.factId = CmmFactSrvc.getSelectedFactId() ;
+   
+   
+   //공장선택시
+   
+ 
+/*   function changeFact() {
+	   //하위 컨트롤러에게 이벤트전송
+	    $rootscope.$broadcast("event:changeFact",{selectedFact: self.plcParamVo.factId});
+	   
+	   	console.log(self.plcParamVo.factId);
+		CmmFactSrvc.setSelectedFactId(self.plcParamVo.factId);
+		
+		if(workerList.worker3!=undefined){
+			workerList.worker3.terminate();
+			workerList.worker3=undefined;
+		    Worker3Start();
+		}
+    }
+ */
    
     self.vo = {
            PLC_ID: 'PLC-001'
@@ -50,7 +74,7 @@ angular
    self.btnWorkerStart = WorkerStart;
    self.btnWorkerStop = WorkerStop;
    self.LotationSetting = LotationSetting;
-   self.changeFact = changeFact;
+   //self.changeFact = changeFact;
    
       function btnFmbMonClickHandler() {
          WorkerStop();
@@ -84,14 +108,8 @@ angular
          self.showModal = !self.showModal;
       }
       
-     function changeFact() {
-    	  CmmFactSrvc.selectedFactId=self.plcParamVo.factId;
-    	  
-       }
-       
-     
+  
       Worker3Start();
-      
       
       
     if(localStorage.getItem('SettingTime')!=null){
@@ -182,7 +200,6 @@ angular
     
     //설비plc 데이터 불러오기 Web Worker시작 함수
     function Worker3Start(){
-
        //브라우저가 웹 워커를 지원하는지 검사한다 .
         if(!!window.Worker){    
            
@@ -210,16 +227,13 @@ angular
                				self.alarmList[i]=data[i];
                			}
                		}
-               		
                	}, function(data){
                		alert('fail: '+ data)
                });
-
              }  
         }
         else {
           alert("현재 브라우저는 웹 워커를 지원하지 않습니다");
         }
       }
-    
 }]);

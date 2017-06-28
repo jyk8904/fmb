@@ -575,10 +575,19 @@ md-dialog title {
 	position:absolute;
 	width:1600px;
 	height:900px;
-	background-image: url('/mes/assets/img/system/eqptBg.png');
+	
     background-repeat: no-repeat;
     background-size: cover;
     opacity:0.8;
+}
+.eqpt_plc_c{
+	background-image: url('/mes/assets/img/system/eqptBg_plc_c2.png');
+}
+.eqpt_plc_b{
+	background-image: url('/mes/assets/img/system/eqptBg_plc_b.png');
+}
+.eqpt_plc_a{
+	background-image: url('/mes/assets/img/system/eqptBg_plc_a.png');
 }
 
 .EQPT {
