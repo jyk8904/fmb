@@ -22,7 +22,7 @@ angular
  
     var self = this;
     var workerList = CmmWorkerSrvc;
-    var fact_id = "C";
+    var fact_id = "B";
     
     self.lineParamVo = {
     	factId : fact_id,

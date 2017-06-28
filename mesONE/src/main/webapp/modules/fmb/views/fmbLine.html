@@ -62,7 +62,7 @@
  -->
 <div class="wrap">
  	<div class="title">
-			<table class="line-table bc-table" ng-repeat="line in vm.lineList" ng-show="$index%7==0">
+			<table grid-header-ctrl data="vm.lineList" class="line-table bc-table" ng-repeat="line in vm.lineList" ng-show="$index%7==0">
 				<tr>
 					<td colspan="2">구분</td>
 				</tr>
@@ -89,8 +89,8 @@
 		</div>
 		
 		
-		<div grid-panel-ctrl class="colList" >
-			<div  class="col" data="vm.lineList" ng-repeat="line in vm.lineList">
+		<div class="colList" >
+			<div grid-panel-ctrl class="col" data="vm.lineList" ng-repeat="line in vm.lineList">
 				<table class="line-table bc-table">
 					<tr>
 						<td>{{line.lineNm}}</td>

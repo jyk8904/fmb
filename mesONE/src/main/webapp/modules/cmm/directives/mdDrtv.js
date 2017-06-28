@@ -171,6 +171,43 @@ angular
 			 }
 		 } 
 	  })
+	  .directive('gridHeaderCtrl', function($timeout){
+		  return {
+			  restrict: 'A',
+			  scope: {
+				   data: '=data'
+			  },
+			  link: function(scope, element, attrs) {
+				  $timeout(function(){
+					 
+					  var length = scope.data.length / 7;
+					  if (length < 3)
+					  {
+						  if (length == 1) {
+							  var header = "143";
+							  var data = "270";
+							  var subData = "90";
+						  }
+						  else if (length == 2) {
+							  var header = "76.5";
+							  var data = "135";
+							  var subData = "45";
+						  }
+						  
+						  element[0].children[0].children[0].style.height = header + "px";
+						  element[0].children[0].children[1].style.height = subData + "px";
+						  element[0].children[0].children[2].children[0].style.height = data + "px";
+						  element[0].children[0].children[2].children[1].style.height = subData + "px";
+						  element[0].children[0].children[3].children[0].style.height = subData + "px";
+						  element[0].children[0].children[4].children[0].style.height = subData + "px";
+						  element[0].children[0].children[5].children[0].style.height = subData + "px";
+						  element[0].children[0].children[6].style.height = subData + "px";
+						  element[0].children[0].children[7].style.height = subData + "px";
+					  }
+				  });
+			  } 
+		  }
+	  })
 	  .directive('gridPanelCtrl', function($timeout){
 		  return {
 			  restrict: 'A',
@@ -180,7 +217,24 @@ angular
 			  link: function(scope, element, attrs) {
 				  $timeout(function(){
 					 
-					  console.log(scope.data);
+					  var length = scope.data.length / 7;
+					  if (length < 3)
+					  {
+						  if (length == 1) {
+							  var header = "143";
+							  var data = "90";
+						  }
+						  else if (length == 2) {
+							  var header = "76.5";
+							  var data = "45";
+						  }
+						  
+						  element[0].children[0].children[0].children[0].style.height = header + "px";
+						  for(var i = 1; i < 7; i++)
+						  {
+							  element[0].children[0].children[0].children[i].style.height = data + "px";
+						  }
+					  }
 				  });
 			  } 
 		  }
