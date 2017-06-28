@@ -14,7 +14,7 @@
 
 angular
     .module('app')
-    .controller('FmbMonCtrl', ['CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc', '$http', '$scope', '$window','$q', function (CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window, $q) 
+    .controller('FmbMonCtrl', ['CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc', 'CmmFactSrvc', '$http', '$scope', '$window','$q', function (CmmAjaxService, CmmWorkerSrvc, CmmFactSrvc, $http, $scope, $window, $q) 
 {
 	/*------------------------------------------
      * 변수 선언
@@ -34,7 +34,8 @@ angular
         	factId: 'C'
         }
     
-
+    self.plcParamVo.factId= CmmFactSrvc.selectedFactId;
+    
     self.showModal = false;
     
     self.toggleModal = function(pid){

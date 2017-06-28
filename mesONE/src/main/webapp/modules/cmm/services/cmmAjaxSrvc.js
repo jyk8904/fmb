@@ -14,7 +14,7 @@
 
 'use strict';
 
-angular.module('app').factory('CmmAjaxService', ['CmmModalSrvc', '$http', '$q', function(CmmModalSrvc, $http, $q) {
+angular.module('app').factory('CmmAjaxService', ['CmmModalSrvc', '$http', '$q','$window', function(CmmModalSrvc, $http, $q, $window) {
 
 	// 서비스 메서드 목록
     var factory = {
@@ -159,8 +159,15 @@ angular.module('app').factory('CmmAjaxService', ['CmmModalSrvc', '$http', '$q', 
 					.then(
 						function(d) {
 							if (d.msgId == "OK") {
-								CmmModalSrvc.showSave(d.msgNm);
-					            deferred.resolve(d.msgId);
+								//console.log("11"+CmmModalSrvc.showSave(d.msgNm));
+								/*if(CmmModalSrvc.showSave(d.msgNm)==true){
+									$window.location.reload();
+								}	*/
+								//
+								CmmModalSrvc.showSave(d.msgNm)	
+								$window.location.reload();
+								
+					            deferred.resolve(d);
 							}
 							else {
 								CmmModalSrvc.showError(d.msgNm);

@@ -1,0 +1,275 @@
+@CHARSET "UTF-8";
+
+/**
+ * @ File Name   : fmbDash.css
+ * @ Description : DashBoard CSS
+ * @ Modification Information @ 
+ * @ 작업일                  작성자                내용 @ 
+ * @-----------   ---------   ------------------------------- 
+ * @ 2017.05.29     조준연              최초생성 @
+ */
+
+
+/*임시 코드*/
+.workBar {
+	top: 670px;
+}
+.workPie {
+	margin: 20px 0 0 30px;
+}
+.runGauge {
+	margin-left: 50px;
+}
+/*설정 코드*/
+.stsbackLg {
+	position: absolute;
+	width: 360px;
+	height: 844px;
+	z-index: 99;
+	opacity:0.8;
+	margin: -5px 0 0 0;
+	/*background-image: url('/mes/assets/img/dash/dash_panel_lg.png');
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    bacground-position: center;*/
+}
+.stsbackSm {
+	position: absolute;
+	width: 360px;
+	height: 380px;
+	z-index: 99;
+	opacity: 0.8;
+	margin: -5px 0 0 0;
+	/*background-image: url('/mes/assets/img/dash/dash_panel_sm.png');
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;*/
+}
+.stsTitle {
+	/*color:white;
+	width:120px;
+	background-color: #12253D;
+	border:1px solid white;
+	clear: both;*/
+	width: 240px;
+	height: 48px;
+	background-image: url('/mes/assets/img/dash/dash_panel_title.png');
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.stsTitle p {
+	font-size: 28px;
+	color: ghostWhite;
+	padding: 6px 0 0 12px;
+}
+.stsBoard {
+	/*border: 1px solid white;*/
+	width: 360px;
+	float: left;
+	margin: 15px;
+	/*background-color: white;*/
+}
+.stsBody {
+	position: absolute;
+	z-index: 100;
+}
+.dashLg {
+	height: 900px;
+}
+.dashSm {
+	height: 434px;
+}
+.workInfo {
+	position:absolute;
+	width:360px;
+	height: 270px;
+	top: 400px;
+	z-index:100;
+	padding: 0 10px 5px 10px;
+}
+.workInfo .workInfoGrid {
+	width: 340px;
+	height: 200px;
+	margin-bottom: 20px;
+	background-color: black;
+}
+.workInfo .workInfoGrid .dBlue {
+	background-color: #10253F
+}
+
+.workInfo .workInfoGrid .rBlue {
+	background-color: #546E7A
+}
+.workInfo .workInfoGrid .grey {
+	background-color: grey
+}
+.workInfo .workInfoGrid .workFirstBox {
+	width: 60px;
+	height: 25px;
+	float:left;
+	margin: 0 4px 4px 0;
+	text-align: center;
+	font-size: 19px;
+	color: ghostWhite;
+}
+.workInfo .workInfoGrid .workSecondBox {
+	width: 192px;
+	height: 25px;
+	float:left;
+	margin: 0 4px 4px 0;
+	text-align: center;
+	font-size: 19px;
+	color: ghostWhite;
+}
+.workInfo .workInfoGrid .workThirdBox {
+	width: 80px;
+	height: 25px;
+	float:left;
+	margin-bottom: 4px;
+	text-align: center;
+	font-size: 19px;
+	color: ghostWhite;
+}
+.workInfo .workInfoPpm {
+	width: 340px;
+	height: 35px;
+}
+.workInfo .workInfoPpm .ppmTitle {
+	width: 200px;
+	height: 35px;
+	background-color: grey;
+	float:left;
+	margin-right: 20px;
+	text-align: center;
+	font-size: 24px;
+	color: ghostWhite;
+}
+.workInfo .workInfoPpm .ppmValue {
+	width: 120px;
+	height: 35px;
+	background-color: grey;
+	float:left;
+	text-align: center;
+	font-size: 24px;
+	color: ghostWhite;
+}
+.gaugeInfo {
+	position:absolute;
+	width:360px;
+	height: 145px;
+	top: 290px;
+	z-index:100;
+	padding: 0 10px 5px 10px;
+}
+.gaugeTitleBox {
+	width: 165px;
+	height: 30px;
+	background-color: grey;
+	float: left;
+	margin: 0 10px 5px 0;
+}
+.gaugeValueBox {
+	width: 165px;
+	height: 30px;
+	background-color: grey;
+	float: left;
+	margin: 0 0 5px 0;
+}
+.gaugeTitleBox p {
+	font-size: 24px;
+	color: ghostWhite;
+	text-align:center;
+}
+.gaugeValueBox p {
+	font-size: 24px;
+	color: ghostWhite;
+	padding-left: 40px;
+}
+.topInfo {
+	position: absolute;
+	width: 360px;
+	height: 165px;
+	top: 270px;
+	z-index: 100;
+	padding: 0 10px 5px 10px;
+}
+.bottomInfo {
+	position: absolute;
+	width: 360px;
+	height: 165px;
+	top: 734px;
+	z-index: 100;
+	padding: 0 10px 5px 10px;
+}
+.infoTitle {
+	width: 150px;
+	height: 25px;
+	background-color: white;
+	margin-bottom: 10px;
+	border: 1.5px solid black;
+	padding-left: 10px;
+}
+.firstTitleBox {
+	width: 165px;
+	height: 35px;
+	background-color: grey;
+	float: left;
+	margin: 0 10px 5px 0;
+	line-height: 35px;
+	padding-left: 5px;
+	color: white;
+}
+.firstValueBox {
+	width: 165px;
+	height: 35px;
+	background-color: grey;
+	float: left;
+	margin: 0 0 5px 0;
+	line-height: 35px;
+	padding-left: 5px;
+	color: white;
+}
+.secondTitleBox {
+	width: 165px;
+	height: 35px;
+	background-color: grey;
+	float: left;
+	margin: 0 10px 5px 0;
+	line-height: 35px;
+	padding-left: 5px;
+	color: white;
+}
+.secondValueBox {
+	width: 165px;
+	height: 35px;
+	background-color: grey;
+	float: left;
+	margin: 0 0 5px 0;
+	line-height: 35px;
+	padding-left: 5px;
+	color: white;
+}
+.thirdTitleBox {
+	width: 165px;
+	height: 35px;
+	background-color: grey;
+	float: left;
+	margin: 0 10px 0 0;
+	line-height: 35px;
+	padding-left: 5px;
+	color: white;
+}
+.thirdValueBox {
+	width: 165px;
+	height: 35px;
+	background-color: grey;
+	float: left;
+	line-height: 35px;
+	padding-left: 5px;
+	color: white;
+}
