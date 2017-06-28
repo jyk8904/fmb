@@ -22,7 +22,7 @@ angular
  
     var self = this;
     var workerList = CmmWorkerSrvc;
-    var fact_id = "B";
+    var fact_id = "C";
     
     self.lineParamVo = {
     	factId : fact_id,
@@ -46,6 +46,31 @@ angular
     promise.then(function(data){
     	self.lineList = data;
     	console.log(self.lineList);
+    	console.log(self.lineList.length)
+    	var length = self.lineList.length;
+    	var dangle = length % 7;
+    	if (dangle != 0) 
+    	{
+    		var blankCount = 7- dangle;
+    		for (var i = 0; i < blankCount; i++)
+    		{
+    			var data = {  dCount : ''
+		    			    , dgoal : ''
+		    			    , drate : ''
+		    			    , eqptSts : ''
+		    			    , desc : null
+		    			    , lineBotNm : ''
+		    			    , lineCd : ''
+		    				, lineMidNm : ''
+		    				, lineNm : ''
+		    				, lineTopNm : ''
+		    				, ncount : ''
+		    				, ngoal : ''
+		    				, nrate : ''
+		    			   };
+    			self.lineList.push(data);
+    		}
+    	}
     }
     ,function(data){
     	alert('fail: '+ data)
