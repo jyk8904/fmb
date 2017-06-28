@@ -66,7 +66,9 @@ angular
     
    self.btnFmbMonClick = btnFmbMonClickHandler;   
    self.btnFmbTbmClick = btnFmbTbmClickHandler;   
-   self.btnFmbLineClick = btnFmbLineClickHandler;   
+   self.btnFmbLineAClick = btnFmbLineAClickHandler;
+   self.btnFmbLineBClick = btnFmbLineBClickHandler;  
+   self.btnFmbLineCClick = btnFmbLineCClickHandler;  
    self.btnFmbSpcClick = btnFmbSpcClickHandler;
    self.btnFmbTotalClick = btnFmbTotalClickHandler;
    self.btnFmbModeClick = btnFmbModeClickHandler;
@@ -84,9 +86,17 @@ angular
          WorkerStop();
          $location.url('/FmbTbm');
       }
-      function btnFmbLineClickHandler() {
+      function btnFmbLineAClickHandler() {
           WorkerStop();
-          $location.url('/FmbLine');
+          $location.url('/FmbLineA');
+       }
+      function btnFmbLineBClickHandler() {
+          WorkerStop();
+          $location.url('/FmbLineB');
+       }
+      function btnFmbLineCClickHandler() {
+          WorkerStop();
+          $location.url('/FmbLineC');
        }
       function btnFmbSpcClickHandler() {
           WorkerStop();
@@ -114,28 +124,33 @@ angular
       
     if(localStorage.getItem('SettingTime')!=null){
     	self.Setting = JSON.parse(localStorage.getItem('SettingTime'));
-    }else{
+    }
+    else
+    {
 	  	self.Setting = [{"pageSeq":"1", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbMon"},
-						{"pageSeq":"2", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbTbm"},
-						{"pageSeq":"3", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbLine"},
-						{"pageSeq":"4", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbSpc"},
-						{"pageSeq":"5", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbTotal"},
-    ]}
+						{"pageSeq":"2", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbTotal"},
+						{"pageSeq":"3", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbLineA"},
+						{"pageSeq":"4", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbLineB"},
+						{"pageSeq":"5", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbLineC"},
+						{"pageSeq":"6", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbTbm"}];
+	  	
+	  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));
+	}
     
     self.submit1 = function() {
      var SettingTime =[{"pageSeq":"1", "rotateTime": self.Setting[0].rotateTime, "dataTime": self.Setting[0].dataTime, "pageNm":"FmbMon"},
-     					{"pageSeq":"2", "rotateTime": self.Setting[1].rotateTime, "dataTime": self.Setting[1].dataTime, "pageNm":"FmbTbm"},
-     					{"pageSeq":"3", "rotateTime": self.Setting[2].rotateTime, "dataTime": self.Setting[2].dataTime, "pageNm":"FmbLine"},
-     					{"pageSeq":"4", "rotateTime": self.Setting[3].rotateTime, "dataTime": self.Setting[3].dataTime, "pageNm":"FmbSpc"},
-     					{"pageSeq":"5", "rotateTime": self.Setting[4].rotateTime, "dataTime": self.Setting[4].dataTime, "pageNm":"FmbTotal"}
-     				]
+     					{"pageSeq":"2", "rotateTime": self.Setting[1].rotateTime, "dataTime": self.Setting[1].dataTime, "pageNm":"FmbTotal"},
+     					{"pageSeq":"3", "rotateTime": self.Setting[2].rotateTime, "dataTime": self.Setting[2].dataTime, "pageNm":"FmbLineA"},
+     					{"pageSeq":"4", "rotateTime": self.Setting[3].rotateTime, "dataTime": self.Setting[3].dataTime, "pageNm":"FmbLineB"},
+     					{"pageSeq":"5", "rotateTime": self.Setting[4].rotateTime, "dataTime": self.Setting[4].dataTime, "pageNm":"FmbLineC"},
+     					{"pageSeq":"5", "rotateTime": self.Setting[5].rotateTime, "dataTime": self.Setting[5].dataTime, "pageNm":"FmbTbm"}];
 
        
        localStorage.setItem('SettingTime', JSON.stringify(SettingTime));
          
-         for(var i=0; i<localStorage.length; i++)
+       for(var i=0; i<localStorage.length; i++)
        {
-       console.log(localStorage.getItem(localStorage.key(i)));
+    	   console.log(localStorage.getItem(localStorage.key(i)));
        }
     }
    

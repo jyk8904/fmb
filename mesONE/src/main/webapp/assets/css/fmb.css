@@ -31,6 +31,11 @@ img {
 	background-color: #333
 }
 
+.timeSettingPage label{
+	width:100px;
+}
+
+
 .mouse-over-bar:hover {
 	top: 0px;
 }
@@ -47,7 +52,7 @@ img {
 }
 
 div[ng-view] {
-	position: absolute;
+	position: relative;
 	/*z-index: 100;*/
 	width: 100%;
 	height: 100%;
@@ -59,10 +64,8 @@ div[ng-view] {
 	margin-top: 0px;
 	margin-bottom: 0px;
 	padding: 0px;
-	border: 1px solid #ddd;
-	/*border-radius: 4px;*/
-	background-image: url('../img/system/back.png');
-	/*box-shadow: inset 0 1px 1px rgba(0,0,0,.075);*/
+	/* background-image: url('../img/system/back.png'); */
+
 }
 
 /* 화면 내부 폼. 화면 당 1개 이상 폼으로 구성됨 
@@ -242,6 +245,30 @@ color:yellow;
 	height:500px;
 	font-size: 20pt;
 }
+.tbm-table tr:nth-child(1){
+	background-color: #404040;
+	height: 143px;
+}
+.tbm-table tr:nth-child(2){
+	background-color: #10253F;
+	height: 110px;
+}
+.tbm-table tr:nth-child(3){
+	background-color: #546E7A;
+	height: 110px;
+}
+.tbm-table tr:nth-child(4){
+	background-color: #303D44;
+	height: 110px;
+}
+.tbm-table tr:nth-child(5){
+	background-color: #262626;
+	height: 110px;
+}
+.tbm-table tr:nth-child(6){
+	background-color: #10253F;
+	height: 110px;
+}
 @media screen and (max-width:1280px) {
 	.auiGrid {
 		margin-left: 0px;
@@ -313,7 +340,8 @@ inputText {
 
 /* 폼의 주요 Contents 부분. 테이블이 없을 경우만 사용  */
 .bc-form-footer {
-	background-image: url('../img/system/back.png');
+	/* background-image: url('../img/system/back.png'); */
+	position:relative;
 	width:1920px;
 	height:55px;
 }
@@ -540,12 +568,15 @@ md-dialog title {
 }
 
 .line_view {
+	position: relative;
 	border-radius: 5px;
 	background-color: rgba(10, 10, 10, 0.7);
 	padding: 0 5px 0 5px;
 	width:365px;
 	height: 118px;
-	float:left
+	float: right;
+	top: -15px;
+	margin-right: 8.3%;
 }
 
 .line {
@@ -616,7 +647,7 @@ div[class^=eqpt] {
 }
 
 .background-panel{
-		background-image: url('../img/system/back.png');
+		/* background-image: url('../img/system/back.png'); */
 }
 /* bcFormFooter */
 .alarm_data {

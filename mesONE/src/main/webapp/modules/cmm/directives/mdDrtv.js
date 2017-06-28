@@ -200,9 +200,8 @@ angular
 						  element[0].children[0].children[2].children[1].style.height = subData + "px";
 						  element[0].children[0].children[3].children[0].style.height = subData + "px";
 						  element[0].children[0].children[4].children[0].style.height = subData + "px";
-						  element[0].children[0].children[5].children[0].style.height = subData + "px";
+						  element[0].children[0].children[5].style.height = subData + "px";
 						  element[0].children[0].children[6].style.height = subData + "px";
-						  element[0].children[0].children[7].style.height = subData + "px";
 					  }
 				  });
 			  } 

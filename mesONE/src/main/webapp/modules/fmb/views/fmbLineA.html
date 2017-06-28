@@ -96,22 +96,28 @@
 						<td>{{line.lineNm}}</td>
 					</tr>
 					<tr>
-						<td>{{line.dgoal + line.ngoal}}</td>
+						<td>{{vm.parseInt(line.dgoal) + vm.parseInt(line.ngoal)}}</td>
 					</tr>
 					<tr>
-						<td>{{line.drate}}</td>
+						<td>{{vm.parseInt(line.dcount)}}</td>
 					</tr>
 					<tr>
-						<td>{{line.nrate}}</td>
+						<td>{{vm.parseInt(line.ncount)}}</td>
 					</tr>
 					<tr>
-						<td>{{line.drate+line.nrate}}</td>
+						<td>{{vm.parseInt(line.dcount) + vm.parseInt(line.ncount)}}</td>
 					</tr>
 					<tr>
-						<td>{{line.drate+line.nrate}}</td>
+						<td>{{vm.parseInt(line.drate) + vm.parseInt(line.nrate)}}</td>
 					</tr>
 					<tr>
-						<td>{{line.eqptSts}}</td>
+						<td ng-switch on="line.eqptSts">
+			               <img ng-switch-when="0" class="obj" src="/mes/assets/img/button/Yellow25.png" align="center" style="width:35px; height:35px;">
+			               <img ng-switch-when="1" class="obj" src="/mes/assets/img/button/Green25.png" align="center" style="width:35px; height:35px;">
+			               <img ng-switch-when="2" class="obj" src="/mes/assets/img/button/White25.png" align="center" style="width:35px; height:35px;">
+			               <img ng-switch-when="3" class="obj" src="/mes/assets/img/button/Blue25.png" align="center" style="width:35px; height:35px;">
+			               <img ng-switch-when="4" class="obj" src="/mes/assets/img/button/Red25.gif" align="center" style="width:35px; height:35px;">
+						</td>
 					</tr>
 				</table>
 			</div> 
