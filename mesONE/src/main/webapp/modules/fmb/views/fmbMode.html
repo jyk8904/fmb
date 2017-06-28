@@ -21,11 +21,16 @@
 	<!--     좌상단 버튼   -->
 	<md-config-btn></md-config-btn>
 	<!--     좌상단 끝   -->
+
+ 	<md-radio-group ng-model="vm.eqptParamVo.factId" ng-change="vm.changeFact()">
+		<md-radio-button class="md-radio-button" value="A" >A동</md-radio-button>
+		<md-radio-button class="md-radio-button" value="B" >B동</md-radio-button>
+		<md-radio-button class="md-radio-button" value="C"> C동 </md-radio-button>
+	</md-radio-group> -
 	
-	공장 선택
-   <input type="radio" ng-model="vm.eqptParamVo.factId" value="A" ng-change="vm.changeFact()">A동
+<!--    <input type="radio" ng-model="vm.eqptParamVo.factId" value="A" ng-change="vm.changeFact()">A동
    <input type="radio" ng-model="vm.eqptParamVo.factId" value="B" ng-change="vm.changeFact()">B동
-   <input type="radio" ng-model="vm.eqptParamVo.factId" value="C" ng-change="vm.changeFact()">C동 
+   <input type="radio" ng-model="vm.eqptParamVo.factId" value="C" ng-change="vm.changeFact()">C동 -->
 </md-form-header>
 <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4">
 
@@ -84,13 +89,13 @@
           				<label>PLC_ID</label>
           				<md-select ng-model="configSetting.plcId">
             				<md-option><em>None</em></md-option>
-            				<md-option ng-repeat="eqpt in vm.eqptList" value="{{eqpt.plcId}}">
-              					{{eqpt.plcId}}
+            				<md-option ng-repeat="plc in vm.plcList" value="{{plc.plcId}}">
+              					{{plc.plcId}}
             				</md-option>
           				</md-select>
           			</md-input-container>
           			
-          			<md-input-container>
+          			<!-- <md-input-container>
           				<label>FACT_ID</label>
           				<md-select ng-model="configSetting.factId" required>
             				<md-option><em>None</em></md-option>
@@ -98,7 +103,7 @@
             				<md-option value="B"> B </md-option>
             				<md-option value="C"> C </md-option>
           				</md-select>
-          			</md-input-container>
+          			</md-input-container> -->
 		        </md-tab-body>
 			</md-tab>
 		   	<md-tab id="tab2">
@@ -194,13 +199,13 @@
    				<label>PLC_ID</label>
    				<md-select ng-model="crtEqpt.plcId">
      				<md-option><em>None</em></md-option>
-     				<md-option ng-repeat="eqpt in vm.eqptList" value="{{eqpt.plcId}}">
-       					{{eqpt.plcId}}
+     				<md-option ng-repeat="plc in vm.plcList" value="{{plc.plcId}}">
+       					{{plc.plcId}}
      				</md-option>
    				</md-select>
    			</md-input-container>
          </div>
-         <div class="form-group">
+<!--          <div class="form-group">
             <md-input-container>
    				<label>FACT_ID</label>
    				<md-select ng-model="crtEqpt.factId">
@@ -210,7 +215,7 @@
      				<md-option value="C"> C </md-option>
    				</md-select>
    			</md-input-container>   
-         </div>			      
+         </div>		 -->	      
       </li>
    </ul>
     <input type="submit" value="Save" /> 

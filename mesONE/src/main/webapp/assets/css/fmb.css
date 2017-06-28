@@ -568,6 +568,15 @@ md-dialog title {
 	width: 150px;
 	height: 105px;
 }
+.md-radio-button{
+	color: white;
+	float: left;
+	margin:40px 10px 0 50px;
+	font-size:20px;
+	
+}
+
+
 
 
 /* bcFormBody */
@@ -578,13 +587,15 @@ md-dialog title {
 	
     background-repeat: no-repeat;
     background-size: cover;
-    opacity:0.8;
+   /*  opacity:0.8; */
 }
+
+
 .eqpt_plc_c{
 	background-image: url('/mes/assets/img/system/eqptBg_plc_c2.png');
 }
 .eqpt_plc_b{
-	background-image: url('/mes/assets/img/system/eqptBg_plc_b.png');
+	background-image: url('/mes/assets/img/system/eqptBg_plc_b2.png');
 }
 .eqpt_plc_a{
 	background-image: url('/mes/assets/img/system/eqptBg_plc_a.png');

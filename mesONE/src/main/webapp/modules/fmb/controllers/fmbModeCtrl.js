@@ -14,27 +14,29 @@
 
 angular
     .module('app')
-    .controller('FmbModeCtrl', ['CmmAjaxService','CmmFactSrvc', '$http', '$scope','$mdSidenav', '$filter','$window', function (CmmAjaxService, CmmFactSrvc, $http, $scope, $mdSidenav, $filter,$window) 
+    .controller('FmbModeCtrl', ['CmmAjaxService','CmmWorkerSrvc','CmmFactSrvc', '$http', '$scope','$mdSidenav', '$filter','$window', function (CmmAjaxService, CmmWorkerSrvc, CmmFactSrvc, $http, $scope, $mdSidenav, $filter,$window) 
 {
     /*------------------------------------------
     *  변수 선언
     *-----------------------------------------*/
      var worker= undefined;
      var self = this;
-    
+     //알람정보워커삭제
+     var workerList = CmmWorkerSrvc;
+     workerList.worker3.terminate();
+     workerList.worker3.undefined;
+     
      //설비parameter
      self.eqptParamVo = {
            factId: 'C',
           plcId: '', 
            eqptCnm: ''
          }
-     
-     //plc parameter
-     self.plcParamVo = {
-            plcId: '', 
-            factId: 'C'
-         }
-     
+ 	//plc parameter
+ 	self.plcParamVo={};
+ 	self.plcParamVo.plcId ='';
+ 	self.plcParamVo.factId ='C';
+
      self.configSetting = {};
      self.checkData = {};
      
@@ -49,6 +51,7 @@ angular
 
      self.toggleLeft = buildToggler('left');
      self.saveEqptData = function(){
+    	 console.log("저장하는시점 factId는? "+self.eqptParamVo.factId );
     	 var eqptPromise = CmmAjaxService.save("/mes/bas/saveFmbEqpt.do", self.eqptList);
     			
     	 
@@ -93,7 +96,6 @@ angular
     	 $scope.configSetting.cnm = eqpts['eqptCnm'];
     	 $scope.configSetting.type = eqpts['eqptType'];
     	 $scope.configSetting.plcId = eqpts['plcId'];
-    	 $scope.configSetting.factId = eqpts['factId'];
     	 $scope.configSetting.top = eqpts['cssTop'];
     	 $scope.configSetting.left = eqpts['cssLeft'];
     	 $scope.configSetting.height = eqpts['cssHeight'];
@@ -111,7 +113,6 @@ angular
     	 target[0]['eqptCnm'] = $scope.configSetting.cnm;
     	 target[0]['eqptType'] = $scope.configSetting.type;
     	 target[0]['plcId'] = $scope.configSetting.plcId;
-    	 target[0]['factId'] = $scope.configSetting.factId;
     	 target[0]['cssTop'] = $scope.configSetting.top;
     	 target[0]['cssLeft'] = $scope.configSetting.left;
     	 target[0]['cssHeight'] = $scope.configSetting.height;
@@ -185,15 +186,13 @@ angular
     	var cnm = $scope.crtEqpt.cnm;
     	var type = $scope.crtEqpt.type;
     	var plcId = $scope.crtEqpt.plcId;
-    	var factId = $scope.crtEqpt.factId;
-    	console.log(cnm,type,plcId,factId)
+    	console.log(cnm,type,plcId)
     	if (cnm != null && cnm != "" && type != null && type != ""
-    		&& plcId != null && plcId != "" && factId != null && factId != "")
+    		&& plcId != null && plcId != "")
     		{
 		    	var data = {  eqptCnm : cnm
 		    			    , plcId : plcId
 		    			    , eqptType : type
-		    			    , factId : factId
 		    			    , desc : null
 		    			    , cssZindex : 'auto'
 		    			    , cssWidth : '0px'
@@ -206,7 +205,7 @@ angular
 		    	self.eqptList.push(data);
     		}
     	else {
-    		console.log(cnm,type,plcId,factId)
+    		console.log(cnm,type,plcId)
     		alert("모든 칸을 기입해야합니다.");
     	}
     };
@@ -215,11 +214,15 @@ angular
     	//배경이미지 변경하기
     	//설비리스트 다시불러오기
     	getEqptList();
-
+    	getPlcList();
+    	var factId = self.eqptParamVo.factId;
+    	self.plcParamVo.factId= factId ;
+    	
+    	     
     }
     
     getEqptList();
-    
+    getPlcList();
     
     //설비 이미지리스트 가져오기
     function getEqptList(){
@@ -234,6 +237,19 @@ angular
     });    	
     
     }
+    
+    
+    function getPlcList(){
+    	
+    	//설비 plc 데이터 가져오기
+    	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
+    	plcPromise.then(function(data) {
+    		self.plcList = data; //fmbplcVo가 담긴 리스트 형태리턴
+    	}, function(data){
+    		alert('fail: '+ data)
+    	});
+    }
+    
     
     /*------------------------------------------
      *  EQPT Data Commit
