@@ -98,6 +98,8 @@ angular.module('app').factory('CmmModalSrvc', ['ModalService', '$q', function(Mo
 	 */
     function showMessage(message) {
     	return getConfirm("확인", message);
+
+        var deferred = $q.defer();
 	};
 	
 	
@@ -105,7 +107,7 @@ angular.module('app').factory('CmmModalSrvc', ['ModalService', '$q', function(Mo
 	 * 내부용 함수 
 	 */
     function getConfirm(title, message) {
-	    ModalService.showModal({
+	   ModalService.showModal({
 	      templateUrl: "/mes/modules/cmm/views/cmmConfirmDlg.html",
 	      controller: "CmmConfirmCtrl",
 	      controllerAs: 'vm',
@@ -139,6 +141,7 @@ angular.module('app').factory('CmmModalSrvc', ['ModalService', '$q', function(Mo
 	      modal.element.modal();
 	      modal.close.then(function(result) {
 	    	  deferred.resolve(result);
+	    	  return result;
 	      });
 	   });
 	    

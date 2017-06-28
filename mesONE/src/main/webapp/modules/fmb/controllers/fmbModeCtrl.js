@@ -14,7 +14,7 @@
 
 angular
     .module('app')
-    .controller('FmbModeCtrl', ['CmmAjaxService', '$http', '$scope','$mdSidenav', '$filter', function (CmmAjaxService, $http, $scope, $mdSidenav, $filter) 
+    .controller('FmbModeCtrl', ['CmmAjaxService','CmmFactSrvc', '$http', '$scope','$mdSidenav', '$filter','$window', function (CmmAjaxService, CmmFactSrvc, $http, $scope, $mdSidenav, $filter,$window) 
 {
     /*------------------------------------------
     *  변수 선언
@@ -22,6 +22,8 @@ angular
      var worker= undefined;
      var self = this;
     
+
+     
      self.configSetting = {};
      self.checkData = {};
      
@@ -34,6 +36,7 @@ angular
      self.toggleLeft = buildToggler('left');
      self.saveEqptData = function(){
     	 var eqptPromise = CmmAjaxService.save("/mes/bas/saveFmbEqpt.do", self.eqptList);
+    			
     	 
 /*     	eqptPromise.then(function(d) {
 			
@@ -166,7 +169,9 @@ angular
            plcId: '', 
            factId: 'C'
         }
-   
+    
+    self.plcParamVo.factId= CmmFactSrvc.selectedFactId;
+  	       
     self.showModal = false;
     
     self.crtEqptModal = function(){

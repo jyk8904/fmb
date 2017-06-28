@@ -91,6 +91,9 @@
 		   <button class="top-btn" ng-click='vm.btnWorkerStop()'>Stop</button>
 			<button class="top-btn" ng-click='vm.btnWorkerStart()'>Start</button>
 		   <button class="top-btn" ng-click='vm.LotationSetting()'>전환 설정 테스트</button>
+		   <input type="radio" ng-model="vm.plcParamVo.factId" value="A" ng-change="vm.changeFact()">A동
+		   <input type="radio" ng-model="vm.plcParamVo.factId" value="B" ng-change="vm.changeFact()">B동
+		   <input type="radio" ng-model="vm.plcParamVo.factId" value="C" ng-change="vm.changeFact()">C동
 		</div>
 	</div>   
 	

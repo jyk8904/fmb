@@ -9,6 +9,7 @@ angular
                        , '$scope'
                        , 'CmmAjaxService'
                        , 'CmmWorkerSrvc'
+                       , 'CmmFactSrvc'
                        , '$location'
                        , '$timeout'
                        , '$q'
@@ -17,6 +18,7 @@ angular
                                  , $scope
                                  , CmmAjaxService
                                  , CmmWorkerSrvc
+                                 , CmmFactSrvc
                                  , $location
                                  , $timeout
                                  , $q
@@ -48,7 +50,7 @@ angular
    self.btnWorkerStart = WorkerStart;
    self.btnWorkerStop = WorkerStop;
    self.LotationSetting = LotationSetting;
-   
+   self.changeFact = changeFact;
    
       function btnFmbMonClickHandler() {
          WorkerStop();
@@ -82,7 +84,12 @@ angular
          self.showModal = !self.showModal;
       }
       
-    
+     function changeFact() {
+    	  CmmFactSrvc.selectedFactId=self.plcParamVo.factId;
+    	  
+       }
+       
+     
       Worker3Start();
       
       
@@ -214,7 +221,5 @@ angular
           alert("현재 브라우저는 웹 워커를 지원하지 않습니다");
         }
       }
-
-    
     
 }]);
