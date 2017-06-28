@@ -89,8 +89,8 @@
 		</div>
 		
 		
-		<div class="colList">
-			<div class="col" ng-repeat="line in vm.lineList">
+		<div grid-panel-ctrl class="colList" >
+			<div  class="col" data="vm.lineList" ng-repeat="line in vm.lineList">
 				<table class="line-table bc-table">
 					<tr>
 						<td>{{line.lineNm}}</td>
@@ -120,19 +120,6 @@
 
 
 	</bc-form-body>
-
-
-	<!-- ngview 내부 footer -->
-	<bc-form-footer> <!--알람정보 하단 바 시작-->
-	<div class="alarm_data">
-		<marquee>
-			<ul id="banner" class="simply-scroll-list">
-				<li ng-repeat="alarm in vm.alarmList">{{alarm.plcId}} 알람발생
-					{{alarm.stsDttm}}</li>
-			</ul>
-		</marquee>
-	</div>
-	</bc-form-footer>
 </div>
 
 

@@ -170,4 +170,18 @@ angular
 				 });
 			 }
 		 } 
+	  })
+	  .directive('gridPanelCtrl', function($timeout){
+		  return {
+			  restrict: 'A',
+			  scope: {
+				   data: '=data'
+			  },
+			  link: function(scope, element, attrs) {
+				  $timeout(function(){
+					 
+					  console.log(scope.data);
+				  });
+			  } 
+		  }
 	  });
