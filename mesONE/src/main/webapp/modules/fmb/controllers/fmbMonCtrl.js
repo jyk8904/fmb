@@ -162,6 +162,7 @@ angular
 	           //새로운 워커(객체)를 생성한다.
 	           workerList.worker2= new Worker("worker2.js");       
 	           
+	           console.log(workerList.worker2data)
 	           //Setting 정보를 Worker로 넘긴다.
 	           workerList.worker2.postMessage(workerList.worker2data);
 	           

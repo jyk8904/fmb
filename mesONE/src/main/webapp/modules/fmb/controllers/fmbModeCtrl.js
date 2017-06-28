@@ -24,7 +24,7 @@ angular
      //알람정보워커삭제
      var workerList = CmmWorkerSrvc;
      //ㄴorkerList.worker3.terminate();
-     workerList.worker3.undefined;
+     workerList.worker3 = undefined;
      
      //설비parameter
      self.eqptParamVo = {

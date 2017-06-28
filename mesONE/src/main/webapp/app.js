@@ -18,7 +18,6 @@
 
 (function () {
     'use strict';
-
     angular
         .module('app', ['dx','angularModalService', 'ngRoute', 'ngCookies', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.tpls'])
         .config(config);
@@ -110,9 +109,19 @@
 	            templateUrl: 'modules/fmb/views/fmbTbm.html',
 	            controllerAs: 'vm'
 	        })	 
-      	    .when('/FmbLine', {
-	            controller: 'FmbLineCtrl',
-	            templateUrl: 'modules/fmb/views/fmbLine.html',
+      	    .when('/FmbLineA', {
+	            controller: 'FmbLineACtrl',
+	            templateUrl: 'modules/fmb/views/fmbLineA.html',
+	            controllerAs: 'vm'
+	        })
+	        .when('/FmbLineB', {
+	            controller: 'FmbLineBCtrl',
+	            templateUrl: 'modules/fmb/views/fmbLineB.html',
+	            controllerAs: 'vm'
+	        })
+	        .when('/FmbLineC', {
+	            controller: 'FmbLineCCtrl',
+	            templateUrl: 'modules/fmb/views/fmbLineC.html',
 	            controllerAs: 'vm'
 	        })
 	        .when('/FmbSpc', {

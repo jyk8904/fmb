@@ -77,18 +77,20 @@
 
 
 
-<body ng-controller="MainCtrl as vm" ng-class="{loading:loadingView}" class="container" style="width: 100%;">
+<body ng-controller="MainCtrl as vm" ng-class="{loading:loadingView}" class="container" style="width: 100%; background-image: url('./assets/img/system/back.png');">
 <!--    <label ng-model='lbl'>angular Js test</label>
     <p>Name : <input type="text" ng-model="name"></p>
    <h1>Hello  {{name}}</h1> -->
 	<div class="relative">
 		<div class="mouse-over-bar"> 
 			<button class="top-btn" ng-click='vm.btnFmbModeClick()'>개발모드</button>
-			<button class="top-btn" ng-click='vm.btnFmbMonClick()'>설비 가동현황</button>
 			<button class="top-btn" ng-click='vm.btnFmbTbmClick()'>Tbm</button>
-			<button class="top-btn" ng-click='vm.btnFmbSpcClick()'>SPC</button>
-			<button class="top-btn" ng-click='vm.btnFmbLineClick()'>Line별 생산실적</button>
-			<button class="top-btn" ng-click='vm.btnFmbTotalClick()'>Total</button>
+			<button class="top-btn" ng-click='vm.btnFmbLineCClick()'>Line별 생산실적(C)</button>
+			<button class="top-btn" ng-click='vm.btnFmbLineBClick()'>Line별 생산실적(B)</button>
+			<button class="top-btn" ng-click='vm.btnFmbLineAClick()'>Line별 생산실적(A)</button>
+			<!-- <button class="top-btn" ng-click='vm.btnFmbSpcClick()'>SPC</button> -->
+			<button class="top-btn" ng-click='vm.btnFmbTotalClick()'>종합 현황</button>
+			<button class="top-btn" ng-click='vm.btnFmbMonClick()'>설비 가동현황</button>
 		   <button class="top-btn" ng-click='vm.btnWorkerStop()'>Stop</button>
 			<button class="top-btn" ng-click='vm.btnWorkerStart()'>Start</button>
 		   <button class="top-btn" ng-click='vm.LotationSetting()'>전환 설정 테스트</button>
@@ -117,9 +119,9 @@
    <!-- 모달 body -->
    <modal title="페이지 전환 설정" visible="vm.showModal">
      <form ng-submit="vm.submit1()">
-     <div ng-repeat="page in vm.Setting">
+     <div class="timeSettingPage" ng-repeat="page in vm.Setting">
      
-     	<label>페이지 {{page.pageSeq}} 번</label>
+     	<label>{{page.pageNm}}</label>
     	<input typt ="text" placeholder="페이지"+{{page.pageSeq}}+" time" name ="name" ng-model=page.rotateTime value={{page.rotateTime}}>&nbsp;&nbsp;&nbsp;
     	<input typt ="text" placeholder="페이지"+{{page.pageSeq}}+"  data refresh time" name ="name" ng-model=page.dataTime value={{page.dataTime}}>
   		<br>      
@@ -162,7 +164,9 @@
 	<script src="modules/fmb/controllers/fmbModeCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbPopupCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbTbmCtrl.js"></script>
-	<script src="modules/fmb/controllers/fmbLineCtrl.js"></script>
+	<script src="modules/fmb/controllers/fmbLineACtrl.js"></script>
+	<script src="modules/fmb/controllers/fmbLineBCtrl.js"></script>
+	<script src="modules/fmb/controllers/fmbLineCCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbSpcCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbTotalCtrl.js"></script>
 	<script src="vendor/pdfkit/AUIGrid.pdfkit.js"></script>

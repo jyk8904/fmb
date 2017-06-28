@@ -134,7 +134,7 @@ angular
     		restrict: 'E',	
       		transclude: true, 
       		replace:true,
-    		template: "<div class='background-panel' ng-transclude></div>"
+    		template: "<div bg-ctrl class='background-panel' ng-transclude></div>"
     	}
     	
     })    
@@ -163,7 +163,7 @@ angular
     		},
     		replace:true,
     		transclude: true,  
-    		template: "<div class='row bc-form-header'>" +
+    		template: "<div bg-ctrl class='row bc-form-header'>" +
     					"<label class='col-sm-4 bc-header-label'>{{title}}</label>"+
     					"<div ng-transclude></div>"	+
     				  "</div>"
@@ -173,14 +173,14 @@ angular
     	return {
     		restrict: 'E',
     		transclude: true,  
-    		template: "<div class='row bc-form-body' ng-transclude></div>"
+    		template: "<div bg-ctrl class='row bc-form-body' ng-transclude></div>"
     	}
     })    
     .directive('bcFormFooter', function() {  /* 폼의 하단부 상태 표시 부분 */
     	return {
     		restrict: 'E',
     		transclude: true,  
-    		template: "<div class='row bc-form-footer' ng-transclude></div>"
+    		template: "<div bg-ctrl class='row bc-form-footer' ng-transclude></div>"
     	}
     })
 

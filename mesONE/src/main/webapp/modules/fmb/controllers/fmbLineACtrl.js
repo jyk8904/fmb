@@ -14,7 +14,7 @@
 
 angular
     .module('app')
-    .controller('FmbLineCtrl', ['CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc', '$http', '$scope', '$window','$q', function (CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window, $q) 
+    .controller('FmbLineACtrl', ['CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc', '$http', '$scope', '$window','$q', function (CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window, $q) 
 {
 	/*------------------------------------------
      * 변수 선언
@@ -22,7 +22,7 @@ angular
  
     var self = this;
     var workerList = CmmWorkerSrvc;
-    var fact_id = "B";
+    var fact_id = "A";
     
     self.lineParamVo = {
     	factId : fact_id,
@@ -39,7 +39,15 @@ angular
     	lineMidNm: '',
     	lineBotNm: ''
     }
-    
+
+    self.parseInt = function(value){
+    	if (value == ""){
+    		return "";
+    	}
+    	else {
+    		return parseInt(value);
+    	}
+    };
     
 	//선택된 공장의 line별 데이터 가져오기
     var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do", self.lineParamVo);
@@ -47,6 +55,7 @@ angular
     	self.lineList = data;
     	console.log(self.lineList);
     	console.log(self.lineList.length)
+    	console.log(self.lineList[0].dcount, parseInt(self.lineList[0].dcount))
     	var length = self.lineList.length;
     	var dangle = length % 7;
     	if (dangle != 0) 
@@ -54,7 +63,7 @@ angular
     		var blankCount = 7- dangle;
     		for (var i = 0; i < blankCount; i++)
     		{
-    			var data = {  dCount : ''
+    			var data = {  dcount : ''
 		    			    , dgoal : ''
 		    			    , drate : ''
 		    			    , eqptSts : ''
