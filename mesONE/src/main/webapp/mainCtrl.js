@@ -115,19 +115,19 @@ angular
     if(localStorage.getItem('SettingTime')!=null){
     	self.Setting = JSON.parse(localStorage.getItem('SettingTime'));
     }else{
-	  	self.Setting = [{"pageSeq":"1", "rotateTime": 10, "pageNm":"FmbMon"},
-						{"pageSeq":"2", "rotateTime": 10, "pageNm":"FmbTbm"},
-						{"pageSeq":"3", "rotateTime": 10, "pageNm":"FmbLine"},
-						{"pageSeq":"4", "rotateTime": 10, "pageNm":"FmbSpc"},
-						{"pageSeq":"5", "rotateTime": 10, "pageNm":"FmbTotal"},
+	  	self.Setting = [{"pageSeq":"1", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbMon"},
+						{"pageSeq":"2", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbTbm"},
+						{"pageSeq":"3", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbLine"},
+						{"pageSeq":"4", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbSpc"},
+						{"pageSeq":"5", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbTotal"},
     ]}
     
     self.submit1 = function() {
-     var SettingTime =[{"pageSeq":"1", "rotateTime": self.Setting[0].rotateTime, "pageNm":"FmbMon"},
-     					{"pageSeq":"2", "rotateTime": self.Setting[1].rotateTime, "pageNm":"FmbTbm"},
-     					{"pageSeq":"3", "rotateTime": self.Setting[2].rotateTime, "pageNm":"FmbLine"},
-     					{"pageSeq":"4", "rotateTime": self.Setting[3].rotateTime, "pageNm":"FmbSpc"},
-     					{"pageSeq":"5", "rotateTime": self.Setting[4].rotateTime, "pageNm":"FmbTotal"}
+     var SettingTime =[{"pageSeq":"1", "rotateTime": self.Setting[0].rotateTime, "dataTime": self.Setting[0].dataTime, "pageNm":"FmbMon"},
+     					{"pageSeq":"2", "rotateTime": self.Setting[1].rotateTime, "dataTime": self.Setting[1].dataTime, "pageNm":"FmbTbm"},
+     					{"pageSeq":"3", "rotateTime": self.Setting[2].rotateTime, "dataTime": self.Setting[2].dataTime, "pageNm":"FmbLine"},
+     					{"pageSeq":"4", "rotateTime": self.Setting[3].rotateTime, "dataTime": self.Setting[3].dataTime, "pageNm":"FmbSpc"},
+     					{"pageSeq":"5", "rotateTime": self.Setting[4].rotateTime, "dataTime": self.Setting[4].dataTime, "pageNm":"FmbTotal"}
      				]
 
        
@@ -160,12 +160,12 @@ angular
          workerList.worker1= new Worker("worker.js");       
             
            //Setting 정보를 Worker로 넘긴다.
-           if(localStorage.getItem('SettingTime')!=null){
+           if(localStorage.getItem('SettingTime')!= null){
                workerList.worker1.postMessage(JSON.parse(localStorage.getItem('SettingTime')));
-        	   
-        	   
+               workerList.worker2data = JSON.parse(localStorage.getItem('SettingTime'));
            }else{
         	   workerList.worker1.postMessage(self.Setting);
+        	   workerList.worker2data(self.Setting);
            }
              
            

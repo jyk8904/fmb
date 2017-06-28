@@ -3,20 +3,22 @@
  */
  onmessage = function(evt){
    
+    // 화면전환에 필요한 각각의 데이터를 JSON으로 받음.
+    var jsonData = evt.data;
     
-  
     // interval 시간을 설정한다.
     // Default는 10초로 정해둠.
-    var interval = 10000;
-    
-    if(evt.data!=null){
-    	interval = evt.data * 1000;
+    var interval = 5000;
+	 console.log(jsonData);
+    if(jsonData.length>0){
+    	interval = jsonData[0].dataTime * 1000;
     }
-    setInterval(post, 5000);
+  
+  
+    setInterval(post, interval);
     
     
     function post(){
-    	console.log('알람메세지');
     	postMessage(interval);
     }
     

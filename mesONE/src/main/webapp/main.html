@@ -115,12 +115,13 @@
 	</bc-form-footer>
 	
    <!-- 모달 body -->
-   <modal title="Login form" visible="vm.showModal">
+   <modal title="페이지 전환 설정" visible="vm.showModal">
      <form ng-submit="vm.submit1()">
      <div ng-repeat="page in vm.Setting">
      
      	<label>페이지 {{page.pageSeq}} 번</label>
-    	<input typt ="text" placeholder="페이지"+{{page.pageSeq}}+" time" name ="name" ng-model=page.rotateTime value={{page.rotateTime}}>
+    	<input typt ="text" placeholder="페이지"+{{page.pageSeq}}+" time" name ="name" ng-model=page.rotateTime value={{page.rotateTime}}>&nbsp;&nbsp;&nbsp;
+    	<input typt ="text" placeholder="페이지"+{{page.pageSeq}}+"  data refresh time" name ="name" ng-model=page.dataTime value={{page.dataTime}}>
   		<br>      
    
    </div>

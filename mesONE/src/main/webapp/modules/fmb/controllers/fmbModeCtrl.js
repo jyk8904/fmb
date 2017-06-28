@@ -23,7 +23,7 @@ angular
      var self = this;
      //알람정보워커삭제
      var workerList = CmmWorkerSrvc;
-     workerList.worker3.terminate();
+     //ㄴorkerList.worker3.terminate();
      workerList.worker3.undefined;
      
      //설비parameter
