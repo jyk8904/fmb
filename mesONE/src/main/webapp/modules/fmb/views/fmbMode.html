@@ -26,12 +26,11 @@
 		<md-radio-button class="md-radio-button" value="A" >A동</md-radio-button>
 		<md-radio-button class="md-radio-button" value="B" >B동</md-radio-button>
 		<md-radio-button class="md-radio-button" value="C"> C동 </md-radio-button>
-	</md-radio-group> -
+		<md-radio-button class="md-radio-button" value="Comb">전체</md-radio-button>
+	</md-radio-group>
 	
-<!--    <input type="radio" ng-model="vm.eqptParamVo.factId" value="A" ng-change="vm.changeFact()">A동
-   <input type="radio" ng-model="vm.eqptParamVo.factId" value="B" ng-change="vm.changeFact()">B동
-   <input type="radio" ng-model="vm.eqptParamVo.factId" value="C" ng-change="vm.changeFact()">C동 -->
 </md-form-header>
+
 <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4">
 
       <md-toolbar class="md-theme-indigo">
@@ -146,13 +145,14 @@
 </md-sidenav>
 <bc-form-body>
    <!--설비클래스 삽입 시작-->
-   <bc-back-panel>
+   <bc-bg-img-panel>
 <!--<div bg-inner-ctrl class='bg-panel eqpt_plc_c'></div> -->
    	
   	<div ng-switch on="vm.eqptParamVo.factId">
     <div ng-switch-when="A" bg-inner-ctrl class='bg-panel eqpt_plc_a'></div>
    	<div ng-switch-when="B" bg-inner-ctrl class='bg-panel eqpt_plc_b'></div>
    	<div ng-switch-when="C" bg-inner-ctrl class='bg-panel eqpt_plc_c'></div>
+   	<div ng-switch-when="Comb" bg-inner-ctrl class='bg-panel eqpt_plc_comb'></div>
     </div> 
    <div class="EQPT">   
    <!-- 설비이미지 repeat -->
@@ -167,7 +167,7 @@
          </li>
       </ul>
     </div>
-   </bc-back-panel>
+   </bc-bg-img-panel>
       <!--설비클래스 삽입 끝-->
 </bc-form-body>
 

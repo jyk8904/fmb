@@ -89,6 +89,11 @@
 	            templateUrl: 'modules/fmb/views/fmbMon.html',
 	            controllerAs: 'vm'
 	        })
+	        .when('/FmbMainMon', {
+	            controller: 'FmbMainMonCtrl',
+	            templateUrl: 'modules/fmb/views/fmbMainMon.html',
+	            controllerAs: 'vm'
+	        })
 	        .when('/FmbMode', {
 	            controller: 'FmbModeCtrl',
 	            templateUrl: 'modules/fmb/views/fmbMode.html',

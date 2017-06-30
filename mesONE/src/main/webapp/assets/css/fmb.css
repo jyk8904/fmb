@@ -619,7 +619,7 @@ md-dialog title {
 /* bcFormBody */
 .bg-panel {
 	position:absolute;
-	width:1600px;
+	width:1880px;
 	height:900px;
 	
     background-repeat: no-repeat;
@@ -627,7 +627,18 @@ md-dialog title {
    /*  opacity:0.8; */
 }
 
-
+.bg-img-panel{
+	position:relative;
+	clear:both;
+	float:left;
+	padding:0 20px 0 20px;
+	width : 1920px;
+	height : 900px;
+	border-radius: 10px;
+}
+.eqpt_plc_comb{
+	background-image: url('/mes/assets/img/system/eqptBg_plc_comb2.png');
+}
 .eqpt_plc_c{
 	background-image: url('/mes/assets/img/system/eqptBg_plc_c2.png');
 }
