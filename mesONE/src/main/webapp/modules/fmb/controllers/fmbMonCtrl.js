@@ -17,23 +17,27 @@ angular
     .controller('FmbMonCtrl', [  'CmmAjaxService'
     							,'CmmModalSrvc'
     							,'CmmWorkerSrvc'
+    							, '$rootScope'
     						  /*, 'CmmFactSrvc'  공장선택*/
     							, '$http'
     							, '$scope'
     							, '$window'
     							, '$q'
     							, '$filter'
+    							, '$location'
     							
     							, function (
     									  CmmAjaxService
     									, CmmModalSrvc
     									, CmmWorkerSrvc
+    									, $rootScope
     								  /*, CmmFactSrvc*/
     									, $http
     									, $scope
     									, $window
     									, $q
     									, $filter
+    									, $location
     									) 
 {
 	/*------------------------------------------
@@ -65,9 +69,7 @@ angular
 					    		  factId: ''
 					    		  } 
 	
-    	
-  
-/*    	//상위컨트롤러에서 전송한 이벤트를 받음
+    	/*    	//상위컨트롤러에서 전송한 이벤트를 받음
     	 $scope.$on("event:changeFact",function (event, data){
     		self.eqptParamVo.factId  = data.selectedFactId;
     		self.plcParamVo.factId = d.selectedFactId;
@@ -75,7 +77,7 @@ angular
 
     	*/
     	//선택된 plc 데이터 가져오기
-/*    	getSelectedPlc();
+    	getSelectedPlc();
     	
     	function getSelectedPlc(){
     		
@@ -88,7 +90,7 @@ angular
             });
         	
         	 self.showModal = !self.showModal;
-        };*/
+        };
         
     	}
         
@@ -162,15 +164,23 @@ angular
 	           //새로운 워커(객체)를 생성한다.
 	           workerList.worker2= new Worker("worker2.js");       
 	           
-	           console.log(workerList.worker2data)
 	           //Setting 정보를 Worker로 넘긴다.
-	           workerList.worker2.postMessage(workerList.worker2data);
 	           
+	           
+	           var SettingTime = workerList.worker2data;
+	           for(var i =0; i < SettingTime.length; i++){
+	        	   if('/'+SettingTime[i].pageNm ==$location.url()){
+	        		   workerList.worker2.postMessage(SettingTime[i]);
+	        		   //console.log(SettingTime[i])
+	        	   }
+	           }
 	           // 워커로부터 전달되는 메시지를 받는다.
 	           		workerList.worker2.onmessage = function(evt){ 
 	           		/*self.eqptParamVo.factId = CmmFactSrvc.getSelectedFactId();
 	           		self.plcParamVo.factId = CmmFactSrvc.getSelectedFactId();*/
-
+	           			if(workerList.worker2sts=='stop'){
+	           				Worker2Start();
+	           			}
 	           		//설비이미지리스트 가져오기
 	           		getEqptList();
 	           		

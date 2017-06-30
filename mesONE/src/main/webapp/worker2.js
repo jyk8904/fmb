@@ -2,19 +2,17 @@
  * 
  */
  onmessage = function(evt){
-   
-    // 화면전환에 필요한 각각의 데이터를 JSON으로 받음.
-    var jsonData = evt.data;
-    
     // interval 시간을 설정한다.
-    // Default는 10초로 정해둠.
+    // Default는 5초로 정해둠.
     var interval = 5000;
-	 console.log(jsonData);
-    if(jsonData.length>0){
-    	interval = jsonData[0].dataTime * 1000;
+    var curPageSettingTime= evt.data;
+    
+  // console.log(curPageSettingTime);
+    
+    
+    if(curPageSettingTime!=null){
+    	interval = curPageSettingTime.dataTime * 1000;
     }
-  
-  
     setInterval(post, interval);
     
     

@@ -119,11 +119,12 @@
    <!-- 모달 body -->
    <modal title="페이지 전환 설정" visible="vm.showModal">
      <form ng-submit="vm.submit1()">
+     <label style="width:200px;"></label> <span style="width:150px; margin-right:10px;">페이지전환시간(초)</span> <span style="width:150px;">데이터로드시간(초)</span>
      <div class="timeSettingPage" ng-repeat="page in vm.Setting">
      
-     	<label>{{page.pageNm}}</label>
-    	<input typt ="text" placeholder="페이지"+{{page.pageSeq}}+" time" name ="name" ng-model=page.rotateTime value={{page.rotateTime}}>&nbsp;&nbsp;&nbsp;
-    	<input typt ="text" placeholder="페이지"+{{page.pageSeq}}+"  data refresh time" name ="name" ng-model=page.dataTime value={{page.dataTime}}>
+     	<label style="width:200px;">{{page.pageNm}}</label>
+    	<input style="width:150px; margin-right:10px;" typt ="text" placeholder="페이지"+{{page.pageSeq}}+" time" name ="name" ng-model=page.rotateTime value={{page.rotateTime}}>&nbsp;&nbsp;&nbsp;
+    	<input style="width:150px; margin-right:10px;" typt ="text" placeholder="페이지"+{{page.pageSeq}}+"  data refresh time" name ="name" ng-model=page.dataTime value={{page.dataTime}}>
   		<br>      
    
    </div>
