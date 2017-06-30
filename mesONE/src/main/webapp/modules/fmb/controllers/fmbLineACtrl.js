@@ -53,11 +53,11 @@ angular
     
    
     getLineList();
-    Worker2Start();
+    //Worker2Start();
     
     
     
-    function Worker2Start(){
+   /* function Worker2Start(){
     	 //브라우저가 웹 워커를 지원하는지 검사한다 .
         if(!!window.Worker){    
            
@@ -92,15 +92,12 @@ angular
         else {
           alert("현재 브라우저는 웹 워커를 지원하지 않습니다");
         }
-      }
+      }*/
            function getLineList(){
         	 //선택된 공장의 line별 데이터 가져오기
         	    var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do", self.lineParamVo);
         	    promise.then(function(data){
         	    	self.lineList = data;
-        	    	console.log(self.lineList);
-        	    	console.log(self.lineList.length)
-        	    	console.log(self.lineList[0].dcount, parseInt(self.lineList[0].dcount))
         	    	var length = self.lineList.length;
         	    	var dangle = length % 7;
         	    	if (dangle != 0) 

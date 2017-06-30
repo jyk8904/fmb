@@ -25,6 +25,7 @@ angular
     var self = this;
     var workerList = CmmWorkerSrvc;
     var fact_id = "C";
+    var i = 1;
     
     self.lineParamVo = {
     	factId : fact_id,
@@ -60,11 +61,15 @@ angular
    	 //브라우저가 웹 워커를 지원하는지 검사한다 .
        if(!!window.Worker){    
           
-          //워커가 이미 존재하면 종료시킨다 .
-          if(workerList.worker2!=undefined){
-       	   workerList.worker2.terminate();
-       	   workerList.worker2=undefined;
-          }      
+    	
+    	          //워커가 이미 존재하면 종료시킨다 .
+    	          if(workerList.worker2!=undefined){
+    	       	   workerList.worker2.terminate();
+    	       	   workerList.worker2=undefined;
+    	       	 
+    	          }    
+    
+  
           
           //새로운 워커(객체)를 생성한다.
           workerList.worker2= new Worker("worker2.js");       

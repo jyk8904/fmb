@@ -184,14 +184,16 @@ angular
 					  if (length < 3)
 					  {
 						  if (length == 1) {
-							  var header = "143";
-							  var data = "270";
-							  var subData = "90";
+							  var header = "150";
+							  var data = "375";
+							  var subData = "125";
+							  var fontSize = "30";
 						  }
 						  else if (length == 2) {
-							  var header = "76.5";
-							  var data = "135";
-							  var subData = "45";
+							  var header = "90";
+							  var data = "180";
+							  var subData = "60";
+							  var fontSize = "27";
 						  }
 						  
 						  element[0].children[0].children[0].style.height = header + "px";
@@ -202,6 +204,11 @@ angular
 						  element[0].children[0].children[4].children[0].style.height = subData + "px";
 						  element[0].children[0].children[5].style.height = subData + "px";
 						  element[0].children[0].children[6].style.height = subData + "px";
+						  
+						  for (var i = 0; i < 7; i++)
+						  {
+							  element[0].children[0].children[i].style.fontSize = fontSize + "px";
+						  }
 					  }
 				  });
 			  } 
@@ -215,23 +222,27 @@ angular
 			  },
 			  link: function(scope, element, attrs) {
 				  $timeout(function(){
-					 
+					 console.log(element)
 					  var length = scope.data.length / 7;
 					  if (length < 3)
 					  {
 						  if (length == 1) {
-							  var header = "143";
-							  var data = "90";
+							  var header = "150";
+							  var data = "125";
+							  var fontSize = "27";
 						  }
 						  else if (length == 2) {
-							  var header = "76.5";
-							  var data = "45";
+							  var header = "90";
+							  var data = "60";
+							  var fontSize = "27";
 						  }
 						  
 						  element[0].children[0].children[0].children[0].style.height = header + "px";
+						  element[0].children[0].children[0].children[0].style.fontSize = fontSize + "px";
 						  for(var i = 1; i < 7; i++)
 						  {
 							  element[0].children[0].children[0].children[i].style.height = data + "px";
+							  element[0].children[0].children[0].children[i].style.fontSize = fontSize + "px";
 						  }
 					  }
 				  });

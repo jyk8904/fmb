@@ -26,8 +26,8 @@
 
 <div class="wrap">
  	<div class="title">
-			<table grid-header-ctrl data="vm.lineList" class="line-table bc-table" ng-repeat="line in vm.lineList track by $index" ng-show="$index%7==0">
-				<tr>
+			<table grid-header-ctrl data="vm.lineList" class="line-legend-table bc-table" ng-repeat="line in vm.lineList" ng-show="$index%7==0">
+
 					<td colspan="2">구분</td>
 				</tr>
 				<tr>
@@ -54,10 +54,11 @@
 		
 		
 		<div class="colList" >
+
 			<div grid-panel-ctrl class="col" data="vm.lineList" ng-repeat="line in vm.lineList track by $index">
-				<table class="line-table bc-table">
+				<table class="line-list-table bc-table">
 					<tr>
-						<td>{{line.lineNm}}</td>
+						<td><p>{{line.lineTopNm}}</p><p>{{line.lineMidNm}}</p><p>{{line.lineBotNm}}</p></td>
 					</tr>
 					<tr>
 						<td>{{vm.parseInt(line.dgoal) + vm.parseInt(line.ngoal)}}</td>
