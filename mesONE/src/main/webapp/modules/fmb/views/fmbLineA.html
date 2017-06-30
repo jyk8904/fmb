@@ -23,46 +23,10 @@
 
 	<!-- ngview 내부 body -->
 	<bc-form-body> 
-	<!-- 	<table class="bc-table">
-		<tr>
-			<td colspan="2">구분</td>
-			<td ng-repeat="line in vm.lineList">{{line.lineNm}}</td>
-		<tr>
-		<tr>
-			<td colspan="2">목표</td>
-			<td ng-repeat="line in vm.lineList">{{line.dgoal + line.ngoal}}
-			</td>
-		</tr>
-		<tr>
 
-			<td rowspan="3">실적</td>
-			<td>주간</td>
-			<td ng-repeat="line in vm.lineList">{{line.drate}}</td>
-		</tr>
-		<tr>
-			<td>야간</td>
-			<td ng-repeat="line in vm.lineList">{{line.nrate}}</td>
-		</tr>
-		<tr>
-			<td>합계</td>
-			<td ng-repeat="line in vm.lineList">{{line.drate + line.nrate}}
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">달성률(%)
-			<td ng-repeat="line in vm.lineList">{{line.drate + line.nrate}}
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">가동상태
-			<td ng-repeat="line in vm.lineList">{{line.eqptSts}}</td>
-		</tr>
-	</table>
-
- -->
 <div class="wrap">
  	<div class="title">
-			<table grid-header-ctrl data="vm.lineList" class="line-table bc-table" ng-repeat="line in vm.lineList" ng-show="$index%7==0">
+			<table grid-header-ctrl data="vm.lineList" class="line-table bc-table" ng-repeat="line in vm.lineList track by $index" ng-show="$index%7==0">
 				<tr>
 					<td colspan="2">구분</td>
 				</tr>
@@ -90,7 +54,7 @@
 		
 		
 		<div class="colList" >
-			<div grid-panel-ctrl class="col" data="vm.lineList" ng-repeat="line in vm.lineList">
+			<div grid-panel-ctrl class="col" data="vm.lineList" ng-repeat="line in vm.lineList track by $index">
 				<table class="line-table bc-table">
 					<tr>
 						<td>{{line.lineNm}}</td>

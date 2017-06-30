@@ -107,8 +107,8 @@
 	<!--알람정보 하단 바 시작-->
 	   	<div class="alarm_data">
 	  		<marquee>
-	      		<ul id="banner" class="simply-scroll-list">
-	      			<li ng-repeat="alarm in vm.alarmList">
+	      		<ul id="banner" class="simply-scroll-list" style="background-color:#333;">
+	      			<li ng-repeat="alarm in vm.alarmList track by $index">
 	       				{{alarm.plcId}} 알람발생  {{alarm.stsDttm}}
 	      			</li>
 	    		</ul>

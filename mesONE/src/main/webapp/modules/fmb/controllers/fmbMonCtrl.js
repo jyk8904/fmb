@@ -166,7 +166,6 @@ angular
 	           
 	           //Setting 정보를 Worker로 넘긴다.
 	           
-	           
 	           var SettingTime = workerList.worker2data;
 	           for(var i =0; i < SettingTime.length; i++){
 	        	   if('/'+SettingTime[i].pageNm ==$location.url()){

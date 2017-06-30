@@ -67,6 +67,17 @@ angular
    self.btnWorkerStop = WorkerStop;
    self.LotationSetting = LotationSetting;
    self.submit1 = submitLotationSetting;
+   
+   var pageList=[{"pageNm":"FmbCwMon"}
+			     ,{"pageNm":"FmbMon"}
+			     ,{"pageNm": "FmbTotal"}
+			     ,{"pageNm":"FmbLineA"}
+			     ,{"pageNm":"FmbLineB"}
+			     ,{"pageNm":"FmbLineC"}
+			     ,{"pageNm":"FmbTbm"}
+			     ,{"pageNm":"FmbMainMon"}
+			     ]
+   self.Setting={};
    //self.changeFact = changeFact;
    
    /*공장선택시*/
@@ -104,6 +115,7 @@ angular
   	
    Worker3Start();
    defaultLotationSetting();
+   
    submitLotationSetting();
       
    
@@ -111,28 +123,22 @@ angular
 	   if(localStorage.getItem('SettingTime')!=null){
 		   self.Setting = JSON.parse(localStorage.getItem('SettingTime'));
 	   }else{
-		   self.Setting = [{"pageSeq":"1", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbCwMon"},
-			   			   {"pageSeq":"2", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbMon"},
-			   			   {"pageSeq":"3", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbTotal"},
-			   			   {"pageSeq":"4", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbLineA"},
-			   			   {"pageSeq":"5", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbLineB"},
-			   			   {"pageSeq":"6", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbLineC"},
-			   			   {"pageSeq":"7", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbTbm"}];
+		   for(var j =0; j<pageList.length; j++){
+			   console.log(j+1, pageList[j].pageNm);
+			   	self.Setting[j] = {"pageSeq":j+1, "rotateTime": 10, "dataTime": 5, "pageNm":pageList[j].pageNm}
+		   }
 		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));
 	   }
+	   console.log(self.Setting);
 	   workerList.worker2data =JSON.parse(localStorage.getItem('SettingTime'));
-	   
    }
 		 
 
 	 function submitLotationSetting() {
-		   var SettingTime =[{"pageSeq":"1", "rotateTime": self.Setting[0].rotateTime, "dataTime": self.Setting[0].dataTime, "pageNm":"FmbCwMon"},
-			   				 {"pageSeq":"2", "rotateTime": self.Setting[1].rotateTime, "dataTime": self.Setting[1].dataTime, "pageNm":"FmbMon"},
-						     {"pageSeq":"3", "rotateTime": self.Setting[2].rotateTime, "dataTime": self.Setting[2].dataTime, "pageNm":"FmbTotal"},
-						     {"pageSeq":"4", "rotateTime": self.Setting[3].rotateTime, "dataTime": self.Setting[3].dataTime, "pageNm":"FmbLineA"},
-						     {"pageSeq":"5", "rotateTime": self.Setting[4].rotateTime, "dataTime": self.Setting[4].dataTime, "pageNm":"FmbLineB"},
-						     {"pageSeq":"6", "rotateTime": self.Setting[5].rotateTime, "dataTime": self.Setting[5].dataTime, "pageNm":"FmbLineC"},
-						     {"pageSeq":"7", "rotateTime": self.Setting[6].rotateTime, "dataTime": self.Setting[6].dataTime, "pageNm":"FmbTbm"}];
+		  var SettingTime = [];
+		   for(var j =0; j<pageList.length; j++){
+			   SettingTime[j] = {"pageSeq":j+1, "rotateTime": self.Setting[j].rotateTime, "dataTime":  self.Setting[j].dataTime, "pageNm":pageList[j].pageNm}
+		   }
 		   localStorage.setItem('SettingTime', JSON.stringify(SettingTime));
 		   /*for(var i=0; i<localStorage.length; i++){
 			   console.log(localStorage.getItem(localStorage.key(i)));
