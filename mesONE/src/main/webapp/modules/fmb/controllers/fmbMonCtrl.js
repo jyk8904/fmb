@@ -1,5 +1,5 @@
 /**  
- * @Class Name : fmb006Ctrl.js
+ * @Class Name : fmbCh006Ctrl.js
  * @Description : fmb006 
  * @Modification Information  
  * @

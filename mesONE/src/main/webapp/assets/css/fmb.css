@@ -1,4 +1,5 @@
 @CHARSET "UTF-8";
+
 /* css 초기화 */
 /* *{
 	margin: 0;
@@ -627,16 +628,20 @@ md-dialog title {
    /*  opacity:0.8; */
 }
 
-
+.eqpt_plc_a{
+	background-image: url('/mes/assets/img/system/eqptBg_plc_cw.png');
+	width:1880px !important;
+	background-size: contain;
+}
 .eqpt_plc_c{
 	background-image: url('/mes/assets/img/system/eqptBg_plc_c2.png');
 }
-.eqpt_plc_b{
+ .eqpt_plc_b{
 	background-image: url('/mes/assets/img/system/eqptBg_plc_b2.png');
-}
-.eqpt_plc_a{
+} 
+/*  .eqpt_plc_a{
 	background-image: url('/mes/assets/img/system/eqptBg_plc_a.png');
-}
+} */
 
 .EQPT {
 	position:relative;

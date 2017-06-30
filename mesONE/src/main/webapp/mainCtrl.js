@@ -47,14 +47,15 @@ angular
    /*plc parameter*/
    self.plcParamVo={};
    self.plcParamVo.plcId ='';
-   self.plcParamVo.factId = 'C';
+   self.plcParamVo.factId = '';
    //self.plcParamVo.factId = CmmFactSrvc.getSelectedFactId() ;
    //화면전환 모달창 default값
    self.showModal = false;
    
    self.vo = {PLC_ID: 'PLC-001'}
    /*이벤트*/
-   self.btnFmbMonClick = btnFmbMonClickHandler;   
+   self.btnFmbMonClick = btnFmbMonClickHandler;    
+   self.btnFmbCwMonClick = btnFmbCwMonClickHandler;   
    self.btnFmbTbmClick = btnFmbTbmClickHandler;   
    self.btnFmbLineAClick = btnFmbLineAClickHandler;
    self.btnFmbLineBClick = btnFmbLineBClickHandler;  
@@ -86,6 +87,21 @@ angular
    
    
    //알람정보 워커시작
+   
+	//설비 plc 데이터 가져오기
+  	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
+  	self.alarmList = {}
+  	plcPromise.then(function(data) {
+
+  		for (var i = 0; i < data.length; i++) {
+  			if(data[i].eqptSts=='0'){ //sts== 4일경우 하단바에 알람 발생 경고()
+  				self.alarmList[i]=data[i];
+  			}
+  		}
+  	}, function(data){
+  		alert('fail: '+ data)
+  });
+  	
    Worker3Start();
    defaultLotationSetting();
    submitLotationSetting();
@@ -95,12 +111,13 @@ angular
 	   if(localStorage.getItem('SettingTime')!=null){
 		   self.Setting = JSON.parse(localStorage.getItem('SettingTime'));
 	   }else{
-		   self.Setting = [{"pageSeq":"1", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbMon"},
-			   			   {"pageSeq":"2", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbTotal"},
-			   			   {"pageSeq":"3", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbLineA"},
-			   			   {"pageSeq":"4", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbLineB"},
-			   			   {"pageSeq":"5", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbLineC"},
-			   			   {"pageSeq":"6", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbTbm"}];
+		   self.Setting = [{"pageSeq":"1", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbCwMon"},
+			   			   {"pageSeq":"2", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbMon"},
+			   			   {"pageSeq":"3", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbTotal"},
+			   			   {"pageSeq":"4", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbLineA"},
+			   			   {"pageSeq":"5", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbLineB"},
+			   			   {"pageSeq":"6", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbLineC"},
+			   			   {"pageSeq":"7", "rotateTime": 10, "dataTime": 5, "pageNm":"FmbTbm"}];
 		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));
 	   }
 	   workerList.worker2data =JSON.parse(localStorage.getItem('SettingTime'));
@@ -109,12 +126,13 @@ angular
 		 
 
 	 function submitLotationSetting() {
-		   var SettingTime =[{"pageSeq":"1", "rotateTime": self.Setting[0].rotateTime, "dataTime": self.Setting[0].dataTime, "pageNm":"FmbMon"},
-						     {"pageSeq":"2", "rotateTime": self.Setting[1].rotateTime, "dataTime": self.Setting[1].dataTime, "pageNm":"FmbTotal"},
-						     {"pageSeq":"3", "rotateTime": self.Setting[2].rotateTime, "dataTime": self.Setting[2].dataTime, "pageNm":"FmbLineA"},
-						     {"pageSeq":"4", "rotateTime": self.Setting[3].rotateTime, "dataTime": self.Setting[3].dataTime, "pageNm":"FmbLineB"},
-						     {"pageSeq":"5", "rotateTime": self.Setting[4].rotateTime, "dataTime": self.Setting[4].dataTime, "pageNm":"FmbLineC"},
-						     {"pageSeq":"5", "rotateTime": self.Setting[5].rotateTime, "dataTime": self.Setting[5].dataTime, "pageNm":"FmbTbm"}];
+		   var SettingTime =[{"pageSeq":"1", "rotateTime": self.Setting[0].rotateTime, "dataTime": self.Setting[0].dataTime, "pageNm":"FmbCwMon"},
+			   				 {"pageSeq":"2", "rotateTime": self.Setting[1].rotateTime, "dataTime": self.Setting[1].dataTime, "pageNm":"FmbMon"},
+						     {"pageSeq":"3", "rotateTime": self.Setting[2].rotateTime, "dataTime": self.Setting[2].dataTime, "pageNm":"FmbTotal"},
+						     {"pageSeq":"4", "rotateTime": self.Setting[3].rotateTime, "dataTime": self.Setting[3].dataTime, "pageNm":"FmbLineA"},
+						     {"pageSeq":"5", "rotateTime": self.Setting[4].rotateTime, "dataTime": self.Setting[4].dataTime, "pageNm":"FmbLineB"},
+						     {"pageSeq":"6", "rotateTime": self.Setting[5].rotateTime, "dataTime": self.Setting[5].dataTime, "pageNm":"FmbLineC"},
+						     {"pageSeq":"7", "rotateTime": self.Setting[6].rotateTime, "dataTime": self.Setting[6].dataTime, "pageNm":"FmbTbm"}];
 		   localStorage.setItem('SettingTime', JSON.stringify(SettingTime));
 		   /*for(var i=0; i<localStorage.length; i++){
 			   console.log(localStorage.getItem(localStorage.key(i)));
@@ -129,6 +147,11 @@ angular
          //callParamSetting();
          $location.url('/FmbMon');
       }
+   function btnFmbCwMonClickHandler() {
+       WorkerStop();
+       //callParamSetting();
+       $location.url('/FmbCwMon');
+    }
       function btnFmbTbmClickHandler() {
          WorkerStop();
         // callParamSetting();

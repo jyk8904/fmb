@@ -137,7 +137,16 @@ angular
     		template: "<div bg-ctrl class='background-panel' ng-transclude></div>"
     	}
     	
-    })    
+    })
+       .directive('bcBackPanel2', function() {   /* 폼 백그라운드 패널 */
+    	return {
+    		restrict: 'E',	
+      		transclude: true, 
+      		replace:true,
+    		template: "<div bg-ctrl class='background-panel' ng-transclude style='margin-top:20px; padding: 0 10px 0 10px; !important;'></div>"
+    	}
+    	
+    })  
    .directive('bcBackPanelLine', function() {   /* 폼 백그라운드 패널 상세 */
     	return {
     		restrict: 'E',	

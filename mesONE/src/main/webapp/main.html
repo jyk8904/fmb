@@ -31,7 +31,8 @@
     <!-- <script src="assets/js/jquery-3.2.1.js"></script> -->
 
    <!-- AngularJS -->
-   <script src="//code.angularjs.org/1.6.1/angular.js"></script>
+   <script src="//code.angularjs.org/1.6.1/angu
+   lar.js"></script>
    <script src="//code.angularjs.org/1.6.1/angular-route.js"></script>
    <script src="//code.angularjs.org/1.6.1/angular-cookies.js"></script>
    <script src="//code.angularjs.org/1.6.1/angular-animate.js"></script>
@@ -54,7 +55,6 @@
 	<!-- DevExtreme CSS -->
 	<link rel="stylesheet" type="text/css" href="assets/css/dx.common.css" />
 	<link rel="stylesheet" type="text/css" href="assets/css/dx.light.css" />
-
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -91,6 +91,7 @@
 			<!-- <button class="top-btn" ng-click='vm.btnFmbSpcClick()'>SPC</button> -->
 			<button class="top-btn" ng-click='vm.btnFmbTotalClick()'>종합 현황</button>
 			<button class="top-btn" ng-click='vm.btnFmbMonClick()'>설비 가동현황</button>
+			<button class="top-btn" ng-click='vm.btnFmbCwMonClick()'>창원공장 설비 가동현황</button>
 		   <button class="top-btn" ng-click='vm.btnWorkerStop()'>Stop</button>
 			<button class="top-btn" ng-click='vm.btnWorkerStart()'>Start</button>
 		   <button class="top-btn" ng-click='vm.LotationSetting()'>전환 설정 테스트</button>
@@ -100,7 +101,7 @@
 		</div>
 	</div>   
 	
-	<div p-ctrl ng-view style='width:100%; height:1025px;'></div>
+	<div p-ctrl ng-view style='width:100%; height:1016px'></div>
 
 
 	<bc-form-footer bg-ctrl>
@@ -162,6 +163,7 @@
 	<script src="modules/fmb/controllers/fmb004Ctrl.js"></script>
 	<script src="modules/fmb/controllers/fmb005Ctrl.js"></script>
 	<script src="modules/fmb/controllers/fmbMonCtrl.js"></script>
+	<script src="modules/fmb/controllers/fmbCwMonCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbModeCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbPopupCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbTbmCtrl.js"></script>
