@@ -22,8 +22,16 @@ angular
 *  @ 설명
 *  
 *---------------------------------------------------------------*/
+    
      var worker= undefined;
      var self = this;
+     $scope.hoverIn = function(){
+    	 this.hover = true;
+     }
+     $scope.hoverOut = function(){
+    	 this.hover = false;
+     }
+     	
      //알람정보워커삭제
      var workerList = CmmWorkerSrvc;
      //workerList.worker3.terminate();
@@ -33,6 +41,7 @@ angular
      
      self.configSetting = {};
      self.checkData = {};
+     $scope.plctext = {};
      $scope.crtEqpt = {};
      
      //설비parameter

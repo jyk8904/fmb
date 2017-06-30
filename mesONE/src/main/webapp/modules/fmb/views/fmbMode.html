@@ -26,13 +26,9 @@
 		<md-radio-button class="md-radio-button" value="A" >A동</md-radio-button>
 		<md-radio-button class="md-radio-button" value="B" >B동</md-radio-button>
 		<md-radio-button class="md-radio-button" value="C"> C동 </md-radio-button>
-<<<<<<< HEAD
-	</md-radio-group> 
-=======
 		<md-radio-button class="md-radio-button" value="Comb">전체</md-radio-button>
 	</md-radio-group>
 	
->>>>>>> branch 'master' of https://github.com/jyk8904/fmb.git
 </md-form-header>
 
 <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4">
@@ -55,7 +51,7 @@
 						<h4>ID</h4>
 					</div>
 					<div class='third'>
-						<h4>삭제</h4>
+						<h4>사용안함</h4>
 					</div>
 				</div>
 				<ul>
@@ -166,7 +162,9 @@
               style="top:{{eqpt.cssTop}}; left: {{eqpt.cssLeft}}; 
                      width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}}; 
                      z-index:{{eqpt.cssZindex}};">
-               <img class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
+                     
+               <img ng-mouseover='hoverIn()' ng-mouseleave='hoverOut()'  class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
+           		<span class="hint" ng-show="hover" >{{eqpt.plcId}}</span>
             </div>
          </li>
       </ul>

@@ -613,7 +613,13 @@ md-dialog title {
 	font-size:20px;
 	
 }
-
+.hint{
+background-color: #444;
+border:1px solid #222;
+border-radius:2px;
+color:white;
+padding:3px;
+}
 
 
 
