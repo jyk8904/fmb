@@ -89,15 +89,14 @@
 	            templateUrl: 'modules/fmb/views/fmbMon.html',
 	            controllerAs: 'vm'
 	        })
-<<<<<<< HEAD
 	        .when('/FmbCwMon', {
 	            controller: 'FmbCwMonCtrl',
 	            templateUrl: 'modules/fmb/views/fmbCwMon.html',
-=======
+	            controllerAs: 'vm'
+	        })
 	        .when('/FmbMainMon', {
 	            controller: 'FmbMainMonCtrl',
 	            templateUrl: 'modules/fmb/views/fmbMainMon.html',
->>>>>>> branch 'master' of https://github.com/jyk8904/fmb.git
 	            controllerAs: 'vm'
 	        })
 	        .when('/FmbMode', {

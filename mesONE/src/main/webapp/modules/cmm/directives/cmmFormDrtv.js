@@ -138,8 +138,7 @@ angular
     	}
     	
     })
-<<<<<<< HEAD
-       .directive('bcBackPanel2', function() {   /* 폼 백그라운드 패널 */
+    .directive('bcBackPanel2', function() {   /* 폼 백그라운드 패널 */
     	return {
     		restrict: 'E',	
       		transclude: true, 
@@ -148,7 +147,6 @@ angular
     	}
     	
     })  
-=======
     .directive('bcBgImgPanel', function() {   /* 폼 백그라운드 패널 */
     	return {
     		restrict: 'E',	
@@ -158,7 +156,6 @@ angular
     	}
     	
     })
->>>>>>> branch 'master' of https://github.com/jyk8904/fmb.git
    .directive('bcBackPanelLine', function() {   /* 폼 백그라운드 패널 상세 */
     	return {
     		restrict: 'E',	
