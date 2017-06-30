@@ -16,75 +16,176 @@ angular
     .module('app')
     .controller('FmbModeCtrl', ['CmmAjaxService','CmmWorkerSrvc','CmmFactSrvc', '$http', '$scope','$mdSidenav', '$filter','$window', function (CmmAjaxService, CmmWorkerSrvc, CmmFactSrvc, $http, $scope, $mdSidenav, $filter,$window) 
 {
-    /*------------------------------------------
-    *  변수 선언
-    *-----------------------------------------*/
+/*----------------------------------------------------------------
+*  변수 선언
+* ----------------------------------------------------------------
+*  @ 설명
+*  
+*---------------------------------------------------------------*/
      var worker= undefined;
      var self = this;
      //알람정보워커삭제
      var workerList = CmmWorkerSrvc;
-     //ㄴorkerList.worker3.terminate();
+     //workerList.worker3.terminate();
      workerList.worker3 = undefined;
+     
+     self.showModal = false;
+     
+     self.configSetting = {};
+     self.checkData = {};
+     $scope.crtEqpt = {};
      
      //설비parameter
      self.eqptParamVo = {
-           factId: 'C',
-          plcId: '', 
-           eqptCnm: ''
-         }
- 	//plc parameter
- 	self.plcParamVo={};
- 	self.plcParamVo.plcId ='';
- 	self.plcParamVo.factId ='C';
-
-     self.configSetting = {};
-     self.checkData = {};
-     
-     
-     self.changeFact = changeFact;
-     
-     self.exists = function (eqpt, modStatus, index) {
-    	 if (modStatus == true) {
-    	 	eqpt.status = "delete";
-    	 }
+    		  factId: 'C'
+		   	, plcId: ''
+		   	, eqptCnm: ''
      };
 
-     self.toggleLeft = buildToggler('left');
-     self.saveEqptData = function(){
+ 	//plc parameter
+ 	self.plcParamVo = {
+ 			  plcId: ''
+ 			, factId: 'C'
+ 	};
+
+/*----------------------------------------------------------------
+*  이벤트 함수 맵핑
+* ---------------------------------------------------------------- 
+*  @ 설명
+*  brbr - brbrbrbr~~
+*  brbr - brbrbr~~~~
+*---------------------------------------------------------------*/ 	
+ 	
+    self.changeFact = changeFact;
+     
+    self.exists = function (eqpt, modStatus, index) {
+    	if (modStatus == true) {
+    	 	eqpt.status = "delete";
+    	}
+    };
+
+    self.toggleLeft = buildToggler('left');
+    
+    
+    
+    self.crtEqptModal = function(){
+    	
+    	self.showModal = !self.showModal;
+    };
+    
+    $scope.submit = function(){	
+    	var cnm = $scope.crtEqpt.cnm;
+    	var type = $scope.crtEqpt.type;
+    	var plcId = $scope.crtEqpt.plcId;
+    	console.log(cnm,type,plcId)
+    	if (cnm != null && cnm != "" && type != null && type != "" && plcId != null && plcId != "")
+    	{
+    		var detect = $filter('filter')(self.eqptList, {plcId : plcId , status : '!delete'});
+    		console.log(detect);
+		    /*	var data = {  eqptCnm : cnm
+		    			    , plcId : plcId
+		    			    , eqptType : type
+		    			    , desc : null
+		    			    , cssZindex : 'auto'
+		    			    , cssWidth : '0px'
+		    				, cssHeight : '0px'
+		    				, cssTop : '0px'
+		    				, cssLeft : '0px'
+		    				, status : 'insert'
+		    			   };
+		    	
+		    	self.eqptList.push(data);*/
+    	}
+    	else {
+    		console.log(cnm,type,plcId)
+    		alert("모든 칸을 기입해야합니다.");
+    	}
+    };
+    
+    self.saveEqptData = function(){
     	 console.log("저장하는시점 factId는? "+self.eqptParamVo.factId );
     	 var eqptPromise = CmmAjaxService.save("/mes/bas/saveFmbEqpt.do", self.eqptList);
-    			
-    	 
-/*     	eqptPromise.then(function(d) {
-			
-			if (d.msgId == 'OK') {
-				alert(d.msgNm);
-			} else {
-				alert("err =" + d.msgNm);
-			}
-		},
-		function(errResponse){
-			console.error("Error while fectching Data");
-		});*/
-     };
-     
+    };
+    
+    //설비 이미지리스트 가져오기
+    function getEqptList(){
+    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
+    	eqptPromise.then(function(data) {
+    		self.eqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
+    		for(var i = 0; i < self.eqptList.length; i++){
+    			self.eqptList[i]['status'] = "keep";
+    		}
+    	}, function(data){
+    	alert('fail: '+ data)
+    });    	
+    
+    }
+    
+    function getPlcList(){
+    	
+    	//설비 plc 데이터 가져오기
+    	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
+    	plcPromise.then(function(data) {
+    		self.plcList = data; //fmbplcVo가 담긴 리스트 형태리턴
+    	}, function(data){
+    		alert('fail: '+ data)
+    	});
+    }
+    
+    
+/*----------------------------------------------------------------
+*  이벤트 함수 정의
+* ----------------------------------------------------------------
+* @ 설명
+* 
+*----------------------------------------------------------------*/
+    
      function buildToggler(componentId) {
          return function() {
            $mdSidenav(componentId).toggle();
          };
      }
+     
      function Fmb007Ctrl ( $scope ) {
-    	    $scope.data = {
-    	      selectedIndex: 0,
-    	      bottom:        false
-    	    };
-    	    $scope.next = function() {
+    	 $scope.data = {
+    			   selectedIndex: 0
+    			 , bottom: false
+    	 };
+    	 $scope.next = function() {
     	      $scope.data.selectedIndex = Math.min($scope.data.selectedIndex + 1, 2) ;
-    	    };
-    	    $scope.previous = function() {
+    	 };
+    	 $scope.previous = function() {
     	      $scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
-    	    };
-    	  }
+    	 };
+    }
+    
+    //배경이미지 변경하기
+  	//설비리스트 다시불러오기
+    function changeFact(){
+     	
+    	getEqptList();
+     	getPlcList();
+     	
+     	var factId = self.eqptParamVo.factId;
+     	
+     	if (factId == 'Comb'){
+     		self.plcParamVo.factId = "";
+     	} else {
+     		self.plcParamVo.factId= factId ;
+     	}
+    }
+    
+    
+/*----------------------------------------------------------------
+*  함수 실행
+* ----------------------------------------------------------------
+* @ 설명
+* 
+*----------------------------------------------------------------*/ 
+    
+    getEqptList();
+    getPlcList();
+     
     /*------------------------------------------
     *  Config Setting Data
     *-----------------------------------------*/ 
@@ -170,87 +271,7 @@ angular
     	// 비율은 무조건 16:9로 고정하며 빈공간의 예외상황은 고려하지 않는다.
     	
      });*/
-
-
-    //self.plcParamVo.factId = CmmFactSrvc ;
-  	       
-    self.showModal = false;
-    
-    self.crtEqptModal = function(){
-    	
-    	self.showModal = !self.showModal;
-    };
-    
-    $scope.crtEqpt = {};
-    $scope.submit = function(){	
-    	var cnm = $scope.crtEqpt.cnm;
-    	var type = $scope.crtEqpt.type;
-    	var plcId = $scope.crtEqpt.plcId;
-    	console.log(cnm,type,plcId)
-    	if (cnm != null && cnm != "" && type != null && type != ""
-    		&& plcId != null && plcId != "")
-    		{
-		    	var data = {  eqptCnm : cnm
-		    			    , plcId : plcId
-		    			    , eqptType : type
-		    			    , desc : null
-		    			    , cssZindex : 'auto'
-		    			    , cssWidth : '0px'
-		    				, cssHeight : '0px'
-		    				, cssTop : '0px'
-		    				, cssLeft : '0px'
-		    				, status : 'insert'
-		    			   };
-		    	
-		    	self.eqptList.push(data);
-    		}
-    	else {
-    		console.log(cnm,type,plcId)
-    		alert("모든 칸을 기입해야합니다.");
-    	}
-    };
-
-    function changeFact(){
-    	//배경이미지 변경하기
-    	//설비리스트 다시불러오기
-    	getEqptList();
-    	getPlcList();
-    	var factId = self.eqptParamVo.factId;
-    	self.plcParamVo.factId= factId ;
-    	
-    	     
-    }
-    
-    getEqptList();
-    getPlcList();
-    
-    //설비 이미지리스트 가져오기
-    function getEqptList(){
-    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
-    	eqptPromise.then(function(data) {
-    		self.eqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
-    		for(var i = 0; i < self.eqptList.length; i++){
-    			self.eqptList[i]['status'] = "keep";
-    		}
-    	}, function(data){
-    	alert('fail: '+ data)
-    });    	
-    
-    }
-    
-    
-    function getPlcList(){
-    	
-    	//설비 plc 데이터 가져오기
-    	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
-    	plcPromise.then(function(data) {
-    		self.plcList = data; //fmbplcVo가 담긴 리스트 형태리턴
-    	}, function(data){
-    		alert('fail: '+ data)
-    	});
-    }
-    
-    
+ 
     /*------------------------------------------
      *  EQPT Data Commit
      *-----------------------------------------*/

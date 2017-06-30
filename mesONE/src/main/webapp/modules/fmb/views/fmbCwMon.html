@@ -1,0 +1,133 @@
+<!-- 
+/**  
+ * @Class Name : fmb006.html
+ * @Description : fmb006
+ * @Modification Information  
+ * @
+
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.05	 정유경
+ * 
+
+ * css: assets/css/fmb.css
+ * controller : fmb006Ctrl.js
+ *
+ */
+ -->
+<!-- ngview 내부 페이지 -->
+<div class='bc-screen' >
+	<script src="modules/cmm/services/cmmFactSrvc.js"></script>
+<!-- ngview 내부 header -->
+<img src="assets/img/system/logo.png" style="margin:30px; float:left;">
+<p style="margin:30px 250px 30px 400px; float:left; color:white; font-size:30pt; font-weight: bold;">생산 자원 통합 모니터링<p>
+<div style="background-color: rgba(255,255,255,0.3); border-radius:25px; padding:10px 30px; margin:15px 0px 15px 80px; 
+width:300px; height:90px; color:white; float:left;  font-size:12pt; font-weight:bold;"  >
+<img style="width:40px; height:auto;" src="assets/img/system/BJT.jpg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img style="width:40px; height:auto;" src="assets/img/system/CABJ.jpg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img style="width:40px; height:auto;" src="assets/img/system/ITR.jpg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img style="width:40px; height:auto;" src="assets/img/system/OTR.jpg"><br>&nbsp;BJT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+CABJ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ITR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OTR
+</div>
+<div style="background-color: rgba(255,255,255,0.3); border-radius:25px; padding:20px 30px; margin:15px 5px 15px 30px; width:200px; 
+height:90px; font-size:12pt; font-weight:bold;float:left; color:white; clear:right;">
+<img src="assets/img/button/Green25.png" style="margin-bottom:10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="assets/img/button/Red25.png" style="margin-bottom:10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="assets/img/button/White25.png" style="margin-bottom:10px; width:25px; height:25px;"><br>
+가동&nbsp;&nbsp; 알람&nbsp; 비가동
+
+</div>
+<div style=" width:250px; height:100px;"> </div>
+
+	
+
+<!-- ngview 내부 body -->
+<bc-form-body>
+	<bc-back-panel2>
+	<!--설비클래스 삽입 시작-->
+	<!--<div bg-inner-ctrl class='bg-panel'></div> -->
+  	<div ng-switch on="vm.eqptParamVo.factId">
+    <div ng-switch-when="A" bg-inner-ctrl class='bg-panel eqpt_plc_a'></div>
+   	<div ng-switch-when="B" bg-inner-ctrl class='bg-panel eqpt_plc_b'></div>
+   	<div ng-switch-when="C" bg-inner-ctrl class='bg-panel eqpt_plc_c'></div>
+    </div> 
+	<div class="EQPT">	
+		 <ul>
+			<!-- 설비이미지 repeat -->
+			<li ng-repeat="eqpt in vm.eqptList">
+			 <div class="{{eqpt.eqptCnm}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
+				  style="top:{{eqpt.cssTop}}; left: {{eqpt.cssLeft}}; 
+				  		 width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}}; 
+				  		 z-index:{{eqpt.cssZindex}};">
+				  		 
+	               <div ng-switch on="vm.stsData[$index]">  
+	               <!-- {{vm.stsData[$index]}} -->
+	               <img ng-switch-when="0" class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};" ng-click="vm.toggleModal(eqpt.plcId)">
+	               <img ng-switch-when="1" class="obj" src="{{eqpt.stsImg1}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};" ng-click="vm.toggleModal(eqpt.plcId)">
+	               <img ng-switch-when="2" class="obj" src="{{eqpt.stsImg2}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};" ng-click="vm.toggleModal(eqpt.plcId)">
+	               <img ng-switch-when="3" class="obj" src="{{eqpt.stsImg3}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};" ng-click="vm.toggleModal(eqpt.plcId)">
+	               <img ng-switch-when="4" class="obj" src="{{eqpt.stsImg4}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};" ng-click="vm.toggleModal(eqpt.plcId)">
+	               </div> 
+				</div>
+			</li>
+		</ul>
+ 	</div>
+	</div>
+	</bc-back-panel2>
+		<!--설비클래스 삽입 끝-->
+</bc-form-body>
+</div>
+
+
+<!------------------------------------------ modal body start------------------------------------------------------->
+<modal title="설비 정보" visible="vm.showModal">
+<form role="form">
+
+	<ul class="eqpt-info-modal">
+		<li ng-repeat="plc in vm.plc">
+			<div class="form-group">
+				<label for="stsImg0"></label>
+			</div>
+			<div class="form-group">
+				<label for="plcId">PlcID </label>
+				<h5>{{plc.plcId}}</h5>
+			</div>
+			<div class="form-group">
+
+				<label for="eqptCd">설비코드 </label>
+				<h5>{{plc.eqptCd}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="eqptNm">설비명</label>
+				<h5>{{plc.eqptNm}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="factId">공장ID</label>
+				<h5>{{plc.factId}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="lineNm">라인명 </label>
+				<h5>{{plc.lineNm}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="item_Cd">제품코드 </label>
+				<h5>{{plc.item_Cd}}</h5>
+				
+			</div>
+			<div class="form-group">
+				<label for="eqptSts">설비상태 </label>
+				<h5>{{plc.eqptSts}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="stsDttm">설비 </label>
+				<h5>{{plc.stsDttm}}</h5>
+			</div>
+
+		</li>
+	</ul>
+<button type="button" class="btn btn-default" data-dismiss="modal"
+		aria-hidden="true">close</button>
+</form>
+</modal>
+
+<!-------------------------------------------modal body end------------------------------------------------------->

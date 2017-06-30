@@ -620,7 +620,7 @@ md-dialog title {
 /* bcFormBody */
 .bg-panel {
 	position:absolute;
-	width:1600px;
+	width:1880px;
 	height:900px;
 	
     background-repeat: no-repeat;
@@ -628,10 +628,24 @@ md-dialog title {
    /*  opacity:0.8; */
 }
 
+<<<<<<< HEAD
 .eqpt_plc_a{
 	background-image: url('/mes/assets/img/system/eqptBg_plc_cw.png');
 	width:1880px !important;
 	background-size: contain;
+=======
+.bg-img-panel{
+	position:relative;
+	clear:both;
+	float:left;
+	padding:0 20px 0 20px;
+	width : 1920px;
+	height : 900px;
+	border-radius: 10px;
+}
+.eqpt_plc_comb{
+	background-image: url('/mes/assets/img/system/eqptBg_plc_comb2.png');
+>>>>>>> branch 'master' of https://github.com/jyk8904/fmb.git
 }
 .eqpt_plc_c{
 	background-image: url('/mes/assets/img/system/eqptBg_plc_c2.png');
