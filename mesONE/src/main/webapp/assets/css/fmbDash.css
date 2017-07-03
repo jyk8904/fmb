@@ -15,15 +15,15 @@
 	top: 670px;
 }
 .workPie {
-	margin: 20px 0 0 30px;
+	margin: 20px 0 0 80px;
 }
 .runGauge {
-	margin-left: 50px;
+	margin-left: 105px;
 }
 /*설정 코드*/
 .stsbackLg {
 	position: absolute;
-	width: 360px;
+	width: 455px;
 	height: 844px;
 	z-index: 99;
 	opacity:0.8;
@@ -37,8 +37,8 @@
 }
 .stsbackSm {
 	position: absolute;
-	width: 360px;
-	height: 380px;
+	width: 455px;
+	height: 392px;
 	z-index: 99;
 	opacity: 0.8;
 	margin: -5px 0 0 0;
@@ -69,9 +69,9 @@
 }
 .stsBoard {
 	/*border: 1px solid white;*/
-	width: 360px;
+	width: 455px;
 	float: left;
-	margin: 15px;
+	margin: 10px;
 	/*background-color: white;*/
 }
 .stsBody {
@@ -86,14 +86,14 @@
 }
 .workInfo {
 	position:absolute;
-	width:360px;
+	width:455px;
 	height: 270px;
 	top: 400px;
 	z-index:100;
-	padding: 0 10px 5px 10px;
+	padding: 0 20px 5px 20px;
 }
 .workInfo .workInfoGrid {
-	width: 340px;
+	width: 415px;
 	height: 200px;
 	margin-bottom: 20px;
 	background-color: black;
@@ -109,7 +109,7 @@
 	background-color: grey
 }
 .workInfo .workInfoGrid .workFirstBox {
-	width: 60px;
+	width: 80px;
 	height: 25px;
 	float:left;
 	margin: 0 4px 4px 0;
@@ -118,7 +118,7 @@
 	color: ghostWhite;
 }
 .workInfo .workInfoGrid .workSecondBox {
-	width: 192px;
+	width: 227px;
 	height: 25px;
 	float:left;
 	margin: 0 4px 4px 0;
@@ -127,7 +127,7 @@
 	color: ghostWhite;
 }
 .workInfo .workInfoGrid .workThirdBox {
-	width: 80px;
+	width: 100px;
 	height: 25px;
 	float:left;
 	margin-bottom: 4px;
@@ -136,11 +136,11 @@
 	color: ghostWhite;
 }
 .workInfo .workInfoPpm {
-	width: 340px;
+	width: 415px;
 	height: 35px;
 }
 .workInfo .workInfoPpm .ppmTitle {
-	width: 200px;
+	width: 240px;
 	height: 35px;
 	background-color: grey;
 	float:left;
@@ -150,7 +150,7 @@
 	color: ghostWhite;
 }
 .workInfo .workInfoPpm .ppmValue {
-	width: 120px;
+	width: 155px;
 	height: 35px;
 	background-color: grey;
 	float:left;
@@ -160,21 +160,21 @@
 }
 .gaugeInfo {
 	position:absolute;
-	width:360px;
+	width:455px;
 	height: 145px;
 	top: 290px;
 	z-index:100;
-	padding: 0 10px 5px 10px;
+	padding: 0 20px 5px 20px;
 }
 .gaugeTitleBox {
-	width: 165px;
+	width: 200px;
 	height: 30px;
 	background-color: grey;
 	float: left;
-	margin: 0 10px 5px 0;
+	margin: 0 15px 5px 0;
 }
 .gaugeValueBox {
-	width: 165px;
+	width: 200px;
 	height: 30px;
 	background-color: grey;
 	float: left;
@@ -192,19 +192,19 @@
 }
 .topInfo {
 	position: absolute;
-	width: 360px;
+	width: 455px;
 	height: 165px;
 	top: 270px;
 	z-index: 100;
-	padding: 0 10px 5px 10px;
+	padding: 0 20px 5px 20px;
 }
 .bottomInfo {
 	position: absolute;
-	width: 360px;
+	width: 455px;
 	height: 165px;
 	top: 734px;
 	z-index: 100;
-	padding: 0 10px 5px 10px;
+	padding: 0 20px 5px 20px;
 }
 .infoTitle {
 	width: 150px;
@@ -215,17 +215,17 @@
 	padding-left: 10px;
 }
 .firstTitleBox {
-	width: 165px;
+	width: 200px;
 	height: 35px;
 	background-color: grey;
 	float: left;
-	margin: 0 10px 5px 0;
+	margin: 0 15px 5px 0;
 	line-height: 35px;
 	padding-left: 5px;
 	color: white;
 }
 .firstValueBox {
-	width: 165px;
+	width: 200px;
 	height: 35px;
 	background-color: grey;
 	float: left;
@@ -235,17 +235,17 @@
 	color: white;
 }
 .secondTitleBox {
-	width: 165px;
+	width: 200px;
 	height: 35px;
 	background-color: grey;
 	float: left;
-	margin: 0 10px 5px 0;
+	margin: 0 15px 5px 0;
 	line-height: 35px;
 	padding-left: 5px;
 	color: white;
 }
 .secondValueBox {
-	width: 165px;
+	width: 200px;
 	height: 35px;
 	background-color: grey;
 	float: left;
@@ -255,17 +255,17 @@
 	color: white;
 }
 .thirdTitleBox {
-	width: 165px;
+	width: 200px;
 	height: 35px;
 	background-color: grey;
 	float: left;
-	margin: 0 10px 0 0;
+	margin: 0 15px 0 0;
 	line-height: 35px;
 	padding-left: 5px;
 	color: white;
 }
 .thirdValueBox {
-	width: 165px;
+	width: 200px;
 	height: 35px;
 	background-color: grey;
 	float: left;

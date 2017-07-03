@@ -107,7 +107,7 @@
 	<!--알람정보 하단 바 시작-->
 	   	<div class="alarm_data">
 	  		<marquee>
-	      		<ul id="banner" class="simply-scroll-list" style="background-color:#333;">
+	      		<ul marquee-banner data='vm.alarmList' id="banner" class="simply-scroll-list" style="background-color:#333;">
 	      			<li ng-repeat="alarm in vm.alarmList track by $index">
 	       				{{alarm.plcId}} 알람발생  {{alarm.stsDttm}}
 	      			</li>
@@ -172,6 +172,7 @@
 	<script src="modules/fmb/controllers/fmbLineCCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbSpcCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbTotalCtrl.js"></script>
+	<script src="modules/fmb/controllers/dialogCtrl.js"></script>
 	<script src="vendor/pdfkit/AUIGrid.pdfkit.js"></script>
     	
 	<!--  Modify Page 관리 -->

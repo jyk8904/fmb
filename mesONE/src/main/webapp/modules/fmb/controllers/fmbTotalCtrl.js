@@ -199,7 +199,7 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 			    self.alarmDateRunInfo = {
 			        dataSource: self.dateRunInfoList,
 			        size: {
-			        	width: 350,
+			        	width: 450,
 			        	height: 200
 			        },
 			        commonSeriesSettings: {
@@ -258,7 +258,7 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 		    self.standbyDateRunInfo = {	    	
 		        dataSource: self.dateRunInfoList,
 		        size: {
-		        	width: 350,
+		        	width: 450,
 		        	height: 200
 		        },
 		        commonSeriesSettings: {
@@ -312,7 +312,7 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 		    self.noRunDateRunInfo = {
 		        dataSource: self.dateRunInfoList,
 		        size: {
-		        	width: 350,
+		        	width: 450,
 		        	height: 200
 		        },
 		        commonSeriesSettings: {
@@ -456,7 +456,7 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 			        	}
 			        },
 			        size: {
-			        	width: 360,
+			        	width: 450,
 			        	height: 800
 			        },
 			        legend: {
@@ -494,7 +494,7 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 			            color: '#ffaa66'
 			        },
 			        size: {
-			        	width: 350,
+			        	width: 450,
 			        	height: 220
 			        },
 			        legend: {

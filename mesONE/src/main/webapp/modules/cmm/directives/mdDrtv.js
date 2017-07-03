@@ -42,6 +42,39 @@ angular
             		"</div>"
          }
       })
+      .directive('bannerList', function($timeout){
+    	  return{
+        	  restrict: 'A',
+        	  scope: {
+        		  data:'=data'
+        	  },
+        	  controller: function() {
+        		  return scope.data;
+        	  }
+    	  }
+      })
+      .directive('marqueeBanner', function($timeout){
+    	  return {
+    		restrict: 'A',
+    		scope: {
+      		  data:'=data'
+      	  },
+    		link: function(scope, element, attrs) {
+    			//console.log(scope.data)
+    			//console.log(Object.keys(scope.data))
+    			
+    			//console.log(angular.toJson(scope.data))
+    			/*var output = [];
+    			
+    			for (var key in scope.data) {
+    				var tempObj = {};
+    				tempObj[key] = scope.data[key];
+    				output.push(tempObj);
+    			}
+    			console.log(output)*/
+    		}
+    	  };
+      })
       .directive('uCtrl', function($timeout, $window){
     	  return {
     		  restrict: 'A',

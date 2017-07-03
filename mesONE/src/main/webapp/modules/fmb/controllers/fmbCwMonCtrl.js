@@ -14,30 +14,31 @@
 
 angular
     .module('app')
-    .controller('FmbCwMonCtrl', [  'CmmAjaxService'
-    							,'CmmModalSrvc'
-    							,'CmmWorkerSrvc'
+    .controller('FmbCwMonCtrl', [ 'CmmAjaxService'
+    							, 'CmmModalSrvc'
+    							, 'CmmWorkerSrvc'
+    							, 'CmmFactSrvc'
     							, '$rootScope'
-    						  /*, 'CmmFactSrvc'  공장선택*/
     							, '$http'
     							, '$scope'
     							, '$window'
     							, '$q'
     							, '$filter'
     							, '$location'
-    							
+    							, '$mdDialog'
     							, function (
     									  CmmAjaxService
     									, CmmModalSrvc
     									, CmmWorkerSrvc
+    									, CmmFactSrvc
     									, $rootScope
-    								  /*, CmmFactSrvc*/
     									, $http
     									, $scope
     									, $window
     									, $q
     									, $filter
     									, $location
+    									, $mdDialog
     									) 
 {
 	/*------------------------------------------
@@ -48,14 +49,14 @@ angular
     
     //설비parameter
     self.eqptParamVo = {};
-    self.eqptParamVo.factId = 'A';
+    self.eqptParamVo.factId = 'Comb';
     self.eqptParamVo.plcId = '';
     self.eqptParamVo.eqptCnm ='';
     	
 	//plc parameter
 	self.plcParamVo={};
 	self.plcParamVo.plcId ='';
-	self.plcParamVo.factId ='A';
+	self.plcParamVo.factId ='';
 	
 	self.stsData = {};
 	
@@ -87,7 +88,7 @@ angular
     getEqptList();
     
     //설비plc 데이터 불러오기 Web Worker시작 함수
-    Worker2Start();
+   // Worker2Start();
   //설비 이미지리스트 가져오기
     function getEqptList(){
 	    	//설비 이미지리스트 가져오기 메소드
@@ -101,8 +102,11 @@ angular
     }
     
     function aaa(){
+    	console.log("123")
 		for(var i =0; i < self.eqptList.length; i++){
+			
 			var target = $filter('filter')(self.plcList, {plcId : self.eqptList[i].plcId});
+			console.log(self.eqptList[i].plcId);
 			self.stsData[i]= target[0].eqptSts;
 		}
 		//console.log(self.stsData[0])
@@ -156,8 +160,8 @@ angular
 	           }
 	           // 워커로부터 전달되는 메시지를 받는다.
 	           		workerList.worker2.onmessage = function(evt){ 
-	           		/*self.eqptParamVo.factId = CmmFactSrvc.getSelectedFactId();
-	           		self.plcParamVo.factId = CmmFactSrvc.getSelectedFactId();*/
+	           		self.eqptParamVo.factId = CmmFactSrvc.getSelectedFactId();
+	           		self.plcParamVo.factId = CmmFactSrvc.getSelectedFactId();
 	           			if(workerList.worker2sts=='stop'){
 	           				Worker2Start();
 	           			}
@@ -172,5 +176,36 @@ angular
 	          alert("현재 브라우저는 웹 워커를 지원하지 않습니다");
 	        }
 	      }
+	    
+	    // 팝업 테스트용 코드입니다....
+	    
+	    var customFullscreen = false;
+	    
+	    $scope.cancel = function() {
+	    	$mdDialog.cancel();
+	    };
+	    
+	    $scope.showAdvanced = function(ev) {
+	    	
+	    	CmmFactSrvc.setPlcData(ev);
+	    	console.log(CmmFactSrvc.getPlcData());
+	    	//PlC 데이터 저장 하는 부분.
+	    	//CmmFactSrvc.setPlcData(ev);
+	    	
+	        $mdDialog.show({
+	          controller: 'DialogCtrl',
+	          controllerAs: 'vm',
+	          templateUrl: '/mes/modules/fmb/views/dialog1.tmpl.html',
+	          parent: angular.element(document.body),
+	          targetEvent: ev,
+	          clickOutsideToClose:true,
+	          fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+	        })
+	        .then(function(answer) {
+	          $scope.status = 'You said the information was "' + answer + '".';
+	        }, function() {
+	          $scope.status = 'You cancelled the dialog.';
+	        });
+	    };
 }]);
 

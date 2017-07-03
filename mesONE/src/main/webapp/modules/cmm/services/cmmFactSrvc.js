@@ -14,6 +14,25 @@
 
 angular.module('app').factory('CmmFactSrvc',  function() {
 		var selectedFactId ="C";
+		var savePlcData = "PLC_000";
+		
+		
+		//신규 추가 코드
+		// 이동해야 됨
+		function setPlcData(data) {
+			savePlcData = data;
+		}
+		
+		function getPlcData() {
+			return savePlcData;
+		}
+		
+		var plcData = {
+				setPlcData : setPlcData,
+				getPlcData : getPlcData
+		};
+		
+		return plcData;
 		
 		var factory={
 				selectedFactId : selectedFactId,
