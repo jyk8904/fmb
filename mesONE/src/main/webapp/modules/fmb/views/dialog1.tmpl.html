@@ -1,0 +1,26 @@
+<md-dialog aria-label="eqpt info" class="infoPopup" style="width:1500px; height:900px;">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{vm.plcData}}의 설비 정보</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content class="infoPopupContent">
+      <div class="md-dialog-content" style="width:1500px; height:800px;">
+        <img class="eqptImg" scr='assets/img/system/logo.png' style='position:relative; width:552px; height:376px; float:left;'>
+		<div class="timeProd" style="position:relative; width:900px; height:376px; float:left; background-color:green">
+			<div dx-chart="vm.timeProd"></div>
+		</div>
+
+        <div class="eqptInfo" style="position:relative; width:552px; height:376px; float:left; background-color:blue"></div>
+        <div class="eqptRunCh" style="position:relative; width:900px; height:376px; float:left; background-color:gray"></div>
+
+      </div>
+    </md-dialog-content>
+  </form>
+</md-dialog>
