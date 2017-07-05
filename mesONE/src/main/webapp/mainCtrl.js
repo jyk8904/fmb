@@ -44,6 +44,10 @@ angular
                                  ) {
    var workerList = CmmWorkerSrvc;
    var self = this;
+   
+   self.alarmListLen = {};
+
+   
    /*plc parameter*/
    self.plcParamVo={};
    self.plcParamVo.plcId ='';
@@ -291,6 +295,8 @@ angular
                	}, function(data){
                		alert('fail: '+ data)
                });
+               	
+                self.alarmListLen = Object.keys(self.alarmList).length;
              }  
         }
         else {

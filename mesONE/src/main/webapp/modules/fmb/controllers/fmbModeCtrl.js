@@ -14,7 +14,7 @@
 
 angular
     .module('app')
-    .controller('FmbModeCtrl', ['CmmAjaxService','CmmWorkerSrvc','CmmFactSrvc', '$http', '$scope','$mdSidenav', '$filter','$window', function (CmmAjaxService, CmmWorkerSrvc, CmmFactSrvc, $http, $scope, $mdSidenav, $filter,$window) 
+    .controller('FmbModeCtrl', ['CmmAjaxService','CmmWorkerSrvc','CmmFactSrvc', '$http', '$scope','$mdSidenav', '$filter','$window','$mdDialog', function (CmmAjaxService, CmmWorkerSrvc, CmmFactSrvc, $http, $scope, $mdSidenav, $filter, $window, $mdDialog) 
 {
 /*----------------------------------------------------------------
 *  변수 선언
@@ -235,6 +235,29 @@ angular
     	 
     	 alert("적용 되었습니다.");
      }
+     
+     var customFullscreen = false;
+     
+     self.uploadImg = function() {
+    	 var ev = '12333';
+    	 console.log(ev)
+	        $mdDialog.show({
+		          controller: 'UploadCtrl',
+		          controllerAs: 'vm',
+		          templateUrl: '/mes/modules/fmb/views/upload.tmpl.html',
+		          parent: angular.element(document.body),
+		          clickOutsideToClose:true,
+		          fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+		        })
+		        .then(function(answer) {
+		        	console.log('22223')
+		          $scope.status = 'You said the information was "' + answer + '".';
+		        }, function() {
+		        	console.log('121231233')
+		          $scope.status = 'You cancelled the dialog.';
+		        });
+    	 console.log('123')
+     };
      
     /*------------------------------------------
     *  Responsive Setting Part

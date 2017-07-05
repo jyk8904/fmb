@@ -26,9 +26,10 @@
     
     <!-- JQUERY -->
     <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
-    <!-- <script src="assets/js/jquery-3.1.0.min.js"></script>
- -->   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- <script src="assets/js/jquery-3.1.0.min.js"></script>-->   	
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- <script src="assets/js/jquery-3.2.1.js"></script> -->
+
 
    <!-- AngularJS -->
    <script src="//code.angularjs.org/1.6.1/angular.js"></script>
@@ -38,6 +39,10 @@
    <script src="//code.angularjs.org/1.6.1/angular-sanitize.js"></script>
    <script src="//code.angularjs.org/1.6.1/i18n/angular-locale_ko-kr.js"></script>
 
+    <script src="assets/js/ng-file-upload-shim.min.js"></script>
+    <script src="assets/js/ng-file-upload.min.js"></script> 
+    <script src="assets/js/ng-file-upload-all.min.js"></script> 
+    
    <script   src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
    <script   src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
    <script   src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
@@ -107,8 +112,8 @@
 	<!--알람정보 하단 바 시작-->
 	   	<div class="alarm_data">
 	  		<marquee>
-	      		<ul marquee-banner data='vm.alarmList' id="banner" class="simply-scroll-list" style="background-color:#333;">
-	      			<li ng-repeat="alarm in vm.alarmList track by $index">
+	      		<ul id="banner" class="simply-scroll-list" style="background-color:#333;">
+	      			<li marquee-banner alarm-list='vm.alarmList'  ng-repeat="alarm in vm.alarmList track by $index">
 	       				{{alarm.plcId}} 알람발생  {{alarm.stsDttm}}
 	      			</li>
 	    		</ul>
@@ -143,7 +148,7 @@
    <!-- APP 전체 -->
    <script src="app.js"></script>
    <script src="assets/js/angular-modal-service.js"></script>
-
+    
    <!-- 메인 화면 관리 -->
 	<script src="mainCtrl.js"></script>
 	<script src="modules/cmm/controllers/cmmCommonsCtrl.js"></script>
@@ -173,6 +178,7 @@
 	<script src="modules/fmb/controllers/fmbSpcCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbTotalCtrl.js"></script>
 	<script src="modules/fmb/controllers/dialogCtrl.js"></script>
+	<script src="modules/fmb/controllers/uploadCtrl.js"></script>
 	<script src="vendor/pdfkit/AUIGrid.pdfkit.js"></script>
     	
 	<!--  Modify Page 관리 -->

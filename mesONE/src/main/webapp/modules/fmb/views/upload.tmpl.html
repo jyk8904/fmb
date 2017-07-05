@@ -1,0 +1,32 @@
+
+<md-dialog aria-label="eqpt info" class="infoPopup" style="width:1500px; height:900px;">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>이미지 업로드</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content class="infoPopupContent">
+      <div class="md-dialog-content" style="width:1500px; height:800px;">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h3>선택시 파일 업로드</h3>
+          <div class="example">
+            <form ng-app="app" ng-controller="UploadCtrl" name="form">
+            <!-- <div class="button" ng-model="file" name="file" ngf-select ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">파일선택</div> -->
+    			<input type="file" ng-model="file" name="file" ngf-select ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" value="$file">
+   				 <button type="submit" ng-click="submit()">업로드</button>
+			</form>            
+          </div>
+        </div>
+      </div>
+
+      </div>
+    </md-dialog-content>
+  </form>
+</md-dialog>
