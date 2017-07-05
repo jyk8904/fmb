@@ -39,39 +39,25 @@ angular
             			"<div ng-click='saveEqptData()' class='saveBtn'>" +
             				"<img ng-click='vm.saveEqptData()' title='저장' src='assets/img/system/send_white.png' />" +
             			"</div>" +
+            			"<div ng-click='uploadImg(test)' class='saveBtn'>" +
+        				"<img ng-click='vm.uploadImg()' title='저장' src='assets/img/system/send_white.png' />" +
+        			"</div>" +
             		"</div>"
          }
-      })
-      .directive('bannerList', function($timeout){
-    	  return{
-        	  restrict: 'A',
-        	  scope: {
-        		  data:'=data'
-        	  },
-        	  controller: function() {
-        		  return scope.data;
-        	  }
-    	  }
       })
       .directive('marqueeBanner', function($timeout){
     	  return {
     		restrict: 'A',
     		scope: {
-      		  data:'=data'
+      		  alarmList:'='
       	  },
     		link: function(scope, element, attrs) {
-    			//console.log(scope.data)
-    			//console.log(Object.keys(scope.data))
-    			
-    			//console.log(angular.toJson(scope.data))
-    			/*var output = [];
-    			
-    			for (var key in scope.data) {
-    				var tempObj = {};
-    				tempObj[key] = scope.data[key];
-    				output.push(tempObj);
-    			}
-    			console.log(output)*/
+    			$timeout(function(){
+    				var alarmList = scope.alarmList;
+    				var listCount = Object.keys(alarmList).length;
+    				var calcWidth = (listCount * 430) + 40;
+    				element[0].parentNode.style.width = calcWidth + 'px';
+    			});
     		}
     	  };
       })
