@@ -4,21 +4,54 @@
       <div class="md-toolbar-tools">
         <h2>{{vm.plcData}}의 설비 정보</h2>
         <span flex></span>
-        <md-button class="md-icon-button" ng-click="cancel()">
-          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        <md-button class="md-icon-button">
+          <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog" ng-click="vm.cancel()"></md-icon>
         </md-button>
+        
       </div>
     </md-toolbar>
 
     <md-dialog-content class="infoPopupContent">
       <div class="md-dialog-content" style="width:1500px; height:800px;">
-        <img class="eqptImg" scr='assets/img/system/logo.png' style='position:relative; width:552px; height:376px; float:left;'>
-		<div class="timeProd" style="position:relative; width:900px; height:376px; float:left; background-color:green">
+        
+        
+        <img class="eqptImg" src='assets/img/system/logo.png' style='position:relative; width:552px; height:300px; float:left;'>
+	
+		<div class="timeProd" style="position:relative; width:900px; height:300px; float:left;">
+			<div>시간별 생산량</div>
 			<div dx-chart="vm.timeProd"></div>
 		</div>
 
-        <div class="eqptInfo" style="position:relative; width:552px; height:376px; float:left; background-color:blue"></div>
-        <div class="eqptRunCh" style="position:relative; width:900px; height:376px; float:left; background-color:gray"></div>
+        <div class="eqptInfo" style="position:relative; width:552px; height:376px; float:left; font-size:18px; ">
+        <div>설비정보</div>
+			<ul class="eqpt-info-modal" style="padding:0 !important;">
+				<li ng-repeat="plc in vm.plc">
+					<table class="dialog-tbl">
+						<tr><td>PLC ID</td><td>{{plc.plcId}}</td></tr>
+						<tr><td>설비코드</td><td>{{plc.eqptCd}}</td></tr>
+						<tr><td>설비명</td><td>{{plc.eqptNm}}</td></tr>
+						<tr><td>주간실적</td><td>{{plc.dcount}}</td></tr>
+						<tr><td>야간실적</td><td>{{plc.ncount}}</td></tr>
+						<tr><td>생산시간</td><td>{{plc.prodDt}}</td></tr>
+						<tr><td>정지 LOSS</td><td>{{}}</td></tr>
+						<tr ng-switch on="plc.eqptSts">
+							<td>상태</td>
+							<td ng-switch-when="1" >가동</td>
+							<td ng-switch-when="2" >대기</td>
+							<td ng-switch-when="3" >수리</td>
+							<td ng-switch-when="4" >알람</td>
+						</tr>
+						<tr><td>ACT UPH</td><td></td></tr>
+						<tr><td>순간정지</td><td></td></tr>
+					</table>
+				</li>
+			</ul>
+        
+        </div>
+        <div class="eqptRunCh" style="position:relative; width:900px; height:376px; float:left;">
+        	<div>시간별 가동상태변화</div>        
+        	<div dx-chart="vm.stsProd"></div>
+        </div>
 
       </div>
     </md-dialog-content>

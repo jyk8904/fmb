@@ -117,7 +117,6 @@ angular
 	    	});
     }
     
-    
     function aaa(){
 		for(var i =0; i < self.eqptList.length; i++){
 			var target = $filter('filter')(self.plcList, {plcId : self.eqptList[i].plcId});
@@ -125,8 +124,6 @@ angular
 		}
 		//console.log(self.stsData[0])
 	};
-    
-   
     
 		function getPlcList(){
    		//설비 plc 데이터 가져오기

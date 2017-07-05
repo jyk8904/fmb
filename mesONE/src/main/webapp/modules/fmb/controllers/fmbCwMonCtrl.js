@@ -182,7 +182,7 @@ angular
 	    var customFullscreen = false;
 	    
 	    $scope.cancel = function() {
-	    	$mdDialog.cancel();
+	    	$mdDialog.hide();
 	    };
 	    
 	    $scope.showAdvanced = function(ev) {

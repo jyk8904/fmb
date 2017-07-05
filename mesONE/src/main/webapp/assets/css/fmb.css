@@ -717,3 +717,28 @@ div[class^=eqpt] {
 	position: absolute;
 	z-index: 1000
 }
+
+.dialog-tbl{
+	width:500px;
+	margin:20px; 
+	border:1px solid #333;
+	text-align:center;
+	}
+.dialog-tbl tr{
+	padding:5px;
+	border:1px solid #333;
+	}
+.dialog-tbl tr td:first-child{
+	padding:5px;
+	width:200px; padding:5px; 
+	border:1px solid #333;
+	}
+
+.dialog-tbl tr td:second-child{
+	padding:5px;
+	width:300px; padding:5px;
+	}
+
+
+
+

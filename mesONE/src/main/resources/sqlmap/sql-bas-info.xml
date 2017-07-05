@@ -92,6 +92,10 @@
         {call USP_DASH_RANK_RUNINFO_SELECT01()}
     </select> 
     
+    <!-- Total- 설비상태별순위 그리드 정보조회 -->    
+    <select id="selectFmbEqptStsHis"  parameterType="com.dsinfo.fmb.service.FmbEqptStsHisParamVO" resultType="com.dsinfo.fmb.service.FmbEqptStsHisVO">     	      
+        {call USP_EQPT_STS_HIS_SELECT04(#{dt}, #{plc_id})}
+    </select> 
     
  <!--
     EqptCSSList 정보 생성
