@@ -60,6 +60,13 @@ angular
 			dt:'',
 			plcId: CmmFactSrvc.getPlcData() 
   		  } 
+	
+	
+    self.cancel = function() {
+    	$mdDialog.hide();
+    	console.log("팝업끔")
+    };
+    
     getSelectedPlc();
     console.log(self.stsVo);
 	//설비상태 발생추이 가져오기
@@ -78,7 +85,6 @@ angular
 		self.eqptStsHisData = data;
 		console.log(self.eqptStsHisData);
 		
-		
 		getCstData();
 		//StsProd();
 	}, function(data) {
@@ -91,9 +97,10 @@ angular
 		//대기발생추이
 	    self.timeProd = {	    	
 	        dataSource: self.timeProdData,
+	        zoomingMode: "all",
 	        size: {
 	        	width: 850,
-	        	height: 298
+	        	height: 250
 	        },
 	        commonSeriesSettings: {
 	            argumentField: "dt",
@@ -144,23 +151,26 @@ angular
 	
 	
 	function getCstData(){
+	
 		for(var i = 0; i< self.eqptStsHisData.length; i++){
-			
 				if(self.eqptStsHisData[i].plcSts == '0'){
 					eqptStsCstData[i] = {
 										"task" : i,
-										"strDttm0" : new Date(self.eqptStsHisData[i].strDttm.split('-')[0],
-															  self.eqptStsHisData[i].strDttm.split('-')[1],
-															  self.eqptStsHisData[i].strDttm.split('-')[3].split(' ')[0],
-															  self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0],
-															  self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1], 
-															  self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
-										"endDttm0" : new Date(self.eqptStsHisData[i].endDttm.split('-')[0],
-													  self.eqptStsHisData[i].endDttm.split('-')[1],
-													  self.eqptStsHisData[i].endDttm.split('-')[3].split(' ')[0],
-													  self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0],
-													  self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1], 
-													  self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
+										"sts" : self.eqptStsHisData[i].plcStsTxt,
+										"strDttm0" : new Date(Number(self.eqptStsHisData[i].strDttm.split('-')[0]),
+															  Number(self.eqptStsHisData[i].strDttm.split('-')[1]),
+															  Number(self.eqptStsHisData[i].strDttm.split('-')[2].split(' ')[0]),
+															  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0]),
+															  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1]), 
+															  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
+															  0),
+										"endDttm0" : new Date(Number(self.eqptStsHisData[i].endDttm.split('-')[0]),
+															  Number(self.eqptStsHisData[i].endDttm.split('-')[1]),
+															  Number(self.eqptStsHisData[i].endDttm.split('-')[2].split(' ')[0]),
+															  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0]),
+															  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1]), 
+															  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
+															  0),
 										"strDttm1" : '',
 										"endDttm1" : '',
 										"strDttm2" : '',
@@ -172,15 +182,23 @@ angular
 
 					}else if(self.eqptStsHisData[i].plcSts == '1'){
 						eqptStsCstData[i] = {"task" : i,
+								"sts" : self.eqptStsHisData[i].plcStsTxt,
 								"strDttm0" : '',
 								"endDttm0" : '',
-								"strDttm1" : new Date(self.eqptStsHisData[i].strDttm.split('-')[0],
-										  self.eqptStsHisData[i].strDttm.split('-')[1],
-										  self.eqptStsHisData[i].strDttm.split('-')[3].split(' ')[0],
-										  self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0],
-										  self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1], 
-										  self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
-								"endDttm1" :self.eqptStsHisData[i].endDttm,
+								"strDttm1" :  new Date(Number(self.eqptStsHisData[i].strDttm.split('-')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split('-')[1]),
+										  Number(self.eqptStsHisData[i].strDttm.split('-')[2].split(' ')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1]), 
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
+										  0),
+								"endDttm1" :new Date(Number(self.eqptStsHisData[i].endDttm.split('-')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[1]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[2].split(' ')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1]), 
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
+										  0),
 								"strDttm2" : '0',
 								"endDttm2" : '0',
 								"strDttm3" : '',
@@ -189,30 +207,59 @@ angular
 								"endDttm4" : ''		}			
 					}else if(self.eqptStsHisData[i].plcSts == '2'){
 						eqptStsCstData[i] = {"task" : i,
+								"sts" : self.eqptStsHisData[i].plcStsTxt,
 								"strDttm0" : '',
 								"endDttm0" : '',
 								"strDttm1" : '',
 								"endDttm1" : '',
-								"strDttm2" : self.eqptStsHisData[i].strDttm,
-								"endDttm2" : self.eqptStsHisData[i].endDttm,
+								"strDttm2" : new Date(Number(self.eqptStsHisData[i].strDttm.split('-')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split('-')[1]),
+										  Number(self.eqptStsHisData[i].strDttm.split('-')[2].split(' ')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1]), 
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
+										  0),
+								"endDttm2" :new Date(Number(self.eqptStsHisData[i].endDttm.split('-')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[1]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[2].split(' ')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1]), 
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
+										  0),
 								"strDttm3" : '',
 								"endDttm3" : '',
 								"strDttm4" : '',
-								"endDttm4" : ''		}
+								"endDttm4" : ''		
+						}
+						
 					}else if(self.eqptStsHisData[i].plcSts == '3'){
 						eqptStsCstData[i] = {"task" : i,
+								"sts" : self.eqptStsHisData[i].plcStsTxt,
 								"strDttm0" : '',
 								"endDttm0" : '',
 								"strDttm1" : '',
 								"endDttm1" : '',
 								"strDttm2" : '',
 								"endDttm2" : '',
-								"strDttm3" : self.eqptStsHisData[i].strDttm,
-								"endDttm3" : self.eqptStsHisData[i].endDttm,
+								"strDttm3" : new Date(Number(self.eqptStsHisData[i].strDttm.split('-')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split('-')[1]),
+										  Number(self.eqptStsHisData[i].strDttm.split('-')[2].split(' ')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1]), 
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
+										  0),
+								"endDttm3" : new Date(Number(self.eqptStsHisData[i].endDttm.split('-')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[1]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[2].split(' ')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1]), 
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
+										  0),
 								"strDttm4" : '',
 								"endDttm4" : ''		}
 					}else{
 						eqptStsCstData[i] = {"task" : i,
+								"sts" : self.eqptStsHisData[i].plcStsTxt,
 								"strDttm0" : '',
 								"endDttm0" : '',
 								"strDttm1" : '',
@@ -221,8 +268,20 @@ angular
 								"endDttm2" : '',
 								"strDttm3" : '',
 								"endDttm3" : '',
-								"strDttm4" : self.eqptStsHisData[i].strDttm,
-								"endDttm4" : self.eqptStsHisData[i].endDttm,
+								"strDttm4" :  new Date(Number(self.eqptStsHisData[i].strDttm.split('-')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split('-')[1]),
+										  Number(self.eqptStsHisData[i].strDttm.split('-')[2].split(' ')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1]), 
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
+										  0),
+								"endDttm4" : new Date(Number(self.eqptStsHisData[i].endDttm.split('-')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[1]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[2].split(' ')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1]), 
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
+										  0),
 								}		
 					}
 			}
@@ -235,15 +294,22 @@ angular
 	function StsProd(){
 		self.stsProd = {	
 			rotated: true,
-			palette: "violet",
+			//palette: "violet",
+	        equalBarWidth: false,
 	        dataSource: eqptStsCstData,
+	        //redrawOnResize : true,
+	        scrollingMode: "all", 
+	        zoomingMode: "all",
+	        adjustOnZoom: true, 
 	        size: {
 	        	width: 850,
-	        	height: 298
+	        	height: 376
 	        },
 	        commonSeriesSettings: {
+	        	//color: "#f2f2f2",
 	            argumentField: "task",
 	            type:"rangeBar"
+	            //width: 4
 	        },
 	        series: [
 	            { rangeValue1Field: "strDttm0", 
@@ -263,32 +329,98 @@ angular
 	              name: "수리" 
 		        },
 		        { rangeValue1Field: "strDttm4", 
-	              rangeValue2Field: "endDttm4", 
+
+		        	urangeValue2Field: "endDttm4", 
 	              name: "알람" 
 		        }
 		        
 	        ],
-	        valueAxis: {
-	      	        visible: true,
-	                label: {
-	                    customizeText: function () {
-	                        return this.value.split(' ')[1]
-	                        
-	                    }
-	                }
+	        valueAxis: { 
+        		min: new Date('2017','01','09','08','30'),
+	        	max: new Date('2017','01','10','08','29'),
+
+	      	    visible: true,
+	      	    valueType: "datetime",
+/*	      	    label:{   
+	      	     	//overlappingBehavior: "stagger",
+	      	    	format: "shortTime"
+	      	       }*/
+	        },
+	        argumentAxis : {
+	        	inverted:true,
+	        	argumentType: "Numeric",
+	        	label: {
+	        	visible : false
+	        	}
 	        },
 	        tooltip:{
-	        	enbled: true,
+	        	enabled: true,
 	        	customizeTooltip: function (arg) {
 	                return {
-	                    text: arg.valueText
+	                    text: arg.argumentText
 	                };
 	            },
 	        },
 	        legend: {
-	        	visible: true
+	        	visible: true,
+	        	itemTextPosition:"bottom",
+	        	hoverMode : "includePoints"
+	        	//position : "inside"
 	        }	 
 		}
+		
+		self.rangeOptions = {
+		        size: {
+		            height: 120
+		        },
+		        margin: {
+		            left: 10
+		        },
+		        scale: {
+		            minorTickCount: 1
+		        },
+		        dataSource: eqptStsCstData,
+		        chart: {
+		        	rotated : true,
+		            commonSeriesSettings: {
+		            	argumentField: "task",
+		                type: "rangeBar"
+		            },
+		            equalBarWidth: false,
+		            series: [
+			            { rangeValue1Field: "strDttm0", 
+			              rangeValue2Field: "endDttm0", 
+			              name: "비가동" 
+			             },
+			            { rangeValue1Field: "strDttm1", 
+			              rangeValue2Field: "endDttm1", 
+			              name: "가동" 
+				        },
+				        { rangeValue1Field: "strDttm2", 
+			              rangeValue2Field: "endDttm2", 
+			              name: "대기" 
+				        },
+				        { rangeValue1Field: "strDttm3", 
+			              rangeValue2Field: "endDttm3", 
+			              name: "수리" 
+				        },
+				        { rangeValue1Field: "strDttm4", 
+			              rangeValue2Field: "endDttm4", 
+			              name: "알람" 
+				        }
+				        
+			        ]
+		        },
+		        behavior: {
+		            callValueChanged: "onMoving"
+		        },
+		        onValueChanged: function (e) {
+		            var zoomedChart = $(".eqptRunCh #zoomedChart").dxChart("instance");
+		            zoomedChart.zoomArgument(e.value[0], e.value[1]);
+		        }
+		    };
+		
+		
 	}		
    	
 	function getSelectedPlc(){

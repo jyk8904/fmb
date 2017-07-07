@@ -522,6 +522,8 @@ body {
 .dialogdemoBasicUsage .dialog-demo-prerendered md-checkbox {
 	margin-bottom: 0;
 }
+.
+
 
 /*
 Copyright 2016 Google Inc. All Rights Reserved. 
@@ -533,7 +535,17 @@ md-dialog title {
 	margin-left: auto;
 	width: 450px;
 }
-
+.infoPopup{
+background-color: #272727;	
+}
+.p_title{
+	font-size: 20px;
+	padding:3px 0 3px 30px;
+	color:white;
+	height:35px;
+	width:100%;
+	background-color: rgba(15, 17, 29, 0.62);
+}
 /****************************************************************************/
 
 /* bcFormHeader */
@@ -720,18 +732,18 @@ div[class^=eqpt] {
 
 .dialog-tbl{
 	width:500px;
-	margin:20px; 
-	border:1px solid #333;
+	margin:5px; 
+	border:1px solid #a5a0a0;
 	text-align:center;
 	}
 .dialog-tbl tr{
 	padding:5px;
-	border:1px solid #333;
+	border:1px solid #a5a0a0;
 	}
 .dialog-tbl tr td:first-child{
 	padding:5px;
 	width:200px; padding:5px; 
-	border:1px solid #333;
+	border:1px solid #a5a0a0;
 	}
 
 .dialog-tbl tr td:second-child{
