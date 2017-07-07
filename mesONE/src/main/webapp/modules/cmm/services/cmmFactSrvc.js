@@ -17,6 +17,20 @@ angular.module('app').factory('CmmFactSrvc',  function() {
 		var savePlcData = "PLC_000";
 		
 		
+	
+		var factory={
+				selectedFactId : selectedFactId,
+				setSelectedFactId : setSelectedFactId,
+				getSelectedFactId : getSelectedFactId,
+				
+				setPlcData : setPlcData,
+				getPlcData : getPlcData,
+		};
+		
+		return factory;
+		
+		
+		
 		//신규 추가 코드
 		// 이동해야 됨
 		function setPlcData(data) {
@@ -27,21 +41,12 @@ angular.module('app').factory('CmmFactSrvc',  function() {
 			return savePlcData;
 		}
 		
-		var plcData = {
+	/*	var plcData = {
 				setPlcData : setPlcData,
 				getPlcData : getPlcData
 		};
 		
-		return plcData;
-		
-		var factory={
-				selectedFactId : selectedFactId,
-				setSelectedFactId : setSelectedFactId,
-				getSelectedFactId : getSelectedFactId
-		};
-		
-		return factory;
-		
+		return plcData;*/
     	
     	function setSelectedFactId(factId){
     		selectedFactId = factId;

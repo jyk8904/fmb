@@ -26,6 +26,7 @@ angular
     							, '$filter'
     							, '$location'
     							, '$mdDialog'
+    							, '$timeout'
     							, function (
     									  CmmAjaxService
     									, CmmModalSrvc
@@ -39,6 +40,7 @@ angular
     									, $filter
     									, $location
     									, $mdDialog
+    									, $timeout
     									) 
 {
 	/*------------------------------------------
@@ -66,73 +68,87 @@ angular
     	self.plcSelectedVo = {plcId: pid,
 					    		  factId: ''
 					    		  } 
-    	
-    	
     	//선택된 plc 데이터 가져오기
     	getSelectedPlc();
-    	
-    	function getSelectedPlc(){
-    		var promise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcSelectedVo);
-            promise.then(function(data){
-            	self.plc = data;//fmbPlcVo가 담긴 리스트 형태리턴
-            }
-            ,function(data){
-            	alert('fail: '+ data)
-            });
-        	
-        	 self.showModal = !self.showModal;
-        };
         
-    	}
-    getPlcList();
-    getEqptList();
-    
-    //설비plc 데이터 불러오기 Web Worker시작 함수
-   // Worker2Start();
-  //설비 이미지리스트 가져오기
-    function getEqptList(){
-	    	//설비 이미지리스트 가져오기 메소드
-	    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
-	    	eqptPromise.then(function(data) {
-	    		self.eqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
-	    		aaa();
-	    	}, function(data){
-	    		alert('fail: '+ data)
-	    	});
     }
     
-    function aaa(){
-    	console.log("123")
-		for(var i =0; i < self.eqptList.length; i++){
-			
-			var target = $filter('filter')(self.plcList, {plcId : self.eqptList[i].plcId});
-			console.log(self.eqptList[i].plcId);
-			self.stsData[i]= target[0].eqptSts;
-		}
-		//console.log(self.stsData[0])
-	};
+    // 비동기실행에 따른 이벤트 순서 제어 
+    $timeout(getPlcList(), 50)
+    		.then(function(){//getPlcList 수행 완료 후 
+    			console.log("getPlcList 실행");
+    			$timeout(getEqptList(),600)
+    				.then(function(){//getEqptList 수행 완료 후 
+    				//bindData();
+    				console.log('getEqptList 실행');
+
+    			}, function(){//getEqptList 수행 실패 후 
+    				console.log('getEqptList 실패')
+    			});
+    		}, function(){//getPlcList 수행 실패 후 
+    			console.log('getPlcList data loading 실패');
+    			}
+    		);
+   
+	
     
-		function getPlcList(){
+    function getPlcList(){
    		//설비 plc 데이터 가져오기
    	   		var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
            	plcPromise.then(function(data) {
            		//랜덤값 입력
-           		for(var i = 0; i< data.length; i++){
+           			for(var i = 0; i< data.length; i++){
                		var random = Math.floor(Math.random()*5);
-               		//console.log("random값"+random);
                		data[i].eqptSts = random;
-               		console.log("상태값"+data[i].eqptSts);
-           		}
-           		
-           		self.plcList = data; //fmbplcVo가 담긴 리스트 형태리턴
+           			}
+           			self.plcList = data; 
+           			//fmbplcVo가 담긴 리스트 형태리턴
            		
            	}, function(data){
            		alert('fail: '+ data)
            });
    		}
 
+    function getEqptList(){
+	    	//설비 이미지리스트 가져오기 메소드
+	    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
+	    	eqptPromise.then(function(data) {
+	    		$timeout(self.eqptList = data, 200)
+	    		.then(function(){
+	    			bindData();
+	    		});
+	    	}, function(data){
+	    		alert('fail: '+ data)
+	    	});
+	}
+
+	function bindData(){
+		console.log("bindData 시작");
 		
-		
+		for(var i =0; i < self.eqptList.length; i++){
+			console.log(i);
+			var target = $filter('filter')(self.plcList, {plcId : self.eqptList[i].plcId});
+			console.log(target);
+			console.log(self.plcList);
+			console.log(self.eqptList);
+			//console.log(self.seqptList[i].plcId);
+			self.stsData[i]= target[0].eqptSts;
+		}
+		console.log("bindData 끝");
+	};
+	    
+	function getSelectedPlc(){
+		var promise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcSelectedVo);
+        promise.then(function(data){
+        	self.plc = data;//fmbPlcVo가 담긴 리스트 형태리턴
+        }
+        ,function(data){
+        	alert('fail: '+ data)
+        });
+    	
+    	 self.showModal = !self.showModal;
+    };
+
 		 //설비plc 데이터 불러오기 Web Worker시작 함수
 	    function Worker2Start(){
 
@@ -183,6 +199,7 @@ angular
 	    
 	    $scope.cancel = function() {
 	    	$mdDialog.hide();
+	    	console.log("끔")
 	    };
 	    
 	    $scope.showAdvanced = function(ev) {
