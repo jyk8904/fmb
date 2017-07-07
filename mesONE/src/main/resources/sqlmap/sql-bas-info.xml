@@ -97,6 +97,17 @@
         {call USP_EQPT_STS_HIS_SELECT04(#{dt}, #{plc_id})}
     </select> 
     
+    <!-- Fmb Image 저장  -->
+    <insert id="insertFmbImageData" parameterType="com.dsinfo.fmb.service.FmbImageVO">     	      
+        {call USP_FMB_IMAGE_DATA_INSERT01(#{file_name}, #{file_p_path}, #{file_l_path}, #{file_origin_name}, #{file_size})}
+    </insert>
+    
+    <!-- Fmb Image 조회 -->    
+    <select id="selectFmbImages" resultType="com.dsinfo.fmb.service.FmbImageVO">     	      
+        {call USP_FMB_IMAGE_DATA_SELECT01()}
+    </select> 
+    
+    
  <!--
     EqptCSSList 정보 생성
     <insert id="selectFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbEqptParamVO">     	      

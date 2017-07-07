@@ -41,7 +41,10 @@ angular
             			"</div>" +
             			"<div ng-click='uploadImg(test)' class='saveBtn'>" +
         				"<img ng-click='vm.uploadImg()' title='저장' src='assets/img/system/send_white.png' />" +
-        			"</div>" +
+        				"</div>" +
+        				"<div ng-click='FindImg()' class='saveBtn'>" +
+        				"<img ng-click='vm.FindImg()' title='저장' src='assets/img/system/send_white.png' />" +
+        				"</div>" +
             		"</div>"
          }
       })

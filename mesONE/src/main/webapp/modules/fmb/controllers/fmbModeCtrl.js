@@ -239,8 +239,6 @@ angular
      var customFullscreen = false;
      
      self.uploadImg = function() {
-    	 var ev = '12333';
-    	 console.log(ev)
 	        $mdDialog.show({
 		          controller: 'UploadCtrl',
 		          controllerAs: 'vm',
@@ -250,14 +248,31 @@ angular
 		          fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
 		        })
 		        .then(function(answer) {
-		        	console.log('22223')
 		          $scope.status = 'You said the information was "' + answer + '".';
 		        }, function() {
-		        	console.log('121231233')
 		          $scope.status = 'You cancelled the dialog.';
 		        });
     	 console.log('123')
      };
+     
+     self.FindImg = function() {
+    	 console.log("22222")
+	        $mdDialog.show({
+		          controller: 'ImageViewerCtrl',
+		          controllerAs: 'vm',
+		          templateUrl: '/mes/modules/fmb/views/imageViewer.tmpl.html',
+		          parent: angular.element(document.body),
+		          clickOutsideToClose:true,
+		          fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+		        })
+		        .then(function(answer) {
+		          $scope.status = 'You said the information was "' + answer + '".';
+		        }, function() {
+		          $scope.status = 'You cancelled the dialog.';
+		        });
+    	 console.log('123')
+     };
+     
      
     /*------------------------------------------
     *  Responsive Setting Part

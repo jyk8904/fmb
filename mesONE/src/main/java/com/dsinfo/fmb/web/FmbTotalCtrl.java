@@ -58,12 +58,6 @@ public class FmbTotalCtrl {
 			return new ResponseEntity<List<FmbPlanProgressVO>>(fmbPlanProgressVO, HttpStatus.OK);
 		}
 	}
-    
-    
-    	   
-
-    
-    
    
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/bas/selectGaugeRunRate.do", method = RequestMethod.POST)
@@ -133,8 +127,6 @@ public class FmbTotalCtrl {
 			log.error("FmbTotalController:selectFmbTotal=>" +  ie.toString());
 			return new ResponseEntity<List<FmbDateRunInfoVO>>(fmbDateRunInfoVO, HttpStatus.OK);
 		}
-	}
-
-    
+	} 
     
 }

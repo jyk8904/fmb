@@ -15,13 +15,26 @@
       <div class="md-dialog-content" style="width:1500px; height:800px;">
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <h3>선택시 파일 업로드</h3>
+          <h3>업로드 선택</h3>
           <div class="example">
-            <form ng-app="app" ng-controller="UploadCtrl" name="form">
+            <form name="form" role="form">
+            	<div class="form-group">
             <!-- <div class="button" ng-model="file" name="file" ngf-select ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">파일선택</div> -->
-    			<input type="file" ng-model="file" name="file" ngf-select ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" value="$file">
-   				 <button type="submit" ng-click="submit()">업로드</button>
+            	<!-- <input type="file" ng-file-select="onFileSelect()"> -->
+    			<input type="file" ng-model="file" name="file"  ngf-select="onFileSelect($file)" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" value="$file"> 
+   				<button type="submit" ng-click="submit()">업로드</button>
+   				</div>
 			</form>            
+          </div>
+          <div class="imageInfo" ng-show="imageInfo.show">
+          	  <h3>업로드 달성률</h3>
+          	  <h5>{{imageInfo.percentage}} %</h5>
+          	  <md-progress-linear md-mode="determinate" value="{{imageInfo.percentage}}"></md-progress-linear>
+	          <h3>업로드 이미지 정보</h3>
+	          <h5>이미지 명 : </h5> <h5>{{imageInfo.name}}</h5>
+	          <h5>사이즈 : </h5> <h5>{{imageInfo.size}}</h5>
+	          <h5>타입 : </h5> <h5>{{imageInfo.type}}</h5>
+	          <h5>파일 수정일 : </h5> <h5>{{imageInfo.date}}</h5>
           </div>
         </div>
       </div>
