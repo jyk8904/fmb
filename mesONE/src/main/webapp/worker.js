@@ -37,12 +37,14 @@
           rotationSeq++;
        }
       
-       console.log(rotationSeq, jsonData[rotationSeq].rotateTime * 1000);
-       // 화면 전환 순번을 넘김
-       postMessage(rotationSeq);
-       // 화면 별로 정의된 각각의 시간을 바탕으로 셋팅한다.
-       interval = jsonData[rotationSeq].rotateTime * 1000;
-      
+       if(jsonData[rotationSeq].on == true){ //on 설정되어있을경우에만 post 넘김
+    	  console.log(jsonData[rotationSeq].on);
+	       console.log(rotationSeq, jsonData[rotationSeq].rotateTime * 1000);
+	       // 화면 전환 순번을 넘김
+	       postMessage(rotationSeq);
+	       // 화면 별로 정의된 각각의 시간을 바탕으로 셋팅한다.
+	       interval = jsonData[rotationSeq].rotateTime * 1000;
+       }
        // 시간 설정 후 시작.
        setTimer = setInterval(timer, interval);
     }

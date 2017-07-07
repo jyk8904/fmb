@@ -125,17 +125,31 @@
    <modal title="페이지 전환 설정" visible="vm.showModal">
      <form ng-submit="vm.submit1()">
      <label style="width:200px;"></label> <span style="width:150px; margin-right:10px;">페이지전환시간(초)</span> <span style="width:150px;">데이터로드시간(초)</span>
-     <div class="timeSettingPage" ng-repeat="page in vm.Setting">
-     
-     	<label style="width:200px;">{{page.pageNm}}</label>
-    	<input style="width:150px; margin-right:10px;" typt ="text" placeholder="페이지"+{{page.pageSeq}}+" time" name ="name" ng-model=page.rotateTime value={{page.rotateTime}}>&nbsp;&nbsp;&nbsp;
-    	<input style="width:150px; margin-right:10px;" typt ="text" placeholder="페이지"+{{page.pageSeq}}+"  data refresh time" name ="name" ng-model=page.dataTime value={{page.dataTime}}>
-  		<br>      
+     <div class="timeSettingPage">
+     <table>
+     <tr ng-repeat="page in vm.Setting">
+	     <td>  
+		     <md-switch ng-model="page.on" aria-label="Switch 1" style="float:left; margin:0 10px; clear:left">
+		     	<label style="width:150px; margin-left: 20px;">{{page.pageNm}}</label>
+		     </md-switch>
+	     </td>
+	 
+	     <td>
+	    	<input style="width:100px; margin-right:10px;" typt ="text" placeholder="페이지"+{{page.pageSeq}}+" time" name ="name" ng-model=page.rotateTime value={{page.rotateTime}}>&nbsp;&nbsp;&nbsp;
+	     </td>
+	     <td>
+	    	<input style="width:100px; margin-right:10px;" typt ="text" placeholder="페이지"+{{page.pageSeq}}+"  data refresh time" name ="name" ng-model=page.dataTime value={{page.dataTime}}>
+     </td>
+     </tr>
+     </table>
+   	
+  	<br>      
    
    </div>
-       <input type="submit" value="Save" />
-       <button type="button" class="btn btn-default" data-dismiss="modal"
-         aria-hidden="true">close</button>
+       <input type="submit" value="저장"  data-dismiss="modal"
+         aria-hidden="true" style="margin: 0 auto;"/>
+      <!--  <button type="button" class="btn btn-default" data-dismiss="modal"
+         aria-hidden="true">닫기</button> -->
      </form>
 	</modal>
 	<!-- 모달 body -->

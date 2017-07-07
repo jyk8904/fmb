@@ -56,6 +56,7 @@ angular
    //화면전환 모달창 default값
    self.showModal = false;
    
+   
    self.vo = {PLC_ID: 'PLC-001'}
    /*이벤트*/
    self.btnFmbMonClick = btnFmbMonClickHandler;    
@@ -129,7 +130,7 @@ angular
 	   }else{
 		   for(var j =0; j<pageList.length; j++){
 			   console.log(j+1, pageList[j].pageNm);
-			   	self.Setting[j] = {"pageSeq":j+1, "rotateTime": 10, "dataTime": 5, "pageNm":pageList[j].pageNm}
+			   	self.Setting[j] = {"pageSeq":j+1, "rotateTime": 10, "dataTime": 5, "pageNm":pageList[j].pageNm, "on" : true}
 		   }
 		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));
 	   }
@@ -139,9 +140,10 @@ angular
 		 
 
 	 function submitLotationSetting() {
+		 console.log(self.Setting[0].on +"on data")
 		  var SettingTime = [];
 		   for(var j =0; j<pageList.length; j++){
-			   SettingTime[j] = {"pageSeq":j+1, "rotateTime": self.Setting[j].rotateTime, "dataTime":  self.Setting[j].dataTime, "pageNm":pageList[j].pageNm}
+			   SettingTime[j] = {"pageSeq":j+1, "rotateTime": self.Setting[j].rotateTime, "dataTime":  self.Setting[j].dataTime, "pageNm":pageList[j].pageNm, "on" : self.Setting[j].on}
 		   }
 		   localStorage.setItem('SettingTime', JSON.stringify(SettingTime));
 		   /*for(var i=0; i<localStorage.length; i++){
