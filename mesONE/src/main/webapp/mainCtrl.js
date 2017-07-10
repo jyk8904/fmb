@@ -48,17 +48,13 @@ angular
    self.alarmListLen = {};
 
    
-   /*plc parameter*/
    self.plcParamVo={};
    self.plcParamVo.plcId ='';
    self.plcParamVo.factId = '';
-   //self.plcParamVo.factId = CmmFactSrvc.getSelectedFactId() ;
    //화면전환 모달창 default값
    self.showModal = false;
    
-   
    self.vo = {PLC_ID: 'PLC-001'}
-   /*이벤트*/
    self.btnFmbMonClick = btnFmbMonClickHandler;    
    self.btnFmbCwMonClick = btnFmbCwMonClickHandler;   
    self.btnFmbTbmClick = btnFmbTbmClickHandler;   
@@ -72,10 +68,11 @@ angular
    self.btnWorkerStop = WorkerStop;
    self.LotationSetting = LotationSetting;
    self.submit1 = submitLotationSetting;
-   
+
+   //전환될 페이지 리스트
    var pageList=[{"pageNm":"FmbCwMon"}
 			     ,{"pageNm":"FmbMon"}
-			     ,{"pageNm": "FmbTotal"}
+			     ,{"pageNm":"FmbTotal"}
 			     ,{"pageNm":"FmbLineA"}
 			     ,{"pageNm":"FmbLineB"}
 			     ,{"pageNm":"FmbLineC"}
@@ -83,28 +80,8 @@ angular
 			     ,{"pageNm":"FmbMainMon"}
 			     ]
    self.Setting={};
-   //self.changeFact = changeFact;
    
-   /*공장선택시*/
-   /*   function changeFact() {
-	   //하위 컨트롤러에게 이벤트전송
-	    $rootscope.$broadcast("event:changeFact",{selectedFact: self.plcParamVo.factId});
-	   
-	   	console.log(self.plcParamVo.factId);
-		CmmFactSrvc.setSelectedFactId(self.plcParamVo.factId);
-		
-		if(workerList.worker3!=undefined){
-			workerList.worker3.terminate();
-			workerList.worker3=undefined;
-		    Worker3Start();
-		}
-    }
-    */
-   
-   
-   //알람정보 워커시작
-   
-	//설비 plc 데이터 가져오기
+	//설비 plc 알람정보 데이터 가져오기
   	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
   	self.alarmList = {}
   	plcPromise.then(function(data) {
@@ -119,36 +96,51 @@ angular
   });
   	
    Worker3Start();
+    
    defaultLotationSetting();
-   
-   submitLotationSetting();
-      
-   
+ 
    function defaultLotationSetting(){
 	   if(localStorage.getItem('SettingTime')!=null){
 		   self.Setting = JSON.parse(localStorage.getItem('SettingTime'));
 	   }else{
 		   for(var j =0; j<pageList.length; j++){
-			   console.log(j+1, pageList[j].pageNm);
-			   	self.Setting[j] = {"pageSeq":j+1, "rotateTime": 10, "dataTime": 5, "pageNm":pageList[j].pageNm, "on" : true}
+			   	self.Setting[j] = {"pageSeq":j+1, "rotateTime": 10, "dataTime": 5, "pageNm":pageList[j].pageNm, "switcher" : true}
 		   }
 		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));
 	   }
-	   console.log(self.Setting);
 	   workerList.worker2data =JSON.parse(localStorage.getItem('SettingTime'));
    }
 		 
 
 	 function submitLotationSetting() {
-		 console.log(self.Setting[0].on +"on data")
+		 
+		/* var check = true;
+		 for(var i =0; i< self.Setting.length; i++){
+		
+			 console.log(self.Setting[i].dataTime);
+			 console.log(angular.isNumber(self.Setting[i].dataTime));
+			if(!(angular.isNumber(self.Setting[i].dataTime))){//숫자가 아닌경우
+				
+				check = false;
+			}
+		 }
+			 if(check==false){
+				 alert("시간 다시 입력")
+				 
+				 self.showModal = true;
+				 return false;
+			 }*/
+
+			 
+		 console.log(self.Setting);
 		  var SettingTime = [];
 		   for(var j =0; j<pageList.length; j++){
-			   SettingTime[j] = {"pageSeq":j+1, "rotateTime": self.Setting[j].rotateTime, "dataTime":  self.Setting[j].dataTime, "pageNm":pageList[j].pageNm, "on" : self.Setting[j].on}
+			   SettingTime[j] = {"pageSeq":j+1, "rotateTime": self.Setting[j].rotateTime, "dataTime":  self.Setting[j].dataTime, "pageNm":pageList[j].pageNm, "switcher" : self.Setting[j].switcher}
 		   }
 		   localStorage.setItem('SettingTime', JSON.stringify(SettingTime));
-		   /*for(var i=0; i<localStorage.length; i++){
+		   for(var i=0; i<localStorage.length; i++){
 			   console.log(localStorage.getItem(localStorage.key(i)));
-		   }*/
+		   }
 		   workerList.worker2data =JSON.parse(localStorage.getItem('SettingTime'));
 		   workerList.worker2sts = 'stop';
 	   }
@@ -209,9 +201,16 @@ angular
     //Web Worker1 시작버튼 클릭 이벤트
     function WorkerStart(){
        // 현재 페이지가 첫페이지가 아닐경우 첫페이지로 이동시킨다.
-       if ($location.absUrl().split('/')[5] != 'FmbMon'){
+      /* if ($location.absUrl().split('/')[5] != 'FmbMon'){
           $location.url('/FmbMon');
-       }
+       }*/
+    	var curPageSeq;
+    	var curPage = $location.url();
+    	for(var i = 0; i<pageList.length; i++){
+    		if(curPage == '/'+pageList[i].pageNm){
+    			curPageSeq = i;
+    		}
+    	}
        //브라우저가 웹 워커를 지원하는지 검사한다 .
         if(!!window.Worker){   
         	//워커가 실행중이면 종료시킨다.
@@ -219,16 +218,15 @@ angular
             //새로운 워커(객체)를 생성한다.
             workerList.worker1= new Worker("worker.js");       
             if(localStorage.getItem('SettingTime')!= null){
-              	 workerList.worker1.postMessage(JSON.parse(localStorage.getItem('SettingTime')));
+              	 workerList.worker1.postMessage([JSON.parse(localStorage.getItem('SettingTime')), curPageSeq]);
       	     }else{
-      	    	 workerList.worker1.postMessage(self.Setting);
+      	    	 workerList.worker1.postMessage([self.Setting, curPageSeq]);
       	    	 //setting정보를 워커2에게 넘김
       	    	 //callParamSetting();
       	           // 워커로부터 전달되는 메시지를 받는다.
       	           // 전달 받은 순서를 바탕으로 이동시킬 page를 지정한다.
       	     }	 
       	           workerList.worker1.onmessage = function(evt){
-      	        	   console.log("메인 받은데이터"+evt)
       	                var seq = evt.data;
       	                var pager = JSON.parse(localStorage.getItem('SettingTime'))[seq].pageNm;
       	                console.log('전환될 페이지 - '+ pager);
@@ -256,11 +254,6 @@ angular
         if(workerList.worker1!=undefined){
         	workerList.worker1.terminate();
         	workerList.worker1=undefined;
-        }
-        //알람정보가져오는 워커 중지(정신사나워서 해놓은거라서 나중에 지워야함)
-        if(workerList.worker3!=undefined){
-        	workerList.worker3.terminate();
-        	workerList.worker3=undefined;
         }
    }
    
@@ -305,7 +298,5 @@ angular
           alert("현재 브라우저는 웹 워커를 지원하지 않습니다");
         }
       }
-    
-
     
 }]);

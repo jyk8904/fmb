@@ -82,11 +82,9 @@
 
 
 <body ng-controller="MainCtrl as vm" ng-class="{loading:loadingView}" class="container" style="width: 100%; background-image: url('./assets/img/system/back.png');">
-<!--    <label ng-model='lbl'>angular Js test</label>
-    <p>Name : <input type="text" ng-model="name"></p>
-   <h1>Hello  {{name}}</h1> -->
 	<div class="relative">
 		<div class="mouse-over-bar"> 
+
 			<button class="top-btn" ng-click='vm.btnFmbModeClick()'>개발모드</button>
 			<button class="top-btn" ng-click='vm.btnFmbTbmClick()'>Tbm</button>
 			<button class="top-btn" ng-click='vm.btnFmbLineCClick()'>Line별 생산실적(C)</button>
@@ -99,9 +97,6 @@
 		   <button class="top-btn" ng-click='vm.btnWorkerStop()'>Stop</button>
 			<button class="top-btn" ng-click='vm.btnWorkerStart()'>Start</button>
 		   <button class="top-btn" ng-click='vm.LotationSetting()'>전환 설정 테스트</button>
-<!-- 		   <input type="radio" ng-model="vm.plcParamVo.factId" value="A" ng-change="vm.changeFact()">A동
-		   <input type="radio" ng-model="vm.plcParamVo.factId" value="B" ng-change="vm.changeFact()">B동
-		   <input type="radio" ng-model="vm.plcParamVo.factId" value="C" ng-change="vm.changeFact()">C동 -->
 		</div>
 	</div>   
 	
@@ -123,37 +118,32 @@
 	
    <!-- 모달 body -->
    <modal title="페이지 전환 설정" visible="vm.showModal">
-     <form ng-submit="vm.submit1()">
-     <label style="width:200px;"></label> <span style="width:150px; margin-right:10px;">페이지전환시간(초)</span> <span style="width:150px;">데이터로드시간(초)</span>
-     <div class="timeSettingPage">
+     <form>
      <table>
+    <tr> <td></td> <td>페이지전환(초)</td> <td>데이터갱신(초)</td></tr>
      <tr ng-repeat="page in vm.Setting">
 	     <td>  
-		     <md-switch ng-model="page.on" aria-label="Switch 1" style="float:left; margin:0 10px; clear:left">
+		     <md-switch ng-model="page.switcher" aria-label="Switch 1" style="float:left; margin:0 10px; clear:left">
 		     	<label style="width:150px; margin-left: 20px;">{{page.pageNm}}</label>
 		     </md-switch>
 	     </td>
 	 
 	     <td>
-	    	<input style="width:100px; margin-right:10px;" typt ="text" placeholder="페이지"+{{page.pageSeq}}+" time" name ="name" ng-model=page.rotateTime value={{page.rotateTime}}>&nbsp;&nbsp;&nbsp;
+	    	<input style="width:100px; margin-right:10px;" type ="text" placeholder="페이지"+{{page.pageSeq}}+" time" name ="name" ng-model=page.rotateTime value={{page.rotateTime}}>&nbsp;&nbsp;&nbsp;
 	     </td>
 	     <td>
-	    	<input style="width:100px; margin-right:10px;" typt ="text" placeholder="페이지"+{{page.pageSeq}}+"  data refresh time" name ="name" ng-model=page.dataTime value={{page.dataTime}}>
+	    	<input style="width:100px; margin-right:10px;" type="text" placeholder="페이지"+{{page.pageSeq}}+"  data refresh time" name ="name" ng-model=page.dataTime value={{page.dataTime}}>
      </td>
      </tr>
      </table>
-   	
   	<br>      
-   
-   </div>
        <input type="submit" value="저장"  data-dismiss="modal"
-         aria-hidden="true" style="margin: 0 auto;"/>
+         aria-hidden="true" style="margin: 0 auto;" ng-click="vm.submit1()"/>
       <!--  <button type="button" class="btn btn-default" data-dismiss="modal"
          aria-hidden="true">닫기</button> -->
      </form>
 	</modal>
 	<!-- 모달 body -->
-   
 
    <!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. --> 
    <script type="text/javascript" src="/mes/vendor/AUIGrid/AUIGridLicense.js"></script>

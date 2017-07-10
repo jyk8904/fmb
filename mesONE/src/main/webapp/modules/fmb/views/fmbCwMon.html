@@ -1,7 +1,7 @@
 <!-- 
 /**  
- * @Class Name : fmb006.html
- * @Description : fmb006
+ * @Class Name : fmbCwMon.html
+ * @Description : fmbCwMon
  * @Modification Information  
  * @
 
@@ -10,7 +10,7 @@
  * 
 
  * css: assets/css/fmb.css
- * controller : fmb006Ctrl.js
+ * controller : fmbCwMonCtrl.js
  *
  */
  -->
@@ -61,13 +61,6 @@ height:90px; font-size:12pt; font-weight:bold;float:left; color:white; clear:rig
 				  		 z-index:{{eqpt.cssZindex}};">
 				  		 
 	               <div ng-switch on="vm.stsData[$index]">  
-	               <!-- {{vm.stsData[$index]}} -->
-	               <!-- <img ng-switch-when="0" class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};" ng-click="vm.toggleModal(eqpt.plcId)">
-	               <img ng-switch-when="1" class="obj" src="{{eqpt.stsImg1}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};" ng-click="vm.toggleModal(eqpt.plcId)">
-	               <img ng-switch-when="2" class="obj" src="{{eqpt.stsImg2}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};" ng-click="vm.toggleModal(eqpt.plcId)">
-	               <img ng-switch-when="3" class="obj" src="{{eqpt.stsImg3}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};" ng-click="vm.toggleModal(eqpt.plcId)">
-	               <img ng-switch-when="4" class="obj" src="{{eqpt.stsImg4}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};" ng-click="vm.toggleModal(eqpt.plcId)"> -->
-	               
 	               <img ng-switch-when="0" class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};" ng-click="showAdvanced(eqpt.plcId)">
 	               <img ng-switch-when="1" class="obj" src="{{eqpt.stsImg1}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};" ng-click="showAdvanced(eqpt.plcId)">
 	               <img ng-switch-when="2" class="obj" src="{{eqpt.stsImg2}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};" ng-click="showAdvanced(eqpt.plcId)">
@@ -86,7 +79,7 @@ height:90px; font-size:12pt; font-weight:bold;float:left; color:white; clear:rig
 
 
 <!------------------------------------------ modal body start------------------------------------------------------->
-<modal title="설비 정보" visible="vm.showModal">
+<!-- <modal title="설비 정보" visible="vm.showModal">
 <form role="form">
 
 	<ul class="eqpt-info-modal">
@@ -134,6 +127,6 @@ height:90px; font-size:12pt; font-weight:bold;float:left; color:white; clear:rig
 <button type="button" class="btn btn-default" data-dismiss="modal"
 		aria-hidden="true">close</button>
 </form>
-</modal>
+</modal> -->
 
 <!-------------------------------------------modal body end------------------------------------------------------->

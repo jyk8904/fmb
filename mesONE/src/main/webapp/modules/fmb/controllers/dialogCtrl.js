@@ -434,20 +434,20 @@ angular
 	        ],
 	        valueAxis: { 
         		//min: new Date('2017','01','09','08','30'),
-	        	min: new Date('2017','01','09','08','30'),
-	        	//max: new Date('2017','01','10','08','29'),
-	        
+	     /*   	min: new Date('2017','01','09','08','30'),
+	        	max: new Date('2017','01','10','08','29'),
+	        */
 
 	      	    visible: true,
-	      	    valueType: "dateTime",
+	      	    valueType: "Numeric",
 	      	    label:{   
-	      	     	//overlappingBehavior: "stagger",
-	      	    	format: "shortTime"
+	      	     	overlappingBehavior: "stagger",
+	      	    	//format: "shortTime"
 	      	       }
 	        },
 	        argumentAxis : {
 	        	inverted:true,
-	        	//argumentType: "Numeric",
+	        	argumentType: "Numeric",
 	        	label: {
 	        	visible : false
 	        	}

@@ -177,12 +177,14 @@ angular
     	return {
     		restrict: 'E',
     		scope: {
-    			title : '@title'
+    			title : '@title',
+    			logo : '@logo'
     		},
     		replace:true,
     		transclude: true,  
     		template: "<div bg-ctrl class='row bc-form-header'>" +
-    					"<label class='col-sm-4 bc-header-label'>{{title}}</label>"+
+    					"<img class ='logo' src={{logo}}>" +
+    					"<label class='col-sm-5 bc-header-label'>{{title}}</label>"+
     					"<div ng-transclude></div>"	+
     				  "</div>"
     	}
