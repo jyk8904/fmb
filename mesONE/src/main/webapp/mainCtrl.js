@@ -85,7 +85,6 @@ angular
   	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
   	self.alarmList = {}
   	plcPromise.then(function(data) {
-
   		for (var i = 0; i < data.length; i++) {
   			if(data[i].eqptSts=='0'){ //sts== 4일경우 하단바에 알람 발생 경고()
   				self.alarmList[i]=data[i];
@@ -95,8 +94,10 @@ angular
   		alert('fail: '+ data)
   });
   	
+  	
+   //알람정보워커
    Worker3Start();
-    
+   
    defaultLotationSetting();
  
    function defaultLotationSetting(){
