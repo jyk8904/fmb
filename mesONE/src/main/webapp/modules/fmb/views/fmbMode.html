@@ -23,27 +23,32 @@
 	<!--     좌상단 끝   -->
 
  	<md-radio-group ng-model="vm.eqptParamVo.factId" ng-change="vm.changeFact()">
+ 		<md-radio-button class="md-radio-button" value="Comb">전체</md-radio-button>
 		<md-radio-button class="md-radio-button" value="A" >A동</md-radio-button>
 		<md-radio-button class="md-radio-button" value="B" >B동</md-radio-button>
 		<md-radio-button class="md-radio-button" value="C"> C동 </md-radio-button>
-		<md-radio-button class="md-radio-button" value="Comb">전체</md-radio-button>
 	</md-radio-group>
 	
 </md-form-header>
 
-<md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4">
+<md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4" ng-style="{'opacity' : vm.opacityData / 100}">
 
       <md-toolbar class="md-theme-indigo">
         <h1 class="md-toolbar-tools">설비 (버튼) 설정</h1>
+        <md-slider ng-model="vm.opacityData" min="0" max="100" aria-label="regular slider" ng-change="vm.opacityChange(opacityData)"></md-slider>
         <md-button ng-click="vm.crtEqptModal()" class="md-accent">생성</md-button>
-        <md-button ng-click="vm.saveConfig(configSetting)" class="md-accent">저장</md-button>
         <md-button ng-click="vm.toggleLeft()" class="md-accent">닫기</md-button>
       </md-toolbar>
 
       <md-content class="md-padding">
 		<div layout="row">
 			<div flex>
-				<div class='listTitle'>
+				<md-toolbar layout="row" class="md-hue-3">
+			      <div class="md-toolbar-tools">
+			        <span>ddddd</span>
+			      </div>
+			    </md-toolbar>
+				<!-- <div class='listTitle'>
 					<div class='first'>
 						<h4>상태</h4>
 					</div>
@@ -53,16 +58,18 @@
 					<div class='third'>
 						<h4>사용안함</h4>
 					</div>
-				</div>
-				<ul>
-		      		<li ng-repeat="eqpts in vm.eqptList" ng-click="vm.setSelectedData(eqpts)" ng-hide="eqpts.status == 'delete'">
-						<label class='first'>{{eqpts.status}}</label>
-						<label class='second'>{{eqpts.plcId}}</label>
+				</div> -->
+	      		<md-list-item class="md-2-line" ng-repeat="eqpts in vm.eqptList" ng-click="vm.setSelectedData($index)" ng-hide="eqpts.status == 'delete'">
+		      		<div class="md-list-item-text" layout="column">
+		      			<h3>{{ eqpts.plcId }}</h3>
+		      			<p>{{ eqpts.status }}</p>
+						<!-- <label class='first'>{{eqpts.status}}</label>
+						<label class='second'>{{eqpts.plcId}}</label> 
 						<md-checkbox class='third' ng-model="checkData.cb" ng-init="checkData.cb = false;" aria-label="1"
 							ng-change="vm.exists(eqpts, checkData.cb, $index)" class="md-warn md-align-top-left" flex>
-          				</md-checkbox>
-		      		</li>
-		      	</ul>
+	         			</md-checkbox>-->
+	         		</div>
+	      		</md-list-item>
 	      	</div>
 		<div flex>
 		<md-tabs class="md-accent" md-selected="0">
@@ -71,12 +78,12 @@
 		        <md-tab-body>
 	   				<md-input-container>
           				<label>Class 명</label>
-          				<input ng-model="configSetting.cnm" readonly>
+          				<input ng-model="vm.eqptList[vm.configSetting.index].eqptCnm" readonly>
         			</md-input-container>
 	   				
 	   				<md-input-container>
           				<label>Type</label>
-          				<md-select ng-model="configSetting.type">
+          				<md-select ng-model="vm.eqptList[vm.configSetting.index].eqptType">
             				<md-option><em>None</em></md-option>
             				<md-option value="PLC"> PLC </md-option>
             				<md-option value="SPC"> SPC </md-option>
@@ -86,7 +93,7 @@
         			
 	   				<md-input-container>
           				<label>PLC_ID</label>
-          				<md-select ng-model="configSetting.plcId">
+          				<md-select ng-model="vm.eqptList[vm.configSetting.index].plcId">
             				<md-option><em>None</em></md-option>
             				<md-option ng-repeat="plc in vm.plcList" value="{{plc.plcId}}">
               					{{plc.plcId}}
@@ -96,7 +103,7 @@
           			
           			<md-input-container>
           				<label>FACT_ID</label>
-          				<md-select ng-model="configSetting.factId" required>
+          				<md-select ng-model="vm.eqptList[vm.configSetting.index].factId" required>
             				<md-option><em>None</em></md-option>
             				<md-option value="A"> A </md-option>
             				<md-option value="B"> B </md-option>
@@ -108,33 +115,35 @@
 		   	<md-tab id="tab2">
 				<md-tab-label>Detail</md-tab-label>
 		        <md-tab-body>
+		        <div class="cssData" ng-show="vm.configSetting.index != null">
 		        	<md-input-container>
           				<label>Top</label>
-          				<input ng-model="configSetting.top">
+          				<input ng-model = "vm.eqptList[vm.configSetting.index].cssTop">
         			</md-input-container>
         			<md-input-container>
           				<label>Left</label>
-          				<input ng-model="configSetting.left">
+          				<input ng-model= "vm.eqptList[vm.configSetting.index].cssLeft">
         			</md-input-container>
         			<md-input-container>
           				<label>Width</label>
-          				<input ng-model="configSetting.width">
+          				<input ng-model ="vm.eqptList[vm.configSetting.index].cssWidth">
         			</md-input-container>
         			<md-input-container>
           				<label>Height</label>
-          				<input ng-model="configSetting.height">
+          				<input ng-model ="vm.eqptList[vm.configSetting.index].cssHeight">
         			</md-input-container>
         			<md-input-container>
           				<label>zIndex</label>
-          				<input ng-model="configSetting.zIndex">
+          				<input ng-model ="vm.eqptList[vm.configSetting.index].cssZindex">
         			</md-input-container>
         			<md-input-container>
           				<label>Image</label>
-          				<input ng-model="configSetting.imgUrl">
+          				<input ng-model ="vm.eqptList[vm.configSetting.index].stsImg0">
         			</md-input-container>
 	   				<div class="prev" style='margin:10px 0 0 0'>
-	   					<img class='prevImg' src="{{configSetting.imgUrl}}" />
+	   					<img class='prevImg' src="{{vm.eqptList[vm.configSetting.index].stsImg0}}" />
 	   				</div>
+	   			</div>
 		        </md-tab-body>
 		      </md-tab>
 		    </md-tabs>

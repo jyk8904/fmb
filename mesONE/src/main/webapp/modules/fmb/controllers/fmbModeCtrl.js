@@ -25,13 +25,15 @@ angular
     
      var worker= undefined;
      var self = this;
+     var vm = this;
+     
      $scope.hoverIn = function(){
     	 this.hover = true;
      }
      $scope.hoverOut = function(){
     	 this.hover = false;
      }
-     	
+
      //알람정보워커삭제
      var workerList = CmmWorkerSrvc;
      //workerList.worker3.terminate();
@@ -39,11 +41,10 @@ angular
      
      self.showModal = false;
      
-     self.configSetting = {};
      self.checkData = {};
      $scope.plctext = {};
      $scope.crtEqpt = {};
-     
+     self.configSetting = {};
      //설비parameter
      self.eqptParamVo = {
     		  factId: 'C'
@@ -56,7 +57,9 @@ angular
  			  plcId: ''
  			, factId: 'C'
  	};
-
+ 	
+ 	self.opacityData = 100;
+ 	
 /*----------------------------------------------------------------
 *  이벤트 함수 맵핑
 * ---------------------------------------------------------------- 
@@ -74,13 +77,55 @@ angular
     };
 
     self.toggleLeft = buildToggler('left');
-    
-    
-    
+
+    $scope.$watch('vm.eqptList', function(newVal, oldVal) {
+    	
+    	if (newVal != null && oldVal != null)
+    	{
+	    	if(newVal.length > 0 && oldVal.length > 0) {
+		    	newVal.forEach(function (obj, i) {
+		    		
+		    		Object.keys(obj).forEach(function(f){
+		    			
+		    			if (f != '$$hashKey') {
+		    				
+			    			var detNewVal = obj[f];
+			    			var detOldVal = oldVal[i][f];
+			    			
+			    			if (detNewVal !== detOldVal) {
+			    				var updateIndex = i;
+			    				if (self.eqptList[i].status == 'keep') {
+			    					self.eqptList[i].status = 'update';
+			    				}
+			    			}
+		    			}
+		    		});
+		    	});
+	    	}
+    	}
+    }, true);
+
     self.crtEqptModal = function(){
+    	var classList = $filter('orderBy')(self.eqptList,'eqptCnm');
+    	
+    	var latestNum = classList[classList.length - 1].eqptCnm.split('eqpt')[1];
+    	
+    	$scope.crtEqpt.cnm = 'eqpt' + leadingZeros(parseInt(latestNum) + 1, 3);
     	
     	self.showModal = !self.showModal;
     };
+    
+    function leadingZeros(n, digits) {
+    	var zero = '';
+    	n = n.toString();
+    	
+    	if (n.length < digits) {
+    		for (var i = 0; i < digits - n.length; i++)
+    			zero += '0';
+    	}
+    	
+    	return zero + n;
+    }
     
     $scope.submit = function(){	
     	var cnm = $scope.crtEqpt.cnm;
@@ -201,16 +246,8 @@ angular
      
      // 선택한 요소에 대한 css 및 기본정보(클래스명, 정의된 타입, Id)값을 불러온다.
      // 탭칸에 요소들을 추가시킴.
-     self.setSelectedData = function setSelectedData(eqpts){
-    	 $scope.configSetting = {};
-    	 $scope.configSetting.cnm = eqpts['eqptCnm'];
-    	 $scope.configSetting.type = eqpts['eqptType'];
-    	 $scope.configSetting.plcId = eqpts['plcId'];
-    	 $scope.configSetting.top = eqpts['cssTop'];
-    	 $scope.configSetting.left = eqpts['cssLeft'];
-    	 $scope.configSetting.height = eqpts['cssHeight'];
-    	 $scope.configSetting.width = eqpts['cssWidth'];	
-    	 $scope.configSetting.imgUrl = eqpts['stsImg0'];
+     self.setSelectedData = function setSelectedData(index){
+    	 self.configSetting.index = index;
      }
      
      // 설정한 요소들에 대하여 실제 HTML에 적용 시킨다.
@@ -252,7 +289,6 @@ angular
 		        }, function() {
 		          $scope.status = 'You cancelled the dialog.';
 		        });
-    	 console.log('123')
      };
      
      self.FindImg = function() {

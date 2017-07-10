@@ -68,11 +68,7 @@ angular
 			        if (stop) stop(e);
 			        
 			        // draggable 로 변경된 값 세팅
-			        //ctrl.modStatus();
-			        if (scope.eqptList[scope.$index].status == "keep")
-			        {
-			        	scope.eqptList[scope.$index].status = "update";
-			        }
+
 			        scope.eqptList[scope.$index].cssTop = element[0].style.top;
 			        scope.eqptList[scope.$index].cssLeft = element[0].style.left; 
 			        scope.$apply();
