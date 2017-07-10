@@ -263,8 +263,124 @@ angular
 	
 	
 	function getCstData(){
-	
 		for(var i = 0; i< self.eqptStsHisData.length; i++){
+			if(self.eqptStsHisData[i].plcSts == '0'){ //비가동일경우
+					eqptStsCstData[i] = {
+							"task" : i,
+							"pre" : new Date(Number(self.eqptStsHisData[i].strDttm.split('-')[0]),
+												  Number(self.eqptStsHisData[i].strDttm.split('-')[1]),
+												  Number(self.eqptStsHisData[i].strDttm.split('-')[2].split(' ')[0]),
+												  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0]),
+												  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1]), 
+												  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
+												  0),
+							"Dttm0" : new Date(Number(self.eqptStsHisData[i].endDttm.split('-')[0]),
+												  Number(self.eqptStsHisData[i].endDttm.split('-')[1]),
+												  Number(self.eqptStsHisData[i].endDttm.split('-')[2].split(' ')[0]),
+												  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0]),
+												  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1]), 
+												  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
+												  0),
+							"Dttm1" :0,
+							"Dttm2" :0,
+							"Dttm3" : 0,
+							"Dttm4" : 0,}
+
+					}else if(self.eqptStsHisData[i].plcSts == '1'){
+						eqptStsCstData[i] = {
+								"task" : i,
+								"pre" : new Date(Number(self.eqptStsHisData[i].strDttm.split('-')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split('-')[1]),
+										  Number(self.eqptStsHisData[i].strDttm.split('-')[2].split(' ')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1]), 
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
+										  0),
+								"Dttm0" : 0,
+								"Dttm1" : new Date(Number(self.eqptStsHisData[i].endDttm.split('-')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[1]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[2].split(' ')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1]), 
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
+										  0),
+								"Dttm2" : 0,
+								"Dttm3" : 0,
+								"Dttm4" : 0
+						}
+					}else if(self.eqptStsHisData[i].plcSts == '2'){
+						eqptStsCstData[i] = {
+								"task" : i,
+								"pre" : new Date(Number(self.eqptStsHisData[i].strDttm.split('-')[0]),
+								  Number(self.eqptStsHisData[i].strDttm.split('-')[1]),
+								  Number(self.eqptStsHisData[i].strDttm.split('-')[2].split(' ')[0]),
+								  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0]),
+								  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1]), 
+								  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
+								  0),
+								"Dttm0" : 0,
+								"Dttm1" : 0,
+								"Dttm2" : new Date(Number(self.eqptStsHisData[i].endDttm.split('-')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[1]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[2].split(' ')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1]), 
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
+										  0),
+								"Dttm3" : 0,
+								"Dttm4" : 0		
+						}
+						
+					}else if(self.eqptStsHisData[i].plcSts == '3'){
+						eqptStsCstData[i] = {
+								"task" : i,
+								"pre" : new Date(Number(self.eqptStsHisData[i].strDttm.split('-')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split('-')[1]),
+										  Number(self.eqptStsHisData[i].strDttm.split('-')[2].split(' ')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1]), 
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
+										  0),
+								"Dttm0" : 0,
+								"Dttm1" : 0,
+								"Dttm2" : 0,
+								"Dttm3" : new Date(Number(self.eqptStsHisData[i].endDttm.split('-')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[1]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[2].split(' ')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1]), 
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
+										  0),
+								"Dttm4" : 0}
+					}else{
+						eqptStsCstData[i] = {
+								"task" : i,
+								"pre" :  new Date(Number(self.eqptStsHisData[i].strDttm.split('-')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split('-')[1]),
+										  Number(self.eqptStsHisData[i].strDttm.split('-')[2].split(' ')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0]),
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1]), 
+										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
+										  0),
+								"Dttm0" : 0,
+								"Dttm1" : 0,
+								"Dttm2" : 0,
+								"Dttm3" : 0,
+								"Dttm4" : new Date(Number(self.eqptStsHisData[i].endDttm.split('-')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[1]),
+										  Number(self.eqptStsHisData[i].endDttm.split('-')[2].split(' ')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0]),
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1]), 
+										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
+										  0),
+								}		
+					}
+		}
+		console.log(eqptStsCstData);
+		StsProd();
+	}
+		
+	/*	for(var i = 0; i< self.eqptStsHisData.length; i++){
 				if(self.eqptStsHisData[i].plcSts == '0'){
 					eqptStsCstData[i] = {
 										"task" : i,
@@ -397,13 +513,75 @@ angular
 								}		
 					}
 			}
+		
 		 console.log(eqptStsCstData);
-		StsProd();	
+		StsProd();	*/
 
-	}
-  		
-	
+
 	function StsProd(){
+		self.stsProd = {	
+			rotated: true,
+	        equalBarWidth: false,
+	        dataSource: eqptStsCstData,
+	        //redrawOnResize : true,
+	        scrollingMode: "all", 
+	        zoomingMode: "all",
+	        adjustOnZoom: true, 
+	        size: {
+	        	width: 850,
+	        	height: 376
+	        },
+	        commonSeriesSettings: {
+	            argumentField: "task",
+	            type:"stackedBar"
+	            //width: 4
+	        },
+	        series: [
+	        	{valueField: "pre", name: "pre", color: 'rgba(1,1,1,0.1)'},
+	            {valueField: "Dttm0", name: "비가동"},
+	            {valueField: "Dttm1", name: "가동"},
+		        {valueField: "Dttm2", name: "대기"},
+		        {valueField: "Dttm3", name: "수리"},
+		        {valueField: "Dttm4", name: "알람"}		        
+	        ],
+	        valueAxis: { 
+        		//min: new Date('2017','01','09','08','30'),
+	        	min: new Date('2017','01','09','08','30'),
+	        	//max: new Date('2017','01','10','08','29'),
+	        
+
+	      	    visible: true,
+	      	    valueType: "dateTime",
+	      	    label:{   
+	      	     	//overlappingBehavior: "stagger",
+	      	    	format: "shortTime"
+	      	       }
+	        },
+	        argumentAxis : {
+	        	inverted:true,
+	        	//argumentType: "Numeric",
+	        	label: {
+	        	visible : false
+	        	}
+	        },
+	        tooltip:{
+	        	enabled: true,
+	        	customizeTooltip: function (arg) {
+	                return {
+	                    text: arg.argumentText
+	                };
+	            },
+	        },
+	        legend: {
+	        	visible: true,
+	        	itemTextPosition:"bottom",
+	        	hoverMode : "includePoints"
+	        	//position : "inside"
+	        }	 
+		}
+	}		
+	
+	/*function StsProd(){
 		self.stsProd = {	
 			rotated: true,
 			//palette: "violet",
@@ -453,10 +631,10 @@ angular
 
 	      	    visible: true,
 	      	    valueType: "datetime",
-/*	      	    label:{   
+	      	    label:{   
 	      	     	//overlappingBehavior: "stagger",
 	      	    	format: "shortTime"
-	      	       }*/
+	      	       }
 	        },
 	        argumentAxis : {
 	        	inverted:true,
@@ -534,7 +712,7 @@ angular
 		
 		
 	}		
-   	
+   	*/
 	function getSelectedPlc(){
 		var promise = CmmAjaxService.selectOne("/mes/bas/selectFmbPlc.do", self.plcSelectedVo);
         promise.then(function(data){

@@ -21,5 +21,6 @@ angular.module('app').factory('CmmWorkerSrvc',  function() {
     	workerList.worker1data = undefined;
     	workerList.worker2data = undefined;
     	workerList.worker2sts = undefined;
+    	
     	return workerList;
     });
