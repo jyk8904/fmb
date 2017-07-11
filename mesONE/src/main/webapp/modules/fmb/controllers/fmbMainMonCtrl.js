@@ -65,45 +65,17 @@ angular
     	self.plcSelectedVo = {plcId: pid,
 					    		  factId: ''
 					    		  } 
-	
-    	
-  
-/*    	//상위컨트롤러에서 전송한 이벤트를 받음
-    	 $scope.$on("event:changeFact",function (event, data){
-    		self.eqptParamVo.factId  = data.selectedFactId;
-    		self.plcParamVo.factId = d.selectedFactId;
-    	 })
-
-    	*/
-    	//선택된 plc 데이터 가져오기
-/*    	getSelectedPlc();
-    	
-    	function getSelectedPlc(){
-    		
-    		var promise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcSelectedVo);
-            promise.then(function(data){
-            	self.plc = data;//fmbPlcVo가 담긴 리스트 형태리턴
-            }
-            ,function(data){
-            	alert('fail: '+ data)
-            });
-        	
-        	 self.showModal = !self.showModal;
-        };*/
-        
     	}
-        
+    getData();
     
-    getPlcList();
-    getEqptList();
-    
-    
-    //설비plc 데이터 불러오기 Web Worker시작 함수
-    Worker2Start();
-  //설비 이미지리스트 가져오기
+	//워커 스타트
+	workerList.workerStart(workerList.worker2, "worker2.js", getData);
    
-    
-    
+    function getData(){
+		getEqptList();
+   		getPlcList();
+    }
+
     function getEqptList(){
 	    	//설비 이미지리스트 가져오기 메소드
 	    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
@@ -124,10 +96,7 @@ angular
 		}
 		//console.log(self.stsData[0])
 	};
-    
-   
-    
-		function getPlcList(){
+	function getPlcList(){
    		//설비 plc 데이터 가져오기
    	   		var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
            	plcPromise.then(function(data) {
@@ -144,50 +113,6 @@ angular
            	}, function(data){
            		alert('fail: '+ data)
            });
-   		}
-
-		
-		
-		 //설비plc 데이터 불러오기 Web Worker시작 함수
-	    function Worker2Start(){
-
-	       //브라우저가 웹 워커를 지원하는지 검사한다 .
-	        if(!!window.Worker){    
-	           
-	           //워커가 이미 존재하면 종료시킨다 .
-	           if(workerList.worker2!=undefined){
-	        	   workerList.worker2.terminate();
-	        	   workerList.worker2=undefined;
-	           }      
-	           
-	           //새로운 워커(객체)를 생성한다.
-	           workerList.worker2= new Worker("worker2.js");       
-	           //Setting 정보를 Worker로 넘긴다.
-	           
-	           var SettingTime = workerList.worker2data;
-	           for(var i =0; i < SettingTime.length; i++){
-	        	   if('/'+SettingTime[i].pageNm ==$location.url()){
-	        		   workerList.worker2.postMessage(SettingTime[i]);
-	        		   //console.log(SettingTime[i])
-	        	   }
-	           }
-	           // 워커로부터 전달되는 메시지를 받는다.
-	           		workerList.worker2.onmessage = function(evt){ 
-	           		/*self.eqptParamVo.factId = CmmFactSrvc.getSelectedFactId();
-	           		self.plcParamVo.factId = CmmFactSrvc.getSelectedFactId();*/
-	           			if(workerList.worker2sts=='stop'){
-	           				Worker2Start();
-	           			}
-	           		//설비이미지리스트 가져오기
-	           		getEqptList();
-	           		
-	           		getPlcList();
-	           		
-	             }  
-	        }
-	        else {
-	          alert("현재 브라우저는 웹 워커를 지원하지 않습니다");
-	        }
-	      }
+   	}
 }]);
 
