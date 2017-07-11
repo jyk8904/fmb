@@ -24,6 +24,7 @@ angular
     							, '$q'
     							, '$filter'
     							, '$location'
+    							, '$timeout'
     							, function (
     									  CmmAjaxService
     									, CmmModalSrvc
@@ -35,6 +36,7 @@ angular
     									, $q
     									, $filter
     									, $location
+    									, $timeout
     									) 
 {
 	/*------------------------------------------
@@ -67,13 +69,17 @@ angular
 					    		  } 
     	}
     getData();
-    
+
+
 	//워커 스타트
 	workerList.workerStart(workerList.worker2, "worker2.js", getData);
    
     function getData(){
-		getEqptList();
-   		getPlcList();
+    	// 비동기실행에 따른 이벤트 순서 제어 
+    	$timeout(getPlcList(), 200)
+    	.then(function(){
+    		getEqptList();
+    	});
     }
 
     function getEqptList(){

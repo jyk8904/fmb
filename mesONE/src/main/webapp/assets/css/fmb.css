@@ -259,34 +259,50 @@ color:yellow;
 
 .tbm-table{
 	margin:auto;
-	width:1200px;
-	height:500px;
-	font-size: 20pt;
+	width:1880px;
+	height:900px;
+	font-size: 27pt;
 }
 .tbm-table tr:nth-child(1){
 	background-color: #404040;
 	height: 143px;
+	font-size: 27pt;
 }
 .tbm-table tr:nth-child(2){
 	background-color: #10253F;
 	height: 110px;
+	font-size: 27pt;
 }
 .tbm-table tr:nth-child(3){
 	background-color: #546E7A;
 	height: 110px;
+	font-size: 27pt;
 }
 .tbm-table tr:nth-child(4){
 	background-color: #303D44;
 	height: 110px;
+	font-size: 27pt;
 }
 .tbm-table tr:nth-child(5){
 	background-color: #262626;
 	height: 110px;
+	font-size: 27pt;
 }
 .tbm-table tr:nth-child(6){
 	background-color: #10253F;
 	height: 110px;
+	font-size: 27pt;
 }
+
+
+.tbm-table tr td{
+	width: 350px;
+}
+.tbm-table tr td:nth-child(1){
+	width: 306px;
+}
+
+
 @media screen and (max-width:1280px) {
 	.auiGrid {
 		margin-left: 0px;
