@@ -50,49 +50,11 @@ angular
     		return parseInt(value);
     	}
     };
-    
    
     getLineList();
-    //Worker2Start();
-    
-    
-    
-   /* function Worker2Start(){
-    	 //브라우저가 웹 워커를 지원하는지 검사한다 .
-        if(!!window.Worker){    
-           
-           //워커가 이미 존재하면 종료시킨다 .
-           if(workerList.worker2!=undefined){
-        	   workerList.worker2.terminate();
-        	   workerList.worker2=undefined;
-           }      
-           
-           //새로운 워커(객체)를 생성한다.
-           workerList.worker2= new Worker("worker2.js");       
-           
-          
-           //Setting 정보를 Worker로 넘긴다.
-           var SettingTime = workerList.worker2data;
-           for(var i =0; i < SettingTime.length; i++){
-        	   if('/'+SettingTime[i].pageNm ==$location.url()){
-        		   workerList.worker2.postMessage(SettingTime[i]);
-        		   console.log(SettingTime[i])
-        	   }
-           }
-	           
-	           // 워커로부터 전달되는 메시지를 받는다.
-	           		workerList.worker2.onmessage = function(evt){ 
-	           			if(workerList.worker2sts=='stop'){
-	           				Worker2Start();
-	           			}
-	           			getLineList();
+    //워커 스타트
+	workerList.workerStart(workerList.worker2, "worker2.js",   getLineList);
 
-		             }  
-        	}
-        else {
-          alert("현재 브라우저는 웹 워커를 지원하지 않습니다");
-        }
-      }*/
            function getLineList(){
         	 //선택된 공장의 line별 데이터 가져오기
         	    var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do", self.lineParamVo);

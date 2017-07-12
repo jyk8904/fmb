@@ -117,9 +117,9 @@
 	</bc-form-footer>
 	
    <!-- 모달 body -->
-   <modal title="페이지 전환 설정" visible="vm.showModal">
+   <modal id="pageSetting" title="페이지 전환 설정" visible="vm.showModal" >
      <form>
-     <table>
+     <table style="margin-left:35px;">
     <tr> <td></td> <td>페이지전환(초)</td> <td>데이터갱신(초)</td></tr>
      <tr ng-repeat="page in vm.Setting">
 	     <td>  
@@ -129,18 +129,17 @@
 	     </td>
 	 
 	     <td>
-	    	<input style="width:100px; margin-right:10px;" type ="text" placeholder="페이지"+{{page.pageSeq}}+" time" name ="name" ng-model=page.rotateTime value={{page.rotateTime}}>&nbsp;&nbsp;&nbsp;
+	    	<input style="width:100px; margin-right:10px;" type ="number" placeholder="페이지전환"+{{page.pageSeq}}+" time" name ="name" ng-model=page.rotateTime value={{page.rotateTime}}>&nbsp;&nbsp;&nbsp;
 	     </td>
 	     <td>
-	    	<input style="width:100px; margin-right:10px;" type="text" placeholder="페이지"+{{page.pageSeq}}+"  data refresh time" name ="name" ng-model=page.dataTime value={{page.dataTime}}>
+	    	<input style="width:100px; margin-right:10px;" type="number" placeholder="데이터갱신"+{{page.pageSeq}}+"  data refresh time" name ="name" ng-model=page.dataTime value={{page.dataTime}}>
      </td>
      </tr>
      </table>
   	<br>      
-       <input type="submit" value="저장"  data-dismiss="modal"
-         aria-hidden="true" style="margin: 0 auto;" ng-click="vm.submit1()"/>
-      <!--  <button type="button" class="btn btn-default" data-dismiss="modal"
-         aria-hidden="true">닫기</button> -->
+  	 	<md-button class="md-raised md-primary" type="submit" data-dismiss="modal" aria-hidden="true" ng-click="vm.submit1()" style="width:50px;margin: 0 256px;" >저장</md-button>
+       <!-- <input type="submit" value="저장"  data-dismiss="modal"  aria-hidden="true" style="width:50px;margin: 0 256px;" ng-click="vm.submit1()"/> -->
+      	<!--<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">닫기</button> -->
      </form>
 	</modal>
 	<!-- 모달 body -->
