@@ -5,6 +5,7 @@
       <div class="md-toolbar-tools">
         <h2>이미지 선택</h2>
         <span flex></span>
+        <md-button class="md-raised" ng-click="vm.saveBgImg(vm.target)">설정</md-button>
         <md-button class="md-icon-button" ng-click="cancel()">
           <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
         </md-button>
@@ -21,8 +22,11 @@
                   md-rowspan="1"
                   md-colspan="1"
                   md-colspan-sm="1"
-                  md-colspan-xs="1">
-      <img src="{{image.file_l_path}}"/>
+                  md-colspan-xs="1"
+                  ng-click=vm.imagePick($index)
+                  ng-class="{'with-mask' : vm.target.num === $index}">
+      <img class="img-view" src="{{image.file_l_path}}"/>
+      <img class="target-img" ng-show="vm.target.num == $index" src="assets/img/system/drag_config.png"/>
       <md-grid-tile-footer>{{image.file_origin_name}}</md-grid-tile-footer>
     </md-grid-tile>
   </md-grid-list>

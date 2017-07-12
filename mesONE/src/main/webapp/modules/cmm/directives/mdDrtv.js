@@ -43,7 +43,7 @@ angular
         				"<img ng-click='vm.uploadImg()' title='저장' src='assets/img/system/send_white.png' />" +
         				"</div>" +
         				"<div ng-click='FindImg()' class='saveBtn'>" +
-        				"<img ng-click='vm.FindImg()' title='저장' src='assets/img/system/send_white.png' />" +
+        				"<img ng-click='vm.FindImg(vm.eqptParamVo.factId)' title='저장' src='assets/img/system/send_white.png' />" +
         				"</div>" +
             		"</div>"
          }

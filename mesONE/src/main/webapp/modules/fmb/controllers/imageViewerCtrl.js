@@ -27,6 +27,7 @@ angular
     							, '$location'
     							, '$mdDialog'
     							, '$timeout'
+    							, 'factId'
     							, function (
     									  CmmAjaxService
     									, CmmModalSrvc
@@ -41,6 +42,7 @@ angular
     									, $location
     									, $mdDialog
     									, $timeout
+    									, factId
     									) 
 {
 	/*------------------------------------------
@@ -49,7 +51,10 @@ angular
     var self = this;
 	var images = {};
 	$scope.select = {};
-	
+	self.target = {
+			num : null
+	};
+
 	getImages();
 	
 	// 이미지 가져오기
@@ -62,8 +67,31 @@ angular
         ,function(data){
         	alert('fail: '+ data)
         });
-    	
     };
     
+    self.imagePick = function imagePick(index) {
+    	self.target.num = index;
+    };
+    
+    self.saveBgImg = function saveBgImg(target) {
+    	
+    	console.log(target);
+    	if (Object.keys(target).length === 0 || target === undefined || target.num === null) 
+    	{
+    		alert("이미지가 선택되지 않았습니다. 이미지를 선택해주세요.");
+    		return;
+    	}
+    	else 
+    	{
+    		var targetData = self.images[target.num].seq;
+    		
+    		self.saveBgImageVo = {
+    				  factId : factId
+    				, imgSeq : targetData
+    		}
+    		console.log(self.saveBgImageVo)
+    		var eqptPromise = CmmAjaxService.save("/mes/bas/saveBgImage.do", self.saveBgImageVo);
+    	}
+    };
 }]);
 

@@ -53,9 +53,23 @@ public class FmbEqptCtrl {
 			return new ResponseEntity<List<FmbEqptVO>>(fmbEqptVO, HttpStatus.OK);
 		}
 	}
-
     
-    
+    @RequestMapping(value = "/bas/selectFmbBgImage.do", method = RequestMethod.POST)
+    public ResponseEntity<List<FmbBgImageVO>> selectFmbBgImage(@RequestBody FmbEqptParamVO vo)  {
+        List<FmbBgImageVO> fmbEqptVO = null;
+        System.out.println("FmbEqpt.do로 이동");
+        try {
+            //5. sql-bas-info.xml의  id가 selectFmbPlc인 select 실행
+            fmbEqptVO = (List<FmbBgImageVO>) mBcfBizService.select("sql-bas-info.selectFmbBgImage", vo);
+            log.info(vo.getFactId());
+            
+            return new ResponseEntity<List<FmbBgImageVO>>(fmbEqptVO, HttpStatus.OK);
+        } catch (Exception ie) {
+            log.error("FmbEqptController:selectFmbEqpt=>" +  ie.toString());
+            return new ResponseEntity<List<FmbBgImageVO>>(fmbEqptVO, HttpStatus.OK);
+        }
+    }
+ 
     @RequestMapping(value = "/bas/saveFmbEqpt.do", method = RequestMethod.POST)
     public ResponseEntity<MSysRtnMsgVO> saveMBasLneMst(@RequestBody List<FmbModEqptVO> pVO)  {
         MBcfTransactionManager transaction = null;

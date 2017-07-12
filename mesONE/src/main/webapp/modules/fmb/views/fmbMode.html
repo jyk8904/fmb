@@ -35,41 +35,34 @@
 
       <md-toolbar class="md-theme-indigo">
         <h1 class="md-toolbar-tools">설비 (버튼) 설정</h1>
-        <md-slider ng-model="vm.opacityData" min="0" max="100" aria-label="regular slider" ng-change="vm.opacityChange(opacityData)"></md-slider>
+        <md-slider ng-model="vm.opacityData" min="40" max="100" aria-label="regular slider" ng-change="vm.opacityChange(opacityData)" style="width:170px; left:300px;"></md-slider>
         <md-button ng-click="vm.crtEqptModal()" class="md-accent">생성</md-button>
         <md-button ng-click="vm.toggleLeft()" class="md-accent">닫기</md-button>
       </md-toolbar>
 
-      <md-content class="md-padding">
-		<div layout="row">
+      <md-content layout-margin>
+		<div layout="row" ng-cloak>
 			<div flex>
-				<md-toolbar layout="row" class="md-hue-3">
-			      <div class="md-toolbar-tools">
-			        <span>ddddd</span>
-			      </div>
-			    </md-toolbar>
-				<!-- <div class='listTitle'>
-					<div class='first'>
-						<h4>상태</h4>
-					</div>
-					<div class='second'>
-						<h4>ID</h4>
-					</div>
-					<div class='third'>
-						<h4>사용안함</h4>
-					</div>
-				</div> -->
-	      		<md-list-item class="md-2-line" ng-repeat="eqpts in vm.eqptList" ng-click="vm.setSelectedData($index)" ng-hide="eqpts.status == 'delete'">
-		      		<div class="md-list-item-text" layout="column">
-		      			<h3>{{ eqpts.plcId }}</h3>
-		      			<p>{{ eqpts.status }}</p>
-						<!-- <label class='first'>{{eqpts.status}}</label>
-						<label class='second'>{{eqpts.plcId}}</label> 
-						<md-checkbox class='third' ng-model="checkData.cb" ng-init="checkData.cb = false;" aria-label="1"
-							ng-change="vm.exists(eqpts, checkData.cb, $index)" class="md-warn md-align-top-left" flex>
-	         			</md-checkbox>-->
-	         		</div>
-	      		</md-list-item>
+				<md-tabs class="md-accent" md-selected="0">
+					<md-tab id="tab1">
+						<md-tab-label>리스트</md-tab-label>
+						<md-button class="md-raised" ng-click="vm.deleteDiv($index)">Button</md-button>
+						<md-tab-body>
+				      		<md-list-item class="md-2-line" ng-class=" {'list_selected' : vm.selected === $index}" ng-repeat="eqpts in vm.eqptList" ng-click="vm.setSelectedData($index)" ng-hide="eqpts.status == 'delete'">
+					      		<div class="md-list-item-text" layout="column">
+					      			<h3>{{ eqpts.plcId }}</h3>
+					      			<div ng-switch on="eqpts.status">
+					      			<p ng-switch-when="insert">신규</p>
+					      			<p ng-switch-when="update">수정</p>
+					      			<p ng-switch-when="keep">  </p>
+					      			</div>
+				         		</div>
+				         		<md-button class="md-raised" ng-click="vm.deleteDiv($index)">삭제</md-button>
+				         		<!-- <img src="assets/img/system/drag_close.png" style="width:25px; height:25px;" ng-click="vm.deleteDiv($index)"/> -->
+				      		</md-list-item>
+		      			</md-tab-body>
+		      		</md-tab>
+	      		</md-tabs>
 	      	</div>
 		<div flex>
 		<md-tabs class="md-accent" md-selected="0">
@@ -158,10 +151,10 @@
 <!--<div bg-inner-ctrl class='bg-panel eqpt_plc_c'></div> -->
    	
   	<div ng-switch on="vm.eqptParamVo.factId">
-    <div ng-switch-when="A" bg-inner-ctrl class='bg-panel eqpt_plc_a'></div>
-   	<div ng-switch-when="B" bg-inner-ctrl class='bg-panel eqpt_plc_b'></div>
-   	<div ng-switch-when="C" bg-inner-ctrl class='bg-panel eqpt_plc_c'></div>
-   	<div ng-switch-when="Comb" bg-inner-ctrl class='bg-panel eqpt_plc_comb'></div>
+    <div ng-switch-when="A" bg-inner-ctrl class='bg-panel' ng-style="{'background-image' : 'url({{eachBg.A}})'}"></div>
+   	<div ng-switch-when="B" bg-inner-ctrl class='bg-panel' ng-style="{'background-image' : 'url({{eachBg.B}})'}"></div>
+   	<div ng-switch-when="C" bg-inner-ctrl class='bg-panel' ng-style="{'background-image' : 'url({{eachBg.C}})'}"></div>
+   	<div ng-switch-when="Comb" bg-inner-ctrl class='bg-panel' ng-style="{'background-image' : 'url({{eachBg.Comb}})'}"></div>
     </div> 
    <div class="EQPT">   
    <!-- 설비이미지 repeat -->
@@ -177,6 +170,7 @@
             </div>
          </li>
       </ul>
+      <div class="pointer" ng-class=" {'show_animate' : vm.pointer.animateTrigger === 'on'}" style="position:absolute; display: {{vm.pointer.display}}; width:25px; height:25px; z-index:900; top:{{vm.pointer.top}}; left:{{vm.pointer.left}};"><img src="assets/img/system/arrow.png"/></div>
     </div>
    </bc-bg-img-panel>
       <!--설비클래스 삽입 끝-->

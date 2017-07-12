@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dsinfo.fmb.service.*;
+import com.dsinfo.sys.service.MSysRtnMsgVO;
 import com.dsinfo.bcf.service.*;
 import com.dsinfo.bcf.service.impl.MBcfTransactionManager;
 
@@ -162,6 +163,34 @@ public class FmbImageSaveCtrl {
             log.error("FmbTotalController:selectFmbTotal=>" +  ie.toString());
             return new ResponseEntity<List<FmbImageVO>>(FmbImageVO, HttpStatus.OK);
         }
+    }
+    
+    @RequestMapping(value = "/bas/saveBgImage.do", method = RequestMethod.POST)
+    public ResponseEntity<MSysRtnMsgVO> saveBgImage(@RequestBody FmbBgImageVO vo)  {
+        MBcfTransactionManager transaction = null;
+        String sqlID = null;
+        try {
+            transaction = mBcfBizService.getTransactionManager();
+            transaction.start();
+            
+            System.out.println("컨트롤러에서 데이터 : "+ vo);
+            sqlID = "sql-bas-info.updateFmbBgImage";
+            mBcfBizService.update("sql-bas-info.updateFmbBgImage", vo);
+                
+
+            transaction.commit();
+        } catch (Exception ie) {
+            log.error("mbEqptController:saveBgImage:" + sqlID + "=>" +  ie.toString());
+            if (transaction != null) 
+                transaction.rollback();
+          //  mBcfBizService.insertSysErrMsg(sqlID, ie.toString());
+        } finally {
+            if (transaction != null) 
+                transaction.end();
+        }
+        
+        return new ResponseEntity<MSysRtnMsgVO>(mBcfBizService.getMSysRtnMsgVO(), HttpStatus.OK);
+        //return new ResponseEntity<MSysRtnMsgVO>(mBcfBizService.getMSysRtnMsgVO(), HttpStatus.OK);
     }
     
     //uuid생성 

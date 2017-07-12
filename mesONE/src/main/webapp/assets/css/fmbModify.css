@@ -245,8 +245,21 @@ md-config-btn .saveBtn img {
 div[class^=eqpt] {
  	position:absolute;
 }
-
-
+.show_animate {
+	-webkit-animation: bounceIn 5s infinite;
+	animation: bounceIn 5s infinite;
+}
+@keyframes bounceIn {
+	0% {margin-top: -20px;}
+	10% {margin-top: -40px;}
+	25% {margin-top: -20px;}
+	35% {margin-top: -40px;}
+	50% {margin-top: -20px;}
+	60% {margin-top: -40px;}
+	75% {margin-top: -20px;}
+	85% {margin-top: -40px;}
+	100% {margin-top: -20px;}
+}
 /* bcFormFooter */
 
 .alarm_data{
@@ -262,7 +275,10 @@ div[class^=eqpt] {
 
 
 /* sideNav */
-
+.list_selected {
+	background : Green;
+	color : white;
+}
 md-sideNav {
 	width:500px; !important;
 	max-width:600px; !important;

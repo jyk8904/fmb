@@ -14,7 +14,7 @@
 
 angular
     .module('app')
-    .controller('FmbModeCtrl', ['CmmAjaxService','CmmWorkerSrvc','CmmFactSrvc', '$http', '$scope','$mdSidenav', '$filter','$window','$mdDialog', function (CmmAjaxService, CmmWorkerSrvc, CmmFactSrvc, $http, $scope, $mdSidenav, $filter, $window, $mdDialog) 
+    .controller('FmbModeCtrl', ['CmmAjaxService','CmmWorkerSrvc','CmmFactSrvc', '$http', '$scope','$mdSidenav', '$filter','$window','$mdDialog', '$timeout', function (CmmAjaxService, CmmWorkerSrvc, CmmFactSrvc, $http, $scope, $mdSidenav, $filter, $window, $mdDialog, $timeout) 
 {
 /*----------------------------------------------------------------
 *  변수 선언
@@ -25,7 +25,6 @@ angular
     
      var worker= undefined;
      var self = this;
-     var vm = this;
      
      $scope.hoverIn = function(){
     	 this.hover = true;
@@ -40,11 +39,19 @@ angular
      workerList.worker3 = undefined;
      
      self.showModal = false;
-     
-     self.checkData = {};
+     self.selected = {};
+     self.pointer = {
+    		  display : 'none'
+     		, top : '0px'
+     		, left : '0px'
+     };
      $scope.plctext = {};
      $scope.crtEqpt = {};
-     self.configSetting = {};
+     
+     self.configSetting = {
+    		 index : null
+     };
+     
      //설비parameter
      self.eqptParamVo = {
     		  factId: 'C'
@@ -58,7 +65,28 @@ angular
  			, factId: 'C'
  	};
  	
+    self.BgList = {
+    		   factId: '' 
+    };
+    $scope.eachBg = {
+          A : ''
+    	, B : ''
+    	, C : ''
+    	, Comd : ''
+    };
  	self.opacityData = 100;
+ 
+/*----------------------------------------------------------------
+*  함수 실행
+* ---------------------------------------------------------------- 
+*  @ 설명
+*  brbr - brbrbrbr~~
+*  brbr - brbrbr~~~~
+*---------------------------------------------------------------*/ 	
+ 	
+ 	getBgImageList();
+ 	
+ 	
  	
 /*----------------------------------------------------------------
 *  이벤트 함수 맵핑
@@ -70,11 +98,10 @@ angular
  	
     self.changeFact = changeFact;
      
-    self.exists = function (eqpt, modStatus, index) {
-    	if (modStatus == true) {
-    	 	eqpt.status = "delete";
-    	}
-    };
+    self.deleteDiv = function (index) {
+    	console.log(index)
+    	self.eqptList[index].status = "delete";
+    }
 
     self.toggleLeft = buildToggler('left');
 
@@ -97,6 +124,7 @@ angular
 			    				if (self.eqptList[i].status == 'keep') {
 			    					self.eqptList[i].status = 'update';
 			    				}
+			    				self.setSelectedData(i);
 			    			}
 		    			}
 		    		});
@@ -186,6 +214,32 @@ angular
     	});
     }
     
+    function getBgImageList() {
+        
+    	var bgImagePromise = CmmAjaxService.select("/mes/bas/selectFmbBgImage.do", self.BgList);
+    	bgImagePromise.then(function(data) {
+    		self.bgImageList = data;
+    		
+        	for (var i = 0; i < self.bgImageList.length; i++) {
+        		var factId = self.bgImageList[i].factId;
+        		
+        		if (factId == "A") {
+        			console.log($scope.eachBg.A)
+        			$scope.eachBg.A = self.bgImageList[i].imgPath;
+        			console.log($scope.eachBg.A)
+        		} else if (factId == "B") {
+        			$scope.eachBg.B = self.bgImageList[i].imgPath;
+        		} else if (factId == "C") {
+        			$scope.eachBg.C = self.bgImageList[i].imgPath;
+        		} else if (factId == "Comb") {
+        			$scope.eachBg.Comb = self.bgImageList[i].imgPath;
+        		}
+       		
+        	}
+    	}, function(data) {
+    		alert('fail:' + data)
+    	});
+    }
     
 /*----------------------------------------------------------------
 *  이벤트 함수 정의
@@ -196,7 +250,11 @@ angular
     
      function buildToggler(componentId) {
          return function() {
-           $mdSidenav(componentId).toggle();
+        	 self.pointer.animateTrigger = 'off';
+        	 self.pointer.display = 'none';
+        	 self.selected = {};
+        	 self.configSetting = {};
+        	 $mdSidenav(componentId).toggle();
          };
      }
      
@@ -221,12 +279,9 @@ angular
      	getPlcList();
      	
      	var factId = self.eqptParamVo.factId;
-     	
-     	if (factId == 'Comb'){
-     		self.plcParamVo.factId = "";
-     	} else {
-     		self.plcParamVo.factId= factId ;
-     	}
+
+     	self.plcParamVo.factId= factId ;
+
     }
     
     
@@ -248,6 +303,12 @@ angular
      // 탭칸에 요소들을 추가시킴.
      self.setSelectedData = function setSelectedData(index){
     	 self.configSetting.index = index;
+    	 self.selected = index;
+    	 self.pointer.top = self.eqptList[index].cssTop;
+    	 self.pointer.left = self.eqptList[index].cssLeft;
+    	 self.pointer.animateTrigger = 'on';
+    	 self.pointer.display = 'block';
+
      }
      
      // 설정한 요소들에 대하여 실제 HTML에 적용 시킨다.
@@ -291,14 +352,17 @@ angular
 		        });
      };
      
-     self.FindImg = function() {
-    	 console.log("22222")
+     self.FindImg = function(factId) {
+    	 console.log("보내는쪽 팩트아이디" + factId);
 	        $mdDialog.show({
 		          controller: 'ImageViewerCtrl',
 		          controllerAs: 'vm',
 		          templateUrl: '/mes/modules/fmb/views/imageViewer.tmpl.html',
 		          parent: angular.element(document.body),
 		          clickOutsideToClose:true,
+		          locals : {
+		        	  factId : factId
+		          },
 		          fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
 		        })
 		        .then(function(answer) {
@@ -306,54 +370,8 @@ angular
 		        }, function() {
 		          $scope.status = 'You cancelled the dialog.';
 		        });
-    	 console.log('123')
      };
      
-     
-    /*------------------------------------------
-    *  Responsive Setting Part
-    *-----------------------------------------
-     angular.element(document).ready(function(){
-    	 
-    	 var default_width = 1920;
-    	 var default_height = 1080;
-    	    
-    	 var screen_width = $(window).width();
-    	 var screen_height = $(window).height();
-    	    
-    	 console.log(screen_width, screen_height);
-    	    
-    	 // 현재 개념 ..
-    	 // 모바일일경우 강제 화면 전환이 될경우가 제일 좋을것으로 예상되며,
-    	 // 필요 조건(ex - 16:9 종횡 비율이 아닐경우)
-    	 // 페이지를 보여주지 않고 화면 전환 할경우에만 보여줄 것을 권장하는 방법으로 생각중.
-    	 // 폰 디바이스 일 경우, width와 height를 서로 swap 하여 계산한다.
-    	 if (navigator.userAgent.match(/Mobile|iP(hone|od)|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/)) {
-
-    	     // 스마트폰일 때 실행 될 스크립트
-  	        // mobile용 코딩//
-  	        var swap = "";
-   	        swap = screen_width;
-   	        screen_width = screen_height;		
-   	        screen_height = swap;
-
-   	    }
-    
-    	// 화면 비율 구하는 공식
-    	// 기본 16:9 비율의 화면에서는 소수점이 없으나 일반 4:3 모니터의 경우 편의를 위해 소수점을 두자리까지 고정 시켜준다.
-    	// 대형 화면 기준으로 실제 와이드 화면으로 셋팅 될 경우 공식 자체를 변환해주어야함.
-    	// 너비의 비율을 너비와 높이에 곱해줘야 동일한 가로세로비율을 유지할수 있음
-
-    	var screen_rate = (screen_width / default_width);
-    	console.log(screen_rate);
-    	//screen_rate = Math.floor(screen_rate, 2);
-   
-    	document.getElementsByClassName("md-screen").width= document.getElementsByClassName("md-screen")[0].offsetWidth * screen_rate;
-    	
-    	// 실제 영역에 대하여 비율 축소를 적용하는 Part
-    	// 비율은 무조건 16:9로 고정하며 빈공간의 예외상황은 고려하지 않는다.
-    	
-     });*/
  
     /*------------------------------------------
      *  EQPT Data Commit

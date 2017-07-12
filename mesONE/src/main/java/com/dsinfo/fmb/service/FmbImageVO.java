@@ -4,6 +4,7 @@ package com.dsinfo.fmb.service;
 
 public class FmbImageVO extends MBasAbsVO {
 
+    private String seq;
     private String file_name;
     private String file_p_path;
     private String file_l_path;
@@ -12,7 +13,14 @@ public class FmbImageVO extends MBasAbsVO {
 
     public FmbImageVO() {
     }
+    
+    public String getSeq() {
+        return seq;
+    }
 
+    public void setSeq(String seq) {
+        this.seq = seq;
+    }
     public String getFile_name() {
         return file_name;
     }
