@@ -371,13 +371,4 @@ angular
 		          $scope.status = 'You cancelled the dialog.';
 		        });
      };
-     
- 
-    /*------------------------------------------
-     *  EQPT Data Commit
-     *-----------------------------------------*/
-    function saveEqptData() {
-    	console.log(self.eqptList);
-    }
-    
 }]);
