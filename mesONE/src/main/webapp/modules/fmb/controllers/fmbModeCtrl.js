@@ -35,8 +35,8 @@ angular
 
      //알람정보워커삭제
      var workerList = CmmWorkerSrvc;
-     //workerList.worker3.terminate();
-     workerList.worker3 = undefined;
+     workerList.worker3.worker.terminate();
+     workerList.worker3.worker = undefined;
      
      self.showModal = false;
      self.selected = {};
@@ -164,7 +164,7 @@ angular
     	{
     		var detect = $filter('filter')(self.eqptList, {plcId : plcId , status : '!delete'});
     		console.log(detect);
-		    /*	var data = {  eqptCnm : cnm
+		    	var data = {  eqptCnm : cnm
 		    			    , plcId : plcId
 		    			    , eqptType : type
 		    			    , desc : null
@@ -176,7 +176,7 @@ angular
 		    				, status : 'insert'
 		    			   };
 		    	
-		    	self.eqptList.push(data);*/
+		    	self.eqptList.push(data);
     	}
     	else {
     		console.log(cnm,type,plcId)
@@ -186,6 +186,7 @@ angular
     
     self.saveEqptData = function(){
     	 console.log("저장하는시점 factId는? "+self.eqptParamVo.factId );
+    	 console.log(self.eqptList)
     	 var eqptPromise = CmmAjaxService.save("/mes/bas/saveFmbEqpt.do", self.eqptList);
     };
     
@@ -371,4 +372,5 @@ angular
 		          $scope.status = 'You cancelled the dialog.';
 		        });
      };
+     
 }]);

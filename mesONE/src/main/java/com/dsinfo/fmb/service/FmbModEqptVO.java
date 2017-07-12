@@ -6,7 +6,7 @@ package com.dsinfo.fmb.service;
 public class FmbModEqptVO extends MBasAbsVO {
 
 	//DB컬럼이름과 같게 지정
-	//private String fact_id;		// 공장 ID
+	private String fact_id;		// 공장 ID
 	private String eqpt_cnm;  	// 설비클래스명
 	private String eqpt_type; 	// 타입(활성화여부)
 	private String plc_id;    	// PLC ID
@@ -28,14 +28,14 @@ public class FmbModEqptVO extends MBasAbsVO {
 	
 	//메소드명 지정방식 :  Camel Case
 
-	/*	public String getFactId() {
+	public String getFactId() {
 		return fact_id;
 	}
 
 	public void setFactId(String fact_id) {
 		this.fact_id = fact_id;
 	}
-*/
+
 	public String getEqptCnm() {
 		return eqpt_cnm;
 	}
