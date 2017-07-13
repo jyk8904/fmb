@@ -54,7 +54,12 @@ angular
 	self.target = {
 			num : null
 	};
-
+	
+    self.cancel = function() {
+    	$mdDialog.hide();
+    	console.log("팝업끔")
+    };
+    
 	getImages();
 	
 	// 이미지 가져오기

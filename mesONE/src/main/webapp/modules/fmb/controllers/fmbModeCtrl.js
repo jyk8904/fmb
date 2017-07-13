@@ -35,8 +35,8 @@ angular
 
      //알람정보워커삭제
      var workerList = CmmWorkerSrvc;
-     workerList.worker3.worker.terminate();
-     workerList.worker3.worker = undefined;
+    /* workerList.worker3.worker.terminate();
+     workerList.worker3.worker = undefined;*/
      
      self.showModal = false;
      self.selected = {};
@@ -135,11 +135,15 @@ angular
 
     self.crtEqptModal = function(){
     	var classList = $filter('orderBy')(self.eqptList,'eqptCnm');
-    	
-    	var latestNum = classList[classList.length - 1].eqptCnm.split('eqpt')[1];
-    	
-    	$scope.crtEqpt.cnm = 'eqpt' + leadingZeros(parseInt(latestNum) + 1, 3);
-    	
+    	if (classList.length == 0) {
+    		$scope.crtEqpt.cnm = 'eqpt001';
+    	}
+    	else 
+    	{
+	    	var latestNum = classList[classList.length - 1].eqptCnm.split('eqpt')[1];
+	    	
+	    	$scope.crtEqpt.cnm = 'eqpt' + leadingZeros(parseInt(latestNum) + 1, 3);
+    	}
     	self.showModal = !self.showModal;
     };
     

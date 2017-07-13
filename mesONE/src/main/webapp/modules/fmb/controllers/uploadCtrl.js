@@ -25,8 +25,14 @@ angular
 									) 
 {
 								
+								var self = this;
 								$scope.imageInfo = {show:false , percentage:'0'};
 								
+							    self.cancel = function() {
+							    	$mdDialog.hide();
+							    	console.log("팝업끔")
+							    };
+							    
 								$scope.onFileSelect = function($files) {
 									if ($files != null) {
 										console.log($files)
@@ -75,7 +81,7 @@ angular
 								        }, function (evt) {
 								            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 								            $scope.imageInfo.percentage = progressPercentage;
-								            if (progressPercentage == '100') {
+								            if (progressPercentage == 100) {
 								            	alert("업로드가 완료되었습니다.");
 								            }
 								            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);

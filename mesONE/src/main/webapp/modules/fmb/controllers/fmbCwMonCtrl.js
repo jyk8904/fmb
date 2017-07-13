@@ -61,7 +61,16 @@ angular
 	self.plcParamVo.factId ='';
 	
 	self.stsData = {};
-	
+    self.BgList = {
+ 		   factId: 'Comb' 
+    };
+	 $scope.eachBg = {
+	       A : ''
+	 	, B : ''
+	 	, C : ''
+	 	, Comd : ''
+	 };
+ 
     self.showModal = false;
 	    
     self.toggleModal = function(pid){
@@ -72,6 +81,8 @@ angular
     	getSelectedPlc();
         
     }
+    
+    getBgImageList();
     
     // 비동기실행에 따른 이벤트 순서 제어 
     $timeout(getPlcList(), 50)
@@ -129,7 +140,34 @@ angular
 			self.stsData[i]= target[0].eqptSts;
 		}
 	};
-	    
+	 
+    function getBgImageList() {
+        
+    	var bgImagePromise = CmmAjaxService.select("/mes/bas/selectFmbBgImage.do", self.BgList);
+    	bgImagePromise.then(function(data) {
+    		self.bgImageList = data;
+    		
+        	for (var i = 0; i < self.bgImageList.length; i++) {
+        		var factId = self.bgImageList[i].factId;
+        		
+        		if (factId == "A") {
+        			console.log($scope.eachBg.A)
+        			$scope.eachBg.A = self.bgImageList[i].imgPath;
+        			console.log($scope.eachBg.A)
+        		} else if (factId == "B") {
+        			$scope.eachBg.B = self.bgImageList[i].imgPath;
+        		} else if (factId == "C") {
+        			$scope.eachBg.C = self.bgImageList[i].imgPath;
+        		} else if (factId == "Comb") {
+        			$scope.eachBg.Comb = self.bgImageList[i].imgPath;
+        		}
+       		
+        	}
+    	}, function(data) {
+    		alert('fail:' + data)
+    	});
+    }
+    
 	function getSelectedPlc(){
 		var promise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcSelectedVo);
         promise.then(function(data){
