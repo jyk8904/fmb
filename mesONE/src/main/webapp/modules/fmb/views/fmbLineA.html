@@ -28,7 +28,7 @@
 
 <div class="wrap">
  	<div class="title">
-			<table grid-header-ctrl data="vm.lineList" class="line-legend-table bc-table" ng-repeat="line in vm.lineList" ng-show="$index%7==0">
+			<table grid-header-ctrl data="vm.lineList" class="line-legend-table bc-table" ng-repeat="line in vm.lineList track by $index" ng-show="$index%7==0">
 
 					<td colspan="2">구분</td>
 				</tr>

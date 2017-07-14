@@ -60,7 +60,15 @@ angular
 	//self.plcParamVo.factId = CmmFactSrvc.getSelectedFactId() ;
 	
 	self.stsData = {};
-	
+	self.BgList = {
+	    factId: 'B'
+	};
+	$scope.eachBg = {
+	    A: ''
+	 	, B: ''
+	 	, C: ''
+	 	, Comd: ''
+	};
 	
     self.showModal = false;
 	    
@@ -96,8 +104,35 @@ angular
             
     getPlcList();
     getEqptList();
-        
-	
+    getBgImageList();
+
+    function getBgImageList() {
+
+        var bgImagePromise = CmmAjaxService.select("/mes/bas/selectFmbBgImage.do", self.BgList);
+        bgImagePromise.then(function (data) {
+            self.bgImageList = data;
+
+            for (var i = 0; i < self.bgImageList.length; i++) {
+                var factId = self.bgImageList[i].factId;
+
+                if (factId == "A") {
+                    console.log($scope.eachBg.A)
+                    $scope.eachBg.A = self.bgImageList[i].imgPath;
+                    console.log($scope.eachBg.A)
+                } else if (factId == "B") {
+                    $scope.eachBg.B = self.bgImageList[i].imgPath;
+                } else if (factId == "C") {
+                    $scope.eachBg.C = self.bgImageList[i].imgPath;
+                } else if (factId == "Comb") {
+                    $scope.eachBg.Comb = self.bgImageList[i].imgPath;
+                }
+
+            }
+        }, function (data) {
+            alert('fail:' + data)
+        });
+    }
+
 	//워커 스타트
 	workerList.workerStart(workerList.worker2, "worker2.js", getData);
   //설비 이미지리스트 가져오기
