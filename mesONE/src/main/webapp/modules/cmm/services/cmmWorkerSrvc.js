@@ -57,7 +57,9 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$location', func
 	           //data를 Worker로 넘긴다.
 	           
 	           var SettingTime = workerName.data;
-	           for(var i =0; i < SettingTime.length; i++){
+	           var obj_length = Object.keys(SettingTime).length;
+
+	           for(var i = 0; i < obj_length; i++){
 	        	   if('/'+SettingTime[i].pageNm ==$location.url()){
 	        		   workerName.worker.postMessage(SettingTime[i]);
 	        	   }
@@ -65,6 +67,7 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$location', func
 	           
            		// 워커로부터 전달되는 메시지를 받는다.
            		workerName.worker.onmessage = function(evt){ 
+           			console.log(evt)
            			if(workerName.sts=='stop'){
            				workerStart(workerName, url, func);
            			}

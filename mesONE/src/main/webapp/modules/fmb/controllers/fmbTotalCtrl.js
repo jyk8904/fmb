@@ -11,20 +11,23 @@ var rankRunInfoList;
 var gaugeRunInfoList;
 angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 													'CmmAjaxService',
-													'CmmModalSrvc',
+													/*'CmmModalSrvc',*/
 													'CmmWorkerSrvc',
 													'$http',
 													'$scope',
 													'$window',
 													'$q',
-	function(CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window,	$q) {
+													'$timeout',
+	function(CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window,	$q, $timeout) {
 		/*------------------------------------------
 		 * 변수 선언
 		 *-----------------------------------------*/
 		var self = this;
 		var workerList = CmmWorkerSrvc;
 		// 설비parameter
-
+		var count = 1;
+		$scope.value = "70";
+		$scope.dateRunInfoList = {};
 		 var dataSource = [{
 			    country: "Russia",
 			    area: 12
@@ -100,69 +103,94 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 				norun: "null",
 				alarm: "null"
 		};
-		// 계획진도율 가져오기
-		var planProgressPromise = CmmAjaxService.select("/mes/bas/selectPlanProgress.do");
-			planProgressPromise.then(function(data) {
-			self.planProgressList = data;						
-			//console.log(self.planProgressList);
-			planProgress();
-			
-		}, function(data) {
-			alert('fail: ' + data)
-		});
+		getData();
 		
+		function getData()
+		{
+			console.log("getData Call!!")
+			getPlanProgress();
+			getGaugeRunRate();
+			getGaugeRunInfo();
+			getDateRunInfo();
+			getRankRunInfo();
+		}
 		
-		// 라인가동현황게이지 가져오기
-		var gaugeRunRatePromise = CmmAjaxService.select("/mes/bas/selectGaugeRunRate.do");
-			gaugeRunRatePromise.then(function(data) {
-			self.gaugeRunRateList = data;						
-			//console.log(self.gaugeRunRateList);
-			gaugeRunRate();
+		var createData = function () {
 			
-		}, function(data) {
-			alert('fail: ' + data)
-		});
 			
+		};
 		
-		// 라인가동현황 그리드 가져오기
-		var gaugeRunInfoPromise = CmmAjaxService.select("/mes/bas/selectGaugeRunInfo.do");
-			gaugeRunInfoPromise.then(function(data) {
-			gaugeRunInfoList = data;						
-			//console.log(gridList);
-			gaugeRunInfo();
+		function getPlanProgress() {
+			// 계획진도율 가져오기
+			var planProgressPromise = CmmAjaxService.select("/mes/bas/selectPlanProgress.do");
+				planProgressPromise.then(function(data) {
+				self.planProgressList = data;						
+				//console.log(self.planProgressList);
+				planProgress();
+				
+			}, function(data) {
+				alert('fail: ' + data)
+			});	
+		}
+		function getGaugeRunRate() {
+			// 라인가동현황게이지 가져오기
+			var gaugeRunRatePromise = CmmAjaxService.select("/mes/bas/selectGaugeRunRate.do");
+				gaugeRunRatePromise.then(function(data) {
+				self.gaugeRunRateList = data;						
+				$scope.value = self.gaugeRunRateList[0].lineGauge;
+				if (count == 1) {
+					gaugeRunRate();
+				}
+			}, function(data) {
+				alert('fail: ' + data)
+			});
+		}	
+		function getGaugeRunInfo() {	
+			// 라인가동현황 그리드 가져오기
+			var gaugeRunInfoPromise = CmmAjaxService.select("/mes/bas/selectGaugeRunInfo.do");
+				gaugeRunInfoPromise.then(function(data) {
+				gaugeRunInfoList = data;						
+				//console.log(gridList);
+				gaugeRunInfo();
+				
+			}, function(data) {
+				alert('fail: ' + data)
+			});
+		}
+		function getDateRunInfo() {
+			//카운트 초기화
 			
-		}, function(data) {
-			alert('fail: ' + data)
-		});
-	
-			
-		//설비상태 발생추이 가져오기
-		var dateRunInfoPromise = CmmAjaxService.select("/mes/bas/selectDateRunInfo.do");
-			dateRunInfoPromise.then(function(data) {
-			self.dateRunInfoList = data;						
-			//console.log(self.dateRunInfoList);
-			alarmDateRunInfo();
-			standbyDateRunInfo();
-			noRunDateRunInfo();
-		}, function(data) {
-			alert('fail: ' + data)
-		});
-		
-		
-		//설비상태별 발생량 순위 가져오기
-		var rankRunInfoPromise = CmmAjaxService.select("/mes/bas/selectRankRunInfo.do");
-			rankRunInfoPromise.then(function(data) {
-			rankRunInfoList = data;						
-			//console.log(rankRunInfoList);
-			alarmRankRunInfo();
-			standbyRankRunInfo();
-			noRunRankRunInfo();
-			$scope.apply();
-		}, function(data) {
-			alert('fail: ' + data)
-		});	
-			
-			
+			$scope.dateRunInfoList = "";
+			//설비상태 발생추이 가져오기
+			var dateRunInfoPromise = CmmAjaxService.select("/mes/bas/selectDateRunInfo.do");
+				dateRunInfoPromise.then(function(data) {
+				
+				$scope.dateRunInfoList = data;
+
+
+				alarmDateRunInfo();
+				standbyDateRunInfo();
+				noRunDateRunInfo();
+			}, function(data) {
+				alert('fail: ' + data)
+			});
+		}	
+		function getRankRunInfo() {
+			//설비상태별 발생량 순위 가져오기
+			var rankRunInfoPromise = CmmAjaxService.select("/mes/bas/selectRankRunInfo.do");
+				rankRunInfoPromise.then(function(data) {
+				rankRunInfoList = data;
+				alarmRankRunInfo();
+				standbyRankRunInfo();
+				noRunRankRunInfo();
+				$scope.apply();
+
+
+			}, function(data) {
+				alert('fail: ' + data)
+			});
+		}	
+
 			
 		function alarmRankRunInfo(){
 		//알람 발생량 순위 그리드
@@ -194,69 +222,73 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 			self.info.norun.thirdValue = rankRunInfoList["2"].noRunTm+ "시간 (" + rankRunInfoList["2"].noRunCount + " 번)";
 		}
 		
-		function alarmDateRunInfo(){
-			//알람발생추이
-			    self.alarmDateRunInfo = {
-			        dataSource: self.dateRunInfoList,
-			        size: {
-			        	width: 450,
-			        	height: 200
-			        },
-			        commonSeriesSettings: {
-			        	height:100,
-			            argumentField: "dt",
-			            dashStyle: "solid",
-			            color: "#d79392",
-			        	point: {
-			        		color: "#dc0002"
-			        	},
-			        	width: 4
-			        },
-			        argumentAxis: {
-			        
-			            valueMarginsEnabled: false,
-			            discreteAxisDivisionMode: "crossLabels",
-			            grid: {
-			                visible: false
-			            },
-			            label: {
-			        		font: {
-			        			color: "#e1e1e7"
-			        		}
-			        	}
-			        },
-			        valueAxis: {
-			        	label: {
-			        		font: {
-			        			color: "#e1e1e7"
-			        		}
-			        	}
-			        },
-			        series: [
-			            { valueField: "alarmCount", name: "알람발생추이" },
-			        ],
-			        legend: {
-			        	visible: false
-			        },
-			        /*"export": {
-			            enabled: true
-			        },*/
-			        tooltip: {
-			            enabled: true,
-			            customizeTooltip: function (arg) {
-			                return {
-			                    text: arg.valueText
-			                };
-			            },
-			            zIndex: 101
-			        }
-			    };
-		}
+	
+		//알람발생추이
+		    $scope.alarmDateRunInfo = {
+		    	bindingOptions: {
+		    			dataSource: "dateRunInfoList"
+		    	},
+		        size: {
+		        	width: 450,
+		        	height: 200
+		        },
+		        commonSeriesSettings: {
+		        	height:100,
+		            argumentField: "dt",
+		            dashStyle: "solid",
+		            color: "#d79392",
+		        	point: {
+		        		color: "#dc0002"
+		        	},
+		        	width: 4
+		        },
+		        argumentAxis: {
+		        
+		            valueMarginsEnabled: false,
+		            discreteAxisDivisionMode: "crossLabels",
+		            grid: {
+		                visible: false
+		            },
+		            label: {
+		        		font: {
+		        			color: "#e1e1e7"
+		        		}
+		        	}
+		        },
+		        valueAxis: {
+		        	label: {
+		        		font: {
+		        			color: "#e1e1e7"
+		        		}
+		        	}
+		        },
+		        series: [
+		            { valueField: "alarmCount", name: "알람발생추이" },
+		        ],
+		        legend: {
+		        	visible: false
+		        },
+		        tooltip: {
+		            enabled: true,
+		            customizeTooltip: function (arg) {
+		                return {
+		                    text: arg.valueText
+		                };
+		            },
+		            zIndex: 101
+		        },
+		        animation: {
+	                easing: 'easeOutCubic',
+	                duration: 2000
+	            }
+		    };
+	
 			
-		function standbyDateRunInfo(){
 			//대기발생추이
-		    self.standbyDateRunInfo = {	    	
-		        dataSource: self.dateRunInfoList,
+		    $scope.standbyDateRunInfo = {	    	
+		    		bindingOptions: {
+		    			dataSource: "dateRunInfoList"
+		    	},
 		        size: {
 		        	width: 450,
 		        	height: 200
@@ -303,14 +335,18 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 		                };
 		            },
 		            zIndex: 101
-		        }
+		        },
+		        animation: {
+	                easing: 'easeOutCubic',
+	                duration: 2000
+	            }
 		    };
-		}			
-		
-		function noRunDateRunInfo(){
+
 			//비가동 발생추이
-		    self.noRunDateRunInfo = {
-		        dataSource: self.dateRunInfoList,
+		    $scope.noRunDateRunInfo = {
+		    	bindingOptions: {
+		    			dataSource: "dateRunInfoList"
+		    	},
 		        size: {
 		        	width: 450,
 		        	height: 200
@@ -360,9 +396,13 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 		                };
 		            },
 		            zIndex: 101
-		        }
+		        },
+		        animation: {
+	                easing: 'easeOutCubic',
+	                duration: 2000
+	            }
 		    };
-	}			
+		
 			
 			
 		function gaugeRunInfo(){
@@ -372,9 +412,12 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 			self.gauge.norun = gaugeRunInfoList["0"].noRunCount + " 라 인";
 			self.gauge.alarm = gaugeRunInfoList["0"].alarmCount + " 라 인";
 		}
-		function gaugeRunRate(){
+
 			//라인가동현황게이지
-			self.gaugeRunRate = {
+			$scope.gaugeRunRate = {
+				bindingOptions: {
+					value: "value"
+				},
 		        scale: {
 		            startValue: 0,
 		            endValue: 100,
@@ -398,12 +441,12 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 		                { startValue: 30, endValue: 70, color: "#E6E200" },
 		                { startValue: 70, endValue: 100, color: "#77DD77" }
 		            ]
-		        },
+		        }
 		        //tooltip: { enabled: true },	        
-		        value: self.gaugeRunRateList[0].lineGauge
+		        //value: self.gaugeRunRateList[0].lineGauge
 		        
 		    };
-		}
+
 		
 			function planProgress(){
 				//계획진도율 차트 
@@ -561,11 +604,8 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 	
 	
 		
-	// 워커가 이미 존재하면 종료시킨다 .
-	if (workerList.worker2 != undefined) {
-		workerList.worker2.terminate();
-		workerList.worker2 = undefined;
-	}
+			//워커 스타트
+		   workerList.workerStart(workerList.worker2, "worker2.js", getData);
 	
 	
 		

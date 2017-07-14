@@ -31,7 +31,7 @@
 	
 </md-form-header>
 
-<md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4" ng-style="{'opacity' : vm.opacityData / 100}">
+<md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4" ng-style="{'opacity' : vm.opacityData / 100, 'z-index' : 910}">
 
       <md-toolbar class="md-theme-indigo">
         <h1 class="md-toolbar-tools">설비 (버튼) 설정</h1>
@@ -58,7 +58,6 @@
 					      			</div>
 				         		</div>
 				         		<md-button class="md-raised" ng-click="vm.deleteDiv($index)">삭제</md-button>
-				         		<!-- <img src="assets/img/system/drag_close.png" style="width:25px; height:25px;" ng-click="vm.deleteDiv($index)"/> -->
 				      		</md-list-item>
 		      			</md-tab-body>
 		      		</md-tab>

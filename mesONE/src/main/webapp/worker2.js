@@ -7,7 +7,7 @@
     var interval = 5000;
     var curPageSettingTime= evt.data;
     
-  // console.log(curPageSettingTime);
+   //console.log(curPageSettingTime);
     
     
     if(curPageSettingTime!=null){
