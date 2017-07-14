@@ -124,7 +124,9 @@ angular
 			    				if (self.eqptList[i].status == 'keep') {
 			    					self.eqptList[i].status = 'update';
 			    				}
-			    				self.setSelectedData(i);
+			    				if ($mdSidenav('left').isOpen()) {
+				    				self.setSelectedData(i);	    					
+			    				}
 			    			}
 		    			}
 		    		});
@@ -313,7 +315,6 @@ angular
     	 self.pointer.left = self.eqptList[index].cssLeft;
     	 self.pointer.animateTrigger = 'on';
     	 self.pointer.display = 'block';
-
      }
      
      // 설정한 요소들에 대하여 실제 HTML에 적용 시킨다.

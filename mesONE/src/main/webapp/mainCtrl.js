@@ -315,7 +315,7 @@ angular
                 }
                	}, function(data){
                		alert('fail: '+ data)
-               });x
+               });
                	
                 self.alarmListLen = Object.keys($scope.alarmList).length;
              }  
