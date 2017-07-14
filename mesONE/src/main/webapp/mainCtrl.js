@@ -23,18 +23,18 @@ angular
                        , '$scope'
                        , 'CmmAjaxService'
                        , 'CmmWorkerSrvc'
-                       /*, 'CmmFactSrvc' 선택된 공장 데이터 공유*/
+/*, 'CmmFactSrvc' 선택된 공장 데이터 공유*/
                        , '$location'
                        , '$timeout'
                        , '$q'
                        , '$interval'
                        , '$window'
                        , '$rootScope' //상위스코프접근
-                       ,  function ($http
+                       , function ($http
                                  , $scope
                                  , CmmAjaxService
                                  , CmmWorkerSrvc
-                                /* , CmmFactSrvc*/
+                       /* , CmmFactSrvc*/
                                  , $location
                                  , $timeout
                                  , $q
@@ -44,40 +44,54 @@ angular
                                  ) {
    var workerList = CmmWorkerSrvc;
    var self = this;
-   
+
    self.alarmListLen = {};
 
-   
-   self.plcParamVo={};
-   self.plcParamVo.plcId ='';
+
+   self.plcParamVo = {};
+   self.plcParamVo.plcId = '';
    self.plcParamVo.factId = '';
+   self.bgTheme = 'blue';
    //화면전환 모달창 default값
    self.showModal = false;
-   
-   self.vo = {PLC_ID: 'PLC-001'}
-   self.btnFmbMonClick = btnFmbMonClickHandler;    
-   self.btnFmbCwMonClick = btnFmbCwMonClickHandler;   
-   self.btnFmbTbmClick = btnFmbTbmClickHandler;   
+
+   self.vo = { PLC_ID: 'PLC-001' }
+   self.btnFmbMonClick = btnFmbMonClickHandler;
+   self.btnFmbCwMonClick = btnFmbCwMonClickHandler;
+   self.btnFmbTbmClick = btnFmbTbmClickHandler;
    self.btnFmbLineAClick = btnFmbLineAClickHandler;
-   self.btnFmbLineBClick = btnFmbLineBClickHandler;  
-   self.btnFmbLineCClick = btnFmbLineCClickHandler;  
+   self.btnFmbLineBClick = btnFmbLineBClickHandler;
+   self.btnFmbLineCClick = btnFmbLineCClickHandler;
    self.btnFmbSpcClick = btnFmbSpcClickHandler;
    self.btnFmbTotalClick = btnFmbTotalClickHandler;
    self.btnFmbModeClick = btnFmbModeClickHandler;
    self.btnWorkerStart = WorkerStart;
-   self.btnWorkerStop = function(){ workerList.workerStop(workerList.worker1);}
+   self.btnWorkerStop = function () { workerList.workerStop(workerList.worker1); }
    self.LotationSetting = LotationSetting;
    self.submit1 = submitLotationSetting;
 
-   //전환될 페이지 리스트
-   var pageList=[{"pageNm":"FmbCwMon"}
-			     ,{"pageNm":"FmbMon"}
-			     ,{"pageNm":"FmbTotal"}
-			     ,{"pageNm":"FmbLineA"}
-			     ,{"pageNm":"FmbLineB"}
-			     ,{"pageNm":"FmbLineC"}
-			     ,{"pageNm":"FmbTbm"}
-			     ,{"pageNm":"FmbMainMon"}
+   $scope.$on('$routeChangeSuccess', function () {
+       var page = $location.path();
+       
+       self.bgTeme = 'blue';
+       // 뒷배경 색상을 페이지별 테마를 분기시킬수 있다.
+       // 현재 버전에서는 블루 색사응로 통일 됨
+       /*if (page == '/FmbMon') {
+           self.bgTheme = 'blue';
+       } else {
+           self.bgTheme = 'black';
+       }*/
+   });
+   
+                           //전환될 페이지 리스트
+   var pageList = [{ "pageNm": "FmbCwMon" }
+			     , { "pageNm": "FmbMon" }
+			     , { "pageNm": "FmbTotal" }
+			     , { "pageNm": "FmbLineA" }
+			     , { "pageNm": "FmbLineB" }
+			     , { "pageNm": "FmbLineC" }
+			     , { "pageNm": "FmbTbm" }
+			     , { "pageNm": "FmbMainMon" }
 			     ]
    self.Setting={};
    
@@ -121,28 +135,50 @@ angular
 	   workerList.worker2.data =JSON.parse(localStorage.getItem('SettingTime'));
    }
 		 
+   //설비 plc 알람정보 데이터 가져오기
+   var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
+   self.alarmList = {}
+   plcPromise.then(function (data) {
+       for (var i = 0; i < data.length; i++) {
+           if (data[i].eqptSts == '0') { //sts== 4일경우 하단바에 알람 발생 경고()
+               self.alarmList[i] = data[i];
+           }
+       }
+   }, function (data) {
+       alert('fail: ' + data)
+   });
 
-	 function submitLotationSetting() {
-		 
-		/* var check = true;
-		 for(var i =0; i< self.Setting.length; i++){
-		
-			 console.log(self.Setting[i].dataTime);
-			 console.log(angular.isNumber(self.Setting[i].dataTime));
-			if(!(angular.isNumber(self.Setting[i].dataTime))){//숫자가 아닌경우
-				
-				check = false;
-			}
-		 }
-			 if(check==false){
-				 alert("시간 다시 입력")
-				 
-				 self.showModal = true;
-				 return false;
-			 }*/
 
-			 
-		 console.log(self.Setting);
+   //알람정보워커
+   Worker3Start();
+
+   defaultLotationSetting();
+
+   function defaultLotationSetting() {
+       if (localStorage.getItem('SettingTime') != null) {
+           self.Setting = JSON.parse(localStorage.getItem('SettingTime'));
+           for (var i = 0; i < self.Setting.length; i++) {
+               self.Setting[i] = { "pageSeq": self.Setting[i].pageSeq,
+                   "rotateTime": Number(self.Setting[i].rotateTime),
+                   "dataTime": Number(self.Setting[i].dataTime),
+                   "pageNm": self.Setting[i].pageNm,
+                   "switcher": self.Setting[i].switcher
+               }
+
+           }
+       } else {
+           for (var j = 0; j < pageList.length; j++) { // 기본설정값 지정
+               self.Setting[j] = { "pageSeq": j + 1, "rotateTime": Number(10), "dataTime": Number(5), "pageNm": pageList[j].pageNm, "switcher": true }
+           }
+           localStorage.setItem('SettingTime', JSON.stringify(self.Setting));
+       }
+       workerList.worker2.data = JSON.parse(localStorage.getItem('SettingTime'));
+   }
+
+
+   function submitLotationSetting() {
+
+	   console.log(self.Setting);
 		  var SettingTime = [];
 		   for(var j =0; j<pageList.length; j++){
 			   SettingTime[j] = {"pageSeq":j+1, "rotateTime": Number(self.Setting[j].rotateTime), "dataTime":  Number(self.Setting[j].dataTime), "pageNm":pageList[j].pageNm, "switcher" : self.Setting[j].switcher}
@@ -156,7 +192,6 @@ angular
 		   
 		   self.showModal = false;
 	   }
-
 
    function btnFmbMonClickHandler() {
 	   	workerList.workerStop(workerList.worker1);
@@ -280,7 +315,7 @@ angular
                 }
                	}, function(data){
                		alert('fail: '+ data)
-               });
+               });x
                	
                 self.alarmListLen = Object.keys($scope.alarmList).length;
              }  
@@ -291,3 +326,4 @@ angular
       }
     
 }]);
+                     

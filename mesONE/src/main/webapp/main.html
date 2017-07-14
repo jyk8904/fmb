@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
-  
+
 
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -70,7 +70,7 @@
 <!-- AUIgrid CSS-->   
 <link rel="stylesheet" href="/mes/vendor/AUIGrid/AUIGrid_style.css">
 
-<!-- AngularJS CSS --> 
+<!-- AngularJS CSS -->
 <link rel="stylesheet"
    href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
 
@@ -81,7 +81,7 @@
 
 
 
-<body ng-controller="MainCtrl as vm" ng-class="{loading:loadingView}" class="container" style="width: 100%; background-image: url('./assets/img/system/back.png');">
+<body ng-controller="MainCtrl as vm" ng-class="{loading:loadingView}" class="container" style="width: 100%;" ng-style="vm.bgTheme === 'black' && {'background-image':'url(./assets/img/system/back.png)'} || vm.bgTheme === 'blue' && {'background-image':'url(./assets/img/system/back_blue.png)'}">
 	<div class="relative">
 		<div class="mouse-over-bar"> 
 
@@ -106,6 +106,7 @@
 	<bc-form-footer bg-ctrl>
 	<!--알람정보 하단 바 시작-->
 		  <div class="alarm_data" style="background-color:rgba(62, 79, 160, 0.71);	 width:110% !important; height:35px;">
+
 	  		<marquee>
 	      		<ul id="banner" class="simply-scroll-list" style="background-color:#333;">
 	      			<li marquee-banner alarm-list="alarmList"  ng-repeat="alarm in alarmList track by $index">

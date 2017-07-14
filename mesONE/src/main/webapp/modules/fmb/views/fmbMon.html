@@ -18,24 +18,9 @@
 <div class='bc-screen'>
 	<script src="modules/cmm/services/cmmFactSrvc.js"></script>
 <!-- ngview 내부 header -->
-<bc-form-header title="센트랄모텍 효문공장 B동 설비 가동현황">
-		<!-- 설비상태구분 시작-->
-		<bc-color-division>
-			<bc-color color="g" txt="가동"></bc-color>
-			<bc-color color="r" txt="알람"></bc-color>
-			<bc-color color="w" txt="대기"></bc-color>
-			<bc-color color="y" txt="비가동"></bc-color>
-			<bc-color color="b" txt="수리"></bc-color>
-		</bc-color-division>
-		<!-- 설비상태구분 끝-->
-		<!-- 공장구분 시작-->
-		<bc-line-view>
-			<bc-line line="A" selected=""></bc-line>
-			<bc-line line="B" selected=""></bc-line>
-			<bc-line line="C" selected="selected"></bc-line>
-		</bc-line-view>
-		<!--  공장구분 끝-->
-</bc-form-header>
+<img src="assets/img/system/logo.png" style="margin:30px; float:left;">
+<p style="margin:30px 0px 30px 500px; float:left; color:white; font-size:30pt; font-weight: bold;">생산 자원 통합 모니터링</p>
+<img style="width:420px; height:auto; float:right; margin:20px 70px;" src="assets/img/system/legend1.png">
 	
 
 <!-- ngview 내부 body -->
@@ -44,9 +29,10 @@
 	<!--설비클래스 삽입 시작-->
 	<!--<div bg-inner-ctrl class='bg-panel'></div> -->
   	<div ng-switch on="vm.eqptParamVo.factId">
-    <div ng-switch-when="A" bg-inner-ctrl class='bg-panel eqpt_plc_a'></div>
-   	<div ng-switch-when="B" bg-inner-ctrl class='bg-panel eqpt_plc_b'></div>
-   	<div ng-switch-when="C" bg-inner-ctrl class='bg-panel eqpt_plc_c'></div>
+    <div ng-switch-when="A" bg-inner-ctrl class='bg-panel' ng-style="{'background-image' : 'url(' + eachBg.A + ')'}"></div>
+   	<div ng-switch-when="B" bg-inner-ctrl class='bg-panel' ng-style="{'background-image' : 'url(' + eachBg.B + ')'}"></div>
+   	<div ng-switch-when="C" bg-inner-ctrl class='bg-panel' ng-style="{'background-image' : 'url(' + eachBg.C + ')'}"></div>
+   	<div ng-switch-when="Comb" bg-inner-ctrl class='bg-panel' ng-style="{'background-image' : 'url(' + eachBg.Comb + ')'}"></div>
     </div> 
 	<div class="EQPT">	
 		 <ul>
