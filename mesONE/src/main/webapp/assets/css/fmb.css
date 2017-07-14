@@ -13,10 +13,14 @@
 
 @font-face{
 	font-family:'noteSans';
-	src:url("assets/font/NotoSansCJKkr-Black.otf"); /* , local("사용자컴퓨터 내의 폰트")' */
+	src:url("../font/NNotoSansCJKkr-Regular.otf"); /* , local("사용자컴퓨터 내의 폰트")' */
+}
+@font-face{
+	font-family:'noteSansBlack';
+	src:url("../font/NotoSansCJKkr-Black.otf"); /* , local("사용자컴퓨터 내의 폰트")' */
 }
 *{
-	font-family:noteSans !important;
+	font-family:noteSans;
 }
 html, body {
 	height: 100%;
@@ -125,6 +129,7 @@ div[ng-view] {
   margin-top: 0px;
   margin-bottom: 0px;
   padding: 30px 0 0 0;
+
 } 
 .logo{
 float: left;
@@ -133,9 +138,10 @@ margin:35px 0 0 50px;
 }
 /* 폼 좌측 상단 타이틀 */
 .bc-header-label {
-font-size: 29pt;
+font-size: 26pt;
   	color: white;
   	margin:20px 0 0 100px;
+  	font-family : noteSansBlack !important;
   	
 }
 
