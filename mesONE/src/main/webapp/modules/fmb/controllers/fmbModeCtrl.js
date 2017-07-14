@@ -33,11 +33,8 @@ angular
     	 this.hover = false;
      }
 
-     //알람정보워커삭제
      var workerList = CmmWorkerSrvc;
-    /* workerList.worker3.worker.terminate();
-     workerList.worker3.worker = undefined;*/
-     
+
      self.showModal = false;
      self.selected = {};
      self.pointer = {
