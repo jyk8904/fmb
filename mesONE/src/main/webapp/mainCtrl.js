@@ -83,11 +83,11 @@ angular
    
 	//설비 plc 알람정보 데이터 가져오기
   	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
-  	self.alarmList = {}
+    $scope.alarmList = {}
   	plcPromise.then(function(data) {
   		for (var i = 0; i < data.length; i++) {
   			if(data[i].eqptSts=='0'){ //sts== 4일경우 하단바에 알람 발생 경고()
-  				self.alarmList[i]=data[i];
+  				$scope.alarmList[i]=data[i];
   			}
   		}
   	}, function(data){
@@ -268,19 +268,21 @@ angular
            		workerList.worker3.worker.onmessage = function(evt){ 
            	    //설비 plc 데이터 가져오기
                	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
-               	self.alarmList = {}
                	plcPromise.then(function(data) {
-
+               	 if($location.url() == '/'+'FmbMode'){ // mode일 경우 알람정보 지우기
+                  	 $scope.alarmList = {};
+               	}else{  
                		for (var i = 0; i < data.length; i++) {
                			if(data[i].eqptSts=='0'){ //sts== 4일경우 하단바에 알람 발생 경고()
-               				self.alarmList[i]=data[i];
+               			$scope.alarmList[i]=data[i];
                			}
                		}
+                }
                	}, function(data){
                		alert('fail: '+ data)
                });
                	
-                self.alarmListLen = Object.keys(self.alarmList).length;
+                self.alarmListLen = Object.keys($scope.alarmList).length;
              }  
         }
         else {
