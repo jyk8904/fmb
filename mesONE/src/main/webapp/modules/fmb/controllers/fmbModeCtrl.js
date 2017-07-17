@@ -51,7 +51,7 @@ angular
      
      //설비parameter
      self.eqptParamVo = {
-    		  factId: 'C'
+    		  factId: 'Comb'
 		   	, plcId: ''
 		   	, eqptCnm: ''
      };
@@ -59,7 +59,7 @@ angular
  	//plc parameter
  	self.plcParamVo = {
  			  plcId: ''
- 			, factId: 'C'
+ 			, factId: 'Comb'
  	};
  	
     self.BgList = {

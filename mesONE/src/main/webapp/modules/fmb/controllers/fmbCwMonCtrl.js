@@ -109,7 +109,10 @@ angular
            	plcPromise.then(function(data) {
            		//랜덤값 입력
            			for(var i = 0; i< data.length; i++){
-               		var random = Math.floor(Math.random()*5);
+               		var random = Math.floor(Math.random()*3);
+               		if(random==0){
+               			random = 4;
+               		}
                		data[i].eqptSts = random;
            			}
            			self.plcList = data; 

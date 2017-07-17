@@ -25,7 +25,7 @@ angular
     							, '$q'
     							, '$filter'
     							, '$location'
-    							
+    							, '$timeout'
     							, function (
     									  CmmAjaxService
     									, CmmModalSrvc
@@ -38,6 +38,7 @@ angular
     									, $q
     									, $filter
     									, $location
+    									, $timeout
     									) 
 {
 	/*------------------------------------------
@@ -76,36 +77,41 @@ angular
     	self.plcSelectedVo = {plcId: pid,
 					    		  factId: ''
 					    		  } 
-	
-    	/*    	//상위컨트롤러에서 전송한 이벤트를 받음
-    	 $scope.$on("event:changeFact",function (event, data){
-    		self.eqptParamVo.factId  = data.selectedFactId;
-    		self.plcParamVo.factId = d.selectedFactId;
-    	 })
-
-    	*/
     	//선택된 plc 데이터 가져오기
     	getSelectedPlc();
-    	
-    	function getSelectedPlc(){
-    		
-    		var promise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcSelectedVo);
-            promise.then(function(data){
-            	self.plc = data;//fmbPlcVo가 담긴 리스트 형태리턴
-            }
-            ,function(data){
-            	alert('fail: '+ data)
-            });
-        	
-        	 self.showModal = !self.showModal;
-        };
-        
+    
     	}
-            
-    getPlcList();
-    getEqptList();
-    getBgImageList();
+    getBgImageList();      
+    // 비동기실행에 따른 이벤트 순서 제어 
+    $timeout(getPlcList(), 50)
+    		.then(function(){//getPlcList 수행 완료 후 
+    			console.log("getPlcList 실행");
+    			$timeout(getEqptList(),600)
+    				.then(function(){//getEqptList 수행 완료 후 
+    				//bindData();
+    				console.log('getEqptList 실행');
 
+    			}, function(){//getEqptList 수행 실패 후 
+    				console.log('getEqptList 실패')
+    			});
+    		}, function(){//getPlcList 수행 실패 후 
+    			console.log('getPlcList data loading 실패');
+    			}
+    		);
+    
+	function getSelectedPlc(){
+		
+		var promise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcSelectedVo);
+        promise.then(function(data){
+        	self.plc = data;//fmbPlcVo가 담긴 리스트 형태리턴
+        }
+        ,function(data){
+        	alert('fail: '+ data)
+        });
+    	
+    	 self.showModal = !self.showModal;
+    };
+    
     function getBgImageList() {
 
         var bgImagePromise = CmmAjaxService.select("/mes/bas/selectFmbBgImage.do", self.BgList);
@@ -163,10 +169,11 @@ angular
            	plcPromise.then(function(data) {
            		//랜덤값 입력
            		for(var i = 0; i< data.length; i++){
-               		var random = Math.floor(Math.random()*5);
-               		//console.log("random값"+random);
+               		var random = Math.floor(Math.random()*3);
+               		if(random==0){
+               			random = 4;
+               		}
                		data[i].eqptSts = random;
-               		//console.log("상태값"+data[i].eqptSts);
            		}
            		
            		self.plcList = data; //fmbplcVo가 담긴 리스트 형태리턴
