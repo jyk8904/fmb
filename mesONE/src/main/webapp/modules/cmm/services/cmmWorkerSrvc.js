@@ -18,9 +18,9 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$location', func
 
 	// 서비스 목록
     var factory = {
-    	worker1 : {worker1}, 
-    	worker2 : {worker2},
-    	worker3 : {worker3},
+    	worker1 : {worker1:worker1}, 
+    	worker2 : {worker2:worker2},
+    	worker3 : {worker3:worker3},
     	workerStart : workerStart,
     	workerStop : workerStop
     	}

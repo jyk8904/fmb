@@ -13,7 +13,8 @@
 
 @font-face{
 	font-family:'noteSans';
-	src:url("../font/NNotoSansCJKkr-Regular.otf"); /* , local("사용자컴퓨터 내의 폰트")' */
+	/*src:url("../font/NNotoSansCJKkr-Regular.otf");*/ /* , local("사용자컴퓨터 내의 폰트")' */
+	src:url("/mes/assets/font/NotoSansCJKkr-Regular.otf");
 }
 @font-face{
 	font-family:'noteSansBlack';

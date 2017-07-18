@@ -28,6 +28,7 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 		var count = 1;
 		$scope.value = "70";
 		$scope.dateRunInfoList = {};
+
 		 var dataSource = [{
 			    country: "Russia",
 			    area: 12

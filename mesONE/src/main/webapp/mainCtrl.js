@@ -199,8 +199,10 @@ angular
          $location.url('/FmbMon');
       }
    function btnFmbCwMonClickHandler() {
+	   console.log("123");
 	 	workerList.workerStop(workerList.worker1);
        $location.url('/FmbCwMon');
+       
     }
       function btnFmbTbmClickHandler() {
     	workerList.workerStop(workerList.worker1);

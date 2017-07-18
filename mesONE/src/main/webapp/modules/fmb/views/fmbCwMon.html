@@ -37,10 +37,12 @@
 		 <ul>
 			<!-- 설비이미지 repeat -->
 			<li ng-repeat="eqpt in vm.eqptList">
-			 <div class="{{eqpt.eqptCnm}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
+			 <!-- <div class="{{eqpt.eqptCnm}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
 				  style="top:{{eqpt.cssTop}}; left: {{eqpt.cssLeft}}; 
 				  		 width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}}; 
-				  		 z-index:{{eqpt.cssZindex}};">
+				  		 z-index:{{eqpt.cssZindex}};"> -->
+				  <div class="{{eqpt.eqptCnm}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
+				  ng-style="{'top':eqpt.cssTop, 'left': eqpt.cssLeft, 'width':eqpt.cssWidth, 'height':eqpt.cssHeight,'z-index':eqpt.cssZindex}">
 				  		 
 	               <div ng-switch on="vm.stsData[$index]">  
 	               <img ng-switch-when="0" class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};" ng-click="showAdvanced(eqpt.plcId)">
