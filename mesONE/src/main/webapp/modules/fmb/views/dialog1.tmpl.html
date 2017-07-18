@@ -13,7 +13,7 @@
 
     <md-dialog-content class="infoPopupContent">
       <div class="md-dialog-content" style="width:1500px; height:800px;">
-        <img class="eqptImg" src='assets/img/photo/eqptPhoto1.jpg' style='position:relative; width:552px; height:300px; float:left; padding:20px;'>
+        <img class="eqptImg" src='assets/img/photo/eqptPhoto2.png' style='position:relative; width:552px; height:300px; float:left; padding:20px;'>
 		<div class="timeProd" style="position:relative; width:900px; height:300px; float:left;  padding:20px;">
 			<div class="p_title">시간별 생산량</div>
 			<div dx-chart="vm.timeProd"></div>
@@ -33,7 +33,7 @@
 						<tr><td>생산시간</td><td>{{plc.prodDt}}</td></tr>
 						<tr><td>정지 LOSS</td><td>{{}}</td></tr>
 						<tr ng-switch on="plc.eqptSts">
-							<td>상태</td>
+							<td>설비상태</td>
 							<td ng-switch-when="1" >가동</td>
 							<td ng-switch-when="2" >대기</td>
 							<td ng-switch-when="3" >수리</td>

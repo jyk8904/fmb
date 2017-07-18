@@ -25,7 +25,13 @@ angular
     
      var worker= undefined;
      var self = this;
-     
+     $scope.buttons = [
+    	 {'name':'Yellow25', 'value':'assets/img/button/Yellow25.png'},
+    	 {'name':'Blue25', 'value': 'assets/img/button/Blue25.png'},
+    	 {'name':'Red25', 'value' : 'assets/img/button/Red25.png'},
+    	 {'name':'직접입력', 'value': ''}
+    	 ]
+    
      $scope.hoverIn = function(){
     	 this.hover = true;
      }
@@ -143,9 +149,22 @@ angular
 	    	
 	    	$scope.crtEqpt.cnm = 'eqpt' + leadingZeros(parseInt(latestNum) + 1, 3);
     	}
+    	   
+	  	  var tmp={}, res=[];
+		  for(var i=0;i<self.plcList.length;i++) tmp[self.plcList[i].plcId]=1;
+		  for(var i=0;i<self.eqptList.length;i++) { if(tmp[self.eqptList[i].plcId]) delete tmp[self.eqptList[i].plcId]; }
+		  for(var k in tmp) res.push(k);
+		  console.log(res);
+		  self.plcLst = res;
+		  console.log(self.plcLst);
+    	
     	self.showModal = !self.showModal;
     };
     
+    
+
+
+
     function leadingZeros(n, digits) {
     	var zero = '';
     	n = n.toString();
@@ -162,6 +181,7 @@ angular
     	var cnm = $scope.crtEqpt.cnm;
     	var type = $scope.crtEqpt.type;
     	var plcId = $scope.crtEqpt.plcId;
+    	var factId = self.eqptParamVo.factId
     	console.log(cnm,type,plcId)
     	if (cnm != null && cnm != "" && type != null && type != "" && plcId != null && plcId != "")
     	{
@@ -170,6 +190,7 @@ angular
 		    	var data = {  eqptCnm : cnm
 		    			    , plcId : plcId
 		    			    , eqptType : type
+		    			    , factId : factId
 		    			    , desc : null
 		    			    , cssZindex : 'auto'
 		    			    , cssWidth : '0px'
@@ -188,8 +209,6 @@ angular
     };
     
     self.saveEqptData = function(){
-    	 console.log("저장하는시점 factId는? "+self.eqptParamVo.factId );
-    	 console.log(self.eqptList)
     	 var eqptPromise = CmmAjaxService.save("/mes/bas/saveFmbEqpt.do", self.eqptList);
     };
     
@@ -278,10 +297,8 @@ angular
     //배경이미지 변경하기
   	//설비리스트 다시불러오기
     function changeFact(){
-     	
     	getEqptList();
      	getPlcList();
-     	
      	var factId = self.eqptParamVo.factId;
 
      	self.plcParamVo.factId= factId ;

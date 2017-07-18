@@ -15,29 +15,31 @@
 angular
     .module('app')
     .controller('FmbMonCtrl', [  'CmmAjaxService'
-    							,'CmmModalSrvc'
-    							,'CmmWorkerSrvc'
+    							, 'CmmModalSrvc'
+    							, 'CmmWorkerSrvc'
     							, '$rootScope'
-    						  /*, 'CmmFactSrvc'  공장선택*/
+    						    , 'CmmFactSrvc'
     							, '$http'
     							, '$scope'
     							, '$window'
     							, '$q'
     							, '$filter'
     							, '$location'
+    							, '$mdDialog'
     							, '$timeout'
     							, function (
     									  CmmAjaxService
     									, CmmModalSrvc
     									, CmmWorkerSrvc
     									, $rootScope
-    								  /*, CmmFactSrvc*/
+    								    , CmmFactSrvc
     									, $http
     									, $scope
     									, $window
     									, $q
     									, $filter
     									, $location
+    									, $mdDialog
     									, $timeout
     									) 
 {
@@ -143,6 +145,39 @@ angular
 	workerList.workerStart(workerList.worker2, "worker2.js", getData);
   //설비 이미지리스트 가져오기
     
+	
+    // 팝업 테스트용 코드입니다....
+    
+    var customFullscreen = false;
+    
+    $scope.cancel = function() {
+    	$mdDialog.hide();
+    };
+    
+    $scope.showAdvanced = function(ev) {
+    	
+    	CmmFactSrvc.setPlcData(ev);
+    	console.log(CmmFactSrvc.getPlcData());
+    	//PlC 데이터 저장 하는 부분.
+    	//CmmFactSrvc.setPlcData(ev);
+    	
+        $mdDialog.show({
+          controller: 'DialogCtrl',
+          controllerAs: 'vm',
+          templateUrl: '/mes/modules/fmb/views/dialog1.tmpl.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose:true,
+          fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        })
+        .then(function(answer) {
+          $scope.status = 'You said the information was "' + answer + '".';
+        }, function() {
+          $scope.status = 'You cancelled the dialog.';
+        });
+    };
+	
+	
     function getEqptList(){
 	    	//설비 이미지리스트 가져오기 메소드
 	    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);

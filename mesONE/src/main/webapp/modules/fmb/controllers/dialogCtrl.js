@@ -108,7 +108,6 @@ angular
 	
     self.cancel = function() {
     	$mdDialog.hide();
-    	console.log("팝업끔")
     };
     
     getSelectedPlc();
