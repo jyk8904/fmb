@@ -10,9 +10,6 @@
  * @since 2017.01.01
  * @version 1.0
  * @function
- * 
- * 
- * 
  *
  */
 'use strict';
@@ -23,18 +20,16 @@ angular
                        , '$scope'
                        , 'CmmAjaxService'
                        , 'CmmWorkerSrvc'
-/*, 'CmmFactSrvc' 선택된 공장 데이터 공유*/
                        , '$location'
                        , '$timeout'
                        , '$q'
                        , '$interval'
                        , '$window'
-                       , '$rootScope' //상위스코프접근
+                       , '$rootScope' 
                        , function ($http
                                  , $scope
                                  , CmmAjaxService
                                  , CmmWorkerSrvc
-                       /* , CmmFactSrvc*/
                                  , $location
                                  , $timeout
                                  , $q
@@ -42,38 +37,38 @@ angular
                                  , $window
                                  , $rootScope
                                  ) {
-   var workerList = CmmWorkerSrvc;
-   var self = this;
+	var workerList = CmmWorkerSrvc;
+	var self = this;
 
-   self.alarmListLen = {};
+	self.alarmListLen = {};
 
 
-   self.plcParamVo = {};
-   self.plcParamVo.plcId = '';
-   self.plcParamVo.factId = '';
-   self.bgTheme = 'blue';
-   //화면전환 모달창 default값
-   self.showModal = false;
+	self.plcParamVo = {};
+	self.plcParamVo.plcId = '';
+	self.plcParamVo.factId = '';
+	self.bgTheme = 'blue';
+	//화면전환 모달창 default값
+	self.showModal = false;
 
-   self.vo = { PLC_ID: 'PLC-001' }
-   self.btnFmbMonClick = btnFmbMonClickHandler;
-   self.btnFmbCwMonClick = btnFmbCwMonClickHandler;
-   self.btnFmbTbmClick = btnFmbTbmClickHandler;
-   self.btnFmbLineAClick = btnFmbLineAClickHandler;
-   self.btnFmbLineBClick = btnFmbLineBClickHandler;
-   self.btnFmbLineCClick = btnFmbLineCClickHandler;
-   self.btnFmbSpcClick = btnFmbSpcClickHandler;
-   self.btnFmbTotalClick = btnFmbTotalClickHandler;
-   self.btnFmbModeClick = btnFmbModeClickHandler;
-   self.btnWorkerStart = WorkerStart;
-   self.btnWorkerStop = function () { workerList.workerStop(workerList.worker1); }
-   self.LotationSetting = LotationSetting;
-   self.submit1 = submitLotationSetting;
+	self.vo = { PLC_ID: 'PLC-001' }
+	self.btnFmbMonClick = btnFmbMonClickHandler;
+	self.btnFmbCwMonClick = btnFmbCwMonClickHandler;
+	self.btnFmbTbmClick = btnFmbTbmClickHandler;
+	self.btnFmbLineAClick = btnFmbLineAClickHandler;
+	self.btnFmbLineBClick = btnFmbLineBClickHandler;
+	self.btnFmbLineCClick = btnFmbLineCClickHandler;
+	self.btnFmbSpcClick = btnFmbSpcClickHandler;
+	self.btnFmbTotalClick = btnFmbTotalClickHandler;
+	self.btnFmbModeClick = btnFmbModeClickHandler;
+	self.btnWorkerStart = WorkerStart;
+	self.btnWorkerStop = function () { workerList.workerStop(workerList.worker1); }
+   	self.LotationSetting = LotationSetting;
+   	self.submit1 = submitLotationSetting;
 
-   $scope.$on('$routeChangeSuccess', function () {
-       var page = $location.path();
+   	$scope.$on('$routeChangeSuccess', function () {
+   		var page = $location.path();
        
-       self.bgTeme = 'blue';
+   		self.bgTeme = 'blue';
        // 뒷배경 색상을 페이지별 테마를 분기시킬수 있다.
        // 현재 버전에서는 블루 색사응로 통일 됨
        /*if (page == '/FmbMon') {
@@ -81,18 +76,18 @@ angular
        } else {
            self.bgTheme = 'black';
        }*/
-   });
+	});
    
-                           //전환될 페이지 리스트
-   var pageList = [{ "pageNm": "FmbCwMon" }
-			     , { "pageNm": "FmbMon" }
-			     , { "pageNm": "FmbTotal" }
-			     , { "pageNm": "FmbLineA" }
-			     , { "pageNm": "FmbLineB" }
-			     , { "pageNm": "FmbLineC" }
-			     , { "pageNm": "FmbTbm" }
-			     , { "pageNm": "FmbMainMon" }
-			     ]
+    //전환될 페이지 리스트
+	var pageList = [{ "pageNm": "FmbCwMon"   }
+			      , { "pageNm": "FmbMon"     }
+			      , { "pageNm": "FmbTotal"   }
+			      , { "pageNm": "FmbLineA"   }
+			      , { "pageNm": "FmbLineB"   }
+			      , { "pageNm": "FmbLineC"   }
+			      , { "pageNm": "FmbTbm"     }
+			      , { "pageNm": "FmbMainMon" }
+			       ]
    self.Setting={};
    
 	//설비 plc 알람정보 데이터 가져오기
@@ -106,14 +101,13 @@ angular
   		}
   	}, function(data){
   		alert('fail: '+ data)
-  });
+  	});
   	
   	
    //알람정보워커
    Worker3Start();
-   
    defaultLotationSetting();
- 
+
    function defaultLotationSetting(){
 	   if(localStorage.getItem('SettingTime')!=null){
 		   self.Setting = JSON.parse(localStorage.getItem('SettingTime'));
@@ -124,7 +118,6 @@ angular
 								   "pageNm":self.Setting[i].pageNm, 
 								   "switcher" : self.Setting[i].switcher
 								   }
-			   
 		   }
 	   }else{
 		   for(var j =0; j<pageList.length; j++){ // 기본설정값 지정
@@ -326,6 +319,5 @@ angular
           alert("현재 브라우저는 웹 워커를 지원하지 않습니다");
         }
       }
-    
 }]);
                      
