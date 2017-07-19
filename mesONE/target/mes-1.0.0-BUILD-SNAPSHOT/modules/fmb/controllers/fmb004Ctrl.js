@@ -1,6 +1,6 @@
 /**  
- * @Class Name : fmb001Ctrl.js
- * @Description : fmb001 
+ * @Class Name : fmb004Ctrl.js
+ * @Description : fmb004
  * @Modification Information  
  * @
  * @ 작업일       작성자      내용
@@ -36,6 +36,10 @@ angular
     
     // 조회버튼 클릭이벤트
     self.btnSelectClick = btnSelectClickHandler;
+    self.exportClick = exportClick;
+    self.exportPdfClick = exportPdfClick;
+    self.expand = expand;
+    self.showItemsOnDepth = showItemsOnDepth;
     
    /* ------------------------------------------
      * AUI 그리드 변수 선언
@@ -51,11 +55,35 @@ angular
 		}, {
 			dataField : "lineNm",
 			headerText : "라인명",
+		    filter : {/*행 제목에  필터 보이기*/ 
+		    	showIcon: true
+		    },
+		    headerTooltip : {/*행 제목에  툴팁 보이기*/ 
+				show : true,
+				tooltipHtml : '<div style="width:180px;"><p>AUI 그리드 <span style="color:#F29661;">테스트</span></p><p>이것은 메모 툴팁 </p></div>'
+			},
+			style : "left",
 			width : '12%'
 		}, {
 			dataField : "plcId",
 			headerText : "PLC ID",
-			width : '12%'
+			width : '12%',
+			renderer : {/*데이터부분에 아이콘 보이기*/ 
+				type : "IconRenderer",
+				iconWidth : 20, // icon 가로 사이즈, 지정하지 않으면 24로 기본값 적용됨
+				iconHeight : 20,
+				iconFunction : function(rowIndex, columnIndex, value, item) {
+					if(value && value.substr(0, 1) == "A") 
+						return "vendor/samples/assets/office_female.png" ;
+					return "vendor/samples/assets/office_man.png" ;
+				}
+			},
+		
+			editRenderer : {/* 데이터 클릭시 콤보박스같은 에디터보이기*/ 
+				type : "ComboBoxRenderer",
+				showEditorBtnOver : true, // 마우스 오버 시 에디터버턴 보이기 선택가능
+				historyMode : true // 콤보 리스트 외에 사용자가 다른 값을 입력하면 해당 값이 기존 list 에 추가되어 출력됨
+			}
 		}, {
 			dataField : "eqptNm",
 			headerText : "설비명",
@@ -63,11 +91,33 @@ angular
 		}, {
 			dataField : "eqptSts",
 			headerText : "설비상태",
-			width : '12%'
+			width : '12%',
+			renderer : {
+				type : "BarRenderer",
+				min : 0,
+				max : 100
+			},
+			styleFunction : function(rowIndex, columnIndex, value, headerText, dataField, item) {
+				if(value == 100)
+					return "c-red";
+				return "";
+			}
 		}, {
 			dataField : "prodDt",
 			headerText : "생산날짜",
-			width : '12%'
+			width : '12%',
+			editRenderer : {
+				type : "CalendarRenderer",
+				onlyCalendar : true, // 달력으로만 수정 가능
+				showEditorBtnOver : true, // 마우스 오버 시 에디터버턴 보이기
+				titles : ["S", "M", "T", "W", "T", "F", "S"],
+				monthTitleString : "mmm", 
+				formatMonthString : "mmm yyyy",
+				formatYearString : "yyyy",
+				showExtraDays : true, // 지난 달, 다음 달 여분의 날짜(days) 출력 안함
+				showTodayBtn : true, // 오늘 날짜 선택 버턴 출력
+				todayText : "Today" // 오늘 날짜 버턴 텍스트
+			}
 		}, {
 			dataField : "plcCount",
 			headerText : "생산량",
@@ -81,7 +131,8 @@ angular
 			// 한 화면에 출력되는 행 개수 30개로 지정
 			// pageRowCount 의 크기가 너무 크면 퍼포먼스가 낮아집니다.
 			// 그리드 페이징은 해당 행 수만큼 DOM을 만들기 때문입니다.
-			pageRowCount : 10,
+			pageRowCount : 30,
+			treeColumnIndex  : 1,
 			
 			// 페이징 하단에 출력되는 페이징 정보 텍스트 변경 함수
 			// 파라메터 설명
@@ -165,6 +216,61 @@ angular
     			}
     	);
 	}
+	
+	
+	var isExpanded = true;
+	function expand() {
+		if (!isExpanded) {
+			AUIGrid.expandAll(gridId);
+			isExpanded = true;
+		} else {
+			AUIGrid.collapseAll(gridId);
+			isExpanded = false;
+		}
+	}
+	
+	
+	// 트리 depth 별 오픈하기
+	function showItemsOnDepth(event) {
+		var depthSelect = document.getElementById("depthSelect");
+		var  depth = depthSelect.value;
+		
+		// 해당 depth 까지 오픈함
+		AUIGrid.showItemsOnDepth(gridId, Number(depth) );
+	};
+	
+	// 엑셀 내보내기(Export);
+	function exportClick() {
+		
+		// 그리드가 작성한 엑셀, CSV 등의 데이터를 다운로드 처리할 서버 URL을 지시합니다.
+		// 서버 사이드 스크립트가 JSP 이라면 ./export/export.jsp 로 변환해 주십시오.
+		// 스프링 또는 MVC 프레임워크로 프로젝트가 구축된 경우 해당 폴더의 export.jsp 파일을 참고하여 작성하십시오.
+		AUIGrid.setProp(gridId, "exportURL", "vendor/export_server_samples/export.jsp");
+		
+		// 내보내기 실행
+		AUIGrid.exportToXlsx(gridId);
+	};
+	
+	// PDF 내보내기(Export), AUIGrid.pdfkit.js 파일을 추가하십시오.
+	function exportPdfClick() {
+		
+		// 완전한 HTML5 를 지원하는 브라우저에서만 PDF 저장 가능( IE=10부터 가능 )
+		if(!AUIGrid.isAvailabePdf(gridId)) {
+			alert("PDF 저장은 HTML5를 지원하는 최신 브라우저에서 가능합니다.(IE는 10부터 가능)");
+			return;
+		}
+		
+		// 그리드가 작성한 엑셀, CSV 등의 데이터를 다운로드 처리할 서버 URL을 지시합니다.
+		// 서버 사이드 스크립트가 JSP 이라면 ./export/export.jsp 로 변환해 주십시오.
+		// 스프링 또는 MVC 프레임워크로 프로젝트가 구축된 경우 해당 폴더의 export.jsp 파일을 참고하여 작성하십시오.
+		AUIGrid.setProp(gridId, "exportURL", "vendor/export_server_samples/export.jsp");
+		
+		// 내보내기 실행
+		AUIGrid.exportToPdf(gridId, {
+			fontPath : "vendor/pdfkit/jejugothic-regular.ttf"
+		});
+	};
+	
 	
 }]);
 

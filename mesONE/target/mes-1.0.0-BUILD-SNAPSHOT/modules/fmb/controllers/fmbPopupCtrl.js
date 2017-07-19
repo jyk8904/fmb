@@ -19,24 +19,15 @@
 
 angular
     .module('app')
-    .controller('FmbPopupCtrl', ['CmmAjaxService','CmmModalSrvc', '$http', '$scope', '$q', function (CmmAjaxService, CmmModalSrvc, $http, $scope, $q) 
+    .controller('ModalController', ['CmmAjaxService','CmmModalSrvc', '$http', '$scope', '$q', function (CmmAjaxService, CmmModalSrvc, $http, $scope, $q, close) 
 {
     	
-    	
-	/*------------------------------------------
-     * 변수 선언
-     *-----------------------------------------*/
-    var self 	= this;
-    
-    self.vo = {
-    	test01: 'test01_title', 
-    	test02: 'test02_title'
-    }
-    
-    self.showModal = false;
-    
-    self.toggleModal = function(){
-       self.showModal = !self.showModal;
-    };
+    	/*------------------------------------------
+         * 변수 선언
+         *-----------------------------------------*/
+        var self 	= this;
+    	self.close = function(result) {
+    		 close(result, 500); // close, but give 500ms for bootstrap to animate
+    	};
 }]);
 

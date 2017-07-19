@@ -15,6 +15,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FMB System</title>
+	
+	<script>
+    try{
+        window.addEventListener('load', function(){
+            setTimeout(scrollTo, 0, 0, 1);
+        }, false);
+    } catch(e){}
+</script>
 
 	<!-- JQUERY -->
     <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
@@ -40,24 +48,13 @@
     <script src="assets/js/dx.all.js"></script>
     <script src="assets/js/globalize.js"></script>
     
-<<<<<<< HEAD
-    <!-- SyncFusion dependencies-->
-    <script src="http://cdn.syncfusion.com/js/assets/external/jquery-3.0.0.min.js"></script>
-    <script src="http://cdn.syncfusion.com/js/assets/external/jsrender.min.js"></script>
-    <script src="http://cdn.syncfusion.com/js/assets/external/angular.min.js"></script>    
-    <script src="http://cdn.syncfusion.com/15.1.0.41/js/web/ej.web.all.min.js"></script>
-    <script src="http://cdn.syncfusion.com/15.1.0.41/js/common/ej.widget.angular.min.js" type="text/javascript"></script>
-        <link href="http://cdn.syncfusion.com/15.1.0.41/js/web/flat-azure/ej.web.all.min.css" rel="stylesheet" />
-	
    <!-- Bootstrap -->
    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
-=======
 
 	<!-- Bootstrap -->
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
    	<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
->>>>>>> branch 'master' of https://github.com/jyk8904/fmb.git
    
 	<!-- DevExtreme CSS -->
 	<link rel="stylesheet" type="text/css" href="assets/css/dx.common.css" />
@@ -80,10 +77,8 @@
 	<link rel="stylesheet" href="/mes/assets/css/fmbDash.css" />
 </head>
 
-<<<<<<< HEAD
 
-
-<body ng-controller="MainCtrl as vm" ng-class="{loading:loadingView}" class="container" style="width: 100%; background-image: url(./assets/img/system/back_blue.png;)">
+<body ng-controller="MainCtrl as vm" ng-class="{loading:loadingView}" class="container" style="width: 1920px; background-image: url(./assets/img/system/back_blue.png;)">
 <!-- <body ng-controller="MainCtrl as vm" ng-class="{loading:loadingView}" class="container" 
 	style="width: 100%;" ng-style="vm.bgTheme === 'black' && {'background-image':'url(./assets/img/system/back.png)'} || vm.bgTheme === 'blue' && {'background-image':'url(./assets/img/system/back_blue.png)'}"> -->
 	<div class="relative">

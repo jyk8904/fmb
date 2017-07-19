@@ -1,0 +1,95 @@
+<!-- 
+ * @Class Name : develope.html
+ * @Description : 개발자 모드
+ * @Modification Information
+ * @  수정일            수정자              수정내용
+ * @ ----------------------------------------------------
+ * @ 2017.06.14 정유경
+ *
+ * 
+ -->
+
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>FMB Developement System</title>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4
+	nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+	
+	
+<!-- AUIgrid CSS-->	
+<link rel="stylesheet" href="/mes/vendor/AUIGrid/AUIGrid_style.css">
+
+<!-- AngularJS CSS -->
+
+<link rel="stylesheet"
+	href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+	
+<!-- custom CSS -->	
+<link rel="stylesheet" href="/mes/assets/css/fmb.css" />
+
+</head>
+
+<body ng-controller="dvlpmtCtrl as vm" ng-class="{loading:loadingView}" class="container" style="width: 100%;">
+  	<div class="relative">
+	 <div class="mouse-over-bar">
+		설정바
+	</div>
+	
+	<div ng-view></div>
+	<!-- JQUERY -->
+	<script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+
+	<!-- AngularJS -->
+	<script src="//code.angularjs.org/1.6.1/angular.js"></script>
+	<script src="//code.angularjs.org/1.6.1/angular-route.js"></script>
+	<script src="//code.angularjs.org/1.6.1/angular-cookies.js"></script>
+	<script src="//code.angularjs.org/1.6.1/angular-animate.js"></script>
+	<script src="//code.angularjs.org/1.6.1/angular-sanitize.js"></script>
+	<script src="//code.angularjs.org/1.6.1/i18n/angular-locale_ko-kr.js"></script>
+
+	<script	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+	<script	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+	<script	src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+	<!-- Bootstrap -->
+	<script	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script	src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+
+	<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. --> 
+	<script type="text/javascript" src="/mes/vendor/AUIGrid/AUIGridLicense.js"></script>
+	<script type="text/javascript" src="/mes/vendor/AUIGrid/AUIGrid.js"></script>
+	
+	<!-- APP 전체 -->
+	<script src="app2.js"></script>
+	<script src="assets/js/angular-modal-service.js"></script>
+	
+    <!-- 테스트 >
+	<!-- 개발자 메인 화면 관리 -->
+	<script src="dvlpmtCtrl.js"></script>
+	<script src="modules/cmm/controllers/cmmCommonsCtrl.js"></script>
+	<script src="modules/cmm/controllers/cmmMatMstCtrl.js"></script>
+	<script src="modules/cmm/services/cmmAjaxSrvc.js"></script>
+	<script src="modules/cmm/services/cmmModalSrvc.js"></script>
+	<script src="modules/cmm/services/cmmUtilSrvc.js"></script>
+	<script src="modules/cmm/directives/cmmFormDrtv.js"></script>
+
+	<!-- 페이지 관리 -->
+	<script src="modules/dvlpmt/controllers/dvlpmt001Ctrl.js"></script>
+
+</body>
+</html>

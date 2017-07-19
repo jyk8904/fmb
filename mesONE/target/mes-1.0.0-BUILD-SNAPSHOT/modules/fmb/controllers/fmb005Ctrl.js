@@ -11,29 +11,53 @@
  */
 
 'use strict';
-
+var list;
 angular
     .module('app')
-    .controller('Fmb005Ctrl', ['CmmAjaxService', '$http', '$scope', '$q', function (CmmAjaxService, $http, $scope, $q) 
+    .controller('Fmb005Ctrl', ['CmmAjaxService', 'CmmModalSrvc','$http', '$scope', '$q', function (CmmAjaxService, CmmModalSrvc, $http, $scope, $q) 
 {
 	/*------------------------------------------
      * 변수 선언
      *-----------------------------------------*/
-    var self = this;
-    
+    var self= this;
+
+    self.plcList= {};
     self.vo = {
     	plcId: '', 
     	factId: ''
     }
+    
+    aaa();
 
-    //modules/cmm/services/cmmAjaxSrvc.js로  url과 json객체 보냄
-    var promise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.vo);
-    promise.then(function(data){
-    	self.plcList = data;//fmbPlcVo가 담긴 리스트 형태
-    	//console.log(self.plcList);
+    function aaa(){
+    	
+	    var promise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.vo);
+	    promise.then(function(data){
+		list = data;//fmbPlcVo가 담긴 리스트 형태리턴
+		
+		bbb();
+		console.log(list);
+		}
+		,function(data){
+		alert('fail: '+ data)
+		});
+	    
     }
-    ,function(data){
-    	alert('fail: '+ data)
-    });
-}]);
+    	
 
+    
+    function bbb(){
+		
+		self.dataGridOptions = {
+		        dataSource: list,
+		        columns:["eqptNm","plcId","lineNm", "eqptCd", "lineNm","stsDttm","tcounts"]
+		       
+		    }
+		console.log(list);
+    }
+    	    
+    	    
+
+
+    
+}]);

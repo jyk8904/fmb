@@ -7,6 +7,7 @@ angular.module('app')
 	
 	$scope.close = function(result) {
 		close(result, 500); // close, but give 500ms for bootstrap to animate
+		$scope.showModal = false;
 	};
 }])
 /*기간 선택 달력 컨트롤 */

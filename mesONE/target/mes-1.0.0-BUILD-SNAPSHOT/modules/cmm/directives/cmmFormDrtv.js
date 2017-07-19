@@ -75,13 +75,21 @@ angular
     }])
     */
         
-    .directive('bcFormHeader', function() {   /* 폼 상단의 타이틀 및 버튼 부분 */
+   .directive('dvBtn', function() {   /* */
     	return {
     		restrict: 'E',
+    		scope : {
+    			title :'@title',
+    			src : '@src'
+    		},
     		transclude: true,  
-    		template: "<div class='row bc-form-header' ng-transclude></div>"
+    		replace:true,
+    		template: "<div class='dvBtn'>" +
+    					"<a href='#'><img title={{title}} src={{src}} style/></a>" +
+    					"</div>"
     	}
     })
+    
     .directive('bcColorDivision', function() {   /* 폼상단 컬러별 상태 구분 */
     	return {
     		restrict: 'E',
@@ -90,7 +98,7 @@ angular
     		template: "<div class='color' ng-transclude></div>"
     	}
     })
-    .directive('bcColor', function() {   /* 폼상단 컬러 */
+    .directive('bcColor', function() {   /* 폼상단 컬러구분 */
     	return {
     		restrict: 'E',
     		scope : {
@@ -98,7 +106,7 @@ angular
     			txt:'@txt'
 			},
     		transclude: true, 
-    		template: "<div class='txt'><p class='{{color}}'></p>{{txt}}</div>"
+    		template: "<div class='txt'><p class='{{color}} colors'></p>{{txt}}</div>"
     	}
     }) 
    .directive('bcLineView', function() {   /* 폼상단 라인구분 */
@@ -113,10 +121,11 @@ angular
     	return {
     		restrict: 'E',	
     		scope : {
-    			line:'@line'
+    			line:'@line',
+    			selected:'@selected'
 			},
     		transclude: true, 
-    		template: "<div class='{{line}} line'></div>"
+    		template: "<div class='{{line}} {{selected}} line'></div>"
     	}
     	
     })
@@ -125,10 +134,28 @@ angular
     		restrict: 'E',	
       		transclude: true, 
       		replace:true,
-    		template: "<div class='background-panel' ng-transclude></div>"
+    		template: "<div bg-ctrl class='background-panel' ng-transclude></div>"
     	}
     	
-    })    
+    })
+    .directive('bcBackPanel2', function() {   /* 폼 백그라운드 패널 */
+    	return {
+    		restrict: 'E',	
+      		transclude: true, 
+      		replace:true,
+    		template: "<div bg-ctrl class='background-panel' ng-transclude style='margin-top:20px; padding: 0 10px 0 10px; !important;'></div>"
+    	}
+    	
+    })  
+    .directive('bcBgImgPanel', function() {   /* 폼 백그라운드 패널 */
+    	return {
+    		restrict: 'E',	
+      		transclude: true, 
+      		replace:true,
+    		template: "<div bg-ctrl class='bg-img-panel' ng-transclude></div>"
+    	}
+    	
+    })
    .directive('bcBackPanelLine', function() {   /* 폼 백그라운드 패널 상세 */
     	return {
     		restrict: 'E',	
@@ -142,57 +169,42 @@ angular
     	}
     })
     
-    
-    
-    
- 
-/*********************************************factC.html*****************************************************************/
-    
 
-  
-/*******************************************미사용 디렉티브*********************************************/
+
+/******************************************디렉티브*********************************************/    
       
-    
-    
-    .directive('bcFormSearch', function() {  /* 검색 조건 입력 부분. 하위에 검색 조건을 입력 받을 수 있는 input, combo 등이 있음 */
+    .directive('bcFormHeader', function() {   /* 폼 상단의 타이틀 및 버튼 부분 */
     	return {
     		restrict: 'E',
     		scope: {
-    			height: '@height'
+    			title : '@title',
+    			logo : '@logo'
     		},
-    		transclude: true,
-    		//template: "<div class='bc-form-search' style='height:{{ height * 44 }}px;' ng-transclude></div>"		// IE 사용시 적용 안됨
-    		template: "<div class='bc-form-search' ng-style='{height: height*44 + \"px\"}' ng-transclude></div>"	
-    	}
-    })
-    .directive('bcFormSearchHalf', function() {  /* 검색 조건 입력 부분. 하위에 검색 조건을 입력 받을 수 있는 input, combo 등이 있음 */
-    	return {
-    		restrict: 'E',
-    		scope: {
-    			height: '@height'
-    		},
-    		transclude: true,
-    		//template: "<div class='bc-form-search' style='height:{{ height * 44 }}px;' ng-transclude></div>"		// IE 사용시 적용 안됨
-    		template: "<div class='bc-form-search-half' ng-style='{height: height*44 + \"px\"}' ng-transclude></div>"	
+    		replace:true,
+    		transclude: true,  
+    		template: "<div bg-ctrl class='row bc-form-header'>" +
+    					"<img class ='logo' src={{logo}}>" +
+    					"<label class='col-sm-5 bc-header-label'>{{title}}</label>"+
+    					"<div ng-transclude></div>"	+
+    				  "</div>"
     	}
     })
     .directive('bcFormBody', function() {  /* 폼의 주요 Contents 부분. 테이블이 없을 경우만 사용  */
     	return {
     		restrict: 'E',
     		transclude: true,  
-    		template: "<div class='row bc-form-body' ng-transclude></div>"
+    		template: "<div bg-ctrl class='row bc-form-body' ng-transclude></div>"
     	}
     })    
     .directive('bcFormFooter', function() {  /* 폼의 하단부 상태 표시 부분 */
     	return {
     		restrict: 'E',
-    		scope: {
-    			message : '@message'
-    		},
-    		template: "<p class='bc-form-footer'>{{message}}</p>"
+    		transclude: true,  
+    		template: "<div bg-ctrl class='row bc-form-footer' ng-transclude></div>"
     	}
     })
-    .directive('bcHeaderLabel', function() {  /* 폼 좌측 상단 타이틀 */
+
+/*    .directive('bcHeaderLabel', function() {   폼 좌측 상단 타이틀 
     	return {
     		require:'^bcFormHeader',
     		scope: {
@@ -200,15 +212,8 @@ angular
     		},
     		template: "<label class='col-sm-4 bc-header-label'>{{title}}</label>"
     	}
-    })
-    .directive('bcHeaderButtons', function() {  /* 폼 우측 상단 버튼들. 하위에 추가,저장, 삭제 버튼등이 있음 */
-    	return {
-    		require:'^bcFormHeader',
-    		transclude: true,
-    		template: "<div class='col-sm-8 bc-header-buttons' style='text-align: right;' ng-transclude>"
-    	}
-    })
-    .directive('bcButton', function() {  /* 버튼 */
+    })*/
+     .directive('bcButton', function() {  /* 버튼 */
     	return {
     		scope: {
     			title : '@title',
@@ -223,21 +228,9 @@ angular
     			labelText: '@labeltext',
     			inputValue: '=ngModel'
     		},
-    		template: "<div class='form-horizontal'><div class='form-group'>" +
-    				  "<label class='col-sm-3 control-label'>{{labelText}}</label>" + 
-    				  "<div class='col-sm-6 control-label'>" +
-    				  "<input type='text' class='form-control input-sm' ng-model='inputValue' bc-capitalize/>" + 
-    				  "</div></div></div>"
-    	}
-    })
-    .directive('bcSelect', function() {  /* 콤보박스 */
-    	return {
-    		scope: {
-    			labelText: '@labeltext',
-    			modelValue: '=ngModel',
-    			items: '='
-    		},
-    		template: "<div class='form-horizontal'><div class='form-group'><label class='col-sm-3 control-label'>{{labelText}}</label><div class='col-sm-6 pull-left control-label'><select ng-model='modelValue' ng-options='item.code as item.codeNm for item in items track by item.code'><option value=''>선택</option></select></div></div></div>"
+    		template: "<div class='form-horizontal'><div class='form-group'><label class='col-sm-3 control-label'>{{labelText}}</label><div class='col-sm-6 control-label'><input type='text' class='form-control input-sm' ng-model='inputValue' bc-capitalize/></div></div></div>"
+        	//	template: "<div class='form-horizontal'><div class='form-group'><label class='col-sm-2 control-label'>{{labelText}}</label><div class='col-sm-8'><input type='text' class='form-control input-sm' ng-model='inputValue' bc-capitalize/></div></div></div>"
+    		//template: "<div class='form-horizontal'><div class='form-group'><label control-label'>{{labelText}}</label><div>  <input type='text' class='form-control input-sm' ng-model='inputValue' bc-capitalize/></div></div></div>"
     	}
     })
     .directive('bcCapitalize', function() {	/* 입력 시 대문자로 자동변환 */
@@ -258,55 +251,21 @@ angular
 			}
 		}
 	})
-	.directive('bcDatepicker2', function($scope) {
-		return {
-			templateUrl: 'modules/cmm/views/cmmDatePicker.html',
-			scope: {
-				dtModel: '=ngModel'
-				//format: "@",
-				//options: "=datepickerOptions",
-				//myid: "@"
-			},
-			link: function(scope, element) {
-				scope.openStt = function() {
-					scope.opened1 = true;
-				};
-				scope.openEnd = function() {
-					scope.opened2 = true;
-				};
-			}
-		};
-	})
-    .directive('bcDatepicker', function() {  /* 달력 에디터 */
-    	return {
-    		scope: {
-    			labelText: '@labeltext',
-    			inputValue: '=ngModel'
-    		},
-    		template: "<div class='form-horizontal'><div class='form-group'>" +
-    				  "<label class='col-sm-2 control-label'>{{labelText}} :</label>" + 
-    				  "<div class='col-sm-4 control-label'>" +
-    				  "<md-datepicker ng-model='inputValue'  md-hide-icons='calendar' md-placeholder='Enter date'></md-datepicker>" + 
-    				  "</div></div></div>"
-    	}
-    })
-    
-    
     
     /*모달창*/
     .directive('modal', function () {
     return {
       template: '<div class="modal fade">' + 
-          '<div class="modal-dialog">' + 
-            '<div class="modal-content">' + 
-              '<div class="modal-header">' + 
-                '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' + 
-                '<h4 class="modal-title">{{ title }}</h4>' + 
-              '</div>' + 
-              '<div class="modal-body" ng-transclude></div>' + 
-            '</div>' + 
-          '</div>' + 
-        '</div>',
+		          '<div class="modal-dialog">' + 
+		            '<div class="modal-content">' + 
+		              '<div class="modal-header">' + 
+		                /*'<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' + */
+		                '<h4 class="modal-title">{{ title }}</h4>' + 
+		              '</div>' + 
+		              '<div class="modal-body" ng-transclude></div>' + 
+		            '</div>' + 
+		          '</div>' + 
+		        '</div>',
       restrict: 'E',
       transclude: true,
       replace:true,
@@ -335,4 +294,5 @@ angular
       }
     };
   });
+
 
