@@ -110,7 +110,7 @@ angular
 
     $scope.$watch('vm.eqptList', function(newVal, oldVal) {
     	
-    	if (newVal != null && oldVal != null)
+    	if (newVal != null && oldVal != null && newVal.length == oldVal.length)
     	{
 	    	if(newVal.length > 0 && oldVal.length > 0) {
 		    	newVal.forEach(function (obj, i) {
@@ -182,6 +182,8 @@ angular
     	var type = $scope.crtEqpt.type;
     	var plcId = $scope.crtEqpt.plcId;
     	var factId = self.eqptParamVo.factId
+
+    	
     	console.log(cnm,type,plcId)
     	if (cnm != null && cnm != "" && type != null && type != "" && plcId != null && plcId != "")
     	{
@@ -193,14 +195,28 @@ angular
 		    			    , factId : factId
 		    			    , desc : null
 		    			    , cssZindex : 'auto'
-		    			    , cssWidth : '0px'
-		    				, cssHeight : '0px'
-		    				, cssTop : '0px'
-		    				, cssLeft : '0px'
+		    			    , cssWidth : '25px'
+		    				, cssHeight : '25px'
+		    				, cssTop : '230px'
+		    				, cssLeft : '550px'
 		    				, status : 'insert'
+		    				, stsImg0: 'assets/img/button/Yellow25.png'
 		    			   };
-		    	
+		    	var check=true;
+		    	if(data.plcId=='None'){
+		    		check =false;
+		    	}
+		    	for(var i=0; i<self.eqptList.length; i++){
+			    	if(data.plcId ==self.eqptList[i].plcId){
+			    	 check = false;
+			    	}
+		    	}
+		    	if(check ==true ){
 		    	self.eqptList.push(data);
+		    	console.log(data);
+		    	}else{
+		    		alert("PLC ID를 확인하세요");
+		    	}
     	}
     	else {
     		console.log(cnm,type,plcId)
@@ -327,6 +343,7 @@ angular
     	 self.selected = index;
     	 self.pointer.top = self.eqptList[index].cssTop;
     	 self.pointer.left = self.eqptList[index].cssLeft;
+    	 
     	 self.pointer.animateTrigger = 'on';
     	 self.pointer.display = 'block';
      }

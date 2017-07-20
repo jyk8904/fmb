@@ -210,7 +210,7 @@ angular
                		}
                		data[i].eqptSts = random;
            		}
-           		
+           		$scope.plcList = data;
            		self.plcList = data; //fmbplcVo가 담긴 리스트 형태리턴
            		
            	}, function(data){

@@ -26,6 +26,7 @@ angular
                        , '$interval'
                        , '$window'
                        , '$rootScope' 
+                       , '$mdSidenav'
                        , function ($http
                                  , $scope
                                  , CmmAjaxService
@@ -36,6 +37,7 @@ angular
                                  , $interval
                                  , $window
                                  , $rootScope
+                                 , $mdSidenav
                                  ) {
 	var workerList = CmmWorkerSrvc;
 	var self = this;
@@ -64,7 +66,16 @@ angular
 	self.btnWorkerStop = function () { workerList.workerStop(workerList.worker1); }
    	self.LotationSetting = LotationSetting;
    	self.submit1 = submitLotationSetting;
-
+    $scope.onSwipeRight = function() {
+        $mdSidenav('left1').open();
+    };
+    $scope.onSwipeLeft =toggleLeft;
+    	
+    	function toggleLeft() {
+          $mdSidenav('left1').close();
+    };
+          
+      
    	$scope.$on('$routeChangeSuccess', function () {
    		var page = $location.path();
        
@@ -189,36 +200,44 @@ angular
    function btnFmbMonClickHandler() {
 	   	workerList.workerStop(workerList.worker1);
          //callParamSetting();
+	   	toggleLeft();
          $location.url('/FmbMon');
       }
    function btnFmbCwMonClickHandler() {
 	   console.log("123");
 	 	workerList.workerStop(workerList.worker1);
+	 	toggleLeft();
        $location.url('/FmbCwMon');
        
     }
       function btnFmbTbmClickHandler() {
     	workerList.workerStop(workerList.worker1);
+    	toggleLeft();
          $location.url('/FmbTbm');
       }
       function btnFmbLineAClickHandler() {
     	 workerList.workerStop(workerList.worker1);
+    	 toggleLeft();
           $location.url('/FmbLineA');
        }
       function btnFmbLineBClickHandler() {
     	 workerList.workerStop(workerList.worker1);
+    	 toggleLeft();
           $location.url('/FmbLineB');
        }
       function btnFmbLineCClickHandler() {
     	  workerList.workerStop(workerList.worker1);
+    	  toggleLeft();
           $location.url('/FmbLineC');
        }
       function btnFmbSpcClickHandler() {
     	  workerList.workerStop(workerList.worker1);
+    	  toggleLeft();
           $location.url('/FmbSpc');
        }
       function btnFmbTotalClickHandler() {
     	  workerList.workerStop(workerList.worker1);
+    	  toggleLeft();
           $location.url('/FmbTotal');
        }
       function btnFmbModeClickHandler() {

@@ -133,7 +133,7 @@
           				<label>Image</label>
           				<!-- <input ng-model ="vm.eqptList[vm.configSetting.index].stsImg0"> -->
 					  <md-select ng-model="vm.eqptList[vm.configSetting.index].stsImg0" placeholder="Image">
-					    <md-option ng-value="button.value" ng-repeat="button in buttons" ng-init="assets/img/button/Yellow25.png">{{button.name}}</md-option>
+					    <md-option ng-value="button.value" ng-repeat="button in buttons" >{{button.name}}</md-option>
 					    
 					  </md-select>
         			</md-input-container>
@@ -231,9 +231,13 @@
          </div>		 -->	      
       </li>
    </ul>
-    <input type="submit" value="Save" /> 
-<button type="submit" class="btn btn-default" data-dismiss="modal"
-      aria-hidden="true" ng-click="vm.showModal=false">닫기</button>
+   	<md-button class="md-raised md-primary" type="submit" data-dismiss="modal" aria-hidden="true" ng-click="vm.showModal=false" style="width:50px;margin: 0 256px;" >저장</md-button>
+   <!-- <input style="margin:20px 0 10px 250px;"type="submit" value=" save "  ng-click="vm.showModal=false"/>  -->
+    <!-- showModal=false 를 하면 자동 submit이 됨, 
+    모달창을 종료할때 submit하지 않으면서 생성창을 두번누르지 않아도 되는 방법(showModal=false)을 생각해야함-->
+    
+<!-- <button class="btn btn-default" data-dismiss="modal"
+      aria-hidden="true" ng-click="vm.showModal=false">닫기</button> -->
 </form>
 </modal>
 

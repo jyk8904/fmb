@@ -183,7 +183,7 @@ angular
     		replace:true,
     		transclude: true,  
     		template: "<div bg-ctrl class='row bc-form-header'>" +
-    					"<img class ='logo' src={{logo}}>" +
+    					"<img class ='logo' src={{logo}} ng-click='vm.toggleLeft()'>" +
     					"<label class='col-sm-5 bc-header-label'>{{title}}</label>"+
     					"<div ng-transclude></div>"	+
     				  "</div>"
