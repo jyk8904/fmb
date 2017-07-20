@@ -15,11 +15,11 @@
  */
  -->
 <!-- ngview 내부 페이지 -->
-<div test-ctrl class='bc-screen container-fluid' style="margin:0">
+<div test-ctrl class='bc-screen' style="margin:0">
 <script src="modules/cmm/services/cmmFactSrvc.js"></script>
 <!-- ngview 내부 header -->
-<bc-form-header logo='assets/img/system/logo.png' title="생산 자원 통합 모니터링">
-<img class="col-md-4 col-sm-4 col-xs-4" src="assets/img/system/legend.png">
+<bc-form-header logo='assets/img/system/logo.png' title="생산 자원 통합 모니터링" style="display:flex; align-items:center; flex-wrap: wrap;">
+<img src="assets/img/system/legend.png">
 </bc-form-header>
 
 <!-- ngview 내부 body -->
@@ -27,10 +27,6 @@
 	<bc-back-panel2>
 	<!--설비클래스 삽입 시작-->
   	<div ng-switch on="vm.eqptParamVo.factId" style="position:absolute;">
-<!--     <div ng-switch-when="A" class='bg-panel col-md-8' ng-style="{'background-image' : 'url(' + eachBg.A + ')'}"></div>
-   	<div ng-switch-when="B" class='bg-panel col-md-8' ng-style="{'background-image' : 'url(' + eachBg.B + ')'}"></div>
-   	<div ng-switch-when="C" class='bg-panel col-md-8' ng-style="{'background-image' : 'url(' + eachBg.C + ')'}"></div>
-   	<div ng-switch-when="Comb" class='bg-panel col-md-8' ng-style="{'background-image' : 'url(' + eachBg.Comb + ')'}"></div> -->
    	<img ng-switch-when="A" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.A}}' style="padding:0"/>
    	<img ng-switch-when="B" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.B}}' style="padding:0"/>
    	<img ng-switch-when="C" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.C}}' style="padding:0"/>
