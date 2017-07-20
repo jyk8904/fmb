@@ -64,7 +64,7 @@ angular
     		}
     	  };
       })
-      .directive('uCtrl', function($timeout, $window){
+      .directive('testCtrl', function($timeout, $window){
     	  return {
     		  restrict: 'A',
     		  link: function(scope, element, attrs) {
@@ -72,17 +72,43 @@ angular
     				  var width = $window.innerWidth;
     				  var height = $window.innerHeight;
     				  
+    				  element[0].style.width = width + 'px';
+    				  element[0].style.height = height + 'px';
+    			  });
+    		  }
+    	  };
+      })
+      .directive('testCtrl2', function($timeout, $window){
+    	  return {
+    		  restrict: 'A',
+    		  link: function(scope, element, attrs) {
+    			  $timeout(function(){
+    				  var width = $window.innerWidth;
+    				  //var height = '125';
+    				  
+    				  element[0].style.width = width + 'px';
+    				  //element[0].style.height = height + 'px';
+    			  });
+    		  }
+    	  };
+      })
+ /*     .directive('uCtrl', function($timeout, $window){
+    	  return {
+    		  restrict: 'A',
+    		  link: function(scope, element, attrs) {
+   			  $timeout(function(){
+    				  var width = $window.innerWidth;
+    				  var height = $window.innerHeight;
+    				  
     				  var default_width = 1920;
     				  var default_height = 1080;
-    				  if (width >= 1024) 
-    				  {
 	    				  if (width >= default_width) {
 	    					 var screenRate = 1; 
 	    				  }
 	    				  else {
 	    					 var screenRate = width / default_width;
 	    				  }
-	    				 
+	    				 console.log(element)
 	    				  var calcWidth = element[0].style.width.replace('px','') * screenRate;
 	    				  var calcHeight = element[0].style.height.replace('px','') * screenRate;
 	    				  var calcTop = element[0].style.top.replace('px','') * screenRate;
@@ -92,10 +118,38 @@ angular
 	        			  element[0].style.height = calcHeight + 'px';
 	        			  element[0].style.top = calcTop + 'px';
 	        			  element[0].style.left = calcLeft + 'px';
-	        			  
-	    				  element[0].childNodes[1].style.width = calcWidth + 'px';
-	    				  element[0].childNodes[1].style.height = calcHeight + 'px';
-    				  }
+	        			  console.log(calcWidth, calcHeight);
+	    				  element[0].children[0].children[0].style.width = calcWidth + 'px';
+	    				  element[0].children[0].children[0].style.height = calcHeight + 'px';
+    			  });
+    		  }
+    	  };
+      })*/
+      .directive('uCtrl', function($window){
+    	  return {
+    		  restrict: 'A',
+    		  scope : {
+    			data : '=data'  
+    		  },
+    		  link: function(scope, element, attrs) {
+    			  scope.$watch('data',function(newVal, oldVal){
+    				  	console.log(newVal)
+ 						var width = $window.innerWidth;
+		  				var height = $window.innerHeight;
+		  				  
+		  				var default_width = 1920;
+		  				var default_height = 1080;
+	    				if (width >= default_width) {
+	    					var screenRate = 1; 
+	    				}
+	    				else {
+	    					var screenRate = width / default_width;
+	    				}
+	    				console.log(scope.data)
+	    					scope.data.cssHeight = (parseInt(scope.data.cssHeight.replace("px","")) * screenRate) + 'px';
+	    					scope.data.cssWidth = (parseInt(scope.data.cssWidth.replace("px","")) * screenRate) + 'px';
+	    					scope.data.cssTop = (parseInt(scope.data.cssTop.replace("px","")) * screenRate) + 'px';
+	    					scope.data.cssLeft = (parseInt(scope.data.cssLeft.replace("px","")) * screenRate) + 'px';
     			  });
     		  }
     	  };

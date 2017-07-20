@@ -78,10 +78,10 @@
 </head>
 
 
-<body ng-controller="MainCtrl as vm" ng-class="{loading:loadingView}" class="container" style="width: 1920px; background-image: url(./assets/img/system/back_blue.png;)">
+<body ng-controller="MainCtrl as vm" class="col-md-12 col-sm-12 col-xs-12" ng-class="{loading:loadingView}" class="container" style="background-image: url(./assets/img/system/back_blue.png); padding:0">
 <!-- <body ng-controller="MainCtrl as vm" ng-class="{loading:loadingView}" class="container" 
 	style="width: 100%;" ng-style="vm.bgTheme === 'black' && {'background-image':'url(./assets/img/system/back.png)'} || vm.bgTheme === 'blue' && {'background-image':'url(./assets/img/system/back_blue.png)'}"> -->
-	<div class="relative">
+	<div class="relative col-md-12 col-lg-12">
 		<div class="mouse-over-bar"> 
 			<button class="top-btn" ng-click='vm.btnFmbModeClick()'>개발모드</button>
 			<button class="top-btn" ng-click='vm.btnFmbTbmClick()'>Tbm</button>
@@ -97,10 +97,13 @@
 		</div>
 	</div>   
 	
-	<div p-ctrl data-ng-view style='width:100%; height:1016px'></div>
-
-	<bc-form-footer bg-ctrl>
+	<!-- <div p-ctrl data-ng-view style='width:100%; height:1016px'></div> -->
+	
+	<div data-ng-view class="row col-md-12 col-sm-12 col-xs-12" style="padding:0"></div>
+	
+	<bc-form-footer>
 	<!--알람정보 하단 바 시작-->
+		<div class="col-md-12 col-sm-12 col-xs-12">
 		  <div class="alarm_data" style="background-color: rgb(255, 255, 255); width:110% !important; height: 25px;">
 	  		<marquee>
 	      		<ul id="banner" class="simply-scroll-list" style="background-color:#333;">
@@ -109,6 +112,7 @@
 	      			</li>
 	    		</ul>
 	     	</marquee>
+	   	</div>
 	   </div>
 	</bc-form-footer>
 	
@@ -139,7 +143,7 @@
      	</form>
 	</modal>
 	<!-- 모달 body -->
-   	
+</body>
    	<!-- APP 전체 -->
    	<script src="app.js"></script>
    	<script src="assets/js/angular-modal-service.js"></script>
@@ -185,5 +189,4 @@
    	<!-- 워커 관리 -->
    	<script src="worker.js"></script>
    	<script src="worker2.js"></script>
-</body>
 </html>

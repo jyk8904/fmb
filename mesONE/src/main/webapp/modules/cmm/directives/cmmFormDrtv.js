@@ -143,7 +143,8 @@ angular
     		restrict: 'E',	
       		transclude: true, 
       		replace:true,
-    		template: "<div bg-ctrl class='background-panel' ng-transclude style='margin-top:20px; padding: 0 10px 0 10px; !important;'></div>"
+    		/*template: "<div bg-ctrl class='background-panel col-md-8' ng-transclude style='margin-top:20px; padding: 0 10px 0 10px; !important;'></div>"*/
+      		template: "<div class='col-md-12 col-sm-12 col-xs-12' ng-transclude></div>"
     	}
     	
     })  
@@ -182,9 +183,9 @@ angular
     		},
     		replace:true,
     		transclude: true,  
-    		template: "<div bg-ctrl class='row bc-form-header'>" +
-    					"<img class ='logo' src={{logo}}>" +
-    					"<label class='col-sm-5 bc-header-label'>{{title}}</label>"+
+    		template: "<div test-ctrl2 class='row col-md-12 col-sm-12 col-xs-12'>" +
+    					"<img class ='col-md-2 col-sm-2 col-xs-2' src={{logo}}>" +
+    					"<label class='col-md-5 col-sm-5 col-xs-5 col-xs-offset-1'>{{title}}</label>"+
     					"<div ng-transclude></div>"	+
     				  "</div>"
     	}
@@ -193,14 +194,14 @@ angular
     	return {
     		restrict: 'E',
     		transclude: true,  
-    		template: "<div bg-ctrl class='row bc-form-body' ng-transclude></div>"
+    		template: "<div class='col-md-12 col-sm-12 col-xs-12' ng-transclude style='padding:0;'></div>"
     	}
     })    
     .directive('bcFormFooter', function() {  /* 폼의 하단부 상태 표시 부분 */
     	return {
     		restrict: 'E',
     		transclude: true,  
-    		template: "<div bg-ctrl class='row bc-form-footer' ng-transclude></div>"
+    		template: "<div class='row' ng-transclude></div>"
     	}
     })
 
