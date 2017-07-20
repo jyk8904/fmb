@@ -89,16 +89,14 @@
 </head>
 
 <body ng-controller="MainCtrl as vm" class="col-md-12 col-sm-12 col-xs-12" ng-class="{loading:loadingView}" class="container"  style="background-color:#0f2f56;">
-
-<div id="wrapper" class=" hidden-md hidden-lg">
-    your html for your website
-</div>
 <div id="warning-message" class="hidden-md hidden-lg" style="width:100%; height:100%; background-color: #050513; color:white; font-size:30pt; opacity:0.8; position:fixed; z-index:10000;" >
   this website is only viewable <br> in landscape mode<br><br>
     이 페이지는가로모드만 지원합니다
 </div>
 <!-- <body ng-controller="MainCtrl as vm" ng-class="{loading:loadingView}" class="container" 
 	style="width: 100%;" ng-style="vm.bgTheme === 'black' && {'background-image':'url(./assets/img/system/back.png)'} || vm.bgTheme === 'blue' && {'background-image':'url(./assets/img/system/back_blue.png)'}"> -->
+	
+	<!-- pc 버전 -->
 	<div class="relative hidden-xs hidden-sm">
 		<div class="mouse-over-bar"> 
 	    	<md-button class="md-raised md-primary" ng-click='vm.LotationSetting()'>페이지 전환 설정</md-button>
@@ -114,11 +112,16 @@
 			<md-button class="md-raised md-default" ng-click='vm.btnFmbModeClick()' >개발모드</md-button>
 		</div>
 	</div>   
-<section layout="row" flex  class="hidden-md hidden-lg"  md-swipe-right="onSwipeRight()"  md-swipe-left="onSwipeLeft()"style="width:100%; height:100%; position:fixed; z-index:1000;">
- <md-sidenav class="md-sidenav-left" md-component-id="left1" md-disable-backdrop md-whiteframe="4" hide-gt-md>
+	
+	<!-- 모바일 버전 -->
+
+<section layout="row" flex  class="hidden-md hidden-lg"  md-swipe-left="onSwipeLeft()" md-swipe-right="onSwipeRight()" style="border:yellow 1px solid; width:5%; height:100%; position:fixed; z-index:1001;">
+</section>
+<section layout="row" flex  class="hidden-md hidden-lg"  style="border:red 1px solid; width:8%; height:100%;  z-index:1000; overflow:visible !important;">
+ <md-sidenav class="md-sidenav-left" md-swipe-left="onSwipeLeft()" md-component-id="left1" md-disable-backdrop md-whiteframe="4" hide-gt-md style="z-index:1002;">
 
       <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">≡</h1>
+        <h1 class="md-toolbar-tools" style="float:right;" ng-click="onSwipeLeft()">≡</h1>
       </md-toolbar>
 
       <md-content layout-margin>
