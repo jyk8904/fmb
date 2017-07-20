@@ -1,6 +1,6 @@
-<md-dialog aria-label="eqpt info" class="infoPopup" style="width:1500px; height:900px;">
+<md-dialog aria-label="eqpt info" class="infoPopup" style="width:1500px; height:900px; border-radius:50px;"">
   <form ng-cloak>
-    <md-toolbar>
+    <md-toolbar style="border-radius:5px 5px 0 0;">
       <div class="md-toolbar-tools">
         <h2>{{vm.plcData}}의 설비 정보</h2>
         <span flex></span>
@@ -34,6 +34,7 @@
 						<tr><td>정지 LOSS</td><td>{{}}</td></tr>
 						<tr ng-switch on="plc.eqptSts">
 							<td>설비상태</td>
+							<td ng-switch-when="0" >비가동</td>
 							<td ng-switch-when="1" >가동</td>
 							<td ng-switch-when="2" >대기</td>
 							<td ng-switch-when="3" >수리</td>

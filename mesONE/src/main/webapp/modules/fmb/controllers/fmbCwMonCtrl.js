@@ -27,6 +27,7 @@ angular
     							, '$location'
     							, '$mdDialog'
     							, '$timeout'
+    							, '$mdSidenav'
     							, function (
     									  CmmAjaxService
     									, CmmModalSrvc
@@ -41,6 +42,7 @@ angular
     									, $location
     									, $mdDialog
     									, $timeout
+    									, $mdSidenav
     									) 
 {
 	/*------------------------------------------
@@ -54,7 +56,7 @@ angular
     self.eqptParamVo.factId = 'Comb';
     self.eqptParamVo.plcId = '';
     self.eqptParamVo.eqptCnm ='';
-    	
+    
 	//plc parameter
 	self.plcParamVo={};
 	self.plcParamVo.plcId ='';
@@ -70,9 +72,8 @@ angular
 	 	, C : ''
 	 	, Comd : ''
 	 };
- 
+
     self.showModal = false;
-	    
     self.toggleModal = function(pid){
     	self.plcSelectedVo = {plcId: pid,
 					    		  factId: ''
@@ -100,8 +101,6 @@ angular
     			console.log('getPlcList data loading 실패');
     			}
     		);
-   
-	
     
     function getPlcList(){
    		//설비 plc 데이터 가져오기

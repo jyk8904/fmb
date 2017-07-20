@@ -379,144 +379,6 @@ angular
 		StsProd();
 	}
 		
-	/*	for(var i = 0; i< self.eqptStsHisData.length; i++){
-				if(self.eqptStsHisData[i].plcSts == '0'){
-					eqptStsCstData[i] = {
-										"task" : i,
-										"sts" : self.eqptStsHisData[i].plcStsTxt,
-										"strDttm0" : new Date(Number(self.eqptStsHisData[i].strDttm.split('-')[0]),
-															  Number(self.eqptStsHisData[i].strDttm.split('-')[1]),
-															  Number(self.eqptStsHisData[i].strDttm.split('-')[2].split(' ')[0]),
-															  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0]),
-															  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1]), 
-															  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
-															  0),
-										"endDttm0" : new Date(Number(self.eqptStsHisData[i].endDttm.split('-')[0]),
-															  Number(self.eqptStsHisData[i].endDttm.split('-')[1]),
-															  Number(self.eqptStsHisData[i].endDttm.split('-')[2].split(' ')[0]),
-															  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0]),
-															  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1]), 
-															  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
-															  0),
-										"strDttm1" : '',
-										"endDttm1" : '',
-										"strDttm2" : '',
-										"endDttm2" : '',
-										"strDttm3" : '',
-										"endDttm3" : '',
-										"strDttm4" : '',
-										"endDttm4" : ''		}
-
-					}else if(self.eqptStsHisData[i].plcSts == '1'){
-						eqptStsCstData[i] = {"task" : i,
-								"sts" : self.eqptStsHisData[i].plcStsTxt,
-								"strDttm0" : '',
-								"endDttm0" : '',
-								"strDttm1" :  new Date(Number(self.eqptStsHisData[i].strDttm.split('-')[0]),
-										  Number(self.eqptStsHisData[i].strDttm.split('-')[1]),
-										  Number(self.eqptStsHisData[i].strDttm.split('-')[2].split(' ')[0]),
-										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0]),
-										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1]), 
-										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
-										  0),
-								"endDttm1" :new Date(Number(self.eqptStsHisData[i].endDttm.split('-')[0]),
-										  Number(self.eqptStsHisData[i].endDttm.split('-')[1]),
-										  Number(self.eqptStsHisData[i].endDttm.split('-')[2].split(' ')[0]),
-										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0]),
-										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1]), 
-										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
-										  0),
-								"strDttm2" : '0',
-								"endDttm2" : '0',
-								"strDttm3" : '',
-								"endDttm3" : '',
-								"strDttm4" : '',
-								"endDttm4" : ''		}			
-					}else if(self.eqptStsHisData[i].plcSts == '2'){
-						eqptStsCstData[i] = {"task" : i,
-								"sts" : self.eqptStsHisData[i].plcStsTxt,
-								"strDttm0" : '',
-								"endDttm0" : '',
-								"strDttm1" : '',
-								"endDttm1" : '',
-								"strDttm2" : new Date(Number(self.eqptStsHisData[i].strDttm.split('-')[0]),
-										  Number(self.eqptStsHisData[i].strDttm.split('-')[1]),
-										  Number(self.eqptStsHisData[i].strDttm.split('-')[2].split(' ')[0]),
-										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0]),
-										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1]), 
-										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
-										  0),
-								"endDttm2" :new Date(Number(self.eqptStsHisData[i].endDttm.split('-')[0]),
-										  Number(self.eqptStsHisData[i].endDttm.split('-')[1]),
-										  Number(self.eqptStsHisData[i].endDttm.split('-')[2].split(' ')[0]),
-										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0]),
-										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1]), 
-										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
-										  0),
-								"strDttm3" : '',
-								"endDttm3" : '',
-								"strDttm4" : '',
-								"endDttm4" : ''		
-						}
-						
-					}else if(self.eqptStsHisData[i].plcSts == '3'){
-						eqptStsCstData[i] = {"task" : i,
-								"sts" : self.eqptStsHisData[i].plcStsTxt,
-								"strDttm0" : '',
-								"endDttm0" : '',
-								"strDttm1" : '',
-								"endDttm1" : '',
-								"strDttm2" : '',
-								"endDttm2" : '',
-								"strDttm3" : new Date(Number(self.eqptStsHisData[i].strDttm.split('-')[0]),
-										  Number(self.eqptStsHisData[i].strDttm.split('-')[1]),
-										  Number(self.eqptStsHisData[i].strDttm.split('-')[2].split(' ')[0]),
-										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0]),
-										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1]), 
-										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
-										  0),
-								"endDttm3" : new Date(Number(self.eqptStsHisData[i].endDttm.split('-')[0]),
-										  Number(self.eqptStsHisData[i].endDttm.split('-')[1]),
-										  Number(self.eqptStsHisData[i].endDttm.split('-')[2].split(' ')[0]),
-										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0]),
-										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1]), 
-										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
-										  0),
-								"strDttm4" : '',
-								"endDttm4" : ''		}
-					}else{
-						eqptStsCstData[i] = {"task" : i,
-								"sts" : self.eqptStsHisData[i].plcStsTxt,
-								"strDttm0" : '',
-								"endDttm0" : '',
-								"strDttm1" : '',
-								"endDttm1" : '',
-								"strDttm2" : '',
-								"endDttm2" : '',
-								"strDttm3" : '',
-								"endDttm3" : '',
-								"strDttm4" :  new Date(Number(self.eqptStsHisData[i].strDttm.split('-')[0]),
-										  Number(self.eqptStsHisData[i].strDttm.split('-')[1]),
-										  Number(self.eqptStsHisData[i].strDttm.split('-')[2].split(' ')[0]),
-										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[0]),
-										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[1]), 
-										  Number(self.eqptStsHisData[i].strDttm.split(' ')[1].split(':')[2]),
-										  0),
-								"endDttm4" : new Date(Number(self.eqptStsHisData[i].endDttm.split('-')[0]),
-										  Number(self.eqptStsHisData[i].endDttm.split('-')[1]),
-										  Number(self.eqptStsHisData[i].endDttm.split('-')[2].split(' ')[0]),
-										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[0]),
-										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[1]), 
-										  Number(self.eqptStsHisData[i].endDttm.split(' ')[1].split(':')[2]),
-										  0),
-								}		
-					}
-			}
-		
-		 console.log(eqptStsCstData);
-		StsProd();	*/
-
-
 	function StsProd(){
 		self.stsProd = {	
 			rotated: true,
@@ -713,9 +575,20 @@ angular
 	}		
    	*/
 	function getSelectedPlc(){
+				
 		var promise = CmmAjaxService.selectOne("/mes/bas/selectFmbPlc.do", self.plcSelectedVo);
         promise.then(function(data){
+        	for(var i = 0; i< data.length; i++){
+           		var random = Math.floor(Math.random()*3);
+           		if(random==0){
+           			random = 4;
+           		}
+           		data[i].eqptSts = random;
+       		}
+        	
         	self.plc = data;//fmbPlcVo가 담긴 리스트 형태리턴
+        	
+        	
         }
         ,function(data){
         	alert('fail: '+ data)

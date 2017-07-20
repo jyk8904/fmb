@@ -276,8 +276,8 @@ div[class^=eqpt] {
 
 /* sideNav */
 .list_selected {
-	background : Green;
-	color : white;
+	background : #c9ccd7;
+	color : rgb(65, 66, 196);
 }
 md-sideNav {
 	width:500px; !important;
