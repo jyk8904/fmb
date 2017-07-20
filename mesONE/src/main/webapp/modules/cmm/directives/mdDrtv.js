@@ -72,8 +72,13 @@ angular
     				  var width = $window.innerWidth;
     				  var height = $window.innerHeight;
     				  
+    				  var default_height = 1080;
+    				  var body_hieght = 1055;
+    				  
+    				  var height_rate = height / default_height;
     				  element[0].style.width = width + 'px';
-    				  element[0].style.height = height + 'px';
+    				  element[0].style.height = body_hieght * height_rate + 'px';
+    				  //element[0].style.height = height + 'px';
     			  });
     		  }
     	  };
@@ -137,7 +142,7 @@ angular
  						var width = $window.innerWidth;
 		  				var height = $window.innerHeight;
 		  				  
-		  				var default_width = 1920;
+		  				var default_width = 1880;
 		  				var default_height = 1080;
 	    				if (width >= default_width) {
 	    					var screenRate = 1; 

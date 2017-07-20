@@ -144,7 +144,7 @@ angular
       		transclude: true, 
       		replace:true,
     		/*template: "<div bg-ctrl class='background-panel col-md-8' ng-transclude style='margin-top:20px; padding: 0 10px 0 10px; !important;'></div>"*/
-      		template: "<div class='col-md-12 col-sm-12 col-xs-12' ng-transclude></div>"
+      		template: "<div class='col-md-12 col-sm-12 col-xs-12' ng-transclude style='padding:0'></div>"
     	}
     	
     })  
@@ -183,10 +183,10 @@ angular
     		},
     		replace:true,
     		transclude: true,  
-    		template: "<div test-ctrl2 class='row col-md-12 col-sm-12 col-xs-12'>" +
-    					"<img class ='col-md-2 col-sm-2 col-xs-2' src={{logo}}>" +
-    					"<label class='col-md-5 col-sm-5 col-xs-5 col-xs-offset-1'>{{title}}</label>"+
-    					"<div ng-transclude></div>"	+
+    		template: "<div test-ctrl2 class='col-md-12 col-sm-12 col-xs-12'>" +
+    					"<img class ='col-lg-1 col-md-2 col-sm-2 col-xs-2' src={{logo}}>" +
+    					"<h4 class='col-md-5 col-sm-5 col-xs-5 col-xs-offset-1 col-lg-offset-2' style='color: white;'>{{title}}</h4>"+
+    					"<div class='col-lg-3 col-md-4 col-sm-4 col-xs-4 col-lg-offset-1' ng-transclude></div>"	+
     				  "</div>"
     	}
     })
@@ -201,7 +201,7 @@ angular
     	return {
     		restrict: 'E',
     		transclude: true,  
-    		template: "<div class='row' ng-transclude></div>"
+    		template: "<div ng-transclude></div>"
     	}
     })
 

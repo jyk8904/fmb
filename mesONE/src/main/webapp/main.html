@@ -88,12 +88,12 @@
 	<link rel="stylesheet" href="/mes/assets/css/fmbDash.css" />
 </head>
 
-<body ng-controller="MainCtrl as vm" class="col-md-12 col-sm-12 col-xs-12" ng-class="{loading:loadingView}" class="container"  style="background-color:#0f2f56;">
+<body ng-controller="MainCtrl as vm" class="container-fluid col-md-12 col-sm-12 col-xs-12" ng-class="{loading:loadingView}" class="container"  style="background-color:#0f2f56; padding:0">
 
-<div id="wrapper" class=" hidden-md hidden-lg">
+<div id="wrapper" class=" hidden-xs">
     your html for your website
 </div>
-<div id="warning-message" class="hidden-md hidden-lg" style="width:100%; height:100%; background-color: #050513; color:white; font-size:30pt; opacity:0.8; position:fixed; z-index:10000;" >
+<div id="warning-message" class="hidden-xs" style="width:100%; height:100%; background-color: #050513; color:white; font-size:30pt; opacity:0.8; position:fixed; z-index:10000;" >
   this website is only viewable <br> in landscape mode<br><br>
     이 페이지는가로모드만 지원합니다
 </div>
@@ -176,16 +176,16 @@
 	
 	<!-- <div p-ctrl data-ng-view style='width:100%; height:1016px'></div> -->
 	
-	<div data-ng-view class="row col-md-12 col-sm-12 col-xs-12" style="padding:0"></div>
+	<div data-ng-view class="col-md-12 col-sm-12 col-xs-12" style="padding:0"></div>
 	
 	<bc-form-footer>
 	<!--알람정보 하단 바 시작-->
-		<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="col-md-12 col-sm-12 col-xs-12" style="padding:0">
 		  <div class="alarm_data" style="background-color: rgb(255, 255, 255); width:110% !important; height: 25px;">
 	  		<marquee>
 	      		<ul id="banner" class="simply-scroll-list" style="background-color:#333;">
 	      			<li marquee-banner alarm-list="alarmList"  ng-repeat="alarm in alarmList track by $index">
-	       				{{alarm.plcId}} 알람발생  {{alarm.stsDttm}}
+	       				<strong>{{alarm.plcId}} 알람발생  {{alarm.stsDttm}}</strong>
 	      			</li>
 	    		</ul>
 	     	</marquee>
