@@ -19,7 +19,7 @@
 (function () {
     'use strict';
     angular
-        .module('app', ['dx','angularModalService', 'ngRoute', 'ngCookies', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.tpls', 'ngFileUpload'])
+        .module('app', [ 'dx','angularModalService', 'ngRoute', 'ngCookies', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.tpls', 'ngFileUpload'])
         .config(config);
 //        .run(run);
 

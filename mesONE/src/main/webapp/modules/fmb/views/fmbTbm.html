@@ -15,7 +15,7 @@
  */
  -->
 <!-- ngview 내부 페이지 -->
-<div class='bc-screen'>
+<div class='bc-screen' style="width:initial !important;">
 <bc-form-header logo='assets/img/system/logo.png' title="TBM">
 </bc-form-header>
 	<!-- ngview 내부 header -->
@@ -27,7 +27,38 @@
 
 	<!-- ngview 내부 body -->
 	<bc-form-body>
-	<table class="bc-table tbm-table">
+	<div layout="row" style="width:90%; margin:auto;">
+	 	<div grid-tbm-panel-ctrl data= "vm.Tbm" layout="column" layout-fill layout-wrap style="width:18%;" class="colorNested">
+			<div style="color:white; border:1px solid black;">구분</div>
+			<div style="color:white; border:1px solid black;">금일 점검예정</div>
+			<div style="color:white; border:1px solid black;">점검 진행중</div>
+			<div style="color:white; border:1px solid black;">금일 점검완료</div>
+			<div style="color:white; border:1px solid black;">금주 점검예정</div>
+			<div style="color:white; border:1px solid black;">금주 점검완료</div>
+		</div>
+		
+		
+		<div class="colList" style="width:82%;">
+		<div grid-tbm-panel-ctrl  data= "vm.Tbm" flex  layout="column" layout-fill layout-wrap  class="colorNested">
+ 			<div layout="row" >
+				<div flex style="color:white; border:1px solid black;">A동</div>
+				<div flex style="color:white; border:1px solid black;">B동</div>
+				<div flex style="color:white; border:1px solid black;">C동</div>
+				<div flex style="color:white; border:1px solid black;">기타</div>
+				<div flex style="color:white; border:1px solid black;">합계</div>
+			</div>
+			<div layout="row" flex  ng-repeat="tbm in vm.Tbm track by $index">
+				<div flex style="color:white; border:1px solid black;">{{tbm.factA}}</div>
+				<div flex style="color:white; border:1px solid black;">{{tbm.factB}}</div>
+				<div flex style="color:white; border:1px solid black;">{{tbm.factC}}</div>
+				<div flex style="color:white; border:1px solid black;">{{tbm.factX}}</div>
+				<div flex style="color:white; border:1px solid black;">{{tbm.total}}</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 
+		<table class="bc-table tbm-table">
 		<tr>
 			<td>구분</td>
 			<td>A동</td>
@@ -77,6 +108,6 @@
 			<td>{{vm.Tbm[4].factX}}</td>
 			<td>{{vm.Tbm[4].total}}</td>
 		</tr>
-	</table>
+	</table> -->
 	</bc-form-body>
 </div>

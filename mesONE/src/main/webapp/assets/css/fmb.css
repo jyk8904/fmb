@@ -49,23 +49,58 @@ img {
 
 }
 
+.headerColorNested{
+	text-align:center;
+}
 
+.headerColorNested > div:nth-child(1){
+	background-color: #404040;
+}
+.headerColorNested > div:nth-child(2){
+	background-color: #10253F;
+}
+.headerColorNested > div:nth-child(3){
+	background-color: #546E7A;
+}
+.headerColorNested > div:nth-child(3) > div > div:nth-child(2){
+	background-color: #303D44;
+}
+.headerColorNested > div:nth-child(3) > div > div:nth-child(3){
+	background-color: #262626;
+}
+.headerColorNested > div:nth-child(4){
+	background-color: #10253F;
+}
+.headerColorNested > div:nth-child(5){
+	background-color: #173B5D;
+}
+
+.colorNested{
+	text-align:center;
+}
 .colorNested > div:nth-child(1){
-	background-color: #009688;
+	background-color: #404040;
 }
 .colorNested > div:nth-child(2){
-	background-color: #3949ab;
+	background-color: #10253F;
 }
-
 .colorNested > div:nth-child(3){
-	background-color: #9c27b0;
+	background-color: #546E7A;
 }
 .colorNested > div:nth-child(4){
-	background-color: #401566;
+	background-color: #303D44;
 }
 .colorNested > div:nth-child(5){
-	background-color: #803566;
+	background-color: #262626;
 }
+.colorNested > div:nth-child(6){
+	background-color: #10253F;
+}
+.colorNested > div:nth-child(7){
+	background-color: #173B5D;
+}
+
+
 .timeSettingPage label{
 	width:100px;
 }
@@ -94,7 +129,9 @@ div[ng-view] {
 }
 
 .bc-screen {
-	width: 1920px;
+/* 	width가 고정값이면 반응형 웹이 안됨 	
+	반응형 웹이 필요한 곳에서는 html 내의 bc-screen에 인라인스타일로  width:100%  !important 지정해줌*/
+	width: 1920px;  
 	height: 1080px;
 	margin-top: 0px;
 	margin-bottom: 0px;
@@ -294,6 +331,11 @@ color:yellow;
 	clear: left;
 }
 
+
+
+.colList p{
+	margin:0;	
+}
 
 
 .tbm-table{
