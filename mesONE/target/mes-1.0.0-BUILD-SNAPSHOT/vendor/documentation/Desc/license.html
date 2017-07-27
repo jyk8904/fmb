@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="Javascript DataGrid AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net">
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon">
+<meta name="og:description" content="Javascript DataGrid AUIGrid by  AUISoft">
+<link rel="stylesheet" href="../style.css" type="text/css" media="screen">
+<title>AUIGrid Documentation</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:굴림;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"맑은 고딕";
+	panose-1:2 11 5 3 2 0 0 2 0 4;}
+@font-face
+	{font-family:"\@맑은 고딕";
+	panose-1:2 11 5 3 2 0 0 2 0 4;}
+@font-face
+	{font-family:"\@굴림";
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:107%;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"맑은 고딕";}
+p
+	{margin-right:0cm;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:굴림;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:40.0pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:107%;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"맑은 고딕";}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:107%;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:3.0cm 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+</head>
+<body>
+
+<div class="MainContent">
+
+<span class="className">AUIGrid 에서 사용하는 OpenSource 라이선스 명시 의무</span>
+
+<div class=WordSection1>
+
+
+<p class=MsoNormal><span lang=EN-US style='font-size:12.0pt;line-height:107%;
+mso-fareast-font-family:"맑은 고딕";mso-fareast-theme-font:minor-latin'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:38.0pt;mso-para-margin-left:0gd;
+text-indent:-18.0pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+lang=EN-US style='font-size:12.0pt;line-height:107%;font-family:Wingdings;
+mso-fareast-font-family:Wingdings;mso-bidi-font-family:Wingdings'><span
+style='mso-list:Ignore'>l<span style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+lang=EN-US style='font-size:12.0pt;line-height:107%;mso-fareast-font-family:
+"맑은 고딕";mso-fareast-theme-font:minor-latin'>JSZip </span><span lang=EN
+style='font-size:12.0pt;line-height:107%;mso-fareast-font-family:"맑은 고딕";
+mso-fareast-theme-font:minor-latin;mso-bidi-font-family:Helvetica;color:#333333;
+mso-ansi-language:EN'>version 2.5.0</span><span lang=EN-US style='font-size:
+12.0pt;line-height:107%;mso-fareast-font-family:"맑은 고딕";mso-fareast-theme-font:
+minor-latin'><o:p></o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:38.0pt;mso-para-margin-left:0gd'><span
+style='font-size:12.0pt;line-height:107%;mso-fareast-font-family:"맑은 고딕";
+mso-fareast-theme-font:minor-latin'>출처 <span lang=EN-US>: <a
+href="https://stuk.github.io/jszip/"  target="_blank">https://stuk.github.io/jszip/</a><o:p></o:p></span></span></p>
+
+<p class=MsoListParagraph style='margin-left:38.0pt;mso-para-margin-left:0gd'><span
+style='font-size:12.0pt;line-height:107%;mso-fareast-font-family:"맑은 고딕";
+mso-fareast-theme-font:minor-latin'>라이선스 유형 <span lang=EN-US>: MIT or GPLv3 </span>듀얼
+라이선스로 <span lang=EN-US>MIT </span>라이선스를 따릅니다<span lang=EN-US>.<o:p></o:p></span></span></p>
+
+<p class=MsoListParagraph><span lang=EN-US style='font-size:12.0pt;line-height:
+107%;mso-fareast-font-family:"맑은 고딕";mso-fareast-theme-font:minor-latin'>JSZip
+- A Javascript class for generating and reading zip files<o:p></o:p></span></p>
+
+<p class=MsoListParagraph><span lang=EN-US style='font-size:12.0pt;line-height:
+107%;mso-fareast-font-family:"맑은 고딕";mso-fareast-theme-font:minor-latin'>&lt;http://stuartk.com/jszip&gt;<o:p></o:p></span></p>
+
+<p class=MsoListParagraph><span lang=EN-US style='font-size:12.0pt;line-height:
+107%;mso-fareast-font-family:"맑은 고딕";mso-fareast-theme-font:minor-latin'>(c)
+2009-2014 Stuart Knightley &lt;stuart [at] stuartk.com&gt;<o:p></o:p></span></p>
+
+<p class=MsoListParagraph><span lang=EN-US style='font-size:12.0pt;line-height:
+107%;mso-fareast-font-family:"맑은 고딕";mso-fareast-theme-font:minor-latin'>Dual
+licenced under the MIT license or GPLv3. See
+<a
+href="https://raw.github.com/Stuk/jszip/master/LICENSE.markdown" target="_blank">https://raw.github.com/Stuk/jszip/master/LICENSE.markdown.</a><o:p></o:p></span></p>
+
+<p class=MsoListParagraph><span lang=EN-US style='font-size:12.0pt;line-height:
+107%;mso-fareast-font-family:"맑은 고딕";mso-fareast-theme-font:minor-latin'>JSZip
+uses the library pako released under the MIT license :<o:p></o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:38.0pt;mso-para-margin-left:0gd'><span
+lang=EN-US style='font-size:12.0pt;line-height:107%;mso-fareast-font-family:
+"맑은 고딕";mso-fareast-theme-font:minor-latin'><a
+href="https://github.com/nodeca/pako/blob/master/LICENSE" target="_blank">https://github.com/nodeca/pako/blob/master/LICENSE</a><o:p></o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:38.0pt;mso-para-margin-left:0gd'><span
+lang=EN-US style='font-size:12.0pt;line-height:107%;mso-fareast-font-family:
+"맑은 고딕";mso-fareast-theme-font:minor-latin'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:38.0pt;mso-para-margin-left:0gd;
+text-indent:-18.0pt;mso-list:l0 level1 lfo1'><![if !supportLists]><span
+lang=EN-US style='font-size:12.0pt;line-height:107%;font-family:Wingdings;
+mso-fareast-font-family:Wingdings;mso-bidi-font-family:Wingdings'><span
+style='mso-list:Ignore'>l<span style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+lang=EN-US style='font-size:12.0pt;line-height:107%;mso-fareast-font-family:
+"맑은 고딕";mso-fareast-theme-font:minor-latin;mso-bidi-font-family:Arial'><span style='color:#666666;
+text-decoration:none;text-underline:none'><span itemprop=name>crypto-js</span></span>
+version <span style='mso-font-kerning:18.0pt;mso-bidi-font-weight:bold'>3.1.2</span></span><span
+lang=EN-US style='font-size:12.0pt;line-height:107%;mso-fareast-font-family:
+"맑은 고딕";mso-fareast-theme-font:minor-latin'><o:p></o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:38.0pt;mso-para-margin-left:0gd'><span
+style='font-size:12.0pt;line-height:107%;mso-fareast-font-family:"맑은 고딕";
+mso-fareast-theme-font:minor-latin;mso-bidi-font-family:Arial;mso-font-kerning:
+18.0pt;mso-bidi-font-weight:bold'>출처 <span lang=EN-US>: <a
+href="http://code.google.com/p/crypto-js/"  target="_blank">http://code.google.com/p/crypto-js/</a><o:p></o:p></span></span></p>
+
+<p class=MsoListParagraph style='margin-left:38.0pt;mso-para-margin-left:0gd'><span
+style='font-size:12.0pt;line-height:107%;mso-fareast-font-family:"맑은 고딕";
+mso-fareast-theme-font:minor-latin;mso-bidi-font-family:Arial;mso-font-kerning:
+18.0pt;mso-bidi-font-weight:bold'>라이선스 유형 <span lang=EN-US>: </span></span><span
+lang=EN-US style='font-size:12.0pt;line-height:107%;mso-fareast-font-family:
+"맑은 고딕";mso-fareast-theme-font:minor-latin;mso-bidi-font-family:Arial'>New BSD
+License<o:p></o:p></span></p>
+
+<p class=MsoListParagraph><span lang=EN-US style='font-size:12.0pt;line-height:
+107%;mso-fareast-font-family:"맑은 고딕";mso-fareast-theme-font:minor-latin'>CryptoJS
+v3.1.2<o:p></o:p></span></p>
+
+<p class=MsoListParagraph><span lang=EN-US style='font-size:12.0pt;line-height:
+107%;mso-fareast-font-family:"맑은 고딕";mso-fareast-theme-font:minor-latin'>code.google.com/p/crypto-js<o:p></o:p></span></p>
+
+<p class=MsoListParagraph><span lang=EN-US style='font-size:12.0pt;line-height:
+107%;mso-fareast-font-family:"맑은 고딕";mso-fareast-theme-font:minor-latin'>(c)
+2009-2013 by Jeff Mott. All rights reserved.<o:p></o:p></span></p>
+
+<p class=MsoListParagraph><span lang=EN-US style='font-size:12.0pt;line-height:
+107%;mso-fareast-font-family:"맑은 고딕";mso-fareast-theme-font:minor-latin'><a
+href="http://code.google.com/p/crypto-js/wiki/License"  target="_blank">http://code.google.com/p/crypto-js/wiki/License</a><o:p></o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:12.0pt;line-height:107%;
+mso-fareast-font-family:"맑은 고딕";mso-fareast-theme-font:minor-latin'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:12.0pt;line-height:107%;
+mso-fareast-font-family:"맑은 고딕";mso-fareast-theme-font:minor-latin'>OpenSource </span><span
+style='font-size:12.0pt;line-height:107%;mso-fareast-font-family:"맑은 고딕";
+mso-fareast-theme-font:minor-latin'>라이센스들은 소스코드를 자유롭게 열람하고 수정 및 재배포할 수 있는 권리를 부여하는
+한편<span lang=EN-US>, </span>소프트웨어를 사용할 때 해당<span lang=EN-US> OpenSource </span>소프트웨어가
+사용되었음을 명시적으로 표기하는 것을 의무사항으로 채택하고 있습니다<span lang=EN-US>.<o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:12.0pt;line-height:107%;
+mso-fareast-font-family:"맑은 고딕";mso-fareast-theme-font:minor-latin'>AUIGrid </span><span
+style='font-size:12.0pt;line-height:107%;mso-fareast-font-family:"맑은 고딕";
+mso-fareast-theme-font:minor-latin'>는 위에서 언급한 <span lang=EN-US>OpenSource </span>를
+사용하고 있음을 명시하고<span lang=EN-US>, </span>출처를 밝힙니다<span lang=EN-US>.<o:p></o:p></span></span></p>
+
+</div>
+
+
+</div>
+
+</body>
+
+</html>

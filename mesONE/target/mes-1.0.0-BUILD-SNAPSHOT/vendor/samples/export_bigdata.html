@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+
+<!-- 브라우저 다운로딩 할 수 있는 JS 추가 -->
+<script type="text/javascript" src="../pdfkit/FileSaver.min.js"></script>
+
+<style type="text/css">
+
+/* 커스텀 summary total  스타일 */
+.aui-grid-my-footer-sum-total {
+	font-weight:bold;
+	color:#4374D9;
+	text-align:right;
+}
+.aui-grid-my-footer-sum-total2 {
+	text-align:right;
+}
+
+/* 커스텀 칼럼 스타일 정의 */
+.my-right {
+	text-align:right;
+}
+.my-left {
+	text-align:left;
+}
+
+</style>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	createGridData(100000);
+};
+
+// AUIGrid 칼럼 설정
+// 칼럼 레이아웃
+var columnLayout = [{
+		dataField : "isbn",
+		headerText : "ISBN",
+		width: 200
+	}, {
+		dataField : "title",
+		headerText : "책 제목",
+		width: 300,
+		style : "my-left"
+	}, {
+		dataField : "author",
+		headerText : "저자",
+		width: 120
+	}, {
+		dataField : "publisher",
+		headerText : "출판사",
+		width: 120
+	}, {
+		dataField : "price",
+		headerText : "가격",
+		style : "my-right",
+		dataType : "numeric",
+		formatString : "#,##0",
+		width: 100
+	}, {
+		dataField : "pubdate",
+		headerText : "출판일",
+		dataType : "date",
+		formatString : "yyyy. mm. dd",
+		width: 100
+	}, {
+		dataField : "memo",
+		headerText : "메모",
+		style : "my-left",
+		width : 200
+	}];
+
+// 푸터 설정
+var footerObject = [ {
+	labelText : "총계",
+	positionField : "#base"
+}, {
+	dataField : "price",
+	positionField : "price",
+	operation : "SUM",
+	formatString : "#,##0",
+	style : "my-right"
+}];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+			editable : true,
+			rowNumColumnWidth : 50,
+			showFooter : true
+	};
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 푸터 객체 세팅
+	AUIGrid.setFooter(myGridID, footerObject);
+}
+
+// 엑셀 내보내기(Export);
+function exportTo() {
+	
+	//FileSaver.js 로 로컬 다운로드가능 여부 확인
+	if(!AUIGrid.isAvailableLocalDownload(myGridID)) {
+		alert("로컬 다운로드 불가능한 브라우저 입니다. 서버 사이드로 전송하여 다운로드 처리하십시오.");
+		return;
+	}
+	
+	var rowCount = AUIGrid.getRowCount(myGridID);
+	
+	// 10만행 보다 크다면 CSV로 다운로드 처리
+	if(rowCount >= 100000) {
+		if(confirm("10만행을 엑셀 또는 CSV 로 내보내기 합니다.\r\n확인 클릭 - 엑셀로 내보내기\r\n취소 클릭 - CSV로 내보내기")) {
+			AUIGrid.exportToXlsx(myGridID, {
+				fileName : "AUIGrid_엑셀 다운로드 테스트"
+			});
+		} else {
+			AUIGrid.exportToCsv(myGridID, {
+				fileName : "AUIGrid_CSV 다운로드 테스트"
+			});
+		}
+	}
+};
+
+
+// count 수만큼  데이터 생성
+function createGridData(count) {
+	var baseGridData = [{"idx":0,"isbn":"8925555980 9788925555980","title":"구글의 아침은 자유가 시작된다 (구글 인사 책임자가 직접 공개하는 인재 등용의 비밀)","author":"라즐로 복","price":"18000","publisher":"알에이치코리아","image":"http://bookthumb.phinf.naver.net/cover/090/117/09011735.jpg?type=m1&udate=20151120","pubdate":"20150514","link":"http://openapi.naver.com/l?AAACssTS2qtFV1dVa1dFW1NAAznFUdDdQyilLTbDNKSgpUjR1VjdyAKCk/P1svL7EstUgvOT8XKpCSBGXEp6SWJGbm6BVkAHW4JWWmqBq7WBoYGpobm6qV2BqamJqYmZmYGRibGFqo5dqWZLqmeLtVJZWVeDlFhfsGFlqE5gZneVh4RiUD9QEA6AxVApUAAAA=","memo":"메모 입력하세요."},{"idx":1,"isbn":"1185459294 9791185459295","title":"나는 떠났다 그리고 자유를 배웠다 (짜릿한 자유를 찾아 떠난 여성 저널리스트의 한 달에 한 도시 살기 프로젝트!)","author":"마이케 빈네무트","price":"14500","publisher":"북라이프","image":"http://bookthumb.phinf.naver.net/cover/094/277/09427718.jpg?type=m1&udate=20151113","pubdate":"20150820","link":"http://openapi.naver.com/l?AAAC2MsQ6DIBiEn+Z3NAgIMjAYlcWpbTo3IjRYa0FCm/TtSxqTG7675Lv9beNXwtCBGECgP3TQosJFe5cupQCkBaxytPdr+Zo+Npaz347B6ANuxqZpeZbBZUPpxQDpBcWcV02RZEVryhhliNDcN7kr28xBP66eI3IaQ51fzvQy9pivKJs/44zh/JcAAAA=","memo":"메모 하기"},{"idx":2,"isbn":"1130607062 9791130607061","title":"돈에서 자유로워지는 시간","author":"고득성","price":"15000","publisher":"다산북스","image":"http://bookthumb.phinf.naver.net/cover/100/363/10036377.jpg?type=m1&udate=20160127","pubdate":"20160106","link":"http://openapi.naver.com/l?AAAC2LvQqDMBgAn+bLKIlJIw4ZxMZCh0JxELoUf6KRJo3VqPTtG4pww3Fwn1XNXwEyh1RCiv+SQ4aRnlUvtPcT0AziItA494re9abmqHX2CF1zyLNTvh5NNOlwFM3YAT0TjCmnSYK8IOzEOGccU0ZSZIXZrm0+VMOllOtupI0f5b5ocq9uSxh/Zj6hn5YAAAA=","memo":"사용자가 직접 입력하는 곳"},{"idx":3,"isbn":"8959139866 9788959139866","title":"자유 (도스토예프스키에게 배운다)","author":"석영중","price":"17000","publisher":"예담","image":"http://bookthumb.phinf.naver.net/cover/098/764/09876422.jpg?type=m1&udate=20151208","pubdate":"20151127","link":"http://openapi.naver.com/l?AAAC2LTwuCMBxAP81vR9H9sx12cOYQoq5Rl9jaRCmbriX07ZMQ3uHx4M0fH78SmhpEAyL/Sw1VjvroO9mnNAGpAOsVG8Ije5nFx+wexi04u8nN+WSGZzb166Ht4IDsxa7kFGOUZEEZ5ZzynNBCoFG2hxPG50UBVu17vhBmw7U0Qh11x+h6/gBnhfr9lwAAAA==","memo":"메모 입력하세요."},{"idx":4,"isbn":"8955617755 9788955617757","title":"자유나라 평등나라 (자유와 평등을 생각하기 위한 청소년 철학소설)","author":"오가와 히토시","price":"12000","publisher":"바다출판사","image":"http://bookthumb.phinf.naver.net/cover/095/763/09576396.jpg?type=m1&udate=20160122","pubdate":"20150914","link":"http://openapi.naver.com/l?AAAC2MuwrCMBhGn+bPWFJz0QwZSpsq6OIkTpKYSHpNDVHo2xuk8A2HD855f1xcJagahAKB/1BDhZGP7iV9SguQCnZtnglhKGb9dbF4hmk7rNngYV3S3VgsPhut6SyQRrA9J4KjJEvKKOeUY0JLgSbJ7djoWRwu6jac7DGuV+b7/p5b7Byy+QNlQkYdlwAAAA==","memo":"메모 입력하세요."},{"idx":5,"isbn":"8901059363 9788901059365","title":"스페인, 너는 자유다 (모든 것을 훌훌 털어 버리고 떠난 낯선 땅에서 나를 다시 채우고 돌아오다)","author":"손미나","price":"13000","publisher":"웅진지식하우스","image":"http://bookthumb.phinf.naver.net/cover/025/051/02505155.jpg?type=m1&udate=20150713","pubdate":"20060728","link":"http://openapi.naver.com/l?AAAC2MQQuCMBiGf83ncUy3STvsYG5SVAfDe2xtMVGbyZL6940Q3sPDC8/zervlK0DVwBVw/IcaKpz5xT2Ej3EGUkHRpJkQBvTUq1vQPUzbYc0GN+ui7kc0+2Q0prdAZMEwyxnLosgpo2VJS0xozrNJnEx79WTdjfJy+AR9Trm9bAcVuo4fk/kD3KeCqZcAAAA=","memo":"메모 입력하세요."},{"idx":6,"isbn":"8996029998 9788996029991","title":"자유가 뭐예요? (철학하는 어린이)","author":"오스카 브르니피에","price":"9500","publisher":"상수리","image":"http://bookthumb.phinf.naver.net/cover/047/054/04705417.jpg?type=m1&udate=20150720","pubdate":"20080811","link":"http://openapi.naver.com/l?AAAC2LQQuCMBhAf82345j5qeyww9AZnSKqc6j7ZFLmkhXpr2+E8A6PB+/1pnlRYEqQBqT4SwlaMDdTr1wIHlINuzrSTtOdP5sPzbybxi3YdpObpdAMD+5dPOp2sJBWWIgMk4IFlWCGeY65SDGRbFS0mlWS6Hpn919t62W8HL0/H076Gr8fccK2bJUAAAA=","memo":"메모 입력하세요."},{"idx":7,"isbn":"1155501470 9791155501474","title":"노자와 묵자, 자유를 찾고 평화를 넓히다 (무유의 세계를 대표하는 두 거장의 이야기)","author":"신정근","price":"15000","publisher":"사람의무늬","image":"http://bookthumb.phinf.naver.net/cover/100/152/10015283.jpg?type=m1&udate=20160111","pubdate":"20151225","link":"http://openapi.naver.com/l?AAAC3LvQqDMBiF4av5HCUxMZghg9UIHUr2LsWYryj+RG3a0l59QxHO8HLg2Z64fxToCqQGSf5RQUmSfse76kNYgZWQNXHW+zFd2hfuaefn43D2iJvD0A5TuvZRNHZwwGpKCM2zgiVBUZ5zIbggjFOZzOpUR/e172562AKvZ2Pc4snG0FyojvQHyOy2ZZgAAAA=","memo":"메모 입력하세요."},{"idx":8,"isbn":"1195611005 9791195611003","title":"남자도 자유가 필요해 (회사 잘린 지 2200일, 낭랑 오십 해직 기자 미친 척 남미로 떠나다)","author":"우장균","price":"14500","publisher":"북플래닛(BookPlanet)","image":"http://bookthumb.phinf.naver.net/cover/096/751/09675170.jpg?type=m1&udate=20151103","pubdate":"20151016","link":"http://openapi.naver.com/l?AAACssTS2qtFV1dVa1dFW1NAAznFUdDdQyilLTbDNKSgpUjR1VjdyAKCk/P1svL7EstUgvOT8XKpCSBGXEp6SWJGbm6BVkAHW4JWWmqBq7WJqZmxqaG6iV2BqamJqYmZmYGRibGFqq5domZeUHRZlbGBq4eQUn+4cGeiQ7+ZWaVxT5ZyYD9QEAwlKuuJUAAAA=","memo":"메모 입력하세요."},{"idx":9,"isbn":"8963600971 9788963600970","title":"복음 안에서 발견한 참된 자유","author":"티모시 켈러","price":"5000","publisher":"복있는사람","image":"http://bookthumb.phinf.naver.net/cover/070/461/07046107.jpg?type=m1&udate=20150827","pubdate":"20121108","link":"http://openapi.naver.com/l?AAACssTS2qtFV1dVa1dFW1NAAznFUdDdQyilLTbDNKSgpUjR1VjdyAKCk/P1svL7EstUgvOT8XKpCSBGXEp6SWJGbm6BVkAHW4JWWmqBq7mBuYmBkamKuV2BqamJqYmZmYGRibGFqq5dqGBZYnO5tbBoS4GvkHGAGN8PAzSU2PMHJ0Kw41AeoEAAL2FE+XAAAA","memo":"메모 입력하세요."},{"idx":10,"isbn":"8993688451 9788993688450","title":"너에게 끌려 다니지 않을 자유 (대인관계, 사랑, 자존감의 본질을 꿰뚫는 자유의 심리학)","author":"이재진","price":"14000","publisher":"투리북스","image":"http://bookthumb.phinf.naver.net/cover/097/074/09707418.jpg?type=m1&udate=20151026","pubdate":"20151030","link":"http://openapi.naver.com/l?AAACssTS2qtFV1dVa1dFW1NAAznFUdDdQyilLTbDNKSgpUjR1VjdyAKCk/P1svL7EstUgvOT8XKpCSBGXEp6SWJGbm6BVkAHW4JWWmqBq7WJobmJsYWqiV2BqamJqYmZmYGRibGFqq5dr6lJcEmIRGqho5pfpkZ5YFlnh6hJZXlFn4hUQVZAN1AgC9ZjaxlwAAAA==","memo":"메모 입력하세요."},{"idx":11,"isbn":"9367161816 8809367161810","title":"원피스 직소퍼즐 108pcs 미니: 자유","author":"학산문화사 편집부","price":"5000","publisher":"학산문화사","image":"http://bookthumb.phinf.naver.net/cover/101/442/10144270.jpg?type=m1&udate=20160120","pubdate":"20160119","link":"http://openapi.naver.com/l?AAAC2LvQrCMBgAn+bLGJI2VjJkKP0RwU2wOknzU9NqbQyxWJ/eIIUbjoN7vY1fBFQF8Ao4+UsBOUHWm07YEBykOSR1RE7THT/b2XispnENWq5y1Sa0/QM7G49a9hrSkhLKWLIlKAjKNizLWEZSRjkaRdg1w7D/8oU2/alSx5tT9nzoPvV8ieMP3uCE8pYAAAA=","memo":"메모 입력하세요."},{"idx":12,"isbn":"1195189362 9791195189366","title":"꿈과 끼를 키우는 자유학기제 (자유학기제 연구학교 이야기)","author":"자유학기제연구학교교사모임","price":"15000","publisher":"라임","image":"http://bookthumb.phinf.naver.net/cover/076/025/07602577.jpg?type=m1&udate=20150715","pubdate":"20140509","link":"http://openapi.naver.com/l?AAACssTS2qtFV1dVa1dFW1NAAznFUdDdQyilLTbDNKSgpUjR1VjdyAKCk/P1svL7EstUgvOT8XKpCSBGXEp6SWJGbm6BVkAHW4JWWmqBq7mJsZGJmam6uV2BqamJqYmZmYGRibGFqq5dqmpxQWV3olZlgY+RmVR/q7ZgVWBvkEuEcWVoQC9QEAZhAXK5UAAAA=","memo":"메모 입력하세요."},{"idx":13,"isbn":"8998400812 9788998400811","title":"꿈과 끼를 찾는 자유학기제의 모든 것 (덴마크.영국.아일랜드의 직업체험 현장부터 한국의 자유학기제까지)","author":"양소영","price":"15800","publisher":"꿈결","image":"http://bookthumb.phinf.naver.net/cover/100/869/10086936.jpg?type=m1&udate=20160115","pubdate":"20160118","link":"http://openapi.naver.com/l?AAAC2LTwvCIBxAP83Po7g0y4OH4VwFXbqMOsVMh2PuT8OEvn0Sg3d4PHjvj1u/ErQCoUGQvygoCfKr66SPcQFawq7OmHke8NQmt+LXPG7Bmk2e1sW2D3jx+ahNb4FWBSFHLihHURZszzhnnFBWCDTK0ySiavQhVeerC7eHF4k1l7Dc9ZDHH4g62yKWAAAA","memo":"메모 입력하세요."},{"idx":14,"isbn":"8987480488 9788987480480","title":"아는 것으로부터의 자유","author":"지두 크리슈나무르티","price":"10000","publisher":"물병자리","image":"http://bookthumb.phinf.naver.net/cover/001/082/00108201.jpg?type=m1&udate=20150715","pubdate":"20020425","link":"http://openapi.naver.com/l?AAAC2LvQrCMBgAn+brGPLXYIYMNbagg851kcSkJGhNG2LRt7dI4Ybj4Oa3z18FrQbZgsR/0dDgKmQ/qFDKBKwB2q3YlB7oZRaf0T2NW3B2k5vzxcQnmsJ6dDY6YAeCdxSTqijCay4EF5hxiqtR9SLWn7k9syJPSzgSc6X9MNdA9/qS1vEHGLxTPJYAAAA=","memo":"메모 입력하세요."}];
+	var gridData = [];
+	var i, j, n, baseCount;
+	var item;
+	var index, baseLen = baseGridData.length;
+	for (i = 0; i < count; i++) {
+		item = {};
+		index = i % baseLen;
+		for(n in baseGridData[index]) {
+			item[n] = baseGridData[index][n];
+		}
+		gridData[i] = item;
+	}
+	
+	// AUIGrid 에 데이터 삽입합니다.
+	AUIGrid.setGridData("#grid_wrap", gridData);
+};
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>10만개의 행 * 7개의 열을 엑셀(또는 CSV) 로 내보내기 하는 데모입니다.</p>
+		<p>엑셀(또는 CSV) 는 AUIGrid 내에서 자체적으로 포맷을 작성합니다.</p>
+		<p>이는 자바스크립트로 브라우저 자원만을 갖고 엑셀(또는 CSV) 양식을 작성하는 것으로 클라이언트 PC 사양 및 브라우저의 영향을 받습니다.</p>
+		<p>따라서 사용자 PC에서 엑셀로 내보내기를 실행하여 직접 퍼포먼스를 확인하시길 바랍니다.</p>
+		<p>참고 : 저사양 PC 및 구형 브라우저에서 대용량 데이터를 내보내기에는 무리가 있습니다.</p>
+		<p>■ 엑셀 다운로드 예상 속도 : 10초 ~ 30초 이내</p>
+		<p>■ CSV 다운로드 예상 속도 : 5초 ~ 15초 이내</p>
+		
+		<ul class="nav_u">
+			<li><span onclick="exportTo()" class="btn">엑셀 or CSV 로 내보내기</span></li>
+		</ul>
+	</div>
+	
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:420px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

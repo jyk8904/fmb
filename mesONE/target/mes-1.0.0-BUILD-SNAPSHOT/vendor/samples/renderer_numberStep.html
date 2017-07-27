@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+
+/* 커스텀 칼럼 스타일 정의 */
+.aui-grid-user-custom-left {
+	text-align:left;
+}
+
+/* 넙버스텝 렌더러 스텝 인풋 사이징 재조정 ( 그리드 rowHeight 설정 시 그에 맞게 조절 필요 ) */
+.aui-grid-number-step-input {
+	height:24px; 
+	line-height:24px;
+}
+</style>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/normal_100.json");
+
+};
+
+// AUIGrid 칼럼 설정
+// 데이터 형태는 다음과 같은 형태임,
+//[{"id":"#Cust0","date":"2014-09-03","name":"Han","country":"USA","product":"Apple","color":"Red","price":746400}, { .....} ];
+var columnLayout = [ {
+		dataField : "id",
+		headerText : "Client ID",
+		width : 100
+	}, {
+		dataField : "name",
+		headerText : "Name",
+		width : 100,
+		style : "aui-grid-user-custom-left",
+		renderer : {
+			type : "IconRenderer",
+			iconWidth : 20, // icon 가로 사이즈, 지정하지 않으면 24로 기본값 적용됨
+			iconHeight : 20,
+			iconTableRef :  { // icon 값 참조할 테이블 레퍼런스
+				"default" : "./assets/office_man.png" // default
+			}
+		}
+	}, {
+		dataField : "product",
+		headerText : "Product",
+		width: 140
+	}, {
+		dataField : "price",
+		headerText : "Price",
+		renderer : {
+			type : "NumberStepRenderer",
+			min : -100000,
+			max : 1000000,
+			step : 1000
+		}
+	}, {
+		dataField : "quantity",
+		headerText : "Quantity",
+		headerTooltip : { // 헤더 툴팁 표시 HTML 양식
+			show : true,
+			tooltipHtml : '키보드로 바로 입력 불가 설정<br/>오른쪽 스텝퍼로만 가능'
+		},
+		renderer : {
+			type : "NumberStepRenderer",
+			min : 0,
+			max : 50,
+			step : 1,
+			textEditable : false
+		}
+	}, {
+		dataField : "date",
+		headerText : "Date"
+	}
+];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {};
+	
+	// rowHeight 36 설정
+	auiGridProps.rowHeight = 36;
+
+	auiGridProps.showRowCheckColumn = true;
+	
+	// 체크박스 대신 라디오버튼 출력함
+	auiGridProps.rowCheckToRadio = true;
+
+	// 소팅
+	auiGridProps.enableSorting = true;
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 에디팅 정상 종료 이벤트 바인딩
+	AUIGrid.bind(myGridID, "cellEditEnd", auiCellEditingHandler);
+	
+}
+
+// 편집 핸들러
+function auiCellEditingHandler(event) {
+	if(event.type == "cellEditEnd") {
+		document.getElementById("ellapse").innerHTML = "Editing End : ( " + event.rowIndex  + ", " + event.columnIndex + ") : " + event.value;
+	}
+};
+
+// 체크된 아이템 얻기
+function getCheckedRowItems() {
+	var checkedItems = AUIGrid.getCheckedRowItems(myGridID);
+	var str = "";
+	var rowItem;
+	for(var i=0, len = checkedItems.length; i<len; i++) {
+		rowItem = checkedItems[i];
+		str += "row : " + rowItem.rowIndex + ", id :" + rowItem.item.id + ", Price : " + rowItem.item.price  + ", Quantity : " + rowItem.item.quantity;
+	}
+	alert(str);
+}
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>NumberStep 렌더러는 지정된 숫자의 범위 안에서 정해진 간격만큼 가감합니다.(min, max, step)</p>
+		<p>Price 칼럼에는 마우스 뿐만 아니라, 직접 키보드로 입력이 가능하도록 설정하였고, (Enter: 수정 완료, Esc : 수정 취소)</p>
+		<p>Quantity 칼럼은 키보드로 입력할 수 없이 상,하 화살표 클릭으로만 가능하도록 설정하였습니다.(textEditable = false 설정)</p>
+		<span  onclick="getCheckedRowItems()" class="btn">체크 항목 얻기</span>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:480px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

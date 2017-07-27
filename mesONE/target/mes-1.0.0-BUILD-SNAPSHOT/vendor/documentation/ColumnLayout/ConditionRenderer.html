@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../style.css" type="text/css" media="screen">
+<meta content="ConditionRenderer,ColumnLayout.ConditionRenderer" name="keywords">
+<title>ColumnLayout.ConditionRenderer</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript">
+<!--
+				function loadClassListFrame(classListFrameURL) {
+				return;
+				}
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">AUIGrid 2.11 Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../all-classes.html')" href="../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../all-classes.html')" href="../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a href="../index.html?ColumnLayout/ConditionRenderer.html&amp;ColumnLayout/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="AUISoft Logo" title="AUISoft Logo" class="logoImage" src="../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;ConditionRenderer</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#styleSummary">Styles</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<div class="classDescContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable"></table>
+<span class="className">ConditionRenderer</span>
+<p></p>
+<p>컨디션 렌더러는 칼럼 셀의 에디터를 동적으로 지정할 수 있습니다.</p>
+<p>일반적으로 하나의 칼럼에는 동일한 에디터가 출력됩니다. 즉, 달력(CalendarRenderer) 를 설정하면 해당 칼럼의 모든 셀은 수정 시 달력이 출력됩니다.</p>
+<p>그러나 컨디션 렌더러로 하나의 칼럼의 에디터를 동적으로 표현 할 수 있습니다.</p>
+<p>콤보박스 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 editRenderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 editRenderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+<p></p>
+<a name="mxmlSyntaxSummary"></a><span class="classHeaderTableLabel">아래는 설정 예제 입니다.</span>
+<div class="mxmlSyntax" id="mxmlSyntax"><pre>
+// 조건부 에디트렌더러 출력할 editRenderer 정의 1
+var myEditRenderer = {
+      type : "DropDownListRenderer",
+      list : posList
+};
+
+// 조건부 에디트렌더러 출력할 editRenderer 정의 2
+var myEditRenderer2 = {
+      type : "CalendarRenderer",
+      showEditorBtnOver : true, // 마우스 오버 시 에디터버턴 출력 여부
+      onlyCalendar : true, // 사용자 입력 불가, 즉 달력으로만 날짜입력 (기본값 : true)
+      showExtraDays : true // 지난 달, 다음 달 여분의 날짜(days) 출력
+};
+
+var columnLayout = [ {
+     dataField : "name",
+     headerText : "Name",
+     width : 140
+}, {
+     dataField : "data",
+     headerText : "Data",
+     width : 120,
+     editRenderer : { // 조건에 따라 editRenderer 사용하기.
+            type : "ConditionRenderer", 
+            conditionFunction : function(rowIndex, columnIndex, value, item, dataField) {
+                  // 특정 조건에 따라 미리 정의한 editRenderer 반환.
+                  if(item.myCode == 1) {
+                       return myEditRenderer;
+                  } else if(item.myCode == 2) {
+                       return myEditRenderer2;
+                  }
+            }
+     }
+}];
+</pre>
+</div>
+<br>
+</div>
+<div class="summarySection">
+<table id="summaryTableStyle" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>NAME</th><th>Description</th>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">conditionFunction</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Function<br>
+<p>셀 편집 시 표현할 에디터를 동적으로 지정해주는 함수입니다. ConditionRenderer 사용 시 이 함수는 필수 정의해야 합니다.</p>
+<p>conditionFunction 은 함수를 지정해야 하며 함수 형태는 다음과 같습니다. </p>
+<ul>
+<li>rowIndex : 행 인덱스</li>
+<li>columnIndex : 칼럼 인덱스</li>
+<li>value : 원래 데이터의 해당 셀 값(value)</li>
+<li>item : 해당 행에 출력되고 있는 행 아이템 객체 (Object)</li>
+<li>dataField : 해당 칼럼이 출력하고 있는 행 아이템의 필드명(String)</li>
+</ul>
+<pre> 
+conditionFunction : function(rowIndex, columnIndex, value, item, dataField) {
+       // 특정 조건에 따라 미리 정의한 editRenderer 반환.
+       if(item.myCode == 1) {
+              return myEditRenderer; // 미리 정의된 Object
+       } else if(item.myCode == 2) {
+              return myEditRenderer2; // 미리 정의된 Object
+       }
+}
+</pre>
+<p> 이 함수의 반환값이 곧 실제 적용되는 에디트렌더러가 됩니다.</p>
+<p> 정의한 conditionFunction 내에서 하지 말아야 할 코드 - 안티 코드 (퍼포먼스를 위함) </p>
+<ul>
+<li>1. $(this), $("#abc") 와 같은 jQuery 객체 만들기 및 DOM 검색을 하지 마십시오.</li>
+<li>2. return 시키는 객체를 여기서 선언하지 마십시오. 즉, return { type : "DropDownListRenderer", list : ["A", "B"] }; 이와 같은 리턴은 피하십시오.  반드시 선언된 객체의 참조값(변수명)을 반환하십시오.</li>
+<li>3. 나아가 새로운 객체 선언 new Object() 등 피하십시오.</li>
+</ul>
+</td>
+</tr>
+</table>
+</div>
+<div class="MainContent">
+<p></p>
+<center class="copyright">Copyright(c) 2014-2017 AUISoft. All Right Reserved</center>
+</div>
+</body>
+</html>
+<!--Copyright(c) 2014-2017 AUISoft. All Right Reserved-->

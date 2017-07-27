@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+
+/* 커스텀 칼럼 스타일 정의 */
+.aui-grid-user-custom-column {
+	background:#ffffee;
+	font-weight: bold;
+}
+</style>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/normal_500.json");
+
+};
+
+// AUIGrid 칼럼 설정
+// 데이터 형태는 다음과 같은 형태임,
+//[{"id":"#Cust0","date":"2014-09-03","name":"Han","country":"USA","product":"Apple","color":"Red","price":746400}, { .....} ];
+var columnLayout = [ {
+		dataField : "id",
+		headerText : "Client ID",
+		width : 140
+	}, {
+		dataField : "name",
+		headerText : "Name",
+		width : 120
+	}, {
+		dataField : "country",
+		headerText : "Country",
+		width : 120
+	}, {
+		dataField : "flag",
+		headerText : "Flag IMG",
+		width : 120
+	}, {
+		dataField : "product",
+		headerText : "Product",
+		width : 120
+	}, {
+		dataField : "color",
+		headerText : "Color",
+		width : 120
+	}, {
+		dataField : "price",
+		headerText : "Price",
+		dataType : "numeric",
+		style : "my-column",
+		width : 120
+	}, {
+		dataField : "quantity",
+		headerText : "Quantity",
+		width : 120
+	}, {
+		dataField : "date",
+		headerText : "Date",
+		width : 120
+	}];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, {
+		
+		// 선택모드 (기본값은 singleCell 임)
+		selectionMode : "multipleCells",
+		
+		editable : true,
+		
+		showRowNumColumn : true,
+		
+		showRowCheckColumn : false,
+		
+		rowIdField : "id",
+		
+		// Home, End 키가 칼럼의 시작과 끝으로 이동함.
+		isColumnOriented : true
+	});
+	
+	// 그리드 ready 이벤트 바인딩
+	AUIGrid.bind(myGridID, "ready", auiGridCompleteHandler);
+
+};
+
+// 그리드 ready 이벤트 핸들러
+function auiGridCompleteHandler(event) {
+	AUIGrid.setSelectionByIndex(myGridID, 0, 0); // 첫번째 셀 선택되도록 지정
+};
+
+function changeSelectionMode(mode) {
+	AUIGrid.setSelectionMode(myGridID, mode); // 선택 모드 변경
+	AUIGrid.setSelectionByIndex(myGridID, 0, 0); // 첫번째 셀 선택되도록 지정
+}
+
+
+function getSelectedItems() {
+	var selectedItems = AUIGrid.getSelectedItems(myGridID);
+	if(selectedItems.length <= 0) {
+		alert("없음");
+		return;
+	}
+	var str = "";
+	var i, rowItem, rowInfoObj, dataField;
+	selectionMode = AUIGrid.getProp(myGridID, "selectionMode");
+	
+	// 셀 선택모드
+	if(selectionMode == "singleCell" || selectionMode == "multipleCells") {
+		
+		for(i=0; i<selectedItems.length; i++) {
+			rowInfoObj = selectedItems[i];
+			str += "(" + rowInfoObj.rowIndex + ", " + rowInfoObj.columnIndex + ") " + rowInfoObj.value + "\n";
+		}
+	
+	// 행 선택모드
+	} else if(selectionMode == "singleRow" || selectionMode == "multipleRows") {
+		for(i=0; i<selectedItems.length; i++) {
+			rowInfoObj = selectedItems[i];
+			rowItem = rowInfoObj.item;
+			str += "rowIdx : " + rowInfoObj.rowIndex + ", id : " + rowItem.id + ", name : " + rowItem.name + ", country : " + rowItem.country + "......\n";
+		}
+	}
+	
+	alert(str);
+};
+
+// 셀렉션 블럭을 강제로 만듭니다.
+function setSelection() {
+	
+	// 시작행 인덱스, 끝 행 인덱스, 시작 칼럼 인덱스, 끝 칼럼 인덱스 로 하는 블럭을 만듬.
+	// 단, multipleCells 일 때 블럭 셀렉션이 만들어지고 다른 mode 인 경우 각각 해당 모드에 맞게 조절됨.
+	// 예를 들어 2, 4, 2, 4로 블럭 셀렉션을 했는데 singleCell 모드라면 2, 2 에 선택되도록 조절됨.
+	AUIGrid.setSelectionBlock(myGridID, 1, 4, 1, 4);
+};
+
+// 셀렉션 셀을 강제로 만듭니다.
+function setSelectionIndex() {
+	// 25 행인덱스, 7 열인덱스를 선택하도록 지시
+	AUIGrid.setSelectionByIndex(myGridID, 25, 7);
+};
+
+//셀렉션 초기화
+function clearSelection() {
+	
+	// 현재 선택된 셀렉션이 있다면 초기화함.
+	AUIGrid.clearSelection(myGridID);
+};
+
+function chkboxClick() {
+	
+	var isChecked = document.getElementById("chkbox").checked;
+		
+	// isColumnOriented 속성 변경
+	AUIGrid.setProp(myGridID, "isColumnOriented", isChecked);
+}
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>■키보드 화살표키 : 각 방향으로 이동, ■Enter : 아래로, ■Shift + Enter : 위로, ■Tab : 오른쪽으로, ■Shift + Tab : 왼쪽으로<p>
+		<p>■Ctrl + 화살표키 좌, 우 : 칼럼 시작, 끝으로 이동, ■Ctrl + 화살표키 상, 하 : 행(row) 최상단, 최하단으로 이동 </p>
+		<p>■Home : 최상단으로, ■End : 최하단으로, ■PgUp : 한 페이지 위로, ■PgDown : 한 페이지 아래로</p>
+		<p><span onclick="getSelectedItems()" class="btn" style="maring-top:0">선택 아이템 가져오기</span>
+		 <span onclick="setSelection()" class="btn" style="maring-top:0">강제로 블럭 선택하기</span>
+		 <span onclick="setSelectionIndex()" class="btn" style="maring-top:0">강제로 셀 선택하기</span>
+		 <span onclick="clearSelection()" class="btn" style="maring-top:0">선택 해제하기</span>
+		 </p>
+		<p><input type="checkbox" id="chkbox" checked="checked" onclick="chkboxClick()"></input><label for="chkbox">Home, End 키가 칼럼 시작, 끝으로 이동(isColumnOriented, 기본값:true)</label></p>
+		<p>■다중 선택 방법 : 드래깅, Ctrl+클릭, Shift+클릭, Shift+방향키 이동 (multipleCells, multipleRows 에서만 유효)</p>
+		<p><span>선택(selection) 모드는 아래와 같이 5개가 존재합니다.</span></p>
+		<ul class="nav_u">
+			<li><span onclick="changeSelectionMode('singleRow')" class="btn">singleRow</span></li>
+			<li><span onclick="changeSelectionMode('singleCell')" class="btn">singleCell (기본값)</span></li>
+			<li><span  onclick="changeSelectionMode('multipleRows')" class="btn">multipleRows</span></li>
+			<li><span  onclick="changeSelectionMode('multipleCells')" class="btn">multipleCells</span></li>
+			<li><span  onclick="changeSelectionMode('none')" class="btn">none</span></li>
+		</ul>
+		<span></span>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:400px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

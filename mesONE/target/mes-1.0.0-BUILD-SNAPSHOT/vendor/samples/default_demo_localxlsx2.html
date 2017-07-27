@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+
+<!-- jQuery -->
+<script type="text/javascript"	src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
+<!-- SheetJS js-xlsx, https://github.com/SheetJS/js-xlsx-->
+<!-- Apache License v2.0  (http://www.apache.org/licenses/LICENSE-2.0) -->
+<script type="text/javascript" src="./js-xlsx/shim.js"></script>
+<script type="text/javascript" src="./js-xlsx/jszip.js"></script>
+<script type="text/javascript" src="./js-xlsx/xlsx.js"></script>
+
+<script type="text/javascript">
+
+function documentReady() {
+	return false;
+};
+
+var myGridID;
+
+// document ready 
+$(document).ready(function() { 
+	
+	// 최초 그리드 생성함.
+	createInitGrid();
+	
+	// IE10, 11은 readAsBinaryString 지원을 안함. 따라서 체크함.
+	var rABS = typeof FileReader !== "undefined" && typeof FileReader.prototype !== "undefined" && typeof FileReader.prototype.readAsBinaryString !== "undefined";
+
+	// HTML5 브라우저인지 체크 즉, FileReader 를 사용할 수 있는지 여부
+	function checkHTML5Brower() {
+		var isCompatible = false;
+		if (window.File && window.FileReader && window.FileList && window.Blob) {
+			isCompatible = true;
+		}
+		return isCompatible;
+	};
+	
+	// 파일 선택하기
+	$('#fileSelector').on('change', function(evt) {
+		if (!checkHTML5Brower()) {
+		    alert("브라우저가 HTML5 를 지원하지 않습니다.\r\n서버로 업로드해서 해결하십시오.");
+			return;
+		} else {
+		    var data = null;
+		    var file = evt.target.files[0];
+		    if (typeof file == "undefined") {
+				alert("파일 선택 시 오류 발생!!");
+		        return;
+		    }
+		    var reader = new FileReader();
+
+			reader.onload = function(e) {
+				var data = e.target.result;
+
+				/* 엑셀 바이너리 읽기 */
+				
+				var workbook;
+
+				if(rABS) { // 일반적인 바이너리 지원하는 경우
+					workbook = XLSX.read(data, {type: 'binary'});
+				} else { // IE 10, 11인 경우
+					var arr = fixdata(data);
+					workbook = XLSX.read(btoa(arr), {type: 'base64'});
+				}
+
+				var jsonObj = process_wb(workbook);
+
+				//console.log(JSON.stringify(jsonObj.Sheet1, 2, 2));
+				
+				createAUIGrid( jsonObj[Object.keys(jsonObj)[0]] );
+			};
+
+			if(rABS) reader.readAsBinaryString(file);
+			else reader.readAsArrayBuffer(file);
+			
+		}
+	});
+
+});
+
+// IE10, 11는 바이너리스트링 못읽기 때문에 ArrayBuffer 처리 하기 위함.
+function fixdata(data) {
+	var o = "", l = 0, w = 10240;
+	for(; l<data.byteLength/w; ++l) o+=String.fromCharCode.apply(null,new Uint8Array(data.slice(l*w,l*w+w)));
+	o+=String.fromCharCode.apply(null, new Uint8Array(data.slice(l*w)));
+	return o;
+};
+
+// 파싱된 시트의 CDATA 제거 후 반환.
+function process_wb(wb) {
+	var output = "";
+	output = JSON.stringify(to_json(wb));
+	output = output.replace( /<!\[CDATA\[(.*?)\]\]>/g, '$1' );
+	return JSON.parse(output);
+};
+
+// 엑셀 시트를 파싱하여 반환
+function to_json(workbook) {
+	var result = {};
+	workbook.SheetNames.forEach(function(sheetName) {
+		// JSON 으로 파싱
+		//var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+		
+		// CSV 로 파싱
+		var roa = XLSX.utils.sheet_to_csv( workbook.Sheets[sheetName] );
+
+		if(roa.length > 0){
+			result[sheetName] = roa;
+		}
+	});
+	return result;
+}
+
+// 엑셀 파일 시트에서 파싱한 JSON 데이터 기반으로 그리드 동적 생성
+function createAUIGrid(csvStr) {
+	if(AUIGrid.isCreated(myGridID)) {
+		AUIGrid.destroy(myGridID);
+		myGridID = null;
+	}
+	var jsonData = parseCsv(csvStr);
+	var columnLayout = [];
+	var gridProps = {
+			selectionMode : "multipleCells"
+	};
+	
+	// 현재 엑셀 파일의 0번째 행을 기준으로 컬럼을 작성함.
+	// 만약 상단에 문서 제목과 같이 있는 경우
+	// 조정 필요.
+	var firstRow = jsonData[0];
+
+	if(typeof firstRow == "undefined") {
+		alert("AUIGrid 로 변환할 수 없는 엑셀 파일입니다.");
+		return;
+	}
+
+	$.each(firstRow, function(n,v) {
+		columnLayout.push({
+			dataField : n,
+			headerText : "Col" + (1 + n),
+			width : 100
+		});
+	});
+	
+	// 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, gridProps);
+	
+	// 그리드에 CSV 데이터 삽입
+	AUIGrid.setCsvGridData(myGridID, csvStr, false);
+
+};
+
+
+//최초 그리드 생성..
+function createInitGrid() {
+	
+	var columnLayout = [];
+	
+	for(var i=0; i<10; i++) {
+		columnLayout.push({
+			dataField : "f" + i,
+			headerText : String.fromCharCode(65 + i),
+			width : 80
+		});
+	}
+	
+	// 그리드 속성 설정
+	var gridPros = {
+			noDataMessage : "로컬 PC의 엑셀 파일을 선택하십시오."
+	};
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, gridPros);
+	
+	// 그리드 최초에 빈 데이터 넣음.
+	AUIGrid.setGridData(myGridID, []);
+}
+
+function parseCsv(value) {
+	var rows = value.split("\n");
+	var pData = [];
+	for(var i=0, len=rows.length; i<len; i++) {
+		pData[i] = rows[i].split(",");
+	}
+	return pData;
+}
+</script>
+
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>AUIGrid 자체적으로 엑셀 임포팅 기능은 지원하지 않습니다.</p>
+		<p>다만, XLSX 파일(또는 XLS)를 JSON 으로 파싱해 주는 라이브러(SheetJS js-xlsx)를 활용하여 동적으로 AUIGrid 임포팅을 구현한 응용 데모입니다.</p>
+		<p> SheetJS 의 js-xlsx 라이브러리 활용, 출처 : <a href="https://github.com/SheetJS/js-xlsx" target="_blank">https://github.com/SheetJS/js-xlsx</a> </p>
+		<p>SheetJS 의 js-xlsx 라이브러리는 아파치 라이센스 2.0  (Apache License v2.0, http://www.apache.org/licenses/LICENSE-2.0)  으로 상업적 용도로 사용해도 무방하며 아파치 라이센스 2.0 을 명시해야 합니다.</p>
+		<p>본 데모는 기본적인 구현 데모로, 엑셀 파일의 상단에 제목이나 기타 텍스트가 존재한다면 설정을 다르게 할 필요가 있습니다.</p>
+		<p>아래 샘플 파일 다운 받아 적용해 보세요.</p>
+		<p>테스트 파일 다운 받기 : <a href="./data/import_test.xlsx" target="_blank">import_test.xlsx</a>, 2번 테스트 파일 : <a href="./data/import_test2.xlsx" target="_blank">import_test2.xlsx</a></p>
+		
+		<!-- 파일 읽기  -->
+		<input type="file" id="fileSelector" name="files" accept=".xlsx">
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:480px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

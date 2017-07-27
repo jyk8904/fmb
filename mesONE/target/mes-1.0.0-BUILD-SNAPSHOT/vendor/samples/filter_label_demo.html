@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+
+/* 커스텀 칼럼 스타일 정의 */
+.my-column {
+	color:#D9418C;
+}
+
+.my-colum-right {
+	text-align:right;
+}
+</style>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	var gridData = getRandomData();
+	// 그리드 데이터 삽입
+	AUIGrid.setGridData(myGridID, gridData);
+};
+
+//key-value 를 갖는 구조
+var keyValueList = [{"code":"001", "value":"영업본부"}, {"code":"002", "value":"경영본부"}, {"code":"003", "value":"인사부"}, {"code":"004", "value":"경영기획본부"}];
+
+// AUIGrid 칼럼 설정
+var columnLayout = [ {
+		dataField : "name",
+		headerText : "Name",
+		width : 140,
+		filter : {
+			showIcon : true,
+			displayFormatValues : true,
+			iconWidth:30
+		},
+		labelFunction : function( rowIndex, columnIndex, value, headerText, item ) {
+			if(value == "Emma") {
+				return value + " (엠마)";
+			} else if(value == "Anna") {
+				return value + " (안나)";
+			}
+			return value;
+		}
+	}, {
+		dataField : "deptCode",
+		headerText : "부서명(원래 값 필터 메뉴)",
+		width:220,
+		filter : {
+			showIcon : true,
+			iconWidth:30
+		},
+		labelFunction : function(  rowIndex, columnIndex, value, headerText, item ) { 
+			var retStr = value;
+			for(var i=0,len=keyValueList.length; i<len; i++) {
+				if(keyValueList[i]["code"] == value) {
+					retStr = keyValueList[i]["value"];
+					break;
+				}
+			}
+			return retStr;
+		},
+		editRenderer : {
+			type : "DropDownListRenderer",
+			list : keyValueList, //key-value Object 로 구성된 리스트
+			keyField : "code", // key 에 해당되는 필드명
+			valueField : "value" // value 에 해당되는 필드명
+		}
+	}, {
+		dataField : "deptCode2",
+		headerText : "부서명(포맷팅된 필터 메뉴)",
+		width:220,
+		filter : {
+			showIcon : true,
+			displayFormatValues : true,
+			iconWidth:30
+		},
+		labelFunction : function(  rowIndex, columnIndex, value, headerText, item ) { 
+			var retStr = value;
+			for(var i=0,len=keyValueList.length; i<len; i++) {
+				if(keyValueList[i]["code"] == value) {
+					retStr = keyValueList[i]["value"];
+					break;
+				}
+			}
+			return retStr;
+		},
+		editRenderer : {
+			type : "DropDownListRenderer",
+			list : keyValueList, //key-value Object 로 구성된 리스트
+			keyField : "code", // key 에 해당되는 필드명
+			valueField : "value" // value 에 해당되는 필드명
+		}
+	}, {
+		dataField : "date",
+		headerText : "Date",
+		dataType : "date",
+		formatString : "yyyy년 mm월 dd일",
+		filter : {
+			showIcon : true,
+			displayFormatValues : true,
+			iconWidth:30
+		},
+		editRenderer : {
+			type : "CalendarRenderer",
+			onlyCalendar : false,
+			defaultFormat : "yyyy-mm-dd"
+		}
+	}
+];
+
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+			
+		selectionMode : "multipleCells",
+		
+		showRowNumColumn : true,
+		
+		showRowCheckColumn : false,
+		
+		editable : true,
+		
+		softRemoveRowMode : false,
+		
+		enableMovingColumn : false,
+		
+		useContextMenu : true,
+		
+		enableFilter : true,
+		
+		// 필터 레이어 기본 가로, 세로 지정(기본값 : 각각 200, 300)
+		filterLayerWidth : 200,
+		filterLayerHeight : 300
+	};
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 필터링 이벤트 바인딩
+	AUIGrid.bind(myGridID, "filtering", function(evt) {
+		var filterInfo = evt.filterCache;
+		var str = "filtering Event Info<br/>";
+		var length = 0;
+		for(var n in filterInfo) {
+			length++;
+			str += n + " : " + JSON.stringify(filterInfo[n]) + "<br/>";
+		}
+		if(length <= 0)
+			str = "필터링 되지 않음";
+		
+		document.getElementById("ellapse").innerHTML = str;
+	});
+}
+
+// 랜덤 데이터 생성
+function getRandomData() {
+	var names = ["Steve", "Anna", "Lawrence", "Kim", "Emma", "Jennifer", "Han"];
+	var deptCodes = ["001", "002", "003", "004"];
+	var nameLen = names.length;
+	var deptCodeLen = deptCodes.length;
+	var data = [];
+	var today = new Date();
+	for(var i=0; i<500; i++) {
+		today.setDate(today.getDate() - 1);
+		data.push({
+			name : names[ i % nameLen],
+			deptCode : deptCodes[ i % deptCodeLen ],
+			deptCode2 : deptCodes[ i % deptCodeLen ],
+			date : today.getTime()
+		})
+	}
+	return data;
+}
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>필터 메뉴를 출력하도록 설정하면, 기본적으로 원본 데이터의 값으로 필터 메뉴가 출력됩니다.</p>
+		<p>즉, 사용자가 formatString, labelFunction 등으로 사용자 정의해서 출력된 값으로 출력되지 않습니다.</p>
+		<p>그러나 칼럼의 filter 속성에 displayFormatValues = true ( 기본값 : false ) 로 설정하면 사용자 정의해서 출력된 값이 필터 메뉴에도 출력됩니다.</p>
+		<pre>
+dataField : "deptCode2",
+headerText : "부서명(포맷팅된 필터 메뉴)",
+width:200,
+filter : {
+	showIcon : true,
+	displayFormatValues : true // 포매팅된 값으로 필터 메뉴 작성 (기본값 : false)
+},
+		</pre>
+		<p>아래 그리드의 "부서명" 칼럼의 필터 메뉴를 서로 비교해 보십시오.</p>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:400px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

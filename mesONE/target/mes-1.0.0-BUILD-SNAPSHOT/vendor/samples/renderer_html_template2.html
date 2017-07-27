@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+
+/* 커스텀 칼럼 스타일 정의 */
+.aui-grid-user-custom-column {
+	background:#ffffee;
+	font-weight: bold;
+}
+
+/* HTML 템플릿에서 사용할 스타일 정의*/
+.my_div {
+	display:inline-block; 
+	margin-top:4px; 
+	line-height:12px;
+}
+.my_div_text_box {
+	display: inline-block;
+    border: 1px solid #aaa;
+    text-align: left;
+    width: 140px;
+    padding: 4px;
+}
+.my_div_btn {
+    color: #fff !important;
+    background-color: #2a2d33;
+    font-weight: bold;
+    margin: 2px 4px;
+    padding : 2px 4px;
+    line-height:2em;
+    cursor: pointer;
+}
+.my_div_btn2 {
+    color: #fff !important;
+    background-color: #ee5315;
+    font-weight: bold;
+    margin: 2px 4px;
+    padding : 2px 4px;
+    line-height:2em;
+    cursor: pointer;
+}
+.my_div_code_span {
+	margin-right:4px;
+	color:#000099;
+}
+.my_div_chk_span {
+	line-height:2em;
+}
+.my_div_chk_span input {
+	margin-left:4px;
+	width:16px;
+	height:16px;
+}
+/* HTML 템플릿에서 사용할 스타일 정의 끝*/
+</style>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 그리드에 데이터 삽입
+	AUIGrid.setGridData(myGridID, gridData);
+
+};
+
+
+//AUIGrid 칼럼 설정
+var columnLayout = [ {
+		dataField : "name",
+		headerText : "Template-ButtonGroup",
+		width : 260,
+		renderer : { // HTML 템플릿 렌더러 사용
+			type : "TemplateRenderer"
+		},
+		// dataField 로 정의된 필드 값이 HTML 이라면 labelFunction 으로 처리할 필요 없음.
+		labelFunction : function (rowIndex, columnIndex, value, headerText, item ) { // HTML 템플릿 작성
+			var template = '<div class="my_div">';
+			
+			template += '<span class="my_div_text_box">' + value + '</span>';
+			template += '<span class="my_div_btn" onclick="javascript:myApplyBtnClick(' + rowIndex + ', event);">적용</span>';
+			template += '<span class="my_div_btn2" onclick="javascript:myPopupBtnClick(' + rowIndex + ', event);">팝업</span>';
+			template += '</div>';
+			return template;
+		}
+		
+}, {
+		dataField : "code",
+		headerText : "Template-Select",
+		width : 280,
+		editable : false, // 그리드의 에디팅 사용 안함( 템플릿에서 만든 Select 로 에디팅 처리 하기 위함 )
+		renderer : { // HTML 템플릿 렌더러 사용
+			type : "TemplateRenderer"
+		},
+		// dataField 로 정의된 필드 값이 HTML 이라면 labelFunction 으로 처리할 필요 없음.
+		labelFunction : function (rowIndex, columnIndex, value, headerText, item ) { // HTML 템플릿 작성
+			if(!value)	return "";
+			var code, text;
+			var template = '<div class="my_div">';
+			
+			if(value == "None") {
+				template += '<span style="line-height:2em;">선택할 수 없도록 작성됨(즉, 동적 select 표현)</span>';
+			} else {
+				
+				template += '<span class="my_div_code_span">코드명 : ' + value + '</span>';
+				template += '<select style="width:100px;" onchange="javascript:mySelectChangeHandler(' + rowIndex + ', this.value, event);">';
+				
+				for(var i=0, len=mySelectList.length; i<len; i++) {
+					code =  mySelectList[i]["value"];
+					text = mySelectList[i]["text"];
+					if(code == value) { 
+						template += '<option value="' + code + '" selected="selected">' + text + '</option>';
+					} else {
+						template += '<option value="' + code + '">' + text + '</option>';
+					}
+				}
+				template += '</select>';
+			}
+			template += '</div>';
+			return template; // HTML 템플릿 반환..그대도 innerHTML 속성값으로 처리됨
+		}
+}, {
+	dataField : "check",
+	headerText : "Template-CheckGroup",
+	width : 180,
+	editable : false, // 그리드의 에디팅 사용 안함( 템플릿에서 만든 Select 로 에디팅 처리 하기 위함 )
+	renderer : { // HTML 템플릿 렌더러 사용
+		type : "TemplateRenderer"
+	},
+	// dataField 로 정의된 필드 값이 HTML 이라면 labelFunction 으로 처리할 필요 없음.
+	labelFunction : function (rowIndex, columnIndex, value, headerText, item ) { // HTML 템플릿 작성
+		var valueArr = value.split(",");
+		var inputTagArr = [];
+		var template = '<div class="my_div">';
+		template += '<span class="my_div_chk_span">';
+		
+		
+		inputTagArr[0] = '<input type="checkbox" value="v1" onclick="javascript:myCheckClick(' + rowIndex + ', event);">값1';
+		inputTagArr[1] = '<input type="checkbox" value="v2" onclick="javascript:myCheckClick(' + rowIndex + ', event);">값2';
+		inputTagArr[2] = '<input type="checkbox" value="v3" onclick="javascript:myCheckClick(' + rowIndex + ', event);">값3';
+		
+		for(var i=0, len=valueArr.length; i<len; i++) {
+			switch(valueArr[i]) {
+			case "v1":
+				inputTagArr[0] = '<input type="checkbox" checked="checked" value="v1" onclick="javascript:myCheckClick(' + rowIndex + ', event);">값1';
+				break;
+			case "v2":
+				inputTagArr[1] = '<input type="checkbox" checked="checked" value="v2" onclick="javascript:myCheckClick(' + rowIndex + ', event);">값2';
+				break;
+			case "v3":
+				inputTagArr[2] = '<input type="checkbox" checked="checked" value="v3" onclick="javascript:myCheckClick(' + rowIndex + ', event);">값3';
+				break;
+			}
+			
+		}
+		
+		template += inputTagArr.join('');
+		template += '</span>';
+		template += '</div>';
+		
+		return template;
+	}
+}];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+			// 행 높이 설정
+			rowHeight : 34,
+			editable : true,
+			showStateColumn : true,
+			selectionMode : "multipleCells"
+	};
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+}
+
+// 적용 버턴 클릭 핸들러
+function myApplyBtnClick(rowIndex, event) {
+	alert("rowIndex : "+ rowIndex + " 적용 버턴 클릭" );
+	
+	// 그리드에 실제 업데이트 적용 시킴
+	AUIGrid.updateRow(myGridID, {
+		"name" : "셀 값 예약어로 수정"
+	}, rowIndex);
+};
+
+//팝업 버턴 클릭 핸들러
+function myPopupBtnClick(rowIndex, event) {
+	alert("rowIndex : "+ rowIndex + " 팝업 버턴 클릭" );
+};
+
+// 셀렉트 변경 핸들러
+function mySelectChangeHandler(rowIndex, selectedValue, event) {
+	alert(selectedValue);
+	
+	// 그리드에 실제 업데이트 적용 시킴
+	AUIGrid.updateRow(myGridID, {
+		"code" : selectedValue
+	}, rowIndex);
+};
+
+// 체크박스 그룹 클릭 핸들러
+function myCheckClick(rowIndex, event) {
+	var target = event.target ? event.target : event.srcElement;
+	
+	alert("rowIndex : " + rowIndex + ", value : " + target.value + ", checked : " + target.checked);
+	
+	
+	// 해당 행의 아이템 얻기
+	var item = AUIGrid.getItemByRowIndex(myGridID, rowIndex);
+	var checkValue = item.check;
+	var checkArr = checkValue.split(",");
+	
+	 // 체크된 경우 포함시킴
+	if(target.checked) {
+		checkArr.push(target.value);
+	} else {
+		// 해제된 경우 제거함.
+		checkArr.splice(checkArr.indexOf(target.value),1);
+	}
+	
+	// 그리드 값 수정함.
+	AUIGrid.updateRow(myGridID, {
+		"check" : checkArr.join(",")
+	}, rowIndex);
+	
+};
+
+
+// 셀렉트 표현할 리스트
+var mySelectList = [
+	{value : "001", text : "선택 1"},
+	{value : "002", text : "선택 2"},
+	{value : "003", text : "선택 3"},
+	{value : "004", text : "선택 4"},
+	{value : "005", text : "선택 5"}
+];
+
+// 그리드 데이터
+var gridData = [{"name":"Steve","code":"001","check" : "v1"},{"name":"Emma","code":"003","check" : "v1,v2,v3"},{"name":"Steve","code":"004","check" : "v2"},{"name":"Anna","code":"003","check" : "v1,v2,v3"},{"name":"Lawrence","code":"005","check" : "v1,v2,v3"},{"name":"Steve","code":"003","check" : "v1,v2,v3"},{"name":"Anna","code":"002","check" : "v1,v2,v3"},{"name":"Lawrence","code":"002","check" : "v3"},{"name":"Lawrence","code":"None","check" : "v1,v3"},{"name":"Kim","code":"001","check" : "v1,v2"},{"name":"Emma","code":"005","check" : "v1,v2,v3"},{"name":"Kim","code":"002","check" : "v1,v2,v3"},{"name":"Kim","code":"None","check" : "v1,v2,v3"},{"name":"Steve","code":"001","check" : "v1,v2,v3"},{"name":"Anna","code":"005","check" : "v1,v3"},{"name":"Anna","code":"005","check" : "v1,v2,v3"},{"name":"Kim","code":"001","check" : "v3"},{"name":"Steve","code":"None","check" : "v1,v2,v3"},{"name":"Kim","code":"002","check" : "v2,v3"},{"name":"Kim","code":"001","check" : "v1,v2,v3"}];
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>데이터 값이 HTML 인 경우 그대로 출력하며, 사용자가 임의로 labelFunction 에서 HTML 스트링을 작성할 수 있습니다.(innerHTML 처리)</p>
+<xmp>// HTML 형식을 스트링으로 작성해서 반환하면 그대로 그리드의 셀로 출력됩니다.
+labelFunction : function (rowIndex, columnIndex, value, headerText, item ) { // HTML 템플릿 작성
+	var template = '<div class="my_div">';	
+	template += '<span class="my_div_text_box">' + value + '</span>';
+	template += '<span class="my_div_btn" onclick="javascript:myApplyBtnClick(' + rowIndex + ', event);">적용</span>';
+	template += '<span class="my_div_btn2" onclick="javascript:myPopupBtnClick(' + rowIndex + ', event);">팝업</span>';
+	template += '</div>';
+	return template; // HTML 형식의 스트링
+}</xmp>
+		<strong>템플릿 렌더러에서 수정가능한 태그를 어떻게 작성하는지를 보여주는 데모입니다.</strong>
+		<p>템플릿 렌더러로 작성된 데이터 수정도 Undo(Ctrl+Z), Redo(Ctrl+Y) 를 지원합니다.</p>
+		<p>HTML 템플릿은 행 높이를 벗어날 수 없습니다. 예를 들어 br 태그로 개행을 한다해도 지정된 행 높이를 벗어 날 수 없습니다.(그리드의 rowHeight 속성으로 높이를 크게 하십시오.)</p>
+		<p>■ 단점 : 사용자가 HTML 템플릿을 작성하였기 때문에 엑셀 저장, 그룹핑, 필터링, 정렬 등에 제약을 받습니다. (dataField 값 기준으로 처리됩니다.)</p>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:340px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

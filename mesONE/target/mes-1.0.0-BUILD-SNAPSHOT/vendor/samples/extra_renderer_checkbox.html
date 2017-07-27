@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+
+/* 커스텀 칼럼 스타일 정의 */
+.aui-grid-user-custom-left {
+	text-align:left;
+}
+
+/* 엑스트라 체크박스 사용자 선택 못하는 표시 스타일 */
+.disable-check-style {
+	color:#d3825c;
+}
+</style>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/normal_100.json");
+
+};
+
+// AUIGrid 칼럼 설정
+// 데이터 형태는 다음과 같은 형태임,
+//[{"id":"#Cust0","date":"2014-09-03","name":"Han","country":"USA","product":"Apple","color":"Red","price":746400}, { .....} ];
+var columnLayout = [ {
+		dataField : "id",
+		headerText : "Client ID",
+		disableGrouping : true
+	}, {
+		dataField : "name",
+		headerText : "Name"
+	}, {
+		dataField : "product",
+		headerText : "Product",
+		styleFunction :  function(rowIndex, columnIndex, value, headerText, item, dataField) {
+			if(value == "LG G3") {
+				return "disable-check-style";
+			}
+			return null;
+		}
+	}, {
+		dataField : "date",
+		headerText : "Date"
+	}, {
+		dataField : "price",
+		headerText : "Price",
+		dataType : "numeric"
+	}
+];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+		
+		// rowIdField 설정
+		rowIdField : "id",
+		
+		editable : true,
+		
+		softRemoveRowMode : false,
+		
+		// 체크박스 표시 설정
+		showRowCheckColumn : true,
+		
+		// 전체 체크박스 표시 설정
+		showRowAllCheckBox : false,
+		
+		// 엑스트라 체크박스 체커블 함수
+		// 이 함수는 사용자가 체크박스를 클릭 할 때 1번 호출됩니다.
+		rowCheckableFunction : function(rowIndex, isChecked, item) {
+			if(item.product == "LG G3") { // 제품이 LG G3 인 경우 사용자 체크 못하게 함.
+				return false;
+			}
+			return true;
+		},
+		
+		// 엑스트라 체크박스 disabled 함수
+		// 이 함수는 렌더링 시 빈번히 호출됩니다. 무리한 DOM 작업 하지 마십시오. (성능에 영향을 미침)
+		// rowCheckDisabledFunction 이 아래와 같이 간단한 로직이라면, 실제로 rowCheckableFunction 정의가 필요 없습니다.
+		// rowCheckDisabledFunction 으로 비활성화된 체크박스는 체크 반응이 일어나지 않습니다.(rowCheckableFunction 불필요)
+		rowCheckDisabledFunction : function(rowIndex, isChecked, item) {
+			if(item.product == "LG G3") { // 제품이 LG G3 인 경우 체크박스 disabeld 처리함
+				return false; // false 반환하면 disabled 처리됨
+			}
+			return true;
+		}
+	};
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// ready 이벤트 바인딩
+	AUIGrid.bind(myGridID, "ready", function( event ) {
+		setCheckedRowsByIds(); // 시작 시 체크된 상태로 표시
+	});
+		
+	// 체크박스 클린 이벤트 바인딩
+	AUIGrid.bind(myGridID, "rowCheckClick", function( event ) {
+		alert("rowIndex : " + event.rowIndex + ", id : " + event.item.id + ", name : " + event.item.name + ", checked : " + event.checked);
+	});
+	
+	// 전체 체크박스 클릭 이벤트 바인딩
+	AUIGrid.bind(myGridID, "rowAllChkClick", function( event ) {
+		alert("전체 선택  checked : " + eventchecked);
+	});
+	
+};
+
+
+//전체 체크/해제 하기
+var allChecked = false;
+function setAllCheckedRows() {
+	allChecked = !allChecked;
+	AUIGrid.setAllCheckedRows(myGridID, allChecked);
+};
+
+//체크된 행 삭제 하기
+function deleteCheckedRows() {
+	// 체크된 행 삭제 처리
+	AUIGrid.removeCheckedRows(myGridID);
+}
+
+//삭제 행들 보기
+function getRemovedItems() {
+	// 삭제된 행들 보기
+	var removedRowItems = AUIGrid.getRemovedItems(myGridID); // 삭제된 행 아이템들(배열)
+	if(removedRowItems.length <= 0) { 
+		alert("삭제된 행 없음!");
+		return;
+	}
+	
+	var str = "삭제된 행들 ID\r\n";
+	for(var i=0, len=removedRowItems.length; i<len; i++) {
+		str += "id : " + removedRowItems[i].id + ", name : " + removedRowItems[i].name + "\r\n";
+	}
+	alert(str);
+}
+
+// 체크된 아이템 얻기
+function getCheckedRowItems() {
+	var checkedItems = AUIGrid.getCheckedRowItems(myGridID);
+	if(checkedItems.length <= 0) {
+		alert("없음");
+		return;
+	}
+	var str = "";
+	var rowItem;
+	for(var i=0, len = checkedItems.length; i<len; i++) {
+		rowItem = checkedItems[i];
+		str += "row : " + rowItem.rowIndex + ", id :" + rowItem.item.id + ", name : " + rowItem.item.name  + "\n";
+	}
+	alert(str);
+}
+
+// rowIdField 값으로 체크하기 (기존 제거)
+function setCheckedRowsByIds() {
+	
+	// rowIdField 을 고객 ID로 설정했기 때문에 고객 ID ["#Cust0",  "#Cust6",  "#Cust9"] 를 체크함.
+	// 기존 체크된 항목은 체크해제되고 0,6,9로만 체크됨
+	var items = ["#Cust0",  "#Cust6",  "#Cust9"];
+	AUIGrid.setCheckedRowsByIds(myGridID, items);
+};
+//rowIdField 값으로 체크하기 (기존 더하기)
+function addCheckedRowsByIds() {
+	// rowIdField 을 고객 ID로 설정했기 때문에 고객 ID ["#Cust1",  "#Cust2",  "#Cust3"] 를 체크함.
+	// 기존 체크된 항목이 있다면, 유지하고 1,2,3 이 더해져서 체크됨
+	var items = ["#Cust1",  "#Cust2",  "#Cust3"];
+	AUIGrid.addCheckedRowsByIds(myGridID, items);
+};
+//rowIdField 값으로 체크 해제 하기
+function addUncheckedRowsByIds() {
+	// 기존 체크된 항목이 있다면, 1,2,3 이 더해져서 체크해제됨
+	var items = ["#Cust1",  "#Cust2",  "#Cust3"];
+	AUIGrid.addUncheckedRowsByIds(myGridID, items);
+};
+
+
+
+// 특정 칼럼 값으로 체크하기 (기존 제거)
+function setCheckedRowsByValue() {
+	
+	// rowIdField 와 상관없이 행 아이템의 특정 값에 체크함
+	// 행아이템의 name 필드 중 Anna 라는 사람을 모두 체크함
+	AUIGrid.setCheckedRowsByValue(myGridID, "name", "Anna");
+	
+	// 만약 복수 값(Anna, Steve) 체크 하고자 한다면 다음과 같이 배열로 삽입
+	//AUIGrid.setCheckedRowsByValue(myGridID, "name", ["Anna", "Steve"]);
+};
+//특정 칼럼 값으로 체크하기 (기존 더하기)
+function addCheckedRowsByValue() {
+	
+	// rowIdField 와 상관없이 행 아이템의 특정 값에 체크함
+	// 행아이템의 name 필드 중 Emma 라는 사람을 모두 체크함
+	AUIGrid.addCheckedRowsByValue(myGridID, "name", "Emma");
+	
+	// 만약 복수 값(Emma, Steve) 체크 하고자 한다면 다음과 같이 배열로 삽입
+	//AUIGrid.addCheckedRowsByValue(myGridID, "name", ["Emma", "Steve"]);
+};
+//특정 칼럼 값으로 체크 해제 하기
+function addUncheckedRowsByValue() {
+	// 행아이템의 name 필드 중 Emma 라는 사람을 모두 체크 해제함
+	AUIGrid.addUncheckedRowsByValue(myGridID, "name", "Emma");
+};
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>좌측에 엑스트라 체크박스 렌더러를 출력한 예제입니다.(showRowNumColumn = true) </p>
+		<p>rowCheckableFunction 함수로 행의 Product 가 "LG G3" 인 경우, 사용자가 체크 박스를 변경할 수 없게 설정하였습니다.</p>
+		<ul class="nav_u">
+			<li><span  onclick="setAllCheckedRows()" class="btn">전체 설정/해제</span></li>
+			<li><span  onclick="getCheckedRowItems()" class="btn">체크된 아이템 얻기</span></li>
+		</ul>
+		<ul class="nav_u">
+			<li><span  onclick="setCheckedRowsByIds()" class="btn">특정 행들만 체크(기존 제거)</span></li>
+			<li><span  onclick="addCheckedRowsByIds()" class="btn">특정 행들 체크(기존 더하기)</span></li>
+			<li><span  onclick="addUncheckedRowsByIds()" class="btn">특정 행들 체크 해제하기</span></li>
+		</ul>
+		<ul class="nav_u">
+			<li><span  onclick="setCheckedRowsByValue()" class="btn">이름이 Anna 만 체크(기존 제거)</span></li>
+			<li><span  onclick="addCheckedRowsByValue()" class="btn">이름이 Emma 체크(기존 더하기)</span></li>
+			<li><span  onclick="addUncheckedRowsByValue()" class="btn">이름이 Emma 체크 해제하기</span></li>
+		</ul>
+		<ul class="nav_u">
+			<li><span  onclick="deleteCheckedRows()" class="btn">체크된 행(들) 삭제</span></li>
+			<li><span  onclick="getRemovedItems()" class="btn">삭제된 행(들) 보기</span></li>
+		</ul>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:400px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

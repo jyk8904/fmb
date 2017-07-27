@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sql-bas-info">
+
+<!-- 	 품목 정보 조회 
+    <select id="selectMBasMatMst" parameterType="com.dsinfo.fmb.service.MBasMatMstVO" resultType="com.dsinfo.fmb.service.MBasMatMstVO">     	      
+        SELECT *
+          FROM MBASMATMST
+       	  WHERE 1=1
+       	   <if test="mat_cd != '' and mat_cd != null">AND MAT_CD LIKE '%'+#{mat_cd}+'%'</if>
+           <if test="mat_nm != '' and mat_nm != null">AND MAT_NM LIKE '%'+#{mat_nm}+'%'</if>	    
+    </select> -->
+     
+    
+<!--  	PLCList 정보 조회 -->
+    <select id="selectFmbPlc" parameterType="com.dsinfo.fmb.service.FmbPlcParamVO" resultType="com.dsinfo.fmb.service.FmbPlcVO">     	      
+        {call USP_EQPT_MON_SELEC01(#{fact_id},#{plc_id})}
+
+    </select>
+
+ 	<!-- EqptCSSList 정보 조회 -->
+    <select id="selectFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbEqptParamVO" resultType="com.dsinfo.fmb.service.FmbEqptVO">     	      
+        {call USP_EQPT_CSS_SEL01(#{fact_id},#{plc_id},#{eqpt_cnm})}
+    </select>
+
+	<!-- EqptCSSList 정보 생성  -->
+    <insert id="insertFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbModEqptVO">     	      
+        {call USP_EQPT_CSS_INS01(#{eqpt_cnm}, #{eqpt_type}, #{fact_id}, #{plc_id}, #{css_top}
+        , #{css_left}, #{css_width}, #{css_height}, #{css_zindex}, #{sts_img0}, #{sts_img1}, #{sts_img2}, #{sts_img3}, #{sts_img4})}
+    </insert>
+    
+ 	<!-- EqptCSSList 정보 갱신 -->
+    <update id="updateFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbModEqptVO">     	      
+        {call USP_EQPT_CSS_UPD01(#{eqpt_cnm}, #{eqpt_type}, #{fact_id}, #{plc_id}, #{css_top}
+        , #{css_left}, #{css_width}, #{css_height}, #{css_zindex}, #{sts_img0}, #{sts_img1}, #{sts_img2}, #{sts_img3}, #{sts_img4})}
+    </update>
+    
+    <!-- EqptCSSList 정보 삭제 -->
+    <delete id="deleteFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbModEqptVO" >     	      
+        {call USP_EQPT_CSS_DEL01(#{fact_id}, #{plc_id}, #{eqpt_cnm})}
+    </delete>
+    
+	<!-- Line별 생산실적 정보조회 -->
+    <select id="selectFmbLine"  parameterType="com.dsinfo.fmb.service.FmbLineVO" resultType="com.dsinfo.fmb.service.FmbLineVO">     	      
+        {call USP_DAILY_PROD_SELEC02(#{fact_id})}
+
+    </select> 
+    
+<!--     SPC 정보조회
+    <select id="selectFmbSpc"  parameterType="com.dsinfo.fmb.service.FmbSpcParamVO" resultType="com.dsinfo.fmb.service.FmbSpcVO">     	      
+        {call USP_SPC_IF_SELECT01(#{line_cd}, #{op_cd})}
+    </select> 
+     -->
+        
+    <!-- SPC 정보조회 -->
+    <select id="selectFmbSpc"  parameterType="com.dsinfo.fmb.service.FmbSpcParamVO" resultType="com.dsinfo.fmb.service.FmbSpcVO">     	      
+        {call USP_SPC_IF_SELECT01(#{line_cd}, #{op_cd})}
+    </select> 
+    
+    <!-- SPC 정보조회2 -->
+    <select id="selectFmbSpc2"  parameterType="com.dsinfo.fmb.service.FmbSpcParamVO" resultType="com.dsinfo.fmb.service.FmbSpc2VO">     	      
+        {call USP_SPC_IF_SELECT03(#{line_cd}, #{op_cd})}
+    </select> 
+    
+    <!-- TBM 정보조회 -->
+    <select id="selectFmbTbm" resultType="com.dsinfo.fmb.service.FmbTbmVO">     	      
+        {call USP_TBM_MON_SELECT01()}
+    </select> 
+    
+    <!-- Total- planProgress(계획진도율) 정보조회 -->
+    <select id="selectPlanProgress" resultType="com.dsinfo.fmb.service.FmbPlanProgressVO">     	      
+        {call USP_DASH_PLAN_PROGRESS_SELECT01()}
+    </select> 
+    
+    <!-- Total- GaugeRunRate(라인가동현황게이지) 정보조회 -->
+      <select id="selectGaugeRunRate" resultType="com.dsinfo.fmb.service.FmbGaugeRunRateVO">     	      
+        {call USP_DASH_GAUGE_RUNRATE_SELECT01()}
+    </select> 
+
+    <!-- Total- RankRunInfo(라인가동현황그리드) 정보조회 -->
+    <select id="selectGaugeRunInfo" resultType="com.dsinfo.fmb.service.FmbGaugeRunInfoVO">     	      
+        {call USP_DASH_GAUGE_RUNINFO_SELECT01()}
+    </select>     
+    
+    <!-- Total- DateRunInfo(알람발생추이차트) 정보조회 -->
+    <select id="selectDateRunInfo" resultType="com.dsinfo.fmb.service.FmbDateRunInfoVO">     	      
+        {call USP_DASH_DATE_RUNINFO_SELECT01()}
+    </select> 
+    
+    <!-- Total- 설비상태별순위 그리드 정보조회 -->    
+    <select id="selectRankRunInfo" resultType="com.dsinfo.fmb.service.FmbRankRunInfoVO">     	      
+        {call USP_DASH_RANK_RUNINFO_SELECT01()}
+    </select> 
+    
+    <!-- Total- 설비상태별순위 그리드 정보조회 -->    
+    <select id="selectFmbEqptStsHis"  parameterType="com.dsinfo.fmb.service.FmbEqptStsHisParamVO" resultType="com.dsinfo.fmb.service.FmbEqptStsHisVO">     	      
+        {call USP_EQPT_STS_HIS_SELECT04(#{dt}, #{plc_id})}
+    </select> 
+    
+    <!-- Fmb Image 저장  -->
+    <insert id="insertFmbImageData" parameterType="com.dsinfo.fmb.service.FmbImageVO">     	      
+        {call USP_FMB_IMAGE_DATA_INSERT01(#{file_name}, #{file_p_path}, #{file_l_path}, #{file_origin_name}, #{file_size})}
+    </insert>
+    
+    <!-- Fmb Image 조회 -->    
+    <select id="selectFmbImages" resultType="com.dsinfo.fmb.service.FmbImageVO">     	      
+        {call USP_FMB_IMAGE_DATA_SELECT01()}
+    </select> 
+    
+    <!-- Fmb 뒷배경 Image 저장  -->
+    <update id="updateFmbBgImage" parameterType="com.dsinfo.fmb.service.FmbBgImageVO">     	      
+        {call USP_FMB_BG_IMAGE_DATA_UPDATE01(#{fact_id}, #{img_seq})}
+    </update>
+    
+        <!-- Fmb 페이지별 뒷배경 Image 정보 조회 -->    
+    <select id="selectFmbBgImage" resultType="com.dsinfo.fmb.service.FmbBgImageVO">     	      
+        {call USP_FMB_BG_IMAGE_LIST_SELECT01(#{fact_id})}
+    </select> 
+    
+ <!--
+    EqptCSSList 정보 생성
+    <insert id="selectFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbEqptParamVO">     	      
+        {call USP_EQPT_MON_SELEC01(#{fact_id},#{plc_id},#{eqpt_cnm})}
+    </insert>
+    
+    EqpCSStList 정보 수정
+    <update id="selectFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbEqptParamVO">     	      
+        {call USP_EQPT_MON_SELEC01(#{fact_id},#{plc_id},#{eqpt_cnm})}
+    </update>
+    
+    EqptCSSList 정보 삭제
+    <select id="selectFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbEqptParamVO" resultType="com.dsinfo.fmb.service.FmbEqptVO">     	      
+        {call USP_EQPT_MON_SELEC01(#{fact_id},#{plc_id},#{eqpt_cnm})}
+
+    </select>
+    
+    -->
+    
+
+    
+<!--  parameter 전송방법 : 1.vo객체로 보내기
+    <select id="selectMBasMatMst" parameterType="com.dsinfo.fmb.service.MBasMatMstVO" resultType="com.dsinfo.fmb.service.MBasMatMstVO">     	      
+        SELECT *
+          FROM MBASMATMST
+       	  WHERE 1=1
+       	   <if test="mat_cd != '' and mat_cd != null">AND MAT_CD LIKE '%'+#{mat_cd}+'%'</if>
+           <if test="mat_nm != '' and mat_nm != null">AND MAT_NM LIKE '%'+#{mat_nm}+'%'</if>	    
+    </select>    
+    
+ -->
+ 
+ <!--  parameter :  2. hashmap형태로 보내기
+ 	 
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	map.put("user", userInfo);
+
+
+	public interface UserInfoMapper {
+	    public UserInfo selectFmbPlc(HashMap<String, Object> map);
+	}
+
+     <select id="selectFmbPlc" parameterType="hashmap" resultType="com.dsinfo.fmb.service.FmbPlcVO">     	      
+        {call USP_EQPT_MON_SELEC01(#{FAC_ID},#{PLC_ID})}
+    </select>
+-->
+
+<!-- 
+	 parameter : 3.@String으로 보내기
+
+	public interface UserInfoMapper {
+		public UserInfo selectFmbPlc(@Param("userId") String userId, @Param("state") int state);
+
+    <select id="selectFmbPlc" resultType="com.dsinfo.fmb.service.FmbPlcVO">     	      
+        {call USP_EQPT_MON_SELEC01(#{FAC_ID},#{PLC_ID})}
+
+    </select> -->
+</mapper>
