@@ -21,7 +21,8 @@ angular
 	/*------------------------------------------
      * 변수 선언
      *-----------------------------------------*/
- 
+
+                
     var self = this;
     var workerList = CmmWorkerSrvc;
     var fact_id = "A";
@@ -43,7 +44,7 @@ angular
     }
 
     self.parseInt = function(value){
-    	if (value == ""){
+      	if (value == ""){
     		return "";
     	}
     	else {
@@ -90,4 +91,3 @@ angular
         	    });
           }
 }]);
-

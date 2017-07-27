@@ -15,7 +15,7 @@
  */
  -->
 <!-- ngview 내부 페이지 -->
-<div class='bc-screen'>
+<div class='bc-screen' style="width:initial !important;">
 <bc-form-header logo='assets/img/system/logo.png' title="라인별 생산 실적 (B동)">
 </bc-form-header>	
 	<!-- ngview 내부 header -->
@@ -26,14 +26,79 @@
 
 	<!-- ngview 내부 body -->
 	<bc-form-body> 
-<div class="wrap">
- 	<div class="title">
+		<div layout="row" style="width:90%; margin:auto;">
+		<div layout="column" layout-fill layout-wrap style="width:18%;">
+			<div  layout="column" layout-fill layout-wrap class="headerColorNested" grid-header-ctrl data ="vm.lineList"  ng-repeat="line in vm.lineList track by $index" ng-show="$index%7==0" >
+			 <div style="color:white; border:1px solid black;">구분</div>
+			 <div style="color:white; border:1px solid black;">목표</div>
+			 <div layout="row" flex style="color:white;">
+				 <div flex style="color:white; border:1px solid black;">실적</div>
+				 <div layout="column" flex style="color:white; ">
+					 <div flex style="color:white; border:1px solid black;">주간</div>
+					 <div flex style="color:white; border:1px solid black;">야간</div>
+					 <div flex style="color:white; border:1px solid black;">합계</div>
+				 </div>
+			 </div>
+			 
+			 <div style="color:white; border:1px solid black;">달성률(%)</div>
+			 <div style="color:white; border:1px solid black;">가동상태</div>
+			</div>
+		</div>
+		
+		<div class="colList" style="width:82%;">
+		<div ng-repeat="line in vm.lineList track by $index"  layout="row" ng-show="$index%7==0" style="width:100%;">
+			<div  grid-panel-ctrl data = "vm.lineList" flex ng-repeat="line in vm.lineList track by $index" ng-show="$index>=$parent.$index && $index<($parent.$index+7) " layout="column" layout-fill layout-wrap class="colorNested col" style="text-align:center;">
+			  <div style="color:white; border:1px solid black;  display:flex; align-items:center; justify-content: center;" >
+			    <div >
+			    <p>{{line.lineTopNm}}</p><p>{{line.lineMidNm}}</p><p>{{line.lineBotNm}}</p></div>
+			  </div>
+			  <div style="color:white; border:1px solid black;">
+			   {{vm.parseInt(line.dgoal) + vm.parseInt(line.ngoal)}}
+			  </div>
+			  <div style="color:white; border:1px solid black;">
+			    {{vm.parseInt(line.dcount)}}
+			  </div>
+			  <div style="color:white; border:1px solid black;"> 
+			   {{vm.parseInt(line.ncount)}}
+			  </div>
+			  <div style="color:white; border:1px solid black;">	
+			    {{vm.parseInt(line.dcount) + vm.parseInt(line.ncount)}}
+			  </div>
+			  <div style="color:white; border:1px solid black;">
+			    {{vm.parseInt(line.drate) + vm.parseInt(line.nrate)}}
+			  </div>
+			    <div ng-switch on="line.eqptSts"  style="border:1px solid black;">
+					<img ng-switch-when="0" class="obj" src="/mes/assets/img/button/Yellow25.png" align="center" style="width:35px; height:35px;">
+					<img ng-switch-when="1" class="obj" src="/mes/assets/img/button/Green25.png" align="center" style="width:35px; height:35px;">
+					<img ng-switch-when="2" class="obj" src="/mes/assets/img/button/White25.png" align="center" style="width:35px; height:35px;">
+					<img ng-switch-when="3" class="obj" src="/mes/assets/img/button/Blue25.png" align="center" style="width:35px; height:35px;">
+					<img ng-switch-when="4" class="obj" src="/mes/assets/img/button/Red25.gif" align="center" style="width:35px; height:35px;">
+			  	</div>
+			</div> 
+		
+		</div>
+		
+		
+		
+		</div>
+	</div>
+	
+
+	
+	<!--<div class="wrap">
+
+
+
+
+  <div class="title">
 			<table grid-header-ctrl data="vm.lineList" class="line-legend-table bc-table" ng-repeat="line in vm.lineList track by $index" ng-show="$index%7==0">
 				<tr>
 					<td colspan="2">구분</td>
 				</tr>
 				<tr>
 					<td colspan="2">목표</td>
+					
+					
 				</tr>
 				<tr>
 					<td rowspan="3">실적</td>
@@ -56,8 +121,8 @@
 		
 		
 		<div class="colList" >
-			<div grid-panel-ctrl class="col" data="vm.lineList" ng-repeat="line in vm.lineList track by $index">
-				<table class="line-list-table bc-table">
+			<div class="col"  ng-repeat="line in vm.lineList track by $index">
+				<table grid-panel-ctrl data="vm.lineList" class="line-list-table bc-table">
 					<tr>
 						<td><p>{{line.lineTopNm}}</p><p>{{line.lineMidNm}}</p><p>{{line.lineBotNm}}</p></td>
 					</tr>
@@ -88,7 +153,7 @@
 				</table>
 			</div> 
 		</div>
-		</div>
+		</div> -->
 
 
 	</bc-form-body>

@@ -125,8 +125,7 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 			// 계획진도율 가져오기
 			var planProgressPromise = CmmAjaxService.select("/mes/bas/selectPlanProgress.do");
 				planProgressPromise.then(function(data) {
-				self.planProgressList = data;						
-				//console.log(self.planProgressList);
+				$scope.planProgressList = data;						
 				planProgress();
 				
 			}, function(data) {
@@ -139,6 +138,7 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 				gaugeRunRatePromise.then(function(data) {
 				self.gaugeRunRateList = data;						
 				$scope.value = self.gaugeRunRateList[0].lineGauge;
+				console.log(self.gaugeRunRateList)
 				if (count == 1) {
 					gaugeRunRate();
 				}
@@ -415,7 +415,39 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 		}
 
 			//라인가동현황게이지
-			$scope.gaugeRunRate = {
+/*		console.log(self.gaugeRunRateList[0].lineGauge);*/
+		var chart = AmCharts.makeChart( "chartdiv", {
+			  "theme": "dark",
+			  "type": "gauge",
+			  "axes": [ {
+			    "axisColor": "#67b7dc",
+			    "axisThickness": 3,
+			    "endValue": 240,
+			    "gridInside": false,
+			    "inside": false,
+			    "radius": "100%",
+			    "valueInterval": 20,
+			    "tickColor": "#67b7dc"
+			  }, {
+			    "axisColor": "#fdd400",
+			    "axisThickness": 3,
+			    "endValue": 160,
+			    "radius": "80%",
+			    "valueInterval": 20,
+			    "tickColor": "#fdd400"
+			  } ],
+			  "arrows": [ {
+			    "color": "#67b7dc",
+			    "innerRadius": "20%",
+			    "nailRadius": 0,
+			    "radius": "85%", 
+			    "setValue" : 40
+			  } ]
+			} );
+
+			
+		
+			/*$scope.gaugeRunRate = {
 				bindingOptions: {
 					value: "value"
 				},
@@ -446,14 +478,129 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 		        //tooltip: { enabled: true },	        
 		        //value: self.gaugeRunRateList[0].lineGauge
 		        
-		    };
+		    };*/
 
 		
 			function planProgress(){
+				AmCharts.makeChart("chartdiv",
+						{
+							"type": "serial",
+							"categoryField": "lineNm",
+							"rotate": true,
+							"autoMarginOffset": 40,
+							"marginRight": 60,
+							"marginTop": 60,
+							"startDuration": 1,
+							"fontSize": 13,
+							"theme": "dark",
+							"categoryAxis": {
+								"gridPosition": "start"
+							},
+							"trendLines": [],
+							"graphs": [
+								{
+									"balloonText": "[[title]] of [[category]]:[[value]]",
+									"fillAlphas": 1,
+									"id": "AmGraph-1",
+									"labelText": "",
+									"title": "생산실적",
+									"type": "column",
+									"valueField": "curCountPer"
+								},
+								{
+									"balloonText": "[[title]] of [[category]]:[[value]]",
+									"fillAlphas": 1,
+									"id": "AmGraph-2",
+									"title": "계획수량",
+									"type": "column",
+									"valueField": "goalCountPer"
+								},
+								{
+									"balloonText": "[[title]] of [[category]]:[[value]]",
+									"bullet": "round",
+									"id": "AmGraph-3",
+									"title": "평균생산실적",
+									"lineThickness": 2,
+									"valueAxis": "ValueAxis-3",
+									"valueField": "avgCountPer"
+								}
+							],
+							"guides": [],
+							"valueAxes": [
+								{
+									"id": "ValueAxis-1",
+									"stackType": "100%",
+									"title": "",
+									
+								},
+								{
+									"id": "ValueAxis-3",
+									"position": "right",
+								}
+				
+							],
+							"allLabels": [],
+							"balloon": {},
+							"legend": {
+								"enabled": true,
+								"useGraphSettings": true
+							},
+							"titles": [],
+							"dataProvider": $scope.planProgressList
+						}
+					);
+			     /* var chart;
+		            var chartData =$scope.planProgressList;
+		                
+		            AmCharts.ready(function () {
+		                // SERIAL CHART
+		                chart = new AmCharts.AmSerialChart();
+		                chart.dataProvider = chartData;
+		                chart.categoryField = "lineNm";
+		                // this single line makes the chart a bar chart,
+		                // try to set it to false - your bars will turn to columns
+		                chart.rotate = true;
+		                // the following two lines makes chart 3D
+		                chart.depth3D = 20;
+		                chart.angle = 30;
+		               
+		                
+
+		                // AXES
+		                // Category
+		                var categoryAxis = chart.categoryAxis;
+		                categoryAxis.gridPosition = "start";
+		                categoryAxis.fillAlpha = 1;
+		                categoryAxis.gridAlpha = 0;
+
+		                // value
+		                var valueAxis = new AmCharts.ValueAxis();
+		                valueAxis.axisColor = "#DADADA";
+		                valueAxis.title = "Income in millions, USD";
+		                valueAxis.gridAlpha = 0.1;
+		                chart.addValueAxis(valueAxis);
+
+		                // GRAPH
+		                var graph = new AmCharts.AmGraph();
+		                graph.title = "현재생산량";
+		                graph.valueField = "curCountPer";
+		                graph.type = "column";
+		                graph.balloonText = "현재생산량  [[category]]:[[value]]";
+		                graph.lineAlpha = 0;
+		                graph.fillColors = "#bf1c25";
+		                graph.fillAlphas = 1;
+		                chart.addGraph(graph);
+
+		                chart.creditsPosition = "top-right";
+
+		                // WRITE
+		                chart.write("chartdiv");
+		            });*/
+			}
 				//계획진도율 차트 
-			 	self.planProgress = { 
+			 	/*self.planProgress = { 
 			 		rotated: true,
-			        dataSource: self.planProgressList,
+			        dataSource: $scope.planProgressList,
 			        commonSeriesSettings: {
 			        	label:{
 			        		displayMode: "stagger" ,
@@ -464,8 +611,8 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 			        			family: 'Verdana'
 			        		}
 			        	},
-			            argumentField: "lineNm"/*,
-			            type: "fullStackedBar"*/
+			            argumentField: "lineNm",
+			            type: "fullStackedBar"
 			        },
 			        series: [
 			            { valueField: "curCountPer", name: "생산실적", type:'fullStackedBar'},
@@ -474,9 +621,8 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 			            	vlaueField: "avgCountPer", 
 			            	name: "평균생산실적",
 			            	type: 'bar',
-			            	/*axis: 'absoluteAxis',*/
+			            	axis: 'absoluteAxis',
 			            	color:'#208fd8'
-			            		
 			            }
 			        ],
 			        valueAxis:[
@@ -524,8 +670,8 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 			            zIndex: 101
 			        }
 			    }
-			}
-
+			}*/
+													
 			
 			// 공정 불량 바차트 테스트 코드 
 			self.workChart = {

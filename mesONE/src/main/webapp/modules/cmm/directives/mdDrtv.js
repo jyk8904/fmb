@@ -271,12 +271,12 @@ angular
 				   data: '=data'
 			  },
 			  link: function(scope, element, attrs) {
-				  $timeout(function(){
+				/*  $timeout(function(){*/
 					 
 					  var length = scope.data.length / 7;
-					  if (length < 3)
-					  {
-						  if (length == 1) {
+					  /*if (length < 3)
+					  {*/
+						  if (length <= 1) {
 							  var header = "150";
 							  var data = "375";
 							  var subData = "125";
@@ -287,23 +287,70 @@ angular
 							  var data = "180";
 							  var subData = "60";
 							  var fontSize = "27";
+						  }else if (length == 3) {
+							  var header = "80";
+							  var data = "120";
+							  var subData = "40";
+							  var fontSize = "18";
+						  }else if (length == 4) {
+							  var header = "39";
+							  var data = "93";
+							  var subData = "31";
+							  var fontSize = "14";
 						  }
 						  
-						  element[0].children[0].children[0].style.height = header + "px";
+						  element[0].children[0].style.height = header + "px";
+						  element[0].children[0].style.lineHeight = header + "px";
+						  element[0].children[0].style.fontSize = fontSize + "px";
+						  
+						  element[0].children[1].style.height = subData + "px";
+						  element[0].children[1].style.lineHeight = subData + "px";
+						  element[0].children[1].style.fontSize = fontSize + "px";
+						  
+						  element[0].children[2].style.height = data + "px";
+						  element[0].children[2].style.lineHeight = data + "px";
+						  
+						  element[0].children[2].children[0].style.height = data + "px";
+						  element[0].children[2].children[0].style.lineHeight = data + "px";
+						  element[0].children[2].children[1].style.height = data + "px";
+						  element[0].children[2].children[1].style.lineHeight = data + "px";
+						  
+						  element[0].children[2].children[1].children[0].style.height = subData + "px";
+						  element[0].children[2].children[1].children[0].style.lineHeight = subData + "px";
+						  element[0].children[2].children[1].children[1].style.height = subData + "px";
+						  element[0].children[2].children[1].children[1].style.lineHeight = subData + "px";
+						  element[0].children[2].children[1].children[2].style.height = subData + "px";
+						  element[0].children[2].children[1].children[2].style.lineHeight = subData + "px";
+						  element[0].children[2].style.fontSize = fontSize + "px";
+						  element[0].children[3].style.height = subData + "px";
+						  element[0].children[3].style.lineHeight = subData + "px";
+						  element[0].children[3].style.fontSize = fontSize + "px";
+						  element[0].children[4].style.height = subData + "px";
+						  element[0].children[4].style.lineHeight = subData + "px";
+						  element[0].children[4].style.fontSize = fontSize + "px";
+						  element[0].children[5].style.height = subData + "px";
+						  element[0].children[5].style.lineHeight = subData + "px";
+						  element[0].children[5].style.fontSize = fontSize + "px";
+						  element[0].children[6].style.height = subData + "px";
+						  element[0].children[6].style.lineHeight = subData + "px";
+						  element[0].children[6].style.fontSize = fontSize + "px";
+						  
+						  /*element[0].children[0].children[0].style.height = header + "px";
 						  element[0].children[0].children[1].style.height = subData + "px";
 						  element[0].children[0].children[2].children[0].style.height = data + "px";
 						  element[0].children[0].children[2].children[1].style.height = subData + "px";
 						  element[0].children[0].children[3].children[0].style.height = subData + "px";
 						  element[0].children[0].children[4].children[0].style.height = subData + "px";
 						  element[0].children[0].children[5].style.height = subData + "px";
-						  element[0].children[0].children[6].style.height = subData + "px";
-						  
-						  for (var i = 0; i < 7; i++)
+						  element[0].children[0].children[6].style.height = subData + "px";*/						  
+					/*	  for (var i = 0; i < 5; i++)
 						  {
 							  element[0].children[0].children[i].style.fontSize = fontSize + "px";
-						  }
-					  }
-				  });
+							  
+							  element[0].children[0].children[i].style.fontSize = fontSize + "px";
+						  }*/
+					  /*}*/
+				  /*});*/
 			  } 
 		  }
 	  })
@@ -314,12 +361,14 @@ angular
 				   data: '=data'
 			  },
 			  link: function(scope, element, attrs) {
-				  $timeout(function(){
+			/*	  $timeout(function(){*/
 					 console.log(element)
+					 console.log(scope.data);
+					 
 					  var length = scope.data.length / 7;
-					  if (length < 3)
-					  {
-						  if (length == 1) {
+					/*  if (length < 3)
+					  {*/
+						  if (length <= 1) {
 							  var header = "150";
 							  var data = "125";
 							  var fontSize = "27";
@@ -329,16 +378,87 @@ angular
 							  var data = "60";
 							  var fontSize = "27";
 						  }
+						  else if (length == 3) {
+							  var header = "80";
+							  var data = "40";
+							  var fontSize = "18";
+						  }
+						  else if (length == 4) {
+							  var header = "39";
+							  var data = "31";
+							  var fontSize = "14";
+						  }
 						  
-						  element[0].children[0].children[0].children[0].style.height = header + "px";
+						  element[0].children[0].style.height = header + "px";
+						 /* element[0].children[0].style.lineHeight = header + "px";*/
+						  element[0].children[0].style.fontSize = fontSize + "px";
+						  
+						  
+						 /* element[0].children[0].children[0].children[0].style.height = header + "px";
 						  element[0].children[0].children[0].children[0].style.fontSize = fontSize + "px";
+						 */ 
 						  for(var i = 1; i < 7; i++)
 						  {
-							  element[0].children[0].children[0].children[i].style.height = data + "px";
-							  element[0].children[0].children[0].children[i].style.fontSize = fontSize + "px";
+							  console.log(i)
+							  element[0].children[i].style.height = data + "px";
+							  element[0].children[i].style.lineHeight = data + "px";
+							  element[0].children[i].style.fontSize = fontSize + "px";
+							  /*element[0].children[0].children[0].children[i].style.height = data + "px";
+							  element[0].children[0].children[0].children[i].style.fontSize = fontSize + "px";*/
 						  }
-					  }
-				  });
+					 /* }*/
+				 /* });*/
+			  } 
+		  }
+	  })
+	   .directive('gridTbmPanelCtrl', function($timeout){
+		  return {
+			  restrict: 'A',
+			  scope: {
+				   data: '=data'
+			  },
+			  link: function(scope, element, attrs) {
+				  $timeout(function(){
+					 console.log(element)
+					 console.log(scope)
+					 console.log(scope.data);
+					 
+					  var length = scope.data.length / 7;
+
+						  if (length <= 1) {
+							  var header = "150";
+							  var data = "125";
+							  var fontSize = "27";
+						  }
+						  else if (length == 2) {
+							  var header = "90";
+							  var data = "60";
+							  var fontSize = "27";
+						  }
+						  else if (length == 3) {
+							  var header = "80";
+							  var data = "40";
+							  var fontSize = "18";
+						  }
+						  else if (length == 4) {
+							  var header = "39";
+							  var data = "31";
+							  var fontSize = "14";
+						  }
+						  
+						  element[0].children[0].style.height = header + "px";
+						  element[0].children[0].style.lineHeight = header + "px";
+						  element[0].children[0].style.fontSize = fontSize + "px";
+						  
+						  for(var i = 1; i < 7; i++)
+						  {
+							  console.log(i)
+							  element[0].children[i].style.height = data + "px";
+							  element[0].children[i].style.lineHeight = data + "px";
+							  element[0].children[i].style.fontSize = fontSize + "px";
+							  }
+					 /* }*/
+				  }, 200);
 			  } 
 		  }
 	  });

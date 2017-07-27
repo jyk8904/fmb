@@ -34,7 +34,19 @@
 			</div>
 			<img class="stsbackLg" src="/mes/assets/img/dash/dash_panel_lg.png"/>
 			<div class="stsBody">
-				 <div id="chart" dx-chart="vm.planProgress"></div>
+			
+			   <div id="chartdiv" style="width: 500px; height: 600px;"></div>
+			<!-- <am-chart id="myFirstChart" ng-model="vm.amChartOptions" height="100%" width="100%"></am-chart> -->
+			<!-- <am-chart id="myFirstChart" options="amChartOptions" height="100%" width="100%"></am-chart> -->
+			<!-- 			
+ 			<div id="d3-bar" d3-bar 
+ 				 datajson= "planProgressList" 
+                 xaxis-name = "'Year'" 
+                 xaxis-pos = "800"  
+                 yaxis-name = "'Frequency'" 
+                 yaxis-pos = "10" 
+                 d3-format= "'.0%'" >
+		   </div> -->
 			</div>
 		</div>
 	
@@ -113,7 +125,8 @@
 			</div>
 			<img class="stsbackSm" src="/mes/assets/img/dash/dash_panel_sm.png"/>
 			<div class="stsBody runGauge">
-				<div dx-circular-gauge="gaugeRunRate"></div>
+			<div id="gaugeRunRate"></div>
+				<!-- <div dx-circular-gauge="gaugeRunRate"></div> -->
 				<!-- <div dx-data-grid="vm.gaugeRunInfoList"></div> -->
 			</div>
 			<div class="gaugeInfo">
