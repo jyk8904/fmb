@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+
+/* 커스텀 칼럼 스타일 정의 */
+.my-color {
+	color:#00aa00;
+}
+
+.my-right {
+	text-align:right;
+}
+
+</style>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/normal_100.json");
+};
+
+// AUIGrid 칼럼 설정
+// 데이터 형태는 다음과 같은 형태임,
+//[{"id":"#Cust0","date":"2014-09-03","name":"Han","country":"USA","product":"Apple","color":"Red","price":746400}, { .....} ];
+var columnLayout = [ {
+		dataField : "name",
+		headerText : "Name",
+		width : 140,
+		headerTooltip : { // 헤더 툴팁 표시 HTML 양식
+			show : true,
+			tooltipHtml : "어떤 경우라도 이 칼럼은 수정 불가 설정"
+		},
+		style : "my-color",
+		headerStyle : "my-color",
+		editable : false // Name 편집 불가능 설정, 추가된 행인 경우도 편집 불가임
+	}, {
+		dataField : "country",
+		headerText : "Country",
+		headerTooltip : { // 헤더 툴팁 표시 HTML 양식
+			show : true,
+			tooltipHtml : "기본적으로 수정 불가, 단 새 행 추가한 경우는 편집 허용"
+		},
+		style : "my-color",
+		headerStyle : "my-color",
+		editable : true, // 추가된 행인 경우만 수정 할 수 있도록 editable : true 로 설정 (cellEditBegin 이벤트에서 제어함)
+		width : 140
+	}, {
+		dataField : "product",
+		headerText : "Product",
+		width : 120
+	}, {
+		dataField : "quantity",
+		headerText : "Quantity",
+		dataType : "numeric",
+		style : "my-right",
+		width : 80
+	}, {
+		dataField : "price",
+		headerText : "Price",
+		dataType : "numeric",
+		style : "my-right",
+		width : 120
+	}, {
+		dataField : "date",
+		headerText : "Date"
+	}
+];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+			
+			editable : true,
+			
+			selectionMode : "multipleCells",
+			
+			// 행 고유 id 에 속하는 필드명 (필드의 값은 중복되지 않은 고유값이여야 함)
+			rowIdField : "id",
+			
+			// 상태 칼럼 사용
+			showStateColumn : true,
+			
+			// 칼럼 끝에서 오른쪽 이동 시 다음 행, 처음 칼럼으로 이동할지 여부
+			wrapSelectionMove : true,
+			
+			// 엔터키가 다음 행이 아닌 다음 칼럼으로 이동
+			enterKeyColumnBase : true
+	};
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 사용자가 Insert 키, Ctrl+Insert 키로 행 추가하는 경우, 기본 값으로 적용 시킬 아이템 작성
+	AUIGrid.bind(myGridID, "beforeInsertRow", function(event) {
+		return {
+				"name" : "Anna",
+				"country" : "이 값을 변경하세요.",
+				"product" : "새 제품",
+				"quantity" : 1,
+				"price" : 0,
+				"date" : "2016/02/15"
+		};
+	});
+	
+	// 에디팅 시작 이벤트 바인딩
+	AUIGrid.bind(myGridID, "cellEditBegin", function(event) {
+		
+		if(event.dataField == "country") {
+			// 추가된 행 아이템인지 조사하여 추가된 행인 경우만 에디팅 진입 허용
+			if(AUIGrid.isAddedById(event.pid, event.item.id)) {
+				return true; 
+			} else {
+				return false; // false 반환하면 기본 행위 안함(즉, cellEditBegin 의 기본행위는 에디팅 진입임)
+			}
+		}
+		return true; // 다른 필드들은 편집 허용
+	});
+}
+
+
+// 하단에 새행 추가
+function addNewRow() {
+	var newItem = {
+			"name" : "Anna",
+			"country" : "이 값을 변경하세요.",
+			"product" : "새 제품",
+			"quantity" : 1,
+			"price" : 0,
+			"date" : "2016/02/15"
+	};
+	// parameter
+	// item : 삽입하고자 하는 아이템 Object 또는 배열(배열인 경우 다수가 삽입됨)
+	// rowPos : rowIndex 인 경우 해당 index 에 삽입, first : 최상단, last : 최하단, selectionUp : 선택된 곳 위, selectionDown : 선택된 곳 아래
+	AUIGrid.addRow(myGridID, newItem, "last");
+};
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>그리드를 편집 가능(editable=true) 로 설정한 경우, 특정 칼럼만 편집 불가 설정을 할 수 있습니다.</p>
+		<p>편집 불가(readonly)를 원하는 개별 칼럼에(editable=false) 설정하십시오.</p>
+		<p>그러나 때로는 읽기 전용으로 설정한 칼럼 중 사용자가 추가한 행의 칼럼은 수정이 필요한 경우가 있습니다.</p>
+		<p>이런 경우  cellEditBegin 이벤트를 바인딩 한 후 제어하십시오.</p>
+		<p>"Country" 칼럼은 기본적으로 수정이 불가능하지만, 새 행을 추가한 경우 수정이 가능하도록 설정한 모습입니다.</p>
+		<p><span class="btn" onclick="addNewRow()">새 행 추가</span>
+	</div>
+	
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:420px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="selectionDesc"></p>
+		<p id="editBeginDesc"></p>
+		<p id="editBeginEnd"></p>
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

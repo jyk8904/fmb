@@ -1,0 +1,401 @@
+[{
+    "id": "#server_pro_0",
+    "name": "Server 1",
+    "charge": "Emma",
+    "location": "Operation Dept., F6",
+    "available": false,
+    "isSpare": true,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_1",
+    "name": "Server 2",
+    "charge": "Anna",
+    "location": "Operation Dept., F1",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_2",
+    "name": "Server 3",
+    "charge": "Steve",
+    "location": "Operation Dept., F5",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_3",
+    "name": "Server 4",
+    "charge": "Jennifer",
+    "location": "Operation Dept., F6",
+    "available": false,
+    "isSpare": true,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_4",
+    "name": "Server 5",
+    "charge": "Jennifer",
+    "location": "Operation Dept., F1",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_5",
+    "name": "Server 6",
+    "charge": "Kim",
+    "location": "Operation Dept., F1",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_6",
+    "name": "Server 7",
+    "charge": "Anna",
+    "location": "Operation Dept., F2",
+    "available": true,
+    "isSpare": true,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_7",
+    "name": "Server 8",
+    "charge": "Kim",
+    "location": "Operation Dept., F2",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_8",
+    "name": "Server 9",
+    "charge": "Kim",
+    "location": "Operation Dept., F1",
+    "available": false,
+    "isSpare": true,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_9",
+    "name": "Server 10",
+    "charge": "Anna",
+    "location": "Operation Dept., F1",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_10",
+    "name": "Server 11",
+    "charge": "Emma",
+    "location": "Operation Dept., F1",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_11",
+    "name": "Server 12",
+    "charge": "Jennifer",
+    "location": "Operation Dept., F4",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_12",
+    "name": "Server 13",
+    "charge": "Jennifer",
+    "location": "Operation Dept., F2",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_13",
+    "name": "Server 14",
+    "charge": "Kim",
+    "location": "Operation Dept., F3",
+    "available": true,
+    "isSpare": true,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_14",
+    "name": "Server 15",
+    "charge": "Emma",
+    "location": "Operation Dept., F5",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_15",
+    "name": "Server 16",
+    "charge": "Emma",
+    "location": "Operation Dept., F4",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_16",
+    "name": "Server 17",
+    "charge": "Steve",
+    "location": "Operation Dept., F3",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_17",
+    "name": "Server 18",
+    "charge": "Emma",
+    "location": "Operation Dept., F1",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_18",
+    "name": "Server 19",
+    "charge": "Emma",
+    "location": "Operation Dept., F2",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_19",
+    "name": "Server 20",
+    "charge": "Kim",
+    "location": "Operation Dept., F3",
+    "available": true,
+    "isSpare": true,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_20",
+    "name": "Server 21",
+    "charge": "Jennifer",
+    "location": "Operation Dept., F3",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_21",
+    "name": "Server 22",
+    "charge": "Steve",
+    "location": "Operation Dept., F4",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_22",
+    "name": "Server 23",
+    "charge": "Anna",
+    "location": "Operation Dept., F2",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_23",
+    "name": "Server 24",
+    "charge": "Jennifer",
+    "location": "Operation Dept., F6",
+    "available": true,
+    "isSpare": true,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_24",
+    "name": "Server 25",
+    "charge": "Jennifer",
+    "location": "Operation Dept., F5",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_25",
+    "name": "Server 26",
+    "charge": "Steve",
+    "location": "Operation Dept., F5",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_26",
+    "name": "Server 27",
+    "charge": "Kim",
+    "location": "Operation Dept., F4",
+    "available": true,
+    "isSpare": true,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_27",
+    "name": "Server 28",
+    "charge": "Anna",
+    "location": "Operation Dept., F6",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_28",
+    "name": "Server 29",
+    "charge": "Steve",
+    "location": "Operation Dept., F1",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_29",
+    "name": "Server 30",
+    "charge": "Kim",
+    "location": "Operation Dept., F6",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_30",
+    "name": "Server 31",
+    "charge": "Steve",
+    "location": "Operation Dept., F6",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_31",
+    "name": "Server 32",
+    "charge": "Anna",
+    "location": "Operation Dept., F3",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_32",
+    "name": "Server 33",
+    "charge": "Emma",
+    "location": "Operation Dept., F5",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_33",
+    "name": "Server 34",
+    "charge": "Anna",
+    "location": "Operation Dept., F6",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_34",
+    "name": "Server 35",
+    "charge": "Anna",
+    "location": "Operation Dept., F1",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_35",
+    "name": "Server 36",
+    "charge": "Anna",
+    "location": "Operation Dept., F1",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_36",
+    "name": "Server 37",
+    "charge": "Jennifer",
+    "location": "Operation Dept., F4",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_37",
+    "name": "Server 38",
+    "charge": "Steve",
+    "location": "Operation Dept., F4",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_38",
+    "name": "Server 39",
+    "charge": "Lawrence",
+    "location": "Operation Dept., F6",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_39",
+    "name": "Server 40",
+    "charge": "Steve",
+    "location": "Operation Dept., F2",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_40",
+    "name": "Server 41",
+    "charge": "Emma",
+    "location": "Operation Dept., F4",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_41",
+    "name": "Server 42",
+    "charge": "Emma",
+    "location": "Operation Dept., F2",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_42",
+    "name": "Server 43",
+    "charge": "Steve",
+    "location": "Operation Dept., F3",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_43",
+    "name": "Server 44",
+    "charge": "Emma",
+    "location": "Operation Dept., F3",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_44",
+    "name": "Server 45",
+    "charge": "Lawrence",
+    "location": "Operation Dept., F5",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_45",
+    "name": "Server 46",
+    "charge": "Steve",
+    "location": "Operation Dept., F5",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_46",
+    "name": "Server 47",
+    "charge": "Kim",
+    "location": "Operation Dept., F5",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_47",
+    "name": "Server 48",
+    "charge": "Lawrence",
+    "location": "Operation Dept., F5",
+    "available": true,
+    "isSpare": true,
+    "isActive": "Active"
+}, {
+    "id": "#server_pro_48",
+    "name": "Server 49",
+    "charge": "Steve",
+    "location": "Operation Dept., F3",
+    "available": false,
+    "isSpare": false,
+    "isActive": "Inactive"
+}, {
+    "id": "#server_pro_49",
+    "name": "Server 50",
+    "charge": "Kim",
+    "location": "Operation Dept., F6",
+    "available": true,
+    "isSpare": false,
+    "isActive": "Active"
+}]

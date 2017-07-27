@@ -1,0 +1,132 @@
+	<!-- 설정 부분 코드 시작 -->
+	<!--     팝업창 내 설비영역추가 팝업      -->
+	<div class="add_eqpt">
+		<table class="add_eqpt_table">
+			<tr class="first_row">
+				<td class="title" colspan="2">설비 영역 추가</td>
+			</tr>
+			<tr class="second_row">
+				<td class="addClass">클래스명</td>
+				<td class="addClassData"><input type="text" maxLength="30"
+					name="textfield1" placeholder="eqpt*" value="" /></td>
+			</tr>
+			<tr class="third_row">
+				<td class="addType">타입</td>
+				<td class="addTypeData"><select class="type">
+						<option value="active">active</option>
+						<option value="done">done</option>
+				</select></td>
+			</tr>
+			<tr class="fourth_row">
+				<td class="addPlc">PLC 명</td>
+				<td class="addPlcData"><select class="plc">
+						<%
+							for (int i = 0; i < list.size(); i++) {
+								PlcDto pdto = (PlcDto) list.get(i);
+						%>
+						<option value="<%=pdto.getPLC_ID()%>"><%=pdto.getPLC_ID()%></option>
+						<%
+							}
+						%>
+						<option value="none">none</option>
+				</select></td>
+			</tr>
+			<tr class="fifth_row">
+				<td class="commit_btn"><a href="#">적용</a></td>
+				<td class="close_btn"><a href="#">닫기</a></td>
+			</tr>
+		</table>
+	</div>
+	<!--     팝업창 내 설비영역추가 팝업   	     -->
+
+	<!--     팝업창    -->
+	<div class="config_popup">
+		<!--     팝업창좌    -->
+		<div class="first_row">
+			<div class="add_btn">
+				<h6>
+					<a href="#">추가</a>
+				</h6>
+			</div>
+			<div class="commit_btn">
+				<h6>
+					<a href="#">적용</a>
+				</h6>
+			</div>
+			<div class="config_close">
+				<a href="#"><img src="images/system/close_white.png" /></a>
+			</div>
+		</div>
+		<!--     팝업창우    -->
+		<div class="second_row">
+			<div class="eqpt_list">
+				<div class="list_title">
+					<h4>설비 List</h4>
+				</div>
+				<ul>
+				</ul>
+			</div>
+			<div class="line_height"></div>
+
+			<div class="config_data">
+				<div class="config_title">
+					<p class="internal" act="on">설정 1</p>
+					<p class="external" act="off">설정 2</p>
+				</div>
+				<div class="line_height2"></div>
+				<div class="internal_config">
+					<div class="title_1">width :</div>
+					<div class="data_width">
+						<input type="text" maxLength="30" name="textfield1" value="none" />
+					</div>
+					<div class="title_2">height :</div>
+					<div class="data_height">
+						<input type="text" maxLength="30" name="textfield2" value="none" />
+					</div>
+					<div class="title_3">z-index :</div>
+					<div class="data_zIndex">
+						<input type="text" maxLength="30" name="textfield3" value="none" />
+					</div>
+					<div class="title_4">img_url :</div>
+					<div class="data_url">
+						<input type="text" maxLength="30" name="textfield4" value="none" />
+					</div>
+					<div class="title_5">미리보기</div>
+					<div class="data_view">
+						<img src="images/system/none_img.png" />
+					</div>
+				</div>
+				<div class="external_config">
+					<div class="title_1">class :</div>
+					<div class="data_class">
+						<input type="text" maxLength="30" name="textfield1" value="none" />
+					</div>
+					<div class="title_2">type :</div>
+					<div class="data_type">
+						<select class="type">
+							<option value="active">active</option>
+							<option value="done">done</option>
+						</select>
+					</div>
+					<div class="title_3">plc :</div>
+					<div class="data_plc">
+						<select class="plc">
+							<%
+								for (int i = 0; i < list.size(); i++) {
+									PlcDto pdto = (PlcDto) list.get(i);
+							%>
+							<option value="<%=pdto.getPLC_ID()%>"><%=pdto.getPLC_ID()%></option>
+							<%
+								}
+							%>
+							<option value="none">none</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!--     팝업창 끝     -->
+

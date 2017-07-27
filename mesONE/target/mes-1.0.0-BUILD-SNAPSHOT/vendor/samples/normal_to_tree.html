@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+/* 커스텀 스타일 */
+.left {
+	text-align:left;
+}
+</style>
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 그리드에 데이터 삽입
+	AUIGrid.setGridData(myGridID, data);
+};
+
+// AUIGrid 칼럼 설정
+var columnLayout = [ {
+		dataField : "name",
+		headerText : "Name",
+		width : 120
+	}, {
+		dataField : "country",
+		headerText : "Country",
+		width : 120
+	}, {
+		dataField : "product",
+		headerText : "Product",
+		width : 120
+	}, {
+		dataField : "color",
+		headerText : "Color",
+		width : 120
+	}, {
+		dataField : "price",
+		headerText : "Price",
+		dataType : "numeric",
+		style : "my-column",
+		width : 120
+	}, {
+		dataField : "quantity",
+		headerText : "Quantity",
+		width : 120
+	}, {
+		dataField : "date",
+		headerText : "Date",
+		width : 120
+	}];
+
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+			
+			selectionMode : "multipleRows",
+			
+			editable : true,
+			
+			onlyEnterKeyEditEnd : true,
+			
+			showStateColumn : true,
+			
+			// Home, End 키가 칼럼 시작, 끝으로 이동함
+			isColumnOriented : true
+	};
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+
+	// ready 이벤트 바인딩
+	AUIGrid.bind(myGridID, "ready", function(event) {
+		// 두번째 행, 첫 셀에 선택되도록 지정
+		AUIGrid.setSelectionByIndex(myGridID, 1, 0);
+	});
+};
+
+// depth 들여쓰기
+function indentTreeDepth() {
+	AUIGrid.indentTreeDepth(myGridID);
+};
+
+// depth 내어쓰기
+function outdentTreeDepth() {
+	AUIGrid.outdentTreeDepth(myGridID);
+};
+
+var isExpanded = true;
+function expand() {
+	if (!isExpanded) {
+		AUIGrid.expandAll(myGridID);
+		isExpanded = true;
+	} else {
+		AUIGrid.collapseAll(myGridID);
+		isExpanded = false;
+	}
+}
+
+//Grid에 넣을 데이터
+var data = [{"id":"#Cust-100","id4tree":0,"date":"2015-06-11","name":"Anna","country":"Japan","flag":"japan.png","product":"Galaxy Note3","color":"Orange","quantity":7,"price":405300},{"id":"#Cust-99","id4tree":1,"date":"2015-06-10","name":"Anna","country":"Japan","flag":"japan.png","product":"Galaxy Note3","color":"Orange","quantity":7,"price":179000},{"id":"#Cust-98","id4tree":2,"date":"2015-06-09","name":"Emma","country":"UK","flag":"uk.png","product":"IPhone 5S","color":"Pink","quantity":9,"price":922300},{"id":"#Cust-97","id4tree":3,"date":"2015-06-08","name":"Anna","country":"France","flag":"france.png","product":"Galaxy S5","color":"Violet","quantity":0,"price":622100},{"id":"#Cust-96","id4tree":4,"date":"2015-06-07","name":"Kim","country":"UK","flag":"uk.png","product":"Galaxy S5","color":"Pink","quantity":9,"price":353900},{"id":"#Cust-95","id4tree":5,"date":"2015-06-06","name":"Jennifer","country":"France","flag":"france.png","product":"LG G3","color":"Violet","quantity":0,"price":793500},{"id":"#Cust-94","id4tree":6,"date":"2015-06-05","name":"Kim","country":"Ireland","flag":"ireland.png","product":"IPad Air","color":"Pink","quantity":12,"price":194800},{"id":"#Cust-93","id4tree":7,"date":"2015-06-04","name":"Anna","country":"China","flag":"china.png","product":"Galaxy S5","color":"Violet","quantity":10,"price":954700},{"id":"#Cust-92","id4tree":8,"date":"2015-06-03","name":"Steve","country":"Italy","flag":"italy.png","product":"IPad Air","color":"Blue","quantity":15,"price":409900},{"id":"#Cust-91","id4tree":9,"date":"2015-06-02","name":"Emma","country":"China","flag":"china.png","product":"Galaxy Note3","color":"Green","quantity":10,"price":961200},{"id":"#Cust-90","id4tree":10,"date":"2015-06-01","name":"Anna","country":"Singapore","flag":"singapore.png","product":"IPhone 5S","color":"Orange","quantity":20,"price":183500},{"id":"#Cust-89","id4tree":11,"date":"2015-05-31","name":"Lawrence","country":"France","flag":"france.png","product":"Galaxy Note3","color":"Orange","quantity":0,"price":13000},{"id":"#Cust-88","id4tree":12,"date":"2015-05-30","name":"Jennifer","country":"Korea","flag":"korea.png","product":"IPhone 5S","color":"Green","quantity":1,"price":666900},{"id":"#Cust-87","id4tree":13,"date":"2015-05-29","name":"Kim","country":"Japan","flag":"japan.png","product":"LG G3","color":"Yellow","quantity":7,"price":401000},{"id":"#Cust-86","id4tree":14,"date":"2015-05-28","name":"Kim","country":"UK","flag":"uk.png","product":"Galaxy Note3","color":"Orange","quantity":9,"price":732200},{"id":"#Cust-85","id4tree":15,"date":"2015-05-27","name":"Kim","country":"Singapore","flag":"singapore.png","product":"LG G3","color":"Green","quantity":20,"price":263700},{"id":"#Cust-84","id4tree":16,"date":"2015-05-26","name":"Jennifer","country":"Japan","flag":"japan.png","product":"Galaxy Note3","color":"Green","quantity":7,"price":719000},{"id":"#Cust-83","id4tree":17,"date":"2015-05-25","name":"Steve","country":"Singapore","flag":"singapore.png","product":"LG G3","color":"Orange","quantity":20,"price":330700},{"id":"#Cust-82","id4tree":18,"date":"2015-05-24","name":"Lawrence","country":"USA","flag":"usa.png","product":"IPhone 5S","color":"Green","quantity":3,"price":186200},{"id":"#Cust-81","id4tree":19,"date":"2015-05-23","name":"Kim","country":"China","flag":"china.png","product":"IPad Air","color":"Yellow","quantity":10,"price":676200},{"id":"#Cust-80","id4tree":20,"date":"2015-05-22","name":"Jennifer","country":"China","flag":"china.png","product":"IPad Air","color":"Pink","quantity":10,"price":659800},{"id":"#Cust-79","id4tree":21,"date":"2015-05-21","name":"Emma","country":"UK","flag":"uk.png","product":"LG G3","color":"Pink","quantity":9,"price":469100},{"id":"#Cust-78","id4tree":22,"date":"2015-05-20","name":"Steve","country":"Singapore","flag":"singapore.png","product":"Galaxy S5","color":"Gray","quantity":20,"price":387500},{"id":"#Cust-77","id4tree":23,"date":"2015-05-19","name":"Anna","country":"Singapore","flag":"singapore.png","product":"Galaxy Note3","color":"Violet","quantity":20,"price":720000},{"id":"#Cust-76","id4tree":24,"date":"2015-05-18","name":"Anna","country":"UK","flag":"uk.png","product":"IPad Air","color":"Gray","quantity":9,"price":83500},{"id":"#Cust-75","id4tree":25,"date":"2015-05-17","name":"Steve","country":"USA","flag":"usa.png","product":"IPhone 5S","color":"Orange","quantity":3,"price":35800},{"id":"#Cust-74","id4tree":26,"date":"2015-05-16","name":"Emma","country":"Korea","flag":"korea.png","product":"LG G3","color":"Yellow","quantity":1,"price":680600},{"id":"#Cust-73","id4tree":27,"date":"2015-05-15","name":"Lawrence","country":"Korea","flag":"korea.png","product":"Galaxy S5","color":"Pink","quantity":1,"price":363800},{"id":"#Cust-72","id4tree":28,"date":"2015-05-14","name":"Lawrence","country":"China","flag":"china.png","product":"IPhone 5S","color":"Green","quantity":10,"price":82900},{"id":"#Cust-71","id4tree":29,"date":"2015-05-13","name":"Jennifer","country":"Ireland","flag":"ireland.png","product":"Galaxy Note3","color":"Pink","quantity":12,"price":747900},{"id":"#Cust-70","id4tree":30,"date":"2015-05-12","name":"Emma","country":"Japan","flag":"japan.png","product":"IPhone 5S","color":"Orange","quantity":7,"price":909300},{"id":"#Cust-69","id4tree":31,"date":"2015-05-11","name":"Jennifer","country":"Japan","flag":"japan.png","product":"Galaxy S5","color":"Yellow","quantity":7,"price":75800},{"id":"#Cust-68","id4tree":32,"date":"2015-05-10","name":"Jennifer","country":"USA","flag":"usa.png","product":"IPhone 5S","color":"Green","quantity":3,"price":252100},{"id":"#Cust-67","id4tree":33,"date":"2015-05-09","name":"Emma","country":"USA","flag":"usa.png","product":"LG G3","color":"Blue","quantity":3,"price":825800},{"id":"#Cust-66","id4tree":34,"date":"2015-05-08","name":"Anna","country":"Japan","flag":"japan.png","product":"Galaxy S5","color":"Yellow","quantity":7,"price":417900},{"id":"#Cust-65","id4tree":35,"date":"2015-05-07","name":"Emma","country":"Korea","flag":"korea.png","product":"IPhone 5S","color":"Orange","quantity":1,"price":824100},{"id":"#Cust-64","id4tree":36,"date":"2015-05-06","name":"Anna","country":"Singapore","flag":"singapore.png","product":"LG G3","color":"Green","quantity":20,"price":684700},{"id":"#Cust-63","id4tree":37,"date":"2015-05-05","name":"Steve","country":"USA","flag":"usa.png","product":"LG G3","color":"Pink","quantity":3,"price":987700},{"id":"#Cust-62","id4tree":38,"date":"2015-05-04","name":"Lawrence","country":"France","flag":"france.png","product":"Galaxy Note3","color":"Gray","quantity":0,"price":49500},{"id":"#Cust-61","id4tree":39,"date":"2015-05-03","name":"Lawrence","country":"USA","flag":"usa.png","product":"LG G3","color":"Pink","quantity":3,"price":79500},{"id":"#Cust-60","id4tree":40,"date":"2015-05-02","name":"Emma","country":"Italy","flag":"italy.png","product":"IPhone 5S","color":"Orange","quantity":15,"price":974800},{"id":"#Cust-59","id4tree":41,"date":"2015-05-01","name":"Kim","country":"Italy","flag":"italy.png","product":"IPhone 5S","color":"Gray","quantity":15,"price":452900},{"id":"#Cust-58","id4tree":42,"date":"2015-04-30","name":"Lawrence","country":"Singapore","flag":"singapore.png","product":"LG G3","color":"Blue","quantity":20,"price":147400},{"id":"#Cust-57","id4tree":43,"date":"2015-04-29","name":"Anna","country":"USA","flag":"usa.png","product":"Galaxy S5","color":"Gray","quantity":3,"price":808200},{"id":"#Cust-56","id4tree":44,"date":"2015-04-28","name":"Jennifer","country":"UK","flag":"uk.png","product":"IPhone 5S","color":"Blue","quantity":9,"price":217100},{"id":"#Cust-55","id4tree":45,"date":"2015-04-27","name":"Jennifer","country":"Singapore","flag":"singapore.png","product":"IPad Air","color":"Orange","quantity":20,"price":938600},{"id":"#Cust-54","id4tree":46,"date":"2015-04-26","name":"Kim","country":"Japan","flag":"japan.png","product":"IPhone 5S","color":"Yellow","quantity":7,"price":555600},{"id":"#Cust-53","id4tree":47,"date":"2015-04-25","name":"Kim","country":"Korea","flag":"korea.png","product":"LG G3","color":"Orange","quantity":1,"price":481200},{"id":"#Cust-52","id4tree":48,"date":"2015-04-24","name":"Anna","country":"France","flag":"france.png","product":"IPhone 5S","color":"Green","quantity":0,"price":3800},{"id":"#Cust-51","id4tree":49,"date":"2015-04-23","name":"Lawrence","country":"Japan","flag":"japan.png","product":"IPad Air","color":"Orange","quantity":7,"price":665300},{"id":"#Cust-50","id4tree":50,"date":"2015-04-22","name":"Steve","country":"USA","flag":"usa.png","product":"Galaxy Note3","color":"Green","quantity":3,"price":618400},{"id":"#Cust-49","id4tree":51,"date":"2015-04-21","name":"Kim","country":"USA","flag":"usa.png","product":"LG G3","color":"Orange","quantity":3,"price":66400},{"id":"#Cust-48","id4tree":52,"date":"2015-04-20","name":"Lawrence","country":"China","flag":"china.png","product":"IPhone 5S","color":"Orange","quantity":10,"price":428600},{"id":"#Cust-47","id4tree":53,"date":"2015-04-19","name":"Jennifer","country":"China","flag":"china.png","product":"Nexus 10","color":"Yellow","quantity":10,"price":351000},{"id":"#Cust-46","id4tree":54,"date":"2015-04-18","name":"Anna","country":"Japan","flag":"japan.png","product":"LG G3","color":"Orange","quantity":7,"price":179700},{"id":"#Cust-45","id4tree":55,"date":"2015-04-17","name":"Jennifer","country":"France","flag":"france.png","product":"LG G3","color":"Orange","quantity":0,"price":32200},{"id":"#Cust-44","id4tree":56,"date":"2015-04-16","name":"Lawrence","country":"Singapore","flag":"singapore.png","product":"LG G3","color":"Violet","quantity":20,"price":86500},{"id":"#Cust-43","id4tree":57,"date":"2015-04-15","name":"Jennifer","country":"Korea","flag":"korea.png","product":"Galaxy Note3","color":"Violet","quantity":1,"price":214300},{"id":"#Cust-42","id4tree":58,"date":"2015-04-14","name":"Steve","country":"Korea","flag":"korea.png","product":"Galaxy S5","color":"Gray","quantity":1,"price":582100},{"id":"#Cust-41","id4tree":59,"date":"2015-04-13","name":"Kim","country":"Singapore","flag":"singapore.png","product":"IPad Air","color":"Gray","quantity":20,"price":347200},{"id":"#Cust-40","id4tree":60,"date":"2015-04-12","name":"Anna","country":"USA","flag":"usa.png","product":"IPhone 5S","color":"Green","quantity":3,"price":70300},{"id":"#Cust-39","id4tree":61,"date":"2015-04-11","name":"Steve","country":"Korea","flag":"korea.png","product":"Galaxy S5","color":"Pink","quantity":1,"price":973300},{"id":"#Cust-38","id4tree":62,"date":"2015-04-10","name":"Steve","country":"Japan","flag":"japan.png","product":"LG G3","color":"Pink","quantity":7,"price":670200},{"id":"#Cust-37","id4tree":63,"date":"2015-04-09","name":"Anna","country":"Singapore","flag":"singapore.png","product":"IPhone 5S","color":"Blue","quantity":20,"price":480700},{"id":"#Cust-36","id4tree":64,"date":"2015-04-08","name":"Jennifer","country":"Singapore","flag":"singapore.png","product":"IPad Air","color":"Orange","quantity":20,"price":973100},{"id":"#Cust-35","id4tree":65,"date":"2015-04-07","name":"Jennifer","country":"Japan","flag":"japan.png","product":"IPad Air","color":"Pink","quantity":7,"price":848300},{"id":"#Cust-34","id4tree":66,"date":"2015-04-06","name":"Steve","country":"Japan","flag":"japan.png","product":"Galaxy S5","color":"Orange","quantity":7,"price":787700},{"id":"#Cust-33","id4tree":67,"date":"2015-04-05","name":"Steve","country":"Ireland","flag":"ireland.png","product":"LG G3","color":"Blue","quantity":12,"price":401600},{"id":"#Cust-32","id4tree":68,"date":"2015-04-04","name":"Lawrence","country":"UK","flag":"uk.png","product":"Galaxy S5","color":"Green","quantity":9,"price":890600},{"id":"#Cust-31","id4tree":69,"date":"2015-04-03","name":"Anna","country":"USA","flag":"usa.png","product":"IPhone 5S","color":"Green","quantity":3,"price":557400},{"id":"#Cust-30","id4tree":70,"date":"2015-04-02","name":"Emma","country":"USA","flag":"usa.png","product":"LG G3","color":"Blue","quantity":3,"price":778300},{"id":"#Cust-29","id4tree":71,"date":"2015-04-01","name":"Kim","country":"USA","flag":"usa.png","product":"LG G3","color":"Gray","quantity":3,"price":578100},{"id":"#Cust-28","id4tree":72,"date":"2015-03-31","name":"Kim","country":"France","flag":"france.png","product":"Galaxy S5","color":"Gray","quantity":0,"price":415800},{"id":"#Cust-27","id4tree":73,"date":"2015-03-30","name":"Anna","country":"USA","flag":"usa.png","product":"LG G3","color":"Yellow","quantity":3,"price":319200},{"id":"#Cust-26","id4tree":74,"date":"2015-03-29","name":"Jennifer","country":"Italy","flag":"italy.png","product":"Galaxy Note3","color":"Blue","quantity":15,"price":985500},{"id":"#Cust-25","id4tree":75,"date":"2015-03-28","name":"Emma","country":"USA","flag":"usa.png","product":"IPhone 5S","color":"Pink","quantity":3,"price":979000},{"id":"#Cust-24","id4tree":76,"date":"2015-03-27","name":"Lawrence","country":"Japan","flag":"japan.png","product":"IPhone 5S","color":"Gray","quantity":7,"price":641500},{"id":"#Cust-23","id4tree":77,"date":"2015-03-26","name":"Jennifer","country":"France","flag":"france.png","product":"Galaxy S5","color":"Yellow","quantity":0,"price":851800},{"id":"#Cust-22","id4tree":78,"date":"2015-03-25","name":"Steve","country":"Japan","flag":"japan.png","product":"Galaxy S5","color":"Pink","quantity":7,"price":254100},{"id":"#Cust-21","id4tree":79,"date":"2015-03-24","name":"Anna","country":"France","flag":"france.png","product":"Galaxy S5","color":"Pink","quantity":0,"price":74400},{"id":"#Cust-20","id4tree":80,"date":"2015-03-23","name":"Steve","country":"Italy","flag":"italy.png","product":"Galaxy S5","color":"Pink","quantity":15,"price":162800},{"id":"#Cust-19","id4tree":81,"date":"2015-03-22","name":"Kim","country":"USA","flag":"usa.png","product":"Galaxy S5","color":"Orange","quantity":3,"price":375600},{"id":"#Cust-18","id4tree":82,"date":"2015-03-21","name":"Steve","country":"Korea","flag":"korea.png","product":"Galaxy S5","color":"Pink","quantity":1,"price":925700},{"id":"#Cust-17","id4tree":83,"date":"2015-03-20","name":"Lawrence","country":"UK","flag":"uk.png","product":"IPad Air","color":"Yellow","quantity":9,"price":830400},{"id":"#Cust-16","id4tree":84,"date":"2015-03-19","name":"Steve","country":"UK","flag":"uk.png","product":"IPad Air","color":"Violet","quantity":9,"price":72400},{"id":"#Cust-15","id4tree":85,"date":"2015-03-18","name":"Steve","country":"USA","flag":"usa.png","product":"IPad Air","color":"Blue","quantity":3,"price":607600},{"id":"#Cust-14","id4tree":86,"date":"2015-03-17","name":"Emma","country":"Ireland","flag":"ireland.png","product":"IPad Air","color":"Blue","quantity":12,"price":846100},{"id":"#Cust-13","id4tree":87,"date":"2015-03-16","name":"Lawrence","country":"Singapore","flag":"singapore.png","product":"Galaxy Note3","color":"Blue","quantity":20,"price":718100},{"id":"#Cust-12","id4tree":88,"date":"2015-03-15","name":"Steve","country":"USA","flag":"usa.png","product":"Galaxy S5","color":"Pink","quantity":3,"price":963600},{"id":"#Cust-11","id4tree":89,"date":"2015-03-14","name":"Kim","country":"USA","flag":"usa.png","product":"IPad Air","color":"Yellow","quantity":3,"price":767500},{"id":"#Cust-10","id4tree":90,"date":"2015-03-13","name":"Emma","country":"Ireland","flag":"ireland.png","product":"IPad Air","color":"Violet","quantity":12,"price":358600},{"id":"#Cust-9","id4tree":91,"date":"2015-03-12","name":"Kim","country":"Ireland","flag":"ireland.png","product":"IPhone 5S","color":"Pink","quantity":12,"price":705300},{"id":"#Cust-8","id4tree":92,"date":"2015-03-11","name":"Lawrence","country":"Singapore","flag":"singapore.png","product":"IPhone 5S","color":"Violet","quantity":20,"price":931800},{"id":"#Cust-7","id4tree":93,"date":"2015-03-10","name":"Anna","country":"China","flag":"china.png","product":"IPad Air","color":"Orange","quantity":10,"price":574200},{"id":"#Cust-6","id4tree":94,"date":"2015-03-09","name":"Kim","country":"Japan","flag":"japan.png","product":"Galaxy Note3","color":"Blue","quantity":7,"price":306300},{"id":"#Cust-5","id4tree":95,"date":"2015-03-08","name":"Kim","country":"France","flag":"france.png","product":"IPhone 5S","color":"Gray","quantity":0,"price":261200},{"id":"#Cust-4","id4tree":96,"date":"2015-03-07","name":"Lawrence","country":"Japan","flag":"japan.png","product":"Galaxy Note3","color":"Yellow","quantity":7,"price":570200},{"id":"#Cust-3","id4tree":97,"date":"2015-03-06","name":"Steve","country":"Ireland","flag":"ireland.png","product":"IPad Air","color":"Blue","quantity":12,"price":246300},{"id":"#Cust-2","id4tree":98,"date":"2015-03-05","name":"Anna","country":"USA","flag":"usa.png","product":"Galaxy S5","color":"Orange","quantity":3,"price":33500},{"id":"#Cust-1","id4tree":99,"date":"2015-03-04","name":"Anna","country":"USA","flag":"usa.png","product":"Galaxy S5","color":"Orange","quantity":3,"price":353800}];
+
+
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>일반 그리드를 트리 계층형 데이터로 만들고, 반대로 계층형 데이터를 일반 데이터로 만드는 예제입니다.</p>
+		<p>즉, 이 예제는 "depth 올리기(indent)" 와 "depth 내리기(outdent)" 가 트리 그리드에 국한되지 않다는 것을 보여줍니다.
+		일반 그리드에서 depth 를 올리고 내림으로써 트리 그리드로 데이터를 만들 수 있습니다.</p>
+		<p>■ 그리드 데이터 가져오기 : getGridData() 메소드</p>
+		<p>■ 계층 구조를 이루는 그리드 데이터 가져오기 : getTreeGridData() 메소드</p>
+		
+		<ul class="nav_u">
+			<li><button class="btn" onclick="outdentTreeDepth()">◁ Outdent</button></li>
+			<li><button class="btn" onclick="indentTreeDepth()">▷ Indent</button></li>
+			<li><span onclick="expand()" class="btn">모두 열기/ 닫기</span></li>
+		</ul>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:480px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

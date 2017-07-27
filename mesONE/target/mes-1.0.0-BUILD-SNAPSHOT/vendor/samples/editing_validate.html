@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+
+/* 커스텀 칼럼 스타일 정의 */
+.aui-grid-user-custom-column {
+	background:#ffffee;
+	font-weight: bold;
+}
+</style>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/validate_ex.json");
+
+};
+
+// AUIGrid 칼럼 설정
+// 데이터 형태는 다음과 같은 형태임,
+//[{"id":"#Cust0","date":"2014-09-03","name":"Han","country":"USA","product":"Apple","color":"Red","price":746400}, { .....} ];
+var columnLayout = [ {
+		dataField : "id",
+		headerText : "중복 검사",
+		width : 100,
+		editRenderer : {
+			type : "InputEditRenderer",
+			
+			// ID는 고유값만 가능하도록 에디팅 유효성 검사
+			validator : function(oldValue, newValue, item, dataField) {
+				if(oldValue != newValue) {
+					// dataField 에서 newValue 값이 유일한 값인지 조사
+					var isValid = AUIGrid.isUniqueValue(myGridID, dataField, newValue);
+					
+					// 리턴값은 Object 이며 validate 의 값이 true 라면 패스, false 라면 message 를 띄움
+					return { "validate" : isValid, "message"  : newValue + " 값은 고유값이 아닙니다.(이미 존재함) 다른 값을 입력해 주십시오." };
+				}
+			}
+		}
+	}, {
+		dataField : "name",
+		headerText : "영문자 2~8 자만 가능",
+		width : 130,
+		editRenderer : {
+			type : "InputEditRenderer",
+			
+			// 에디팅 유효성 검사
+			validator : function(oldValue, newValue, item) {
+				var isValid = false;
+				var matcher = /^[A-Za-z+]{2,8}$/; // 알파벳 2~8자 체크 정규식
+				
+				if(matcher.test(newValue)) { 
+					isValid = true;
+				}
+				// 리턴값은 Object 이며 validate 의 값이 true 라면 패스, false 라면 message 를 띄움
+				return { "validate" : isValid, "message"  : "영문자 2자 이상 8자 이하로 입력해 주세요." };
+			}
+		}
+	}, {
+		dataField : "phone",
+		headerText : "전화번호 숫자로만 받기<br>앞에 3자리 010 체크",
+		width : 140,
+		editRenderer : {
+			type : "InputEditRenderer",
+			onlyNumeric : true, // Input 에서 숫자만 가능케 설정
+			// 에디팅 유효성 검사
+			validator : function(oldValue, newValue, item) {
+				var isValid = false;
+				if(newValue && newValue.length >= 10 && newValue.substr(0,3) == "010") {
+					isValid = true;
+				}
+				// 리턴값은 Object 이며 validate 의 값이 true 라면 패스, false 라면 message 를 띄움
+				return { "validate" : isValid, "message"  : "010 휴대전화 번호를 정확히 입력해 주세요." };
+			}
+		}
+	}, {
+		dataField : "zip",
+		headerText : "우편번호 숫자로만 6자리 받기",
+		headerTooltip : {
+			show : true,
+			tooltipHtml : "원래 데이터는 123456 형태이나<br> 123-456 으로 사용자 정의해서 출력시킴"
+		},
+		labelFunction : function( rowIndex, columnIndex, value, headerText, item, dataField) { // 출력 텍스트 사용자 정의
+			value = value + ""; // 완전한 문자로 다시 확인
+			if(value.length == 6) {
+				var v1 = value.substr(0,3);
+				var v2 = value.substr(3,3);
+				return v1 + "-" + v2; // 3자리 끊어서 대쉬 넣음
+			}
+			return value; // 원래대로 출력시킴
+		},
+		editRenderer : {
+			type : "InputEditRenderer",
+			onlyNumeric : true, // Input 에서 숫자만 가능케 설정
+			// 에디팅 유효성 검사
+			validator : function(oldValue, newValue, item) {
+				var isValid = false;
+				if(newValue && newValue.length == 6) {
+					isValid = true;
+				}
+				// 리턴값은 Object 이며 validate 의 값이 true 라면 패스, false 라면 message 를 띄움
+				return { "validate" : isValid, "message"  : "정확한 우편번호 6자리를 입력해 주세요." };
+			}
+		}
+	}, {
+		dataField : "email",
+		headerText : "이메일 주소 유효성",
+		width:140,
+		editRenderer : {
+			type : "InputEditRenderer",
+			
+			// 에디팅 유효성 검사
+			validator : function(oldValue, newValue, item) {
+				var isValid = false;
+				var email_matcher = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/; // 이메일 체크 정규식
+				
+				if(email_matcher.test(newValue)) {
+					isValid = true;
+				}
+				// 리턴값은 Object 이며 validate 의 값이 true 라면 패스, false 라면 message 를 띄움
+				return { "validate" : isValid, "message"  : "정확한 이메일 주소가 아닙니다. 다시 확인해 주세요." };
+			}
+		}
+	}, {
+		dataField : "price",
+		headerText : "숫자만 입력 가능<br>값은 10,000 보다 커야 함",
+		dataType : "numeric",
+		editRenderer : {
+			type : "InputEditRenderer",
+			onlyNumeric : true, // Input 에서 숫자만 가능케 설정
+			// 에디팅 유효성 검사
+			validator : function(oldValue, newValue, item) {
+				var isValid = false;
+				var numVal = Number(newValue);
+				if(!isNaN(numVal) && numVal > 10000) {
+					isValid = true;
+				}
+				// 리턴값은 Object 이며 validate 의 값이 true 라면 패스, false 라면 message 를 띄움
+				return { "validate" : isValid, "message"  : "10,000 보다 큰 수를 입력하세요." };
+			}
+		}
+	}
+];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+			headerHeight : 60,
+			showRowNumColumn : false,
+			showRowCheckColumn : false,
+			editable : true,
+			
+			// 엔터키가 다음 칼럼으로 이동
+			enterKeyColumnBase : true,
+			
+			// 칼럼 끝에서 오른쪽 이동 시 다음 행, 처음 칼럼으로 이동할지 여부
+			wrapSelectionMove : true,
+			
+			softRemoveRowMode : false,
+			
+			// 사용자가 추가한 새행은 softRemoveRowMode 적용 안함. 
+			// 즉, 바로 삭제함.
+			softRemovePolicy : "exceptNew"
+	};
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 에디팅 시작 이벤트 바인딩
+	// 에디팅 정상 종료 이벤트 바인딩
+	// 에디팅 취소 이벤트 바인딩
+	AUIGrid.bind(myGridID, ["cellEditBegin", "cellEditEnd", "cellEditCancel"], auiCellEditingHandler);
+};
+
+
+function auiCellEditingHandler(event) {
+	if(event.type == "cellEditBegin") {
+		document.getElementById("editBeginDesc").innerHTML = "에디팅 시작(cellEditBegin) : ( " + event.rowIndex + ", " + event.columnIndex + " ) " + event.headerText + ", value : " + event.value;
+	} else if(event.type == "cellEditEnd") {
+		document.getElementById("editBeginEnd").innerHTML = "에디팅 종료(cellEditEnd) : ( " + event.rowIndex + ", " + event.columnIndex + " ) " + event.headerText + ", value : " + event.value;
+	} else if(event.type == "cellEditCancel") {
+		document.getElementById("editBeginEnd").innerHTML = "에디팅 취소(cellEditCancel) : ( " + event.rowIndex + ", " + event.columnIndex + " ) " + event.headerText + ", value : " + event.value;
+	}
+};
+
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>그리드 데이터 수정 시 유효성 검사(validating)에 맞지 않는다면 수정 완료를 못하도록 설정할 수 있습니다.</p>
+		<p>이 유효성 검사는 다음 editRenderer 에서만 가능합니다.</p>
+		<p style="margin-left:20px">■ 기본 편집 렌더러(InputEditRenderer)</p>
+		<p style="margin-left:20px">■ 달력 편집 렌더러(CalendarRenderer)</p>
+		<p style="margin-left:20px">■ 콤보박스 편집 렌더러(ComboBoxRenderer)</p>
+		<p>위 3개 외 다른 편집 렌더러는 미리 예약된 값 중 선택이므로 유효성 검사 불필요함.</p>
+		<p>유효한 값이 아니라면 지정된 메세지를 출력합니다.</p>
+	</div>
+	
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:480px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="editBeginDesc"></p>
+		<p id="editBeginEnd"></p>
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+
+/* 기본 칼럼 스타일 재정의 */
+.aui-grid-default-column {
+	text-align:right;
+}
+
+/* 기본 푸터 스타일 재정의 */
+.aui-grid-default-footer {
+	text-align:right;
+}
+.my-column-style {
+	text-align:center;
+}
+
+.my-footer-style {
+	text-align:center;
+	color:#00aa00;
+}
+</style>
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/revenue_region.json");
+
+};
+
+// AUIGrid 칼럼 설정
+var columnLayout = [{
+    dataField: "region",
+    headerText: "지역<br>(지역 별 매출)",
+    style : "my-column-style",
+    width: 120
+}, {
+     dataField: "p1201",
+    headerText: "'12 1월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1202",
+    headerText: "'12 2월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1203",
+    headerText: "'12 3월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1204",
+    headerText: "'12 4월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1205",
+    headerText: "'12 5월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1206",
+    headerText: "'12 6월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1207",
+    headerText: "'12 7월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1208",
+    headerText: "'12 8월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1209",
+    headerText: "'12 9월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1210",
+    headerText: "'12 10월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1211",
+    headerText: "'12 11월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}, {
+    dataField: "p1212",
+    headerText: "'12 12월",
+	dataType : "numeric",
+	formatString : "#,##0"
+}];
+
+// 푸터 설정
+var footerObject = [ {
+	positionField : "region",
+	style : "my-footer-style",
+	labelFunction : function(value, columnValues, footerValues) {
+		return "최소값 :<br>최대값 :<br>총합계 :"; 
+	}
+}, {
+	positionField : "p1203",
+	dataField : "p1203",
+	labelFunction : footerLabelFunction
+}, {
+	positionField : "p1206",
+	dataField : "p1206",
+	labelFunction : footerLabelFunction
+}, {
+	positionField : "p1209",
+	dataField : "p1209",
+	labelFunction : footerLabelFunction
+}, {
+	positionField : "p1212",
+	dataField : "p1212",
+	labelFunction : footerLabelFunction
+}];
+
+
+/*
+ * 푸터에 출력할 값을 사용자가 재정의하는 함수입니다. 
+ * 파라메터 설명
+ * value : operation 지정 한 경우 계산된 값,
+ * columnValues : dataField 에 해당되는 모든 칼럼의 값들(Array),
+ * footerValues : 푸터 전체 operation 수행된 값 또는 labelText 값 (Array) 
+ */
+function footerLabelFunction(value, columnValues, footerValues) {
+	var max = Number.MIN_VALUE;
+	var min = Number.MAX_VALUE;
+	var sum = 0;
+	var val;
+	for(var i=0, len=columnValues.length; i<len; i++) {
+		val =  columnValues[i];
+		max = Math.max(max, val);
+		min = Math.min(min, val);
+		sum += val;
+	}
+	min = AUIGrid.formatNumber(min, "#,##0");
+	max = AUIGrid.formatNumber(max, "#,##0");
+	sum = AUIGrid.formatNumber(sum, "#,##0");
+	
+	// footer labelFunction 에서 반환하는 값이 바로 푸터에 출력됨.
+	return min + "<br>" + max + "<br>"  + sum;
+}
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+			editable : true,
+			
+			showFooter : true,
+			
+			headerHeight : 50,
+			
+			footerHeight : 60, // 푸터 높이
+			
+			fixedColumnCount : 1
+	};
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 푸터 객체 세팅
+	AUIGrid.setFooter(myGridID, footerObject);
+};
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>푸터(Footer)에 연산자 1개가 아닌 사용자가 정의한 대로 다수의 연산을 출력한 모습입니다.</p>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:480px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

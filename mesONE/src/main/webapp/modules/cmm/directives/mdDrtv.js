@@ -64,6 +64,45 @@ angular
     		}
     	  };
       })
+      .directive('mResizeCtrl', function($timeout, $window){
+    	  return {
+    		  restrict: 'A',
+    		  link: function(scope, element, attrs) {
+    			  $timeout(function(){
+    				  var height = $window.innerHeight;
+    				  
+    				  var default_height = 1080;
+    				  var origin_height = element[0].children[0].style.height.replace('px','');
+    				  
+    				  var height_rate = height / default_height;
+    				  
+    				  element[0].children[0].style.height = origin_height * height_rate + 'px';
+    				  console.log("리사이즈");
+    				  console.log(element);
+    			  });
+    		  }
+    	  };
+      })
+      /*.directive('mResizeCtrl2', function($timeout, $window){
+    	  return {
+    		  restrict: 'A',
+    		  link: function(scope, element, attrs) {
+    			  $timeout(function(){
+    				  var height = $window.innerHeight;
+    				  
+    				  var default_height = 1080;
+    				  var origin_height = element[0].style.height.replace('px','');
+    				  
+    				  var height_rate = height / default_height;
+    				  
+    				  element[0].style.height = origin_height * height_rate + 'px';
+    				  console.log("리사이즈");
+    				  console.log(element)
+    				  console.log(element[0].style.height, height_rate, origin_height, height);
+    			  });
+    		  }
+    	  };
+      })*/
       .directive('testCtrl', function($timeout, $window){
     	  return {
     		  restrict: 'A',
@@ -138,23 +177,25 @@ angular
     		  },
     		  link: function(scope, element, attrs) {
     			  scope.$watch('data',function(newVal, oldVal){
-    				  	console.log(newVal)
  						var width = $window.innerWidth;
 		  				var height = $window.innerHeight;
 		  				  
-		  				var default_width = 1880;
-		  				var default_height = 1080;
+		  				var default_width = 1920;
+		  				var default_height = 900;
 	    				if (width >= default_width) {
 	    					var screenRate = 1; 
 	    				}
 	    				else {
 	    					var screenRate = width / default_width;
 	    				}
+	    				var testRate = height / default_height;
+	    				
+	    				console.log(screenRate, testRate)
 	    				console.log(scope.data)
-	    					scope.data.cssHeight = (parseInt(scope.data.cssHeight.replace("px","")) * screenRate) + 'px';
-	    					scope.data.cssWidth = (parseInt(scope.data.cssWidth.replace("px","")) * screenRate) + 'px';
-	    					scope.data.cssTop = (parseInt(scope.data.cssTop.replace("px","")) * screenRate) + 'px';
-	    					scope.data.cssLeft = (parseInt(scope.data.cssLeft.replace("px","")) * screenRate) + 'px';
+    					scope.data.cssHeight = (parseInt(scope.data.cssHeight.replace("px","")) * screenRate) + 'px';
+    					scope.data.cssWidth = (parseInt(scope.data.cssWidth.replace("px","")) * screenRate) + 'px';
+    					scope.data.cssTop = (parseInt(scope.data.cssTop.replace("px","")) * screenRate) + 'px';
+    					scope.data.cssLeft = (parseInt(scope.data.cssLeft.replace("px","")) * screenRate) + 'px';
     			  });
     		  }
     	  };

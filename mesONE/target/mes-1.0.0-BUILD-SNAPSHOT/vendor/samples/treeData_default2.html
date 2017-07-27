@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+.pnum {
+	font-weight:bold;
+}
+
+/* 커스텀 스타일 */
+.left {
+	text-align:left;
+}
+
+/* 그리드 오버 시 행 선택자 만들기 */
+.aui-grid-body-panel table tr:hover {
+	background:#D9E5FF;
+	color:#000;
+}
+.aui-grid-main-panel .aui-grid-body-panel table tr td:hover {
+	background:transparent;
+	color:#000;
+}
+
+</style>
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/schedule_flat_id.json");
+};
+
+// AUIGrid 칼럼 설정
+var columnLayout = [ {
+		dataField : "id",
+		headerText : "Task ID",
+		width: 120,
+		editRenderer : {
+			type : "InputEditRenderer",
+			
+			// ID는 고유값만 가능하도록 에디팅 유효성 검사
+			validator : function(oldValue, newValue, rowItem, dataField) {
+				if(oldValue != newValue) {
+					// dataField 에서 newValue 값이 유일한 값인지 조사
+					var isValid = AUIGrid.isUniqueValue(myGridID, dataField, newValue);
+					
+					// 리턴값은 Object 이며 validate 의 값이 true 라면 패스, false 라면 message 를 띄움
+					return { "validate" : isValid, "message"  : newValue + " 값은 고유값이 아닙니다. 다른 값을 입력해 주십시오." };
+				}
+			}
+		}
+}, {
+	    dataField: "name",
+	    headerText: "Task Name",
+		style : "left"
+}];
+
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+	
+			// singleRow 선택모드
+			selectionMode : "singleRow",
+			
+			showSelectionBorder : false,
+			
+			displayTreeOpen : true,
+			
+			editable : true,
+			
+			// 일반 데이터를 트리로 표현할지 여부(treeIdField, treeIdRefField 설정 필수)
+			flat2tree : true,
+			
+			// 행의 고유 필드명
+			rowIdField : "rowId",
+			
+			// 트리의 고유 필드명
+			treeIdField : "id",
+			
+			// 계층 구조에서 내 부모 행의 treeIdField 참고 필드명
+			treeIdRefField : "parent"
+	};
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+}
+
+var isOpen = false;
+function expandItem() {
+	
+	var isOpen = AUIGrid.isItemOpenByRowId(myGridID, "r6");
+	
+	//-- rowIdField 로 설정한 필드의 값이 r6 인 행 열기/ 닫기
+	AUIGrid.expandItemByRowId(myGridID, "r6", !isOpen);
+}
+
+var isExpanded = true;
+function expand() {
+	if (!isExpanded) {
+		AUIGrid.expandAll(myGridID);
+		isExpanded = true;
+	} else {
+		AUIGrid.collapseAll(myGridID);
+		isExpanded = false;
+	}
+};
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>일반 데이터를 계층 구조로 표현한 모습입니다.
+		<span class="btn" onclick="javascript:window.open('./data/schedule_flat_id.json.txt', '_blank', 'width=1024 height=768 scrollbars=yes')">
+		일반 데이터 구조 보기</span></p>
+		<p>기본적으로 트리 그리드는 계층 데이터로 구성된 데이터를 출력합니다. 즉, 서버에서 데이터 작성 시 데이터 구조를 계층적으로 작성해야 합니다.</p>
+		<p>그러나 일반 배열 형식의 데이터를 다음과 같이 id 와 parent 를 지시하면 그리드가 계층구조로 출력합니다.</p>
+<pre>
+{<span class="pnum">"id": "1"</span>, "name": "Phase 1 - Strategic Plan"},
+{<span class="pnum">"id": "2"</span>, "name": "Self-Assessment", <span class="pnum">"parent":"1"</span>},
+{<span class="pnum">"id": "3"</span>, "name": "Define business vision", <span class="pnum">"parent":"2"</span>}
+</pre>
+		<p>id 와 parent 필드는 각각 treeIdField, treeIdRefField 속성으로 설정하십시오.</p>
+
+		<ul class="nav_u">
+			<li><span onclick="expand()" class="btn">모두 열기/ 닫기</span></li>
+			<li><span onclick="expandItem()" class="btn">특정 브랜치 열기/닫기</span>(ID = "r6")</li>
+		</ul>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:420px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

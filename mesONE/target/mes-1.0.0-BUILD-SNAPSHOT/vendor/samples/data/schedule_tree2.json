@@ -1,0 +1,563 @@
+[{
+	"uid" : "0",
+    "id": "T0",
+    "name": "Proposal of Project",
+    "charge": "Lawrence",
+    "start": "2014/02/01",
+    "complete": "62",
+    "end": "2014/08/21",
+    "children": [{
+    	"uid" : "1",
+        "id": "T1",
+        "name": "Gathering of idea",
+        "charge": "Anna",
+        "start": "2014/02/01",
+        "complete": "99",
+        "end": "2014/03/31",
+        "children": [{
+        	"uid" : "2",
+            "id": "T2",
+            "name": "Define project objective",
+            "charge": "Chaly",
+            "start": "2014/02/01",
+            "complete": "100",
+            "end": "2014/02/15"
+        }, {
+        	"uid" : "3",
+            "id": "T3",
+            "name": "Brainstorming",
+            "charge": "Ken",
+            "complete": "100",
+            "start": "2014/02/05",
+            "end": "2014/02/28"
+        }, {
+        	"uid" : "4",
+            "id": "T4",
+            "name": "Think my idea",
+            "charge": "Ken",
+            "complete": "100",
+            "start": "2014/02/07",
+            "end": "2014/02/10"
+        }, {
+        	"uid" : "5",
+            "id": "T5",
+            "name": "Complete proposal of individual idea",
+            "charge": "Sindy",
+            "complete": "100",
+            "start": "2014/02/15",
+            "end": "2014/03/05"
+        }, {
+        	"uid" : "6",
+            "id": "T6",
+            "name": "Have a idea appraisal",
+            "charge": "Paude Jim",
+            "complete": "100",
+            "start": "2014/03/11",
+            "end": "2014/03/20"
+        }, {
+        	"uid" : "7",
+            "id": "T7",
+            "name": "Make the decision in a management meeting",
+            "charge": "Jim Mackulan",
+            "complete": "98",
+            "start": "2014/03/31",
+            "end": "2014/03/31"
+        }]
+    }, {
+    	"uid" : "8",
+        "id": "T8",
+        "name": "Market research",
+        "charge": "Steve",
+        "complete": "50",
+        "start": "2014/03/01",
+        "end": "2014/05/31",
+        "children": [{
+        	"uid" : "9",
+            "id": "T9",
+            "name": "Research products in the domestic and foreign market",
+            "charge": "Rafael",
+            "complete": "37",
+            "start": "2014/03/01",
+            "end": "2014/04/30"
+        }, {
+        	"uid" : "10",
+            "id": "T10",
+            "name": "Analysis other product's functionality",
+            "charge": "Cotter",
+            "complete": "81",
+            "start": "2014/03/15",
+            "end": "2014/04/30"
+        }, {
+        	"uid" : "11",
+            "id": "T11",
+            "name": "Comparing the prices of other products",
+            "charge": "Gerry",
+            "complete": "83",
+            "start": "2014/04/05",
+            "end": "2014/05/10"
+        }, {
+        	"uid" : "12",
+            "id": "T12",
+            "name": "Disscuss product's price",
+            "charge": "B. Lateo",
+            "complete": "53",
+            "start": "2014/05/01",
+            "end": "2014/05/05"
+        }, {
+        	"uid" : "13",
+            "id": "T13",
+            "name": "Research",
+            "end": "-users needs",
+            "charge": "Tamotia young",
+            "complete": "65",
+            "start": "2014/05/01",
+            "end": "2014/05/31"
+        }]
+    }, {
+    	"uid" : "14",
+        "id": "T14",
+        "name": "Writing Proposal",
+        "charge": "Alvin",
+        "complete": "47",
+        "start": "2014/06/01",
+        "end": "2014/08/21",
+        "children": [{
+        	"uid" : "15",
+            "id": "T15",
+            "name": "State our Goal",
+            "charge": "Wayne collins",
+            "complete": "55",
+            "start": "2014/06/01",
+            "end": "2014/06/10"
+        }, {
+        	"uid" : "16",
+            "id": "T16",
+            "name": "Clarify our goal",
+            "charge": "Rafael dick",
+            "complete": "16",
+            "start": "2014/06/11",
+            "end": "2014/06/30"
+        }, {
+        	"uid" : "17",
+            "id": "T17",
+            "name": "State detail subtitle",
+            "charge": "Witchmond",
+            "complete": "95",
+            "start": "2014/06/15",
+            "end": "2014/07/15"
+        }, {
+        	"uid" : "18",
+            "id": "T18",
+            "name": "State result of market research ",
+            "charge": "Alvin Kim",
+            "complete": "3",
+            "start": "2014/07/01",
+            "end": "2014/08/10"
+        }, {
+        	"uid" : "19",
+            "id": "T19",
+            "name": "State",
+            "end": "-user's needs",
+            "charge": "Gerry Gross",
+            "complete": "7",
+            "start": "2014/07/01",
+            "end": "2014/08/10"
+        }, {
+        	"uid" : "20",
+            "id": "T20",
+            "name": "Clarify conclusion and distinction",
+            "charge": "Ken Muore",
+            "complete": "75",
+            "start": "2014/07/27",
+            "end": "2014/08/15"
+        }, {
+        	"uid" : "21",
+            "id": "T21",
+            "name": "Prove your conclusion",
+            "charge": "Jim Macallon",
+            "complete": "91",
+            "start": "2014/08/01",
+            "end": "2014/08/21"
+        }]
+    }]
+}, {
+	"uid" : "30",
+    "id": "T30",
+    "name": "Planning",
+    "charge": "Jeffrey",
+    "complete": "13",
+    "start": "2014/08/22",
+    "end": "2014/12/18",
+    "children": [{
+    	"uid" : "31",
+        "id": "T31",
+        "name": "Scheduling of Projcet",
+        "charge": "Kenneth",
+        "complete": "0",
+        "start": "2014/08/22",
+        "end": "2014/09/30",
+        "children": [{
+        	"uid" : "32",
+            "id": "T32",
+            "name": "Plan time schedule with marketing & development department",
+            "charge": "Uta Brown",
+            "complete": "0",
+            "start": "2014/08/22",
+            "end": "2014/09/10"
+        }, {
+        	"uid" : "33",
+            "id": "T33",
+            "name": "Review propriety of time schedule",
+            "charge": "Richard Ken",
+            "complete": "0",
+            "start": "2014/09/10",
+            "end": "2014/09/20"
+        }, {
+        	"uid" : "34",
+            "id": "T34",
+            "name": "Clarify detail time schedule",
+            "charge": "Dokins Oxf",
+            "complete": "0",
+            "start": "2014/08/22",
+            "end": "2014/09/30"
+
+        }, {
+        	"uid" : "35",
+            "id": "T35",
+            "name": "decide on the schedule of project in the management meeting ",
+            "charge": "Richard Dokins",
+            "complete": "0",
+            "start": "2014/09/30",
+            "end": "2014/09/30"
+
+        }]
+    }, {
+    	"uid" : "36",
+        "id": "T36",
+        "name": "Assignment of resource",
+        "charge": "Winslow",
+        "complete": "0",
+        "start": "2014/10/01",
+        "end": "2014/12/17",
+        "children": [{
+        	"uid" : "37",
+            "id": "T37",
+            "name": "Be recommend the proper person for the project",
+            "charge": "Alvin young",
+            "complete": "0",
+            "start": "2014/10/01",
+            "end": "2014/11/12"
+        }, {
+        	"uid" : "38",
+            "id": "T38",
+            "name": "Form a task force of project",
+            "charge": "Arya alvis",
+            "complete": "0",
+            "start": "2014/11/12",
+            "end": "2014/11/30"
+        }, {
+        	"uid" : "39",
+            "id": "T39",
+            "name": "Assign necessary equipment and room",
+            "charge": "Anna jerry",
+            "complete": "0",
+            "start": "2014/12/01",
+            "end": "2014/12/17"
+        }]
+    }, {
+    	"uid" : "40",
+        "id": "T40",
+        "name": "Assignment of Task",
+        "charge": "Peter Hamilton",
+        "complete": "0",
+        "start": "2014/10/01",
+        "end": "2014/12/17",
+        "children": [{
+        	"uid" : "41",
+            "id": "T41",
+            "name": "Review the concept and proposal of project in TFT",
+            "charge": "Young brown",
+            "complete": "0",
+            "start": "2014/10/01",
+            "end": "2014/10/31"
+        }, {
+        	"uid" : "42",
+            "id": "T42",
+            "name": "Assign job to team member",
+            "charge": "Amanda shoue",
+            "complete": "0",
+            "start": "2014/10/10",
+            "end": "2014/11/30"
+        }, {
+        	"uid" : "43",
+            "id": "T43",
+            "name": "Gathering of individual time schedule",
+            "charge": "Mach joseff",
+            "complete": "0",
+            "start": "2014/11/01",
+            "end": "2014/12/16"
+        }, {
+        	"uid" : "44",
+            "id": "T44",
+            "name": "Dine together for success of project",
+            "charge": "Sindi young",
+            "complete": "0",
+            "start": "2014/12/17",
+            "end": "2014/12/17"
+        }]
+    }]
+}, {
+	"uid" : "50",
+    "id": "T50",
+    "name": "Design",
+    "charge": "Raymond",
+    "complete": "0",
+    "start": "2014/12/19",
+    "end": "2015/05/31",
+    "children": [{
+    	"uid" : "51",
+        "id": "T51",
+        "name": "Design user interface web page",
+        "charge": "Bellin",
+        "complete": "0",
+        "start": "2014/12/19",
+        "end": "2015/02/28"
+    }, {
+    	"uid" : "52",
+        "id": "T52",
+        "name": "Define user interface functionality",
+        "charge": "Bush",
+        "complete": "0",
+        "start": "2014/12/20",
+        "end": "2015/01/31"
+    }, {
+    	"uid" : "53",
+        "id": "T53",
+        "name": "Document user interface flow",
+        "charge": "Obama Jecoks",
+        "complete": "0",
+        "start": "2014/12/20",
+        "end": "2014/12/31"
+    }, {
+    	"uid" : "54",
+        "id": "T54",
+        "name": "Design flow Diagram for programming",
+        "charge": "Raigun Jeffery",
+        "complete": "0",
+        "start": "2015/01/01",
+        "end": "2015/03/31"
+    }, {
+    	"uid" : "55",
+        "id": "T55",
+        "name": "Design process Diagram for programming",
+        "charge": "Rinclon",
+        "complete": "0",
+        "start": "2015/01/01",
+        "end": "2015/03/31"
+    }, {
+    	"uid" : "56",
+        "id": "T56",
+        "name": "Extract user define option",
+        "charge": "Joseph Ken",
+        "complete": "0",
+        "start": "2015/02/01",
+        "end": "2015/04/01"
+    }, {
+    	"uid" : "57",
+        "id": "T57",
+        "name": "Documentation",
+        "charge": "Annamow young",
+        "complete": "0",
+        "start": "2015/04/01",
+        "end": "2015/05/15",
+        "children": [{
+        	"uid" : "58",
+            "id": "T58",
+            "name": "Document API definition and user manual",
+            "charge": "Kennis J.F",
+            "complete": "0",
+            "start": "2015/04/01",
+            "end": "2015/04/30"
+        }, {
+        	"uid" : "59",
+            "id": "T59",
+            "name": "Document necessary module and parameter defintion",
+            "charge": "J Kenndy",
+            "complete": "0",
+            "start": "2015/04/20",
+            "end": "2015/05/01"
+        }, {
+        	"uid" : "60",
+            "id": "T60",
+            "name": "Document data format & layout format",
+            "charge": "Richard King",
+            "complete": "0",
+            "start": "2015/05/11",
+            "end": "2015/05/15"
+        }]
+    }, {
+    	"uid" : "61",
+        "id": "T61",
+        "name": "Simulate unit process",
+        "charge": "Oxford Chally",
+        "complete": "0",
+        "start": "2015/05/16",
+        "end": "2015/05/20"
+    }, {
+    	"uid" : "62",
+        "id": "T62",
+        "name": "Simulate total flow and process",
+        "charge": "Raimond Miro",
+        "complete": "0",
+        "start": "2015/05/29",
+        "end": "2015/05/31"
+    }]
+}, {
+	"uid" : "70",
+    "id": "T70",
+    "name": "Implementation",
+    "charge": "Betty",
+    "complete": "0",
+    "start": "2015/06/01",
+    "end": "2016/05/31",
+    "children": [{
+    	"uid" : "71",
+        "id": "T71",
+        "name": "Programming",
+        "charge": "Geoffrey",
+        "complete": "0",
+        "start": "2015/06/01",
+        "end": "2015/12/31",
+        "children": [{
+        	"uid" : "72",
+            "id": "T72",
+            "name": "Implement date/time function",
+            "charge": "Madonna",
+            "complete": "0",
+            "start": "2015/06/01",
+            "end": "2015/09/30"
+        }, {
+        	"uid" : "73",
+            "id": "T73",
+            "name": "Implement extend/reduce function",
+            "charge": "Stellong S.S",
+            "complete": "0",
+            "start": "2015/07/20",
+            "end": "2015/09/30"
+        }, {
+        	"uid" : "74",
+            "id": "T74",
+            "name": "Implement fitting function",
+            "charge": "Richard Yon",
+            "complete": "0",
+            "start": "2015/08/20",
+            "end": "2015/09/30"
+        }, {
+        	"uid" : "75",
+            "id": "T75",
+            "name": "Implement progress bar module",
+            "charge": "Joshep Mairo",
+            "complete": "0",
+            "start": "2015/08/20",
+            "end": "2015/09/30"
+        }, {
+        	"uid" : "76",
+            "id": "T76",
+            "name": "Join task with progress bar ",
+            "charge": "Hancus Ken",
+            "complete": "0",
+            "start": "2015/10/01",
+            "end": "2015/11/30"
+        }, {
+        	"uid" : "77",
+            "id": "T77",
+            "name": "Program connector(arrow) module in progress bar",
+            "charge": "Jonnadan Ziff",
+            "complete": "0",
+            "start": "2015/10/01",
+            "end": "2015/12/31"
+        }, {
+        	"uid" : "78",
+            "id": "T78",
+            "name": "Program milestone module",
+            "charge": "Gallive Tours",
+            "complete": "0",
+            "start": "2015/10/01",
+            "end": "2015/12/10"
+        }, {
+        	"uid" : "79",
+            "id": "T79",
+            "name": "Program image saving & printing module",
+            "charge": "Jim Basellon",
+            "complete": "0",
+            "start": "2015/11/20",
+            "end": "2015/12/31"
+        }]
+    }, {
+    	"uid" : "80",
+        "id": "T80",
+        "name": "Testing",
+        "charge": "Mark",
+        "complete": "0",
+        "start": "2016/01/01",
+        "end": "2016/03/31",
+        "children": [{
+        	"uid" : "81",
+            "id": "T81",
+            "name": "Unit test by each programmer",
+            "charge": "Yeoks N.Y",
+            "complete": "0",
+            "start": "2016/01/03",
+            "end": "2016/01/31"
+        }, {
+        	"uid" : "82",
+            "id": "T82",
+            "name": "Combined test by programmers",
+            "charge": "Bacon enlan",
+            "complete": "0",
+            "start": "2016/02/03",
+            "end": "2016/02/28"
+        }, {
+        	"uid" : "83",
+            "id": "T83",
+            "name": "Combined test by specialists",
+            "charge": "Stute Jossep",
+            "complete": "0",
+            "start": "2016/03/03",
+            "end": "2016/03/31"
+        }]
+    }, {
+    	"uid" : "84",
+        "id": "T84",
+        "name": "Construction sample Page",
+        "charge": "Raymond",
+        "complete": "0",
+        "start": "2016/02/01",
+        "end": "2016/03/31",
+        "children": [{
+        	"uid" : "85",
+            "id": "T85",
+            "name": "Define samples category and function by planner",
+            "charge": "Happy Mallon",
+            "complete": "0",
+            "start": "2016/02/01",
+            "end": "2016/02/15"
+        }, {
+        	"uid" : "86",
+            "id": "T86",
+            "name": "Design UI page by designner ",
+            "charge": "Hip Chilis",
+            "complete": "0",
+            "start": "2016/02/20",
+            "end": "2016/03/05"
+        }, {
+        	"uid" : "87",
+            "id": "T87",
+            "name": "Program sample page by programmer",
+            "charge": "Jeffery Lateo",
+            "complete": "0",
+            "start": "2016/03/10",
+            "end": "2016/03/31"
+        }]
+    }]
+}]

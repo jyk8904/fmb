@@ -15,7 +15,7 @@
  -->
 
 <!-- ngview 내부 페이지 -->
-<div class='md-screen'>
+<div test-ctrl class='md-screen'>
     
 <md-form-header>
 	<!--     좌상단 버튼   -->
@@ -153,25 +153,23 @@
   </md-content>
 
 </md-sidenav>
-<bc-form-body>
+<bc-form-body class='col-md-12 col-sm-12 col-xs-12' style="padding:0;">
    <!--설비클래스 삽입 시작-->
-   <bc-bg-img-panel>
+   <bc-back-panel2>
 <!--<div bg-inner-ctrl class='bg-panel eqpt_plc_c'></div> -->
    	
-  	<div ng-switch on="vm.eqptParamVo.factId">
-    <div ng-switch-when="A" bg-inner-ctrl class='bg-panel' ng-style="{'background-image' : 'url(' + eachBg.A + ')'}"></div>
-   	<div ng-switch-when="B" bg-inner-ctrl class='bg-panel' ng-style="{'background-image' : 'url(' + eachBg.B + ')'}"></div>
-   	<div ng-switch-when="C" bg-inner-ctrl class='bg-panel' ng-style="{'background-image' : 'url(' + eachBg.C + ')'}"></div>
-   	<div ng-switch-when="Comb" bg-inner-ctrl class='bg-panel' ng-style="{'background-image' : 'url(' + eachBg.Comb + ')'}"></div>
-    </div> 
-   <div class="EQPT">   
+  	<div ng-switch on="vm.eqptParamVo.factId" style="position:absolute;">
+   	<img ng-switch-when="A" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.A}}' style="padding:0"/>
+   	<img ng-switch-when="B" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.B}}' style="padding:0"/>
+   	<img ng-switch-when="C" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.C}}' style="padding:0"/>
+   	<img ng-switch-when="Comb" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.Comb}}' style="padding:0"/>
+    </div>
+	<div class="EQPT col-md-12 col-sm-12 col-xs-12" style="padding:0">	 
    <!-- 설비이미지 repeat -->
        <ul>
-         <li ng-repeat="eqpt in vm.eqptList" ng-hide="eqpt.status =='delete'">
-          <div u-ctrl task-data="vm.eqptList" target-data="$index" ng-draggable='dragOptions' class="{{eqpt.eqptCnm}}" status="{{eqpt.status}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
-              style="top:{{eqpt.cssTop}}; left: {{eqpt.cssLeft}}; 
-                     width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}}; 
-                     z-index:{{eqpt.cssZindex}};">
+         <li u-ctrl data='eqpt' ng-repeat="eqpt in vm.eqptList" ng-hide="eqpt.status =='delete'">
+          <div task-data="vm.eqptList" target-data="$index" ng-draggable='dragOptions' class="{{eqpt.eqptCnm}}" status="{{eqpt.status}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
+            ng-style="{'top':eqpt.cssTop, 'left': eqpt.cssLeft, 'width':eqpt.cssWidth, 'height':eqpt.cssHeight,'z-index':eqpt.cssZindex}">
                      
                <img ng-mouseover='hoverIn()' ng-mouseleave='hoverOut()'  class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
            		<span class="hint" ng-show="hover" >{{eqpt.plcId}}</span>
@@ -180,7 +178,7 @@
       </ul>
       <div class="pointer" ng-class=" {'show_animate' : vm.pointer.animateTrigger === 'on'}" style="position:absolute; display: {{vm.pointer.display}}; width:25px; height:25px; z-index:900; top:{{vm.pointer.top}}; left:{{vm.pointer.left}};"><img src="assets/img/system/arrow.png"/></div>
     </div>
-   </bc-bg-img-panel>
+   </bc-back-panel2>
       <!--설비클래스 삽입 끝-->
 </bc-form-body>
 
