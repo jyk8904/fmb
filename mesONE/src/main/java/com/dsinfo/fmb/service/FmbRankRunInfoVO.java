@@ -9,23 +9,48 @@ public class FmbRankRunInfoVO extends MBasAbsVO {
 	private int rownum;
 	private int norun_count;
 	private String norun_tm;
+	private String norun_dur;
 	private String norun_nm;
 	private String norun_eqpt;
 	private int standby_count;
 	private String standby_tm;
+	private String standby_dur;
 	private String standby_nm;
 	private String standby_eqpt;
 	private int alarm_count;
 	private String alarm_tm;
+	private String alarm_dur;
 	private String alarm_nm;
 	private String alarm_eqpt;
 	
 	
+    public FmbRankRunInfoVO() {
+    }
 	
-	
-	public FmbRankRunInfoVO() {
-	}
+	public String getNorun_dur() {
+        return norun_dur;
+    }
 
+    public void setNorun_dur(String norun_dur) {
+        this.norun_dur = norun_dur;
+    }
+
+    public String getStandby_dur() {
+        return standby_dur;
+    }
+
+    public void setStandby_dur(String standby_dur) {
+        this.standby_dur = standby_dur;
+    }
+
+    public String getAlarm_dur() {
+        return alarm_dur;
+    }
+
+    public void setAlarm_dur(String alarm_dur) {
+        this.alarm_dur = alarm_dur;
+    }
+    
 	public int getRowNum() {
 		return rownum;
 	}
