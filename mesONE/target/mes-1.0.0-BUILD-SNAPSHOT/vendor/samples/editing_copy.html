@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+.bg-red-style {
+	background:#FFD8D8
+}
+</style>
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid();
+	
+	// AUIGrid 에 데이터 삽입합니다.
+	createRandomData(20);
+
+};
+
+var chars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+// AUIGrid 를 생성합니다.
+function createAUIGrid() {
+	
+	var columnLayout = [];
+	var column;
+	columnLayout[0] = {
+			headerText : "A",
+			dataField : "0",
+			dataType : "numeric",
+			formatString : "#,##0",
+			postfix : "원"
+	};
+	
+	for(var i=1; i<26; i++) {
+		columnLayout.push( {
+			headerText : chars[i],
+			dataField : i,
+			width:80
+		});
+	}
+	
+	// G칼럼 다시 추가 작성
+	columnLayout[6].style = "bg-red-style";
+	columnLayout[6].headerTooltip = {
+			show : true,
+			tooltipHtml : "G칼럼은 붙여넣기(Ctrl+V) 적용 안시킴.<br>오로지 순수 입력으로만 변경하도록 설정"
+	};
+	
+	var auiGridProps = {
+			editable : true, // 수정 모드
+			selectionMode : "multipleCells", // 다중셀 선택
+			showStateColumn : true,
+			wrapSelectionMove : true, // 칼럼 끝에서 오른쪽 이동 시 다음 행, 처음 칼럼으로 이동할지 여부
+			copySingleCellOnRowMode : false // selectionMode 가 singleRow 또는 multipleRows 일 때, Copy + Paste 가 단일 셀에만 적용 여부(기본값:false)
+	};
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 에디팅 시작 이벤트 바인딩
+	// 에디팅 시작 이벤트 바인딩
+	// 에디팅 정상 종료 직전 이벤트 바인딩
+	// 에디팅 정상 종료 이벤트 바인딩
+	// 에디팅 취소 이벤트 바인딩
+	AUIGrid.bind(myGridID, ["cellEditBegin", "cellEditEndBefore", "cellEditEnd", "cellEditCancel"], auiCellEditingHandler);
+}
+
+// 주어진 개수만큼 랜덤 데이터 생성하여 그리드에 삽입
+function createRandomData(count) {
+	var data = [];
+	var row;
+	for(var i=1; i<=count; i++) {
+		
+		row = {};
+		row[0] = Math.round(Math.random() * 10000);
+		for(var j=1; j<26; j++) {
+			row[j] = chars[j] + ", " + i;
+		}
+		data.push(row);
+	}
+	// 데이터 삽입
+	AUIGrid.setGridData(myGridID, data);
+}
+
+
+function auiCellEditingHandler(event) {
+	if(event.type == "cellEditBegin") {
+		if(event.isClipboard && event.columnIndex == 6) // 칼럼 G 는 붙여 넣기 하지 않음.
+			return false;
+		document.getElementById("editBeginDesc").innerHTML = "에디팅 시작(cellEditBegin) : ( " + event.rowIndex + ", " + event.columnIndex + " ) " + event.headerText + ", value : " + event.value;
+	} else if(event.type == "cellEditEnd") {
+		document.getElementById("editBeginEnd").innerHTML = "에디팅 종료(cellEditEnd) : ( " + event.rowIndex + ", " + event.columnIndex + " ) " + event.headerText + ", value : " + event.oldValue + " -> " +event.value;
+	} else if(event.type == "cellEditCancel") {
+		document.getElementById("editBeginEnd").innerHTML = "에디팅 취소(cellEditCancel) : ( " + event.rowIndex + ", " + event.columnIndex + " ) " + event.headerText + ", value : " + event.value;
+	} else if(event.type == "cellEditEndBefore") {
+		// 여기서 반환하는 값이 곧 에디팅 완료 값입니다.
+		// 개발자가 입력한 값을 변경할 수 있습니다.
+		return event.value; // 원래 값 그대로 종료 
+	}
+};
+
+function changeSelectionMode(mode) {
+	if(mode == "multipleCells")
+		document.getElementById("modeSpan").innerHTML = "현재 : Cells 셀렉션 모드";
+	else
+		document.getElementById("modeSpan").innerHTML = "현재 : Rows 셀렉션 모드";
+	
+	// AUIGrid 셀렉션 변경
+	AUIGrid.setSelectionMode(myGridID, mode); // 선택 모드 변경
+};
+
+// copyDisplayValue 속성 토글
+function changeCopyFlag() {
+	var target = document.getElementById("c1");
+	var checked = target.checked;
+	
+	// true 라면 포매팅 데이터, false 라면 원래 데이터 복사
+	AUIGrid.setProp(myGridID, "copyDisplayValue", checked);
+};
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>■ 그리드 안에서 셀 또는 행을 선택 복사(Ctrl+C) 하여 다른 셀 또는 행에 붙여 넣기(Ctrl+V) 할 수 있습니다.</p>
+		<p>■ 엑셀에서 영역을 Ctrl+C 하여 그대로 그리드 안에 붙여 넣기 할 수 있고, 반대로 그리드 데이터를 복사하여 그대로 엑셀에서 붙여 넣기 할 수 있습니다.</p>
+		<p>■ 최하단에서 붙여 넣기를 한다면 행이 추가됩니다. 예를 들어 행 5개를 Ctrl+C 하여 최하단에서 Ctrl+V 하면 존재하지 않는 행 수(4개) 만큼 행이 추가됩니다.</p>
+		<p>■ 영역(블럭) 복사, 영역(블럭) 붙여 넣기를 지원합니다.</p>
+		<p style="margin-top:15px;"><input type="checkbox" id="c1"  onclick="changeCopyFlag()" style="vertical-align:middle;">
+		<label for="c1">포매팅 데이터 복사 여부(기본값 : copyDisplayValue=false)</label><p>
+		<p>칼럼 A 데이터는 실제로 1000 과 같이 컴마와 "원" 이 없습니다. 그리드에 의해 포매팅된 데이터입니다. 
+		이와 같이 복사 할 때 원래 데이터 복사인지 실제로 그리드가 보여주는 데이터(포매팅 데이터)인지 여부를 나타냅니다.</p>
+		<ul class="nav_u">
+			<li><span  onclick="changeSelectionMode('multipleRows')" class="btn">Rows 셀렉션 모드</span></li>
+			<li><span  onclick="changeSelectionMode('multipleCells')" class="btn">Cells 셀렉션 모드</span></li>
+			<li><span id="modeSpan">현재 : Cells 셀렉션 모드</span>
+		</ul>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:420px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="editBeginDesc"></p>
+		<p id="editBeginEnd"></p>
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

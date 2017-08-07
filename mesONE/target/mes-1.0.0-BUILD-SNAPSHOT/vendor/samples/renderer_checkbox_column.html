@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+
+<script type="text/javascript" src="../pdfkit/AUIGrid.pdfkit.js"></script>
+
+<!-- 브라우저 다운로딩 할 수 있는 JS 추가 -->
+<script type="text/javascript" src="../pdfkit/FileSaver.min.js"></script>
+
+<style type="text/css">
+
+/* 커스텀 칼럼 스타일 정의 */
+.aui-grid-user-custom {
+	text-align:center;
+}
+.aui-grid-user-custom .aui-checkLabelBox {
+	margin-left: 10px;
+	text-align:left;
+}
+
+.my-active-style {
+	background:#ddedde;
+	font-weight:bold;
+}
+
+.my-inactive-style {
+	background:#efcefc;
+}
+</style>
+
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/server_50.json");
+
+};
+
+// AUIGrid 칼럼 설정
+// 데이터 형태는 다음과 같은 형태임,
+//[{"id":"#Cust0","date":"2014-09-03","name":"Han","country":"USA","product":"Apple","color":"Red","price":746400}, { .....} ];
+var columnLayout = [ {
+		dataField : "id",
+		headerText : "Server ID"
+	}, {
+		dataField : "name",
+		headerText : "Server Name"
+	}, {
+		dataField : "charge",
+		headerText : "In Charge"
+	}, {
+		dataField : "location",
+		headerText : "Location",
+		width:120
+	}, {
+		dataField : "available", // 이미지렌더러로 체크박스 모양 만들기
+		headerText : "Available",
+		width: 80,
+		renderer : {
+			type : "ImageRenderer",
+			imgHeight : 20,
+			imgTableRef : {
+				"true" : "./assets/green_check.png",
+				"false" : "./assets/gray_check.png",
+				"default" : "./assets/gray_check.png" //default
+			}
+		}
+	/*}, { // 아이콘 렌더러로 체크박스 만들려면 주석 제거
+		dataField : "available", // 아이콘렌더러로 체크박스 모양 만들기
+		headerText : "Available",
+		width: 80,
+		renderer : {
+			type : "IconRenderer", 
+			iconPosition:"aisle",
+			iconWidth : 20,
+			iconHeight : 20,
+			iconTableRef :  { // icon 값 참조할 테이블 레퍼런스
+				"true" : "./assets/green_check.png",
+				"false" : "./assets/gray_check.png",
+				"default" : "./assets/gray_check.png" //default
+			}
+		}*/
+	}, {
+		dataField : "isActive",
+		headerText : "isActive",
+		width: 100,
+		style : "aui-grid-user-custom",
+		headerTooltip : {
+			show : true,
+			tooltipHtml : "In Charge 가 Anna 인 경우 사용자가 수정 못하게 막음.<br/>(선택적 체크박스 수정 여부 판단)"
+		},
+		styleFunction : function(rowIndex, columnIndex, value, headerText, item, dataField) {
+			if(value == "Inactive") {
+				return "my-inactive-style";
+			} else if(value == "Active") {
+				return "my-active-style";
+			}
+			return "";
+		},
+		renderer : {
+			type : "CheckBoxEditRenderer",
+			showLabel : true, // 참, 거짓 텍스트 출력여부( 기본값 false )
+			editable : true, // 체크박스 편집 활성화 여부(기본값 : false)
+			checkValue : "Active", // true, false 인 경우가 기본
+			unCheckValue : "Inactive",
+			
+			//사용자가 체크 상태를 변경하고자 할 때 변경을 허락할지 여부를 지정할 수 있는 함수 입니다.
+			checkableFunction :  function(rowIndex, columnIndex, value, isChecked, item, dataField ) {
+				// 행 아이템의 charge 가 Anna 라면 수정 불가로 지정. (기존 값 유지)
+				if(item.charge == "Anna") {
+					return false;
+				}
+				return true;
+			}
+		}
+	}
+];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {
+		
+		// 줄번호 칼럼 렌더러 출력
+		showRowNumColumn : true,
+	
+		// 체크박스 표시 설정
+		showRowCheckColumn : false,
+		
+		// RowIdField 설정
+		rowIdField : "id",
+		
+		rowHeight : 28,
+		
+		// 소팅
+		enableSorting : true
+	};
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 에디팅 정상 종료 이벤트 바인딩
+	AUIGrid.bind(myGridID, "cellEditEnd", auiCellEditingHandler);
+}
+
+// 체크 박스 편집 핸들러
+function auiCellEditingHandler(event) {
+	if(event.type == "cellEditEnd") {
+		
+		// 체크 박스에 맞는 rowItem 얻기
+		var rowItem = AUIGrid.getItemByRowIndex(myGridID, event.rowIndex);
+		
+		// 체크박스가 Active 로 변했다면 available 필드 값도 true 로 바꿔서 Available 도 변하게 만듬
+		rowItem.available = (event.value == "Active") ? true : false;
+		
+		// row 데이터 업데이트
+		AUIGrid.updateRow(myGridID, rowItem, event.rowIndex);
+	
+		// 하단에 정보 출력
+		document.getElementById("ellapse").innerHTML = "Editing End : ( " + event.rowIndex  + ", " + event.columnIndex + ") : " + event.value;
+	}
+};
+
+// 수정된 행들 얻기
+function getEditedRowItems() {
+	// 수정된 행 아이템들(배열)
+	var editedRowItems = AUIGrid.getEditedRowItems(myGridID);
+	var str ="";
+	for(var i=0, len=editedRowItems.length; i<len; i++) {
+		str += editedRowItems[i]["id"] + ", " + editedRowItems[i]["isActive"]+"\n";
+	}
+	alert(str);
+}
+
+// 필드값으로 아이템들 얻기
+function getItemsByField() {
+	
+	// 그리드 데이터에서 isActive 필드의 값이 Active 인 행 아이템 모두 반환
+	var activeItems = AUIGrid.getItemsByValue(myGridID, "isActive", "Active");
+	
+	var ids = []; 
+	for(var i=0, len=activeItems.length; i<len; i++) {
+		ids.push( activeItems[i].id ); // 아이디만 따로 보관해서 alert 출력
+	}
+	var str = ids.join("\n"); 
+	alert(str);
+	
+}
+
+
+//엑셀 내보내기(Export);
+function exportToXlsx() {
+	
+	// 그리드가 작성한 엑셀, CSV 등의 데이터를 다운로드 처리할 서버 URL을 지시합니다.
+	// 서버 사이드 스크립트가 JSP 이라면 export.jsp 로 변환해 주십시오.
+	// 스프링 또는 MVC 프레임워크로 프로젝트가 구축된 경우 해당 폴더의 export.jsp 파일을 참고하여 작성하십시오.
+	AUIGrid.setProp(myGridID, "exportURL", "./server_script/export.php");
+	
+	// 엑셀 내보내기 속성
+	var exportProps = {
+			
+			// 저장하기 파일명
+			fileName : "AUIGridExport"
+			
+	};
+	
+	// 내보내기 실행
+	AUIGrid.exportToXlsx(myGridID, true, exportProps);
+};
+
+
+//PDF 내보내기(Export), AUIGrid.pdfkit.js 파일을 추가하십시오.
+function exportPdfClick() {
+	
+	// 완전한 HTML5 를 지원하는 브라우저에서만 PDF 저장 가능( IE=10부터 가능 )
+	if(!AUIGrid.isAvailabePdf(myGridID)) {
+		alert("PDF 저장은 HTML5를 지원하는 최신 브라우저에서 가능합니다.(IE는 10부터 가능)");
+		return;
+	}
+		
+	// 그리드가 작성한 엑셀, CSV 등의 데이터를 다운로드 처리할 서버 URL을 지시합니다.
+	// 서버 사이드 스크립트가 JSP 이라면 ./export/export.jsp 로 변환해 주십시오.
+	// 스프링 또는 MVC 프레임워크로 프로젝트가 구축된 경우 해당 폴더의 export.jsp 파일을 참고하여 작성하십시오.
+	AUIGrid.setProp(myGridID, "exportURL", "./server_script/export.php");
+	
+	
+	// PDF 내보내기 속성
+	var exportProps = {
+			
+			// 폰트 지정
+			fontPath : "../pdfkit/jejugothic-regular.ttf",
+			
+			// 저장하기 파일명
+			fileName : "AUIGridExport"
+	};
+	
+	// 내보내기 실행
+	AUIGrid.exportToPdf(myGridID, exportProps);
+};
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>참, 거짓으로 표현 가능한 데이터를 여러 형태로 출력한 모습입니다.</p>
+		<p>"isActive" 칼럼의 체크박스에서 "In Charge" 의 값이 <strong>"Anna" 인 경우는 사용자가 수정 불가</strong>하도록 설정한 모습입니다.</p>
+		<ul class="nav_u">
+			<li><span  onclick="getEditedRowItems()" class="btn">수정된 아이템 모두 가져오기</span></li>
+			<li><span  onclick="getItemsByField()" class="btn">"Active" 아이템 모두 가져오기</span></li>
+		</ul>
+		<div>
+			<span class="btn" onclick="exportToXlsx()">엑셀(xlsx) 저장하기</span>
+			<span class="btn" onclick="exportPdfClick()">PDF 저장하기</span>
+		</div>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:480px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

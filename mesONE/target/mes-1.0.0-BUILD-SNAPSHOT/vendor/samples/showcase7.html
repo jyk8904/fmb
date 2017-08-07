@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+
+<!-- jQuery 연동 -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
+<!-- Bootstrap datepicker 아파치 2.0 라이센스 -->
+<!-- 출처 : https://bootstrap-datepicker.readthedocs.io/en/latest/index.html -->
+<script src="./external/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js"></script>
+<script src="./external/bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.ko.min.js"></script>
+<link href="./external/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
+
+<style type="text/css">
+
+
+.f_right {
+	float:right;
+}
+.my_btn {
+	color: #fff;
+	background-color: #2a2d33;
+	border: 1px solid #2a2d33;
+	background-clip: padding-box;
+	position: relative;
+	display: inline-block;
+	padding: 0.6em 2em;
+	line-height: 1em;
+	transition-property: background-color, color;
+	transition-duration: 0.2s;
+	transition-timing-function: ease;
+	border-radius: 0px;
+	-webkit-appearance: none;
+	font-size: 11px;
+	text-align: center;
+	cursor:pointer;
+}
+.my_btn:hover {
+	background-color: #505156;
+}
+/* 디테일 그리드 필터 버턴 */
+.filter_btn {
+	color: #fff;
+	background-color: #2a2d33;
+	border: 1px solid #2a2d33;
+	background-clip: padding-box;
+	display: inline-block;
+	padding: 0.6em 2em;
+	line-height: 1em;
+	border-top-left-radius:8px;
+	border-top-right-radius:8px;
+	font-size: 11px;
+	text-align: center;
+	cursor:pointer;
+}
+.filter_btn:hover {
+	background-color: #505156;
+}
+
+/* 디테일 그리드 동적 셀 1 */
+.mycustom-high {
+	background : #53C14B;
+	color:#000;
+}
+/* 디테일 그리드 동적 셀 2 */
+.mycustom-low {
+	background : #FFF29E;
+	color:#000;
+}
+/* 디테일 그리드 동적 셀 디폴트 */
+.mycustom-default {
+	background : rgba(0,0,0,0);
+}
+
+.my_left_style {
+	text-align:left;
+}
+</style>
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// Details 그리드 생성 후 반환ID
+var myGridID2;
+
+// 마스터 현재 선택된 행 ID 보관
+var curId = null;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid();
+	
+	// Details 그리드를 생성합니다.
+	createDetailAUIGrid();
+	
+	// 마스터 그리드 데이터 요청
+	AUIGrid.showAjaxLoader(myGridID);
+	requestMyData("./data/getMasterList.php", myGridID);
+	
+	// 디테일 그리드 빈 배열로 내용 없다는 표시함.
+	AUIGrid.setGridData(myGridID2, []);
+	
+	// CRUD 버턴 핸들러
+	$(".my_btn").click(crudBtnClickHandler);
+	
+	// 디테일 그리드 필터 버턴 핸들러
+	$(".filter_btn").click(filterBtnClickHandler);
+};
+
+// Master 그리드 를 생성합니다.
+function createAUIGrid() {
+	
+	var today = new Date();
+	
+	// AUIGrid 칼럼 설정
+	var columnLayout = [ {
+			dataField : "type",
+			headerText : "구분",
+			width : 80,
+			renderer : {
+				type : "IconRenderer",
+				iconPosition : "aisle",
+				iconWidth : 20, // icon 가로 사이즈, 지정하지 않으면 24로 기본값 적용됨
+				iconHeight : 20,
+				iconTableRef :  { // icon 값 참조할 테이블 레퍼런스
+					"정규직" : "./assets/green_circle.png",
+					"default" : "./assets/gray_circle.png"
+				}
+			},
+			editRenderer : {
+				type : "DropDownListRenderer",
+				list : ["정규직","계약직"]
+			}
+		}, {
+			dataField : "position",
+			headerText : "직급",
+			editRenderer : {
+				type : "DropDownListRenderer",
+				list : ["사장","이사","부장", "차장", "과장", "대리", "사원", "인턴"]
+			},
+			width : 80
+		}, {
+			dataField : "name",
+			headerText : "직원명",
+			style : "my_left_style",
+			renderer : {
+				type : "IconRenderer",
+				iconPosition : "aisle",
+				iconWidth : 20, // icon 가로 사이즈, 지정하지 않으면 24로 기본값 적용됨
+				iconHeight : 20,
+				iconFunction :  function(rowIndex, columnIndex, value, item) {
+					var sex = item.sex;
+					if(sex == 1) { // 남자
+						return "./assets/office_man.png";
+					} else if(sex == 2) { // 여자
+						return "./assets/office_female.png";
+					}
+					return "./assets/ico_flat.gif"; // ???? 기본
+				}
+			},
+			width : 100
+		}, {
+			dataField : "birth",
+			headerText : "생년월일",
+			dataType : "date",
+			formatString : "yyyy. mm. dd.",
+			editRenderer : {
+				type : "BTCalendarRenderer",
+				onlyCalendar : true,
+				// bootstrap-datepicker 속성을 여기에 설정하십시오.
+				// API : https://bootstrap-datepicker.readthedocs.io/en/latest/options.html
+				btOpts : {
+					language : "ko"
+				} // end of btOpts
+			},
+			width : 100
+		}, {
+			dataField : "sex",
+			headerText : "성별",
+			editRenderer : {
+				type : "DropDownListRenderer",
+				list : [1, 2],
+				labelFunction : function(  rowIndex, columnIndex, value, item ) { // 실 DB 데이터는 1, 2로 정해짐
+					var valueNumber = Number(value);
+					// 1인 경우 남자, 2인 경우 여자
+					if(valueNumber == 1)
+						return "남";
+					else return "여";
+				}
+			},
+			labelFunction : function(  rowIndex, columnIndex, value, headerText, item ) { // 실 DB 데이터는 1, 2로 정해짐
+				// 1인 경우 남자, 2인 경우 여자
+				if(item.sex == 1)
+					return "남";
+				else return "여";
+			},
+			width : 80
+		}, {
+			dataField : "age", // 직접적인 데이터필드 사용 안함
+			headerText : "나이",
+			width : 50,
+			editable : false, // 나이는 자동 계산됨.
+			headerTooltip : {
+				show : true,
+				tooltipHtml : "나이는 생년월일에 맞게 자동 계산됨"
+			},
+			expFunction : function(  rowIndex, columnIndex, item, dataField ) { // 여기서 실제로 출력할 값을 계산해서 리턴시킴.
+				if(item && item.birth) {
+					var birth = item.birth;
+					var birthDate = new Date(birth);
+					var age = today.getFullYear() - birthDate.getFullYear();
+					return age;
+				}
+				return 0;
+			}
+		}, {
+			dataField : "enterDate",
+			headerText : "입사시기",
+			dataType : "date",
+			formatString : "yyyy년 mm월",
+			editRenderer : {
+				type : "BTCalendarRenderer",
+				onlyCalendar : true,
+				onlyMonthMode : true, // 일 단위 달력이 아닌 월 단위 달력 출력
+				// bootstrap-datepicker 속성을 여기에 설정하십시오.
+				// API : https://bootstrap-datepicker.readthedocs.io/en/latest/options.html
+				btOpts : {
+					language : "ko",
+					minViewMode : 1  // 일 단위 달력이 아닌 월 단위 달력 출력
+				} // end of btOpts
+			},
+			width : 100
+		}, {
+			dataField : "email",
+			headerText : "E-Mail",
+			editRenderer : {
+				type : "InputEditRenderer",
+				
+				// 에디팅 유효성 검사
+				validator : function(oldValue, newValue, rowItem) {
+					var isValid = false;
+					var email_matcher = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/; // 이메일 체크 정규식
+					
+					if(email_matcher.test(newValue)) {
+						isValid = true;
+					}
+					// 리턴값은 Object 이며 validate 의 값이 true 라면 패스, false 라면 message 를 띄움
+					return { "validate" : isValid, "message"  : "정확한 이메일 주소가 아닙니다. 다시 확인해 주세요." };
+				}
+			}
+
+		}
+	];
+	
+	// 그리드 속성 설정
+	var gridPros = {
+		selectionMode : "singleRow",
+		rowIdField : "id",
+		editable : true,
+		showStateColumn : true,
+		showRowCheckColumn : false,
+		skipReadonlyColumns : true, // 읽기 전용 칼럼은 건너 띄기
+		wrapSelectionMove : true, // 칼럼 끝에서 오른쪽 이동 시 다음 행, 처음 칼럼으로 이동할지 여부
+		enterKeyColumnBase : true // 엔터키가 옆 칼럼으로 이동할지 여부
+	};
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, gridPros);
+	
+	// 선택 변경 이벤트 바인딩
+	AUIGrid.bind(myGridID, "selectionChange", auiGridSelectionChangeHandler);
+	
+	// 셀 에디팅 완료 전 이벤트 바인딩.
+	AUIGrid.bind(myGridID, "cellEditEndBefore", auiGridCellEditingValidator);
+}
+
+// Details 그리드 생성
+function createDetailAUIGrid() {
+	
+	// AUIGrid 칼럼 설정
+	var columnLayout = [];
+	
+	// 디테일 그리드 날짜 칼럼 정의
+	columnLayout.push({
+		dataField : "1",
+		headerText : "년월",
+		dataType : "date",
+		formatString : "yyyy년 mm월",
+		width:100
+	});
+			
+	for(var i=2; i<=32; i++) { // 1일 ~ 31일까지
+		columnLayout.push( {
+			dataField :  i,
+			headerText : i - 1,
+			dataType : "numeric",
+			width : 40,
+			filter : { enable : false }, // 날짜만 필터링 하기 때문에 퍼포먼스를 위해 1~31일 칼럼은 필터 사용 안함 설정
+			styleFunction : function (rowIndex, columnIndex, value, headerText, item, dataField) { // 스타일 함수
+				var numVal = Number(value);
+				if(isNaN(numVal))
+					return "mycustom-default";
+				else if(value >= 10)
+					return "mycustom-high";
+				else if(value >= 5)
+					return "mycustom-low";
+				return "mycustom-default";
+			}
+		});
+	}
+	
+	// 그리드 속성 설정
+	var gridPros = {
+		editable : true,
+		rowIdField : "1", 
+		selectionMode : "multipleCells",
+		showRowCheckColumn : false,
+		showRowNumColumn : false,
+		fixedColumnCount : 1,
+		enterKeyColumnBase : true, // 엔터키가 옆 칼럼으로 이동할지 여부
+		enableFilter : true // 필터 사용
+	};
+
+	// 실제로 #detail_grid_wrap 에 그리드 생성
+	myGridID2 = AUIGrid.create("#detail_grid_wrap", columnLayout, gridPros);
+}
+
+// Details 데이터 요청 지연 타임아웃
+var timerId = null;
+
+// 마스터 그리드선택 변경 이벤트 핸들러
+// 마스터 그리드에서 행을 선택한 경우 해당 행의 고객 ID(custId) 에 맞는
+// 데이터를 요청하여 디테일 그리드에 표시합니다.
+function auiGridSelectionChangeHandler(event) { 
+	// 200ms 보다 빠르게 그리드 선택자가 변경된다면 데이터 요청 안함
+	if(timerId) {
+		clearTimeout(timerId);
+	}
+	
+	timerId = setTimeout(function() {
+		var selectedItems = event.selectedItems;
+		if(selectedItems.length <= 0)
+			return;
+		
+		var rowItem = selectedItems[0].item; // 행 아이템들
+		
+		curId = rowItem.id; // 선택된 직원 id 보관
+		
+		// 디테일 정보 표시
+		$("#detail_title").html("직원 : " + rowItem.name + " 실적");
+		
+		// rowId 에 맞는 디테일 데이터 요청 후 디테일 그리드에 삽입
+		requestMyData("./data/getDetailList.php?id=" + curId , myGridID2);
+	}, 200);  // 현재 200ms 민감도....환경에 맞게 조절하세요.
+};
+
+// 셀 수정 전 확인 하기
+function auiGridCellEditingValidator(event) {
+	var value = event.value;
+	var oldValue = event.oldValue;
+	var dataField = event.dataField;
+	var birth;
+	var enterDate;
+	
+	if(dataField == "birth" || dataField == "enterDate") {
+		if(dataField == "birth") {
+			var date = new Date(value);
+			if(date.getFullYear() < 1920) {
+				alert("1920년 이후를 선택하십시오.");
+				return oldValue;
+			}
+			birth = date;
+			enterDate = new Date(event.item.enterDate);
+		}
+		if(dataField == "enterDate") {
+			birth = new Date(event.item.birth);
+			enterDate = new Date(value);
+		}
+		
+		if(birth.getTime() >= enterDate.getTime()) {
+			alert("입사 날짜와 생년월일 입력 간에 오류가 있습니다.");
+			return oldValue;
+		}
+		
+		
+	}
+	return value;
+};
+
+
+// 마스터 그리드에 1행 추가
+function insertRow2MasterGrid() {
+	var row = {
+			id : new Date().getTime(),
+			name : "Name",
+			email : "email@auisoft.net",
+			birth : "1981/03/07",
+			type : "계약직",
+			position : "인턴",
+			enterDate : "2015/01/01",
+			sex : 1
+	};
+	AUIGrid.addRow(myGridID, row, "last"); // 최하단에 행 추가
+};
+
+// 마스터 그리드 수정, 추가, 삭제된 아이템 얻어 반환
+function getModfiedDataFromMasterGrid() {
+	var addedRowItems = AUIGrid.getAddedRowItems(myGridID); // 추가된 행 아이템들(배열)
+	var editedRowItems = AUIGrid.getEditedRowItems(myGridID);  // 수정된 행 아이템들(배열) (수정되지 않은 칼럼들의 값도 가지고 있음)
+	//var editedRowItems = AUIGrid.getEditedRowColumnItems(myGridID);  // 수정된 행 중 진짜 수정된 칼럼의 dataField 만 추려낸 아이템들(배열)
+	var removedRowItems = AUIGrid.getRemovedItems(myGridID); // 삭제된 행 아이템들(배열)
+	
+	$("#master_info").html("추가 : " + addedRowItems.length + ", 수정 : " + editedRowItems.length + ", 삭제 : " + removedRowItems.length);
+
+	var data = {};
+	if(addedRowItems.length > 0) {
+		data.add = addedRowItems;
+	}
+	
+	if(editedRowItems.length > 0) {
+		data.update = editedRowItems;
+	}
+	
+	if(removedRowItems.length > 0) {
+		data.remove = removedRowItems;
+	}
+	return data;
+};
+
+// 디테일 그리드 수정된 아이템 얻어 반환
+function getModfiedDataFromDetailGrid() {
+	var editedRowItems = AUIGrid.getEditedRowItems(myGridID2);  // 수정된 행  아이템들(배열)
+	//var editedRowItems = AUIGrid.getEditedRowColumnItems(myGridID2);  // 수정된 행에서 진짜 수정된 칼럼 아이템들(배열)
+	
+	$("#detail_info").html("수정 행 수 : " + editedRowItems.length);
+
+	var data = {};
+	if(editedRowItems.length > 0) {
+		data.update = editedRowItems;
+	}
+	return data;
+};
+
+
+// 디테일 그리드 상단 필터 버턴 클릭 핸들러
+function filterBtnClickHandler(event) {
+	var $this = $(this);
+	var name = $this.attr("data-name");
+	
+	if(name == "clear") {
+		//  필터링 모두 해제
+		AUIGrid.clearFilterAll(myGridID2);
+	} else {
+		
+		var matcher = new RegExp("^" + name); // 정규식 
+		// 사용자 필터링 설정
+		AUIGrid.setFilter(myGridID2, "1",  function(dataField, value, item) { // dataField = 1 즉, 년월 필터링
+			return matcher.test(value);
+		});
+	}
+};
+
+// 추가, 삭제, 저장 등 버턴 클릭 핸들러
+function crudBtnClickHandler(event) {
+	var $this = $(this);
+	var name = $this.attr("data-name");
+	
+	switch(name) {
+	case "a": // 추가
+		insertRow2MasterGrid();
+		break;
+	case "d": // 삭제
+		var items = AUIGrid.getSelectedItems(myGridID);
+		if(items[0]) {
+			if(Number(items[0].item.id) <= 10) {
+				alert("데모용으로 현재 행은 삭제 불가능합니다. 10번 행 아래 데이터만 삭제 가능합니다.");
+				return;
+			}
+		}
+		AUIGrid.removeRow(myGridID, "selectedIndex"); // 선택행 삭제
+		break;
+	case "s": // 저장, 실제 DB에 저장
+		var data = getModfiedDataFromMasterGrid();
+		if(data.add || data.update || data.remove) {
+			saveMyData("./data/updateMasterList.php", myGridID, data);
+		} else {
+			alert("추가, 수정, 삭제된 데이터가 없습니다.");
+		}
+		break;
+	case "r": // 리프레쉬, 갱신
+		requestMyData("./data/getMasterList.php", myGridID);
+		break;
+	case "u": // 디테일 그리드 업데이트
+		var data = getModfiedDataFromDetailGrid();
+		if(data.update) {
+			saveMyData("./data/updateDetailList.php", myGridID2, data);
+		} else {
+			alert("수정된 데이터가 없습니다.");
+		}
+		break;
+	case "r2": // 디테일 그리드 리프레쉬, 갱신
+		if(curId) {
+			requestMyData("./data/getDetailList.php?id=" + curId, myGridID2);
+		} else {
+			alert("Master Grid 의 행을 선택하세요.");
+		}
+		break;
+	
+	default:
+		break;
+	}
+};
+
+//---------------------------------------------------------------------------------
+// Ajax 요청
+//----------------------------------------------------------------------------------
+
+// 데이터 요청 Ajax
+function requestMyData(url, gridId) {
+	AUIGrid.showAjaxLoader(gridId);
+	// jQuery ajax 사용
+	$.ajax({
+		url : url,
+		type : "GET",
+		dataType : "json",
+		success : function(data) {
+			// 그리드 데이터
+			var gridData = data;
+			
+			// 그리드에 데이터 세팅
+			AUIGrid.setGridData(gridId, gridData);
+			AUIGrid.removeAjaxLoader(gridId);
+		},
+		fail : function(e) {
+			alert("데이터 요청에 실패하였습니다.\r status : " + e);
+			AUIGrid.removeAjaxLoader(gridId);
+		},
+		error : function(e) {
+			alert("데이터 요청에 실패하였습니다.\r status : " + e);
+			AUIGrid.removeAjaxLoader(gridId);
+		}
+	});
+};
+
+// 실 DB에 저장 리퀘스트
+function saveMyData(url, gridId, data) {
+	
+	// ajax 요청 전 그리드에 로더 표시.
+	AUIGrid.showAjaxLoader(gridId);
+	
+	$.ajax({
+		url : url,
+		data : data,
+		type : "POST",
+		success : function(msg) {
+			var code = Number(msg);
+			if(code == 1) { // DB 성공
+				AUIGrid.removeAjaxLoader(gridId);
+				AUIGrid.removeSoftRows(gridId); // 삭제 표시된 행(소프트 삭제) 그리드에서 제거
+				AUIGrid.resetUpdatedItems(gridId, "all");
+				alert("저장 완료!!");
+			} else { // DB 실패...데이터 Refresh
+				alert("DB 저장 실패!! message : " + msg);
+				requestMyData("./data/getMasterList.php", gridId);
+			}
+		},
+		fail : function(e) {
+			alert("데이터 요청에 실패하였습니다.\r status : " + e);
+			AUIGrid.removeAjaxLoader(gridId);
+		},
+		error : function(e) {
+			alert("데이터 요청에 실패하였습니다.\r status : " + e);
+			AUIGrid.removeAjaxLoader(gridId);
+		}
+	});
+};
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>실제 DB에 저장, 수정 삭제 하는 Master-Details 데모입니다.(더블 클릭 또는 바로 키입력으로 수정 가능)</p>
+		<div>
+		</div>
+	</div>
+	<div style="width:800px; margin:0 auto;">
+		<div>
+			<span class="my_btn f_right" data-name="r">Refresh</span>
+			<span class="my_btn f_right" data-name="s">DB 저장</span>
+			<span class="my_btn f_right" data-name="d" title="그리드에서만 삭제, DB 업데이트는 DB 저장 버턴으로 최종 수행">선택 삭제</span>
+			<span class="my_btn f_right" data-name="a">직원 추가</span>
+		</div>
+		<div style="clear:both;"></div>
+		<!-- Master Grid -->
+		<div id="grid_wrap" style="width:100%; height:300px;"></div>
+		<p id="master_info" style="clear:both;">&nbsp;</p>
+		
+		
+		<p id="detail_title" style="margin-top:20px;">Detail</p>
+		<!-- Details Grid -->
+		<div>
+			<span class="filter_btn" data-name="2013">2013 년</span>
+			<span class="filter_btn" data-name="2014">2014 년</span>
+			<span class="filter_btn" data-name="clear">필터 초기화</span>
+			<span class="my_btn f_right" data-name="r2">Refresh</span>
+			<span class="my_btn f_right" data-name="u">DB 저장</span>
+		</div>
+		<div style="clear:both;"></div>
+		<div id="detail_grid_wrap" style="width:100%; height:240px;"></div>
+		<p id="detail_info">&nbsp;</p>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

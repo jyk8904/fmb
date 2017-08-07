@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+
+<!-- jQuery -->
+<script type="text/javascript"	src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
+<!-- jQuery ajax form -->
+<!--  http://malsup.com/jquery/form/ -->
+<script src="http://malsup.github.com/jquery.form.js"></script> 
+
+<style type="text/css">
+
+/* 커스텀 칼럼 스타일 정의 */
+.my-column { text-align:right; }
+
+/* 선택 파일 강조 스타일*/
+.my-file-selected {color:#900;}
+
+/* 파일 업로드 프로그래스 스타일*/
+.progress { position:relative; width:400px; border: 1px solid #ddd; padding: 1px; border-radius: 3px; }
+.bar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
+.percent { position:absolute; display:inline-block; top:3px; left:48%; }
+</style>
+
+<script type="text/javascript">
+function documentReady() {};
+
+//파일 저장 캐시
+var myFileCaches = {};
+
+// 최근 그리드 파일 선택 행 아이템 보관 변수
+var recentGridItem = null;
+
+var myGridID = null;
+
+$(document).ready(function() {  
+
+	// 파일 선택하기
+	$('#file').on('change', function(evt) {
+		var data = null;
+		var file = evt.target.files[0];
+		if (typeof file == "undefined") {
+			alert("파일 선택 시 취소!!");
+			
+			delete myFileCaches[recentGridItem.id];
+
+			AUIGrid.updateRowsById(myGridID, {
+				id : recentGridItem.id,
+				selectedFile :  ""
+			});
+			return;
+		}
+		
+		if(file.size > 2048000) {
+			alert("개별 파일은 2MB 를 초과해선 안됩니다.");
+			return;
+		}
+
+		// 서버로 보낼 파일 캐시에 보관
+		myFileCaches[recentGridItem.id] = {
+			name : recentGridItem.name,
+			country : recentGridItem.country, 
+			file : file
+		};
+
+		alert("업로드 할 파일 선택 : \r\n" + file.name + "\r\n" + recentGridItem.name + ", " + recentGridItem.country + ", " + recentGridItem.product + ", " + recentGridItem.color + ", " + recentGridItem.price);
+		
+		// 선택 파일명 그리드에 출력 시킴
+		AUIGrid.updateRowsById(myGridID, {
+			id : recentGridItem.id,
+			selectedFile :  file.name
+		});
+	});
+
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid();
+
+});
+
+
+//칼럼 레이아웃
+var columnLayout = [ {
+		dataField : "name",
+		headerText : "Name",
+		width : 100
+	}, {
+		dataField : "country",
+		headerText : "Country",
+		width : 100
+	}, {
+		dataField : "product",
+		headerText : "Product",
+		width : 100
+	}, {
+		dataField : "color",
+		headerText : "Color",
+		width : 100
+	}, {
+		dataField : "price",
+		headerText : "Price",
+		style : "right_style",
+		dataType : "numeric",
+		width : 80
+	}, {
+		dataField : "selectedFile",
+		headerText : "선택 파일명",
+		width : 140,
+		styleFunction  : function (rowIndex, columnIndex, value, headerText, item, dataField) {
+			if(typeof value == "undefined" || value == "") {
+				return null;
+			}
+			return "my-file-selected";
+		},
+		labelFunction : function( rowIndex, columnIndex, value, headerText, item ) {
+			if(typeof value == "undefined" || value == "") {
+				return "선택 파일 없음";
+			}
+			return value;
+		}
+	}, {
+		dataField : "null",
+		headerText : "파일",
+		width : 140,
+		renderer : {
+			type : "ButtonRenderer",
+			labelText : "파일 선택",
+			onclick : function(rowIndex, columnIndex, value, item) {
+				myButtonClick(item);
+			}
+		}
+	}
+];
+
+//AUIGrid 를 생성합니다.
+function createAUIGrid() {
+	
+	// 그리드 속성 설정
+	var gridPros = {
+		rowIdField : "id",
+		showRowCheckColumn: false,
+		showRowNumColumn:false,
+		enableSorting : false
+		
+	};
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, gridPros);
+
+	// 그리드 데이터 삽입
+	requestData("./data/getJson.php?count=30");
+}
+
+//그리드의 셀 버턴 클릭 처리
+function myButtonClick(item){
+	recentGridItem = item; // 그리드의 클릭한 행 아이템 보관
+	var input = $("#file");
+	input.trigger('click'); // 파일 브라우저 열기
+};
+
+//선택한 파일 서버로 전송
+function submitFiles() {
+	
+	var noFile = true;
+
+	// jQuery Ajax Form 사용
+	var formData = new FormData();
+	
+	$.each(myFileCaches, function(n, v) {
+	//	formData.append("ids[]", n); // 추가 정보들
+	//	formData.append("names[]", v.name); // 추가 정보들
+	//	formData.append("countries[]", v.country); // 추가 정보들
+		formData.append("uploadfiles[]", v.file);
+		noFile = false;
+	});
+
+	if(noFile) {
+		alert("서버로 전송할 파일이 없습니다. 먼저 선택하십시오.!!");
+		return;
+	}
+
+	var bar = $('.bar');
+	var percent = $('.percent');
+	var status = $('#status');
+
+	$.ajax({
+		url: './data/upload.php',
+		processData: false,
+		contentType: false,
+		data: formData,
+		cache: false,
+        dataType: 'json',
+		type: 'POST',
+		beforeSend: function() {
+			status.empty();
+			var percentVal = '0%';
+			bar.width(percentVal)
+			percent.html(percentVal);
+		},
+        xhr: function() {
+			var myXhr = $.ajaxSettings.xhr();
+			if(myXhr.upload){
+				myXhr.upload.addEventListener('progress',function(evt) {
+					if (evt.lengthComputable) {
+						var percentComplete = (evt.loaded / evt.total) * 100;
+						var percentVal = percentComplete + '%';
+						bar.width(percentVal)
+						percent.html(percentVal);
+					}  
+				}, false);
+			} else {
+				console.log("Uploadress is not supported.");
+			}
+			return myXhr;
+		},
+		success: function() {
+			var percentVal = '100%';
+			bar.width(percentVal)
+			percent.html(percentVal);
+		},
+		complete: function(xhr) {
+			status.html('전송 완료!!<br/>' + xhr.responseText);
+		}
+	});
+};
+
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>그리드의 개별 행에 파일 선택을 할 수 있도록 작성한 데모입니다.</p>
+		<p>그리드에서 파일을 선택하고, 종합적으로 모든 선택 파일을 ajaxForm 을 통하여 서버로 전송합니다.</p>
+		
+		<p><span class="btn" onclick="submitFiles();">파일 전체 서버로 보내기</span></p>
+		
+		<!-- 파일 input , 감춰놓기 -->
+		<input type="file" id="file" style="visibility:hidden;"></input>
+		
+		<div class="progress">
+	        <div class="bar"></div >
+	        <div class="percent">0%</div >
+	    </div>
+	    
+	    <div id="status"></div>
+	</div>
+	
+	<div>
+		
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:480px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

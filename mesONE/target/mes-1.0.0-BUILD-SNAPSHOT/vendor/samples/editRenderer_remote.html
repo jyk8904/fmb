@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+
+<!-- jQuery -->
+<script type="text/javascript"	src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
+<style type="text/css">
+
+/* 커스텀 칼럼 스타일 정의 */
+.my-right {
+	text-align:right;
+}
+.my-left {
+	text-align:left;
+}
+
+/* 드랍 리스트 아이템 재정의*/ 
+.aui-grid-drop-list-item {
+	text-align:left;
+}
+
+/* 리스트 템플릿에서 사용할 클래스*/
+.myList-style {
+	text-align :left;
+	white-space:nowrap;
+}
+.myList-style .myList-col {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display:inline-block;
+}
+</style>
+
+<script type="text/javascript">
+
+// 그리드 데이터
+var gridData = [{"idx" : 0, "isbn":"8991767397 9788991767393","title":"SAMSUNG GX-10 활용가이드 (DSLR로 사진찍기)","author":"양재문","price":"15000","publisher":"멘토르"},{"idx" : 1, "isbn":"8947523933 9788947523936","title":"Samsung Rising (삼성전자 왜 강한가)","author":"한국경제신문 특별취재팀","price":"10000","publisher":"한국경제신문"},{"idx" : 2, "isbn":"1119005744 9781119005742","title":"Samsung Galaxy Tabs for Dummies","author":"Geisler|Sandra","price":"32680","publisher":"JohnWiley&SonsInc"},{"idx" : 3, "isbn":"1119008360 4801119008361","title":"Samsung Galaxy Tab 4 NOOK For Dummies","author":"Corey Sandler","price":"10670","publisher":"ForDummies"},{"idx" : 4, "isbn":"0071835792 9780071835794","title":"The Samsung Way (Transformational Management Strategies from the World Leader in Innovation and Design)","author":"Jaeyong Song","price":"37170","publisher":"McGraw-Hill"},{"idx" : 5, "isbn":"1118919327 4801118919323","title":"Teach Yourself VISUALLY Samsung Galaxy S5","author":"Guy Hart-Davis","price":"20670","publisher":"Visual"},{"idx" : 6, "isbn":"1118920279 4801118920275","title":"Samsung Galaxy S5 For Dummies","author":"Bill Hughes","price":"17570","publisher":"ForDummies"},{"idx" : 7, "isbn":"1118920120 4801118920121","title":"Samsung Galaxy Note 3 For Dummies","author":"Dan Gookin","price":"17570","publisher":"ForDummies"},{"idx" : 8, "isbn":"8966370292 9788966370290","title":"INSIDE SAMSUNG (세계 최강 삼성 경쟁력의 비밀, 인사이드 삼성)","author":"배덕상","price":"14000","publisher":"미다스북스"},{"idx" : 9, "isbn":"1118772954 4801118772959","title":"Samsung Galaxy Tabs For Dummies","author":"Dan Gookin","price":"18220","publisher":"ForDummies"},{"idx" : 10, "isbn":"1118772946 9781118772942","title":"Samsung Galaxy Tabs For Dummies","author":"Dan Gookin","price":"36110","publisher":"ForDummies"},{"idx" : 11, "isbn":"1118773713 4801118773710","title":"Samsung Galaxy Tabs For Dummies","author":"Dan Gookin","price":"18310","publisher":"ForDummies"},{"idx" : 12, "isbn":"0789754509 9780789754509","title":"My Samsung Galaxy Note 4","author":"Johnston, Craig James|Hart-Davis, Guy","price":"33580","publisher":"PearsonPTR"},{"idx" : 13, "isbn":"8997390074 9788997390076","title":"SAMSUNG NX 스마트 카메라로 찍는 사진의 마법 (미러리스 카메라)","author":"변현우","price":"14800","publisher":"이지스퍼블리싱"},{"idx" : 14, "isbn":"111882802X 9781118828021","title":"Samsung Smarttv Application Development","author":"Handstudio|Inc. (COR)","price":"57040","publisher":"ForDummies"},{"idx" : 15, "isbn":"8968482411 9788968482410","title":"Google 구글 웹로그 분석 (유입률과 재방문율, 구매전환율을 높이는 구글 애널리틱스 실전 가이드)","author":"미나가와 아키히로","price":"18000","publisher":"한빛미디어"},{"idx" : 16, "isbn":"1455558583 9781455558582","title":"How Google Works (구글은 어떻게 일하는가)","author":"에릭 슈미트|조너선 로젠버그|앨런 이글","price":"23660","publisher":"GrandCentralPublishing"},{"idx" : 17, "isbn":"1492740918 9781492740919","title":"Seo Fitness Workbook: 3rd Edition - The Seven Steps to Search Engine Optimization Success on Google (The Seven Steps to Search Engine Optimization Success on Google)","author":"McDonald|Jason|Ph.D.","price":"67200","publisher":"Createspace"},{"idx" : 18, "isbn":"1455582344 9781455582341","title":"How Google Works (구글은 어떻게 일하는가)","author":"에릭 슈미트|조너선 로젠버그|앨런 이글","price":"37780","publisher":"GrandCentralPublishing"},{"idx" : 19, "isbn":"012802982X 4800128029824","title":"Google Hacking for Penetration Testers, Third Edition","author":"JOHNNY LONG","price":"62030","publisher":"Elsevier"},{"idx" : 20, "isbn":"1118381424 4801118381427","title":"Google+ Marketing For Dummies","author":"Jesse Stay","price":"18220","publisher":"ForDummies"}];
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+};
+
+// AUIGrid 칼럼 설정
+// 데이터 형태는 다음과 같은 형태임,
+//[{"id":"#Cust0","date":"2014-09-03","name":"Han","country":"USA","product":"Apple","color":"Red","price":746400}, { .....} ];
+var columnLayout = [ {
+		dataField : "title",
+		headerText : "책 제목",
+		width: 380,
+		style : "my-left",
+		editRenderer : {
+			type : "RemoteListRenderer",
+			showEditorBtnOver : true, // 마우스 오버 시 에디터버턴 보이기
+			remoter : function( request, response ) { // remoter 지정 필수
+				if(String(request.term).length < 2) {
+					alert("2글자 이상 입력하십시오.");
+					response(false); // 데이터 요청이 없는 경우 반드시 false 삽입하십시오.
+					return;
+				}
+				// 데이터 요청
+				$.ajax({
+					url: "../../blog/api/search_books.php?title=1&query=" + encodeURIComponent(request.term),
+					success: function(data) {
+						// 성공 시 완전한 배열 객체로 삽입하십시오.
+						response(data); 
+					}
+				}); // end of ajax
+			}
+		}
+	}, {
+		dataField : "isbn",
+		headerText : "ISBN",
+		width: 200,
+		editRenderer : {
+			type : "RemoteListRenderer",
+			fieldName : "isbn", // remoter 에서 가져온 데이터 중 실제 그리드에 적용시킬 필드명 (단순 배열이 아닌 경우 반드시 지정해야 함.)
+			remoter : function( request, response ) { // remoter 지정 필수
+				if(String(request.term).length < 2) {
+					alert("2글자 이상 입력하십시오.");
+					response(false); // 데이터 요청이 없는 경우 반드시 false 삽입하십시오.
+					return;
+				}
+				// 데이터 요청
+				$.ajax({
+					url: "../../blog/api/search_books.php?query=" + encodeURIComponent(request.term),
+					success: function(data) {
+						// 성공 시 완전한 배열 객체로 삽입하십시오.
+						response(data); 
+					}
+				}); // end of ajax
+			},
+			listTemplateFunction : function(rowIndex, columnIndex, text, item, dataField, listItem) {
+				var html = '<div class="myList-style">';
+				html += '<span class="myList-col" style="width:240px;" title="' + listItem.title + '">' + listItem.title + '</span>';
+				html += '<span class="myList-col" style="width:80px;">' + listItem.author + '</span>';
+				html += '<span class="myList-col" style="width:60px; text-align:right;">' + listItem.price + '</span>';
+				html += '<span class="myList-col" style="width:80px; padding-left:20px;">' + listItem.publisher + '</span>';
+				html += '</div>';
+				return html;
+			}
+		}
+	}];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {};
+	
+	auiGridProps.rowIdField = "idx";
+	
+	auiGridProps.editable = true;
+	
+	// 체크박스 대신 라디오버튼 출력함
+	auiGridProps.showStateColumn = true;
+	
+	// 소팅
+	auiGridProps.enableSorting = true;
+	
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+	// 에디팅 정상 종료 이벤트 바인딩
+	AUIGrid.bind(myGridID, "cellEditEnd", auiCellEditingHandler);
+	
+	// 그리드 데이터 삽입
+	AUIGrid.setGridData(myGridID, gridData);
+}
+
+// 편집 핸들러
+function auiCellEditingHandler(event) {
+	if(event.type == "cellEditEnd") {
+		document.getElementById("ellapse").innerHTML = "Editing End : ( " + event.rowIndex  + ", " + event.columnIndex + ") : " + event.value;
+	}
+};
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>리모트 리스트 렌더러는 실시간으로 서버에 요청하여 리스트를 출력한 후, 출력된 리스트 중 하나를 선택할 수 있는 편집 렌더러입니다.</p>
+		<p>다음은 책 제목을 검색하면 해당 책을 서핑하여 출력시킵니다.</p>
+		<p>■ "책 제목 칼럼" : 단순 배열 구조의 리스트를 출력하고 리스트 중 하나를 선택할 수 있습니다.</p>
+		<p>■ "ISBN 칼럼" : 책 제목을 검색하면 책의 모든 필드를 갖는 JSON 을 응답으로 받아, 모든 필드를 리스트로 출력합니다. 개발자는 해당 리스트에서 그리드에 적용시킬 필드(fieldName) 를 지정하면 해당 필드가 그리드의 값으로 설정됩니다. (데모는 ISBN 필드를 그리드에 적용시키도록 작성함.)</p>
+		<p>검색어를 입력한 후 엔터를 치면 요청된 데이터를 출력합니다. 키보드 위, 아래 방향키로 리스트의 하나를 선택 후 다시 엔터(또는 탭 등의 일반적인 완료 인터페이스)를 치면 적용됩니다.</p>
+		<p><strong>샘플 상의 요청 URL 을 WAS 에 맞게 고쳐 주십시오.</strong></p>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:480px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

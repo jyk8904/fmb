@@ -1,0 +1,107 @@
+@CHARSET "UTF-8";
+body,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,form,fieldset,legend,input,textarea,button,select{margin:0;padding:0}
+body,input,textarea,select,button,h1,h2,h3,h4,h5{font-family:'Malgun Gothic','맑은 고딕',AppleSDGothicNeo-Light,sans-serif;font-size:14px;line-height:1.25em;vertical-align:middle;}
+body{position:relative;color:#000;-webkit-text-size-adjust:none}
+img,fieldset{border:0}
+ul,ol{list-style:none}
+em,address{font-style:normal}
+a{color:inherit;text-decoration:none}
+.btn {
+	color: #fff;
+	background-color: #2a2d33;
+	border: 1px solid #2a2d33;
+	background-clip: padding-box;
+	display: inline-block;
+	padding: 0.65em 1.5em;
+	line-height: 0.933em;
+	transition-property: background-color, color;
+	transition-duration: 0.2s;
+	transition-timing-function: ease;
+	border-radius: 0px;
+	-webkit-appearance: none;
+	font-size: 1em;
+	font-weight: bold;
+	text-align: center;
+	margin: 0.5em 0.5em;
+	cursor:pointer;
+}
+.btn-disabled {
+	color: #999;
+	background-color: #ccc;
+	border: 1px solid #999;
+	background-clip: padding-box;
+	display: inline-block;
+	padding: 0.65em 1.5em;
+	line-height: 0.933em;
+	transition-property: background-color, color;
+	transition-duration: 0.2s;
+	transition-timing-function: ease;
+	border-radius: 0px;
+	outline: none;
+	-webkit-appearance: none;
+	font-size: 1em;
+	font-weight: bold;
+	text-align: center;
+	margin: 0.5em 0.5em;
+	cursor:not-allowed;
+}
+.btn:hover {
+	background-color: #505156;
+}
+.desc {
+	padding: 10px 0 10px 0;
+	font-size:1em;
+	width:800px;
+	margin:0 auto;
+}
+.desc p {
+	margin: 0.5em 0;
+}
+.desc_bottom {
+	padding-top:5px;
+	font-size:0.9em;
+	height:50px;
+	width:800px;
+	margin:0 auto;
+}
+.nav_u {
+	display:inline-block;
+}
+.nav_u li {
+	display: inline;
+	white-space: nowrap;
+	text-align:right;
+}
+.nav_u li input{
+	margin-left:20px;
+	margin-right:5px;
+	vertical-align: middle;
+}
+#main {
+	min-width:600px;
+	height:790px;
+	margin:0 auto;
+	padding: 0 4px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+#main_top {
+	width:800px;
+	margin:0 auto;
+	padding: 8px 4px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+#footer {
+	width:100%;
+	bottom:0px;
+	background-color: #2a2d33;
+	text-align: right;
+	height:30px;
+	color:#ffffff;
+}
+.copyright {
+	font-size:0.8em;
+	margin-right:20px;
+	padding-top:5px;
+}
