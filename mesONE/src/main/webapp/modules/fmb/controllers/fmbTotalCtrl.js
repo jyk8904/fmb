@@ -24,153 +24,77 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 		 *-----------------------------------------*/
 		var self = this;
 		var workerList = CmmWorkerSrvc;
+		
+		
 		// 설비parameter
-		var count = 1;
-		$scope.value = "70";
 		$scope.dateRunInfoList = {};
-		$scope.planProgressList = {};
-		
-		var chartData = [
-		    {
-		        "date": "2012-01-01",
-		        "distance": 227,
-		        "townName": "New York",
-		        "townName2": "New York",
-		        "townSize": 25,
-		        "latitude": 40.71,
-		        "duration": 408
-		    },
-		    {
-		        "date": "2012-01-02",
-		        "distance": 371,
-		        "townName": "Washington",
-		        "townSize": 14,
-		        "latitude": 38.89,
-		        "duration": 482
-		    },
-		    {
-		        "date": "2012-01-03",
-		        "distance": 433,
-		        "townName": "Wilmington",
-		        "townSize": 40,
-		        "latitude": 34.22,
-		        "duration": 562
-		    },
-		    {
-		        "date": "2012-01-04",
-		        "distance": 345,
-		        "townName": "Jacksonville",
-		        "townSize": 7,
-		        "latitude": 30.35,
-		        "duration": 379
-		    },
-		    {
-		        "date": "2012-01-05",
-		        "distance": 480,
-		        "townName": "Miami",
-		        "townName2": "Miami",
-		        "townSize": 10,
-		        "latitude": 25.83,
-		        "duration": 501
-		    },
-		    {
-		        "date": "2012-01-06",
-		        "distance": 386,
-		        "townName": "Tallahassee",
-		        "townSize": 7,
-		        "latitude": 30.46,
-		        "duration": 443
-		    },
-		    {
-		        "date": "2012-01-07",
-		        "distance": 348,
-		        "townName": "New Orleans",
-		        "townSize": 10,
-		        "latitude": 29.94,
-		        "duration": 405,
-		        "bulletClass": "lastBullet"
-		    }
-		];
-		
-		 var dataSource = [{
-			    country: "Russia",
-			    area: 12
-			}, {
-			    country: "Canada",
-			    area: 7
-			}, {
-			    country: "USA",
-			    area: 7
-			}, {
-			    country: "China",
-			    area: 7
-			}, {
-			    country: "Brazil",
-			    area: 6
-			}, {
-			    country: "Australia",
-			    area: 5
-			}, {
-			    country: "India",
-			    area: 2
-			}, {
-			    country: "Others",
-			    area: 55
-			}];
+		$scope.planProgressList = {};	
 
-		 var dataSource2 = [{
-			    day: "유형1",
-			    oranges: 3
-			}, {
-			    day: "유형2",
-			    oranges: 2
-			}, {
-			    day: "유형3",
-			    oranges: 9
-			}, {
-			    day: "유형4",
-			    oranges: 4
-			}, {
-			    day: "유형5",
-			    oranges: 6
-			}];
-		 
 		self.info = {
-				alarm : {
-					firstTitle : "null",
-					firstValue : "null",
-					secondTitle : "null",
-					secondValue : "null",
-					thirdTitle : "null",
-					thirdValue : "null"
-				},
-				norun : {
-					firstTitle : "null",
-					firstValue : "null",
-					secondTitle : "null",
-					secondValue : "null",
-					thirdTitle : "null",
-					thirdValue : "null"
-				},
-				standby : {
-					firstTitle : "null",
-					firstValue : "null",
-					secondTitle : "null",
-					secondValue : "null",
-					thirdTitle : "null",
-					thirdValue : "null"
-				}
+				alarm : { firstTitle : "null", firstValue : "null", secondTitle : "null", secondValue : "null", thirdTitle : "null", thirdValue : "null" },
+				norun : { firstTitle : "null", firstValue : "null", secondTitle : "null", secondValue : "null", thirdTitle : "null", thirdValue : "null" },
+				standby : { firstTitle : "null", firstValue : "null", secondTitle : "null", secondValue : "null", thirdTitle : "null", thirdValue : "null" }
 		};
+		
 		self.gauge = {
-				run: "null",
-				standby: "null",
-				norun: "null",
-				alarm: "null"
+				run: "null", standby: "null", norun: "null", alarm: "null"
 		};
+		
+		
 		getData();
 		
 		
-
+		var gauge = AmCharts.makeChart("gauge",
+				{
+					"type": "gauge",
+					"marginBottom": 0,
+					"marginLeft": 0,
+					"marginRight": 0,
+					"marginTop": 0,
+					"theme": "dark",
+					"arrows": [
+						{
+							"value": "30"
+						}
+					],
+					"axes": [
+						{
+							"axisThickness": 1,
+							"bottomText": "0 %",
+							"bottomTextFontSize": 20,
+							"bottomTextYOffset": -20,
+							"endValue": 100,
+							"id": "GaugeAxis-1",
+							"valueInterval": 10,
+							"bands": [
+								{
+									"color": "#00CC00",
+									"endValue": 30,
+									"id": "GaugeBand-1",
+									"startValue": 0
+								},
+								{
+									"color": "#ffac29",
+									"endValue": 70,
+									"id": "GaugeBand-2",
+									"startValue": 30
+								},
+								{
+									"color": "#ea3838",
+									"endValue": 100,
+									"id": "GaugeBand-3",
+									"innerRadius": "95%",
+									"startValue": 70
+								}
+							]
+						}
+					],
+					"allLabels": [],
+					"balloon": {},
+					"titles": []
+				}
+			);
+		
 		function getData()
 		{
 			console.log("getData Call!!")
@@ -179,15 +103,13 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 			getGaugeRunInfo();
 			getDateRunInfo();
 			getRankRunInfo();
+			console.log("1111111")
 			pie();
+			console.log("222222222")
 			barChart();
-			alarmDateRunInfo();
+			console.log("333333333")
 		}
 		
-		var createData = function () {
-			
-			
-		};
 		
 		function getPlanProgress() {
 			// 계획진도율 가져오기
@@ -203,14 +125,14 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 				alert('fail: ' + data)
 			});	
 		}
+		
 		function getGaugeRunRate() {
 			// 라인가동현황게이지 가져오기
 			var gaugeRunRatePromise = CmmAjaxService.select("/mes/bas/selectGaugeRunRate.do");
 				gaugeRunRatePromise.then(function(data) {
 				self.gaugeRunRateList = data;						
-				$scope.value = self.gaugeRunRateList[0].lineGauge;
-				gauge.arrows[0].setValue(self.gaugeRunRateList[0].lineGauge);
-				gauge.axes[0].setBottomText(self.gaugeRunRateList[0].lineGauge + "%");
+				/*gauge.arrows[0].setValue(self.gaugeRunRateList[0].lineGauge.toString());
+				gauge.axes[0].setBottomText(self.gaugeRunRateList[0].lineGauge.toString() + "%");*/
 			}, function(data) {
 				alert('fail: ' + data)
 			});
@@ -254,8 +176,6 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 				alarmRankRunInfo();
 				standbyRankRunInfo();
 				noRunRankRunInfo();
-				$scope.apply();
-
 
 			}, function(data) {
 				alert('fail: ' + data)
@@ -689,314 +609,6 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 			self.gauge.alarm = gaugeRunInfoList["0"].alarmCount + " 라 인";
 		}
 
-			//라인가동현황게이지
-/*		console.log(self.gaugeRunRateList[0].lineGauge);*/
-		var chart = AmCharts.makeChart( "chartdiv", {
-			  "theme": "dark",
-			  "type": "gauge",
-			  "axes": [ {
-			    "axisColor": "#67b7dc",
-			    "axisThickness": 3,
-			    "endValue": 240,
-			    "gridInside": false,
-			    "inside": false,
-			    "radius": "100%",
-			    "valueInterval": 20,
-			    "tickColor": "#67b7dc"
-			  }, {
-			    "axisColor": "#fdd400",
-			    "axisThickness": 3,
-			    "endValue": 160,
-			    "radius": "80%",
-			    "valueInterval": 20,
-			    "tickColor": "#fdd400"
-			  } ],
-			  "arrows": [ {
-			    "color": "#67b7dc",
-			    "innerRadius": "20%",
-			    "nailRadius": 0,
-			    "radius": "85%", 
-			    "setValue" : 40
-			  } ]
-			} );
-
-			
-		
-			/*$scope.gaugeRunRate = {
-				bindingOptions: {
-					value: "value"
-				},
-		        scale: {
-		            startValue: 0,
-		            endValue: 100,
-		            tickInterval: 10,
-		            label: {
-		                customizeText: function (arg) {
-		                    return arg.valueText + "%";
-		                },
-		                font: {
-		                	color: "#e1e1e7"
-		                }
-		            }
-		        },
-		        size: {
-		        	width: 250,
-		        	height: 250
-		        },
-		        rangeContainer: {
-		            ranges: [
-		                { startValue: 0, endValue: 30, color: "#0077BE" },
-		                { startValue: 30, endValue: 70, color: "#E6E200" },
-		                { startValue: 70, endValue: 100, color: "#77DD77" }
-		            ]
-		        }
-		        //tooltip: { enabled: true },	        
-		        //value: self.gaugeRunRateList[0].lineGauge
-		        
-		    };*/
-		
-			function planProgress(){
-				AmCharts.makeChart("chartdiv",
-						{
-							"type": "serial",
-							"categoryField": "lineNm",
-							"rotate": true,
-							"autoMarginOffset": 40,
-							"marginRight": 60,
-							"marginTop": 60,
-							"startDuration": 1,
-							"fontSize": 13,
-							"theme": "dark",
-							"categoryAxis": {
-								"gridPosition": "start"
-							},
-							"trendLines": [],
-							"graphs": [
-								{
-									"balloonText": "[[title]] of [[category]]:[[value]]",
-									"fillAlphas": 1,
-									"id": "AmGraph-1",
-									"labelText": "",
-									"title": "생산실적",
-									"type": "column",
-									"valueField": "curCountPer"
-								},
-								{
-									"balloonText": "[[title]] of [[category]]:[[value]]",
-									"fillAlphas": 1,
-									"id": "AmGraph-2",
-									"title": "계획수량",
-									"type": "column",
-									"valueField": "goalCountPer"
-								},
-								{
-									"balloonText": "[[title]] of [[category]]:[[value]]",
-									"bullet": "round",
-									"id": "AmGraph-3",
-									"title": "평균생산실적",
-									"lineThickness": 2,
-									"valueAxis": "ValueAxis-3",
-									"valueField": "avgCountPer"
-								}
-							],
-							"guides": [],
-							"valueAxes": [
-								{
-									"id": "ValueAxis-1",
-									"stackType": "100%",
-									"title": "",
-									
-								},
-								{
-									"id": "ValueAxis-3",
-									"position": "right",
-								}
-				
-							],
-							"allLabels": [],
-							"balloon": {},
-							"legend": {
-								"enabled": true,
-								"useGraphSettings": true
-							},
-							"titles": [],
-							"dataProvider": $scope.planProgressList
-						}
-					);
-			     /* var chart;
-		            var chartData =$scope.planProgressList;
-		                
-		            AmCharts.ready(function () {
-		                // SERIAL CHART
-		                chart = new AmCharts.AmSerialChart();
-		                chart.dataProvider = chartData;
-		                chart.categoryField = "lineNm";
-		                // this single line makes the chart a bar chart,
-		                // try to set it to false - your bars will turn to columns
-		                chart.rotate = true;
-		                // the following two lines makes chart 3D
-		                chart.depth3D = 20;
-		                chart.angle = 30;
-		               
-		                
-
-		                // AXES
-		                // Category
-		                var categoryAxis = chart.categoryAxis;
-		                categoryAxis.gridPosition = "start";
-		                categoryAxis.fillAlpha = 1;
-		                categoryAxis.gridAlpha = 0;
-
-		                // value
-		                var valueAxis = new AmCharts.ValueAxis();
-		                valueAxis.axisColor = "#DADADA";
-		                valueAxis.title = "Income in millions, USD";
-		                valueAxis.gridAlpha = 0.1;
-		                chart.addValueAxis(valueAxis);
-
-		                // GRAPH
-		                var graph = new AmCharts.AmGraph();
-		                graph.title = "현재생산량";
-		                graph.valueField = "curCountPer";
-		                graph.type = "column";
-		                graph.balloonText = "현재생산량  [[category]]:[[value]]";
-		                graph.lineAlpha = 0;
-		                graph.fillColors = "#bf1c25";
-		                graph.fillAlphas = 1;
-		                chart.addGraph(graph);
-
-		                chart.creditsPosition = "top-right";
-
-		                // WRITE
-		                chart.write("chartdiv");
-		            });*/
-			}
-				//계획진도율 차트 
-			 	/*self.planProgress = { 
-			 		rotated: true,
-			        dataSource: $scope.planProgressList,
-			        commonSeriesSettings: {
-			        	label:{
-			        		displayMode: "stagger" ,
-			        		staggeringSpacing: '10',
-			        		font:{
-			        			size:15,
-			        			color:'#FFFFFF',
-			        			family: 'Verdana'
-			        		}
-			        	},
-			            argumentField: "lineNm",
-			            type: "fullStackedBar"
-			        },
-			        series: [
-			            { valueField: "curCountPer", name: "생산실적", type:'fullStackedBar'},
-			            { valueField: "goalCountPer", name: "계획수량", type:'fullStackedBar' },
-			            { 
-			            	vlaueField: "avgCountPer", 
-			            	name: "평균생산실적",
-			            	type: 'bar',
-			            	axis: 'absoluteAxis',
-			            	color:'#208fd8'
-			            }
-			        ],
-			        valueAxis:[
-			        	{name : 'percentAxis'},
-			        	{
-			        		name : 'absoluteAxis',
-			        		position:'right',
-			        		label: {
-			        			font: {
-			        				color: "#e1e1e7"
-			        			}
-			        		},
-			        		synchronizedValue : 0
-			        	}
-			        ],
-			        argumentAxis: {
-			            label: {
-			        		font: {
-			        			color: "#e1e1e7"
-			        		}
-			        	}
-			        },
-			        size: {
-			        	width: 450,
-			        	height: 800
-			        },
-			        legend: {
-			            verticalAlignment: "bottom",
-			            horizontalAlignment: "center",
-			            itemTextPosition: "right",
-			            position:"outside",
-			            orientation:"horizontal", //범례 정렬
-		            	//columnItemSpacing: '6' //범례간 간격
-			            font: {
-			            	color: "#e1e1e7"
-			            }
-			        },
-			        tooltip: {
-			            enabled: true,
-			            customizeTooltip: function (arg) {
-			                return {
-			                    text: arg.percentText 
-			                };
-			            },
-			            zIndex: 101
-			        }
-			    }
-			}*/
-												
-			var gauge = AmCharts.makeChart("gauge",
-					{
-						"type": "gauge",
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
-						"theme": "dark",
-						"arrows": [
-							{
-							}
-						],
-						"axes": [
-							{
-								"axisThickness": 1,
-								"bottomText": "0 %",
-								"bottomTextFontSize": 20,
-								"bottomTextYOffset": -20,
-								"endValue": 100,
-								"id": "GaugeAxis-1",
-								"valueInterval": 10,
-								"bands": [
-									{
-										"color": "#00CC00",
-										"endValue": 30,
-										"id": "GaugeBand-1",
-										"startValue": 0
-									},
-									{
-										"color": "#ffac29",
-										"endValue": 70,
-										"id": "GaugeBand-2",
-										"startValue": 30
-									},
-									{
-										"color": "#ea3838",
-										"endValue": 100,
-										"id": "GaugeBand-3",
-										"innerRadius": "95%",
-										"startValue": 70
-									}
-								]
-							}
-						],
-						"allLabels": [],
-						"balloon": {},
-						"titles": []
-					}
-				);
-
-	
 		function barChart() {
 			AmCharts.makeChart("barChart",
 					{
@@ -1008,7 +620,6 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 						"startDuration": 1,
 						"startEffect": "easeOutSine",
 						"fontSize": 12,
-						"theme": "dark",
 						"categoryAxis": {
 							"gridPosition": "start"
 						},
@@ -1017,7 +628,10 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 							{
 								"balloonText": "[[title]] of [[category]]:[[value]]",
 								"fillAlphas": 1,
+								"fillColors": "#DD4635",
 								"id": "AmGraph-1",
+								"lineAlpha": 0,
+								"lineColor": "#FFFFFF",
 								"title": "graph 1",
 								"type": "column",
 								"valueField": "column-1"
@@ -1049,6 +663,11 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 							},
 							{
 								"category": "category 3",
+								"column-1": 4,
+								"column-2": 3
+							},
+							{
+								"category": "category 4",
 								"column-1": 2,
 								"column-2": 3
 							}
@@ -1079,15 +698,33 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 						"dataProvider": [
 							{
 								"category": "category 1",
-								"column-1": 8
+								"column-1": 8,
+								"color": "BC596A"
 							},
 							{
 								"category": "category 2",
-								"column-1": 6
+								"column-1": 6,
+								"color": "386E85"
 							},
 							{
 								"category": "category 3",
-								"column-1": 2
+								"column-1": 2,
+								"color": "ECBD89"
+							},
+							{
+								"category": "category 4",
+								"column-1": 2,
+								"color": "7F75C1"
+							},
+							{
+								"category": "category 5",
+								"column-1": 2,
+								"color": "678D5A"
+							},
+							{
+								"category": "기타 (ETC)",
+								"column-1": 2,
+								"color": "B886DC"
 							}
 						]
 					}
@@ -1100,14 +737,14 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 						"type": "serial",
 						"rotate": true,
 						"categoryField": "lineNm",
-						"angle": 30,
+						"angle": 10,
 						"autoMarginOffset": 20,
-						"depth3D": 20,
+						"depth3D": 10,
 						"marginRight": 10,
 						"marginTop": 30,
-						"plotAreaBorderAlpha": 0.36,
+						"plotAreaBorderAlpha": 0,
 						"plotAreaBorderColor": "#008000",
-						"plotAreaFillAlphas": 0.46,
+						"plotAreaFillAlphas": 0,
 						"sequencedAnimation": false,
 						"startDuration": 1,
 						"startEffect": "easeOutSine",
@@ -1116,7 +753,11 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 						"fontSize": 13,
 						"theme": "default",
 						"categoryAxis": {
-							"gridPosition": "start"
+							"gridPosition": "start",
+							"gridAlpha": 0.2,
+							"gridColor": "#E5E5E5",
+							"color": "#E7E7E7",
+							"axisAlpha": 0
 						},
 						"trendLines": [],
 						"graphs": [
@@ -1124,12 +765,13 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 								"balloonText": "[[title]] of [[category]]:[[value]]",
 								"columnWidth": 0.61,
 								"fillAlphas": 1,
-								"fillColors": "#008000",
+								"fillColors": "#ecbd89",
 								"fixedColumnWidth": 20,
 								"fontSize": 4,
 								"id": "AmGraph-1",
 								"labelText": "",
-								"lineColor": "#008000",
+								"lineAlpha": 0,
+								"lineColor": "#FFFFFF",
 								"negativeLineAlpha": 0,
 								"title": "graph 1",
 								"type": "column",
@@ -1139,7 +781,7 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 								"balloonColor": "#FFFFFF",
 								"columnWidth": 0.45,
 								"fillAlphas": 1,
-								"fillColors": "#FF8000",
+								"fillColors": "#4F8298",
 								"fixedColumnWidth": 20,
 								"id": "AmGraph-5",
 								"lineAlpha": 0,
@@ -1158,7 +800,10 @@ angular.module('app').controller('FmbTotalCtrl',[	/*'dx',*/
 							{
 								"id": "ValueAxis-1",
 								"stackType": "100%",
-								"title": ""
+								"title": "",
+								"gridAlpha": 0.2,
+								"gridColor": "#E5E5E5",
+								"color": "#E7E7E7"
 							}
 						],
 						"allLabels": [],

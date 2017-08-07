@@ -97,27 +97,23 @@
 	height: 434px;
 }
 .dBlue {
-	background-color: #10253F;
+	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
 	color: ghostWhite;
 	text-align:center;
 }
-.rBlue {
-	background-color: #546E7A;
-	color: ghostWhite;
-	text-align:center;
-}
+
 .lGrey {
-	background-color: grey;
-	color: black;
+	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	color: ghostWhite;
 	text-align:center;
 }
 .ppmTitle {
-	background-color: grey;
+	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
 	color: ghostWhite;
 	text-align:center;
 }
 .ppmValue {
-	background-color: grey;
+	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
 	color: ghostWhite;
 	text-align:center;
 }
@@ -142,18 +138,21 @@
 	margin-bottom: 5px;
 }
 .gaugeTitleBox p {
-	background-color: grey;
 	font-size: 24px;
 	color: ghostWhite;
 	text-align:center;
 }
 .gaugeValueBox p {
-	background-color: grey;
 	font-size: 24px;
 	color: ghostWhite;
 	text-align:center;
 }
-
+.gaugeGreyBox p {
+	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+}
+.gaugeBlueBox p {
+	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
+}
 .bottomInfo {
 	position: absolute;
 	width: 455px;
@@ -175,41 +174,41 @@
 	padding-left: 10px;
 }
 .firstTitleBox {
-	background-color: grey;
+	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
 	margin-bottom: 5px;
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
 .firstValueBox {
-	background-color: grey;
+	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
 	margin-bottom: 5px;
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
 .secondTitleBox {
-	background-color: grey;
+	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
 	margin-bottom: 5px;
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
 .secondValueBox {
-	background-color: grey;
+	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
 	margin-bottom: 5px;
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
 .thirdTitleBox {
-	background-color: grey;
+	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
 .thirdValueBox {
-	background-color: grey;
+	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
