@@ -1,0 +1,501 @@
+[{
+    "id": "#Cust0",
+    "date": "2014-12-28",
+    "name": "Jennifer",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust1",
+    "date": "2014-12-27",
+    "name": "Lawrence",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust2",
+    "date": "2014-12-26",
+    "name": "Kim",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust3",
+    "date": "2014-12-25",
+    "name": "Jennifer",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust4",
+    "date": "2014-12-24",
+    "name": "Emma",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust5",
+    "date": "2014-12-23",
+    "name": "Steve",
+    "msg": "라이브스크립트의 이름이 자바스크립트로 변경된 것은 대략 넷스케이프가 자사의 넷스케이프 네비게이터 웹 브라우저에 자바 기술에 대한 지원을 포함하기 시작할 즈음이다. 자바스크립트는 1995년 12월 출시된 넷스케이프 2.0B3에서부터 공개, 채택되었다. 자바스크립트라는 이름은 상당한 혼란을 가져왔다. 이것은 자바와 자바스크립트 간에는 구문이 유사하다는 점(양쪽 모두 C에 바탕을 두었기 때문에) 외에는 실제 관련성이 없었기 때문이다. 두 언어는 의미론적으로 매우 다르고, 특히 각각의 객체 모델은 관련성이 없는데다가 상당 부분이 호환되지 않는다."
+}, {
+    "id": "#Cust6",
+    "date": "2014-12-22",
+    "name": "Kim",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust7",
+    "date": "2014-12-21",
+    "name": "Jennifer",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust8",
+    "date": "2014-12-20",
+    "name": "Kim",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust9",
+    "date": "2014-12-19",
+    "name": "Kim",
+    "msg": "라이브스크립트의 이름이 자바스크립트로 변경된 것은 대략 넷스케이프가 자사의 넷스케이프 네비게이터 웹 브라우저에 자바 기술에 대한 지원을 포함하기 시작할 즈음이다. 자바스크립트는 1995년 12월 출시된 넷스케이프 2.0B3에서부터 공개, 채택되었다. 자바스크립트라는 이름은 상당한 혼란을 가져왔다. 이것은 자바와 자바스크립트 간에는 구문이 유사하다는 점(양쪽 모두 C에 바탕을 두었기 때문에) 외에는 실제 관련성이 없었기 때문이다. 두 언어는 의미론적으로 매우 다르고, 특히 각각의 객체 모델은 관련성이 없는데다가 상당 부분이 호환되지 않는다."
+}, {
+    "id": "#Cust10",
+    "date": "2014-12-18",
+    "name": "Anna",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust11",
+    "date": "2014-12-17",
+    "name": "Anna",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust12",
+    "date": "2014-12-16",
+    "name": "Emma",
+    "msg": "라이브스크립트의 이름이 자바스크립트로 변경된 것은 대략 넷스케이프가 자사의 넷스케이프 네비게이터 웹 브라우저에 자바 기술에 대한 지원을 포함하기 시작할 즈음이다. 자바스크립트는 1995년 12월 출시된 넷스케이프 2.0B3에서부터 공개, 채택되었다. 자바스크립트라는 이름은 상당한 혼란을 가져왔다. 이것은 자바와 자바스크립트 간에는 구문이 유사하다는 점(양쪽 모두 C에 바탕을 두었기 때문에) 외에는 실제 관련성이 없었기 때문이다. 두 언어는 의미론적으로 매우 다르고, 특히 각각의 객체 모델은 관련성이 없는데다가 상당 부분이 호환되지 않는다."
+}, {
+    "id": "#Cust13",
+    "date": "2014-12-15",
+    "name": "Steve",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust14",
+    "date": "2014-12-14",
+    "name": "Lawrence",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust15",
+    "date": "2014-12-13",
+    "name": "Anna",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust16",
+    "date": "2014-12-12",
+    "name": "Lawrence",
+    "msg": "라이브스크립트의 이름이 자바스크립트로 변경된 것은 대략 넷스케이프가 자사의 넷스케이프 네비게이터 웹 브라우저에 자바 기술에 대한 지원을 포함하기 시작할 즈음이다. 자바스크립트는 1995년 12월 출시된 넷스케이프 2.0B3에서부터 공개, 채택되었다. 자바스크립트라는 이름은 상당한 혼란을 가져왔다. 이것은 자바와 자바스크립트 간에는 구문이 유사하다는 점(양쪽 모두 C에 바탕을 두었기 때문에) 외에는 실제 관련성이 없었기 때문이다. 두 언어는 의미론적으로 매우 다르고, 특히 각각의 객체 모델은 관련성이 없는데다가 상당 부분이 호환되지 않는다."
+}, {
+    "id": "#Cust17",
+    "date": "2014-12-11",
+    "name": "Lawrence",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust18",
+    "date": "2014-12-10",
+    "name": "Anna",
+    "msg": "라이브스크립트의 이름이 자바스크립트로 변경된 것은 대략 넷스케이프가 자사의 넷스케이프 네비게이터 웹 브라우저에 자바 기술에 대한 지원을 포함하기 시작할 즈음이다. 자바스크립트는 1995년 12월 출시된 넷스케이프 2.0B3에서부터 공개, 채택되었다. 자바스크립트라는 이름은 상당한 혼란을 가져왔다. 이것은 자바와 자바스크립트 간에는 구문이 유사하다는 점(양쪽 모두 C에 바탕을 두었기 때문에) 외에는 실제 관련성이 없었기 때문이다. 두 언어는 의미론적으로 매우 다르고, 특히 각각의 객체 모델은 관련성이 없는데다가 상당 부분이 호환되지 않는다."
+}, {
+    "id": "#Cust19",
+    "date": "2014-12-09",
+    "name": "Steve",
+    "msg": "라이브스크립트의 이름이 자바스크립트로 변경된 것은 대략 넷스케이프가 자사의 넷스케이프 네비게이터 웹 브라우저에 자바 기술에 대한 지원을 포함하기 시작할 즈음이다. 자바스크립트는 1995년 12월 출시된 넷스케이프 2.0B3에서부터 공개, 채택되었다. 자바스크립트라는 이름은 상당한 혼란을 가져왔다. 이것은 자바와 자바스크립트 간에는 구문이 유사하다는 점(양쪽 모두 C에 바탕을 두었기 때문에) 외에는 실제 관련성이 없었기 때문이다. 두 언어는 의미론적으로 매우 다르고, 특히 각각의 객체 모델은 관련성이 없는데다가 상당 부분이 호환되지 않는다."
+}, {
+    "id": "#Cust20",
+    "date": "2014-12-08",
+    "name": "Anna",
+    "msg": "This mix of features makes it a multi-paradigm language, supporting object-oriented, imperative, and functional programming styles."
+}, {
+    "id": "#Cust21",
+    "date": "2014-12-07",
+    "name": "Kim",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust22",
+    "date": "2014-12-06",
+    "name": "Steve",
+    "msg": "라이브스크립트의 이름이 자바스크립트로 변경된 것은 대략 넷스케이프가 자사의 넷스케이프 네비게이터 웹 브라우저에 자바 기술에 대한 지원을 포함하기 시작할 즈음이다. 자바스크립트는 1995년 12월 출시된 넷스케이프 2.0B3에서부터 공개, 채택되었다. 자바스크립트라는 이름은 상당한 혼란을 가져왔다. 이것은 자바와 자바스크립트 간에는 구문이 유사하다는 점(양쪽 모두 C에 바탕을 두었기 때문에) 외에는 실제 관련성이 없었기 때문이다. 두 언어는 의미론적으로 매우 다르고, 특히 각각의 객체 모델은 관련성이 없는데다가 상당 부분이 호환되지 않는다."
+}, {
+    "id": "#Cust23",
+    "date": "2014-12-05",
+    "name": "Kim",
+    "msg": "라이브스크립트의 이름이 자바스크립트로 변경된 것은 대략 넷스케이프가 자사의 넷스케이프 네비게이터 웹 브라우저에 자바 기술에 대한 지원을 포함하기 시작할 즈음이다. 자바스크립트는 1995년 12월 출시된 넷스케이프 2.0B3에서부터 공개, 채택되었다. 자바스크립트라는 이름은 상당한 혼란을 가져왔다. 이것은 자바와 자바스크립트 간에는 구문이 유사하다는 점(양쪽 모두 C에 바탕을 두었기 때문에) 외에는 실제 관련성이 없었기 때문이다. 두 언어는 의미론적으로 매우 다르고, 특히 각각의 객체 모델은 관련성이 없는데다가 상당 부분이 호환되지 않는다."
+}, {
+    "id": "#Cust24",
+    "date": "2014-12-04",
+    "name": "Jennifer",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust25",
+    "date": "2014-12-03",
+    "name": "Anna",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust26",
+    "date": "2014-12-02",
+    "name": "Lawrence",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust27",
+    "date": "2014-12-01",
+    "name": "Lawrence",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust28",
+    "date": "2014-11-30",
+    "name": "Anna",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust29",
+    "date": "2014-11-29",
+    "name": "Kim",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust30",
+    "date": "2014-11-28",
+    "name": "Kim",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust31",
+    "date": "2014-11-27",
+    "name": "Anna",
+    "msg": "This mix of features makes it a multi-paradigm language, supporting object-oriented, imperative, and functional programming styles."
+}, {
+    "id": "#Cust32",
+    "date": "2014-11-26",
+    "name": "Anna",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust33",
+    "date": "2014-11-25",
+    "name": "Lawrence",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust34",
+    "date": "2014-11-24",
+    "name": "Kim",
+    "msg": "This mix of features makes it a multi-paradigm language, supporting object-oriented, imperative, and functional programming styles."
+}, {
+    "id": "#Cust35",
+    "date": "2014-11-23",
+    "name": "Kim",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust36",
+    "date": "2014-11-22",
+    "name": "Lawrence",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust37",
+    "date": "2014-11-21",
+    "name": "Emma",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust38",
+    "date": "2014-11-20",
+    "name": "Kim",
+    "msg": "This mix of features makes it a multi-paradigm language, supporting object-oriented, imperative, and functional programming styles."
+}, {
+    "id": "#Cust39",
+    "date": "2014-11-19",
+    "name": "Lawrence",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust40",
+    "date": "2014-11-18",
+    "name": "Emma",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust41",
+    "date": "2014-11-17",
+    "name": "Steve",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust42",
+    "date": "2014-11-16",
+    "name": "Anna",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust43",
+    "date": "2014-11-15",
+    "name": "Jennifer",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust44",
+    "date": "2014-11-14",
+    "name": "Emma",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust45",
+    "date": "2014-11-13",
+    "name": "Jennifer",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust46",
+    "date": "2014-11-12",
+    "name": "Jennifer",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust47",
+    "date": "2014-11-11",
+    "name": "Anna",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust48",
+    "date": "2014-11-10",
+    "name": "Lawrence",
+    "msg": "라이브스크립트의 이름이 자바스크립트로 변경된 것은 대략 넷스케이프가 자사의 넷스케이프 네비게이터 웹 브라우저에 자바 기술에 대한 지원을 포함하기 시작할 즈음이다. 자바스크립트는 1995년 12월 출시된 넷스케이프 2.0B3에서부터 공개, 채택되었다. 자바스크립트라는 이름은 상당한 혼란을 가져왔다. 이것은 자바와 자바스크립트 간에는 구문이 유사하다는 점(양쪽 모두 C에 바탕을 두었기 때문에) 외에는 실제 관련성이 없었기 때문이다. 두 언어는 의미론적으로 매우 다르고, 특히 각각의 객체 모델은 관련성이 없는데다가 상당 부분이 호환되지 않는다."
+}, {
+    "id": "#Cust49",
+    "date": "2014-11-09",
+    "name": "Emma",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust50",
+    "date": "2014-11-08",
+    "name": "Lawrence",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust51",
+    "date": "2014-11-07",
+    "name": "Kim",
+    "msg": "This mix of features makes it a multi-paradigm language, supporting object-oriented, imperative, and functional programming styles."
+}, {
+    "id": "#Cust52",
+    "date": "2014-11-06",
+    "name": "Lawrence",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust53",
+    "date": "2014-11-05",
+    "name": "Kim",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust54",
+    "date": "2014-11-04",
+    "name": "Steve",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust55",
+    "date": "2014-11-03",
+    "name": "Steve",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust56",
+    "date": "2014-11-02",
+    "name": "Emma",
+    "msg": "This mix of features makes it a multi-paradigm language, supporting object-oriented, imperative, and functional programming styles."
+}, {
+    "id": "#Cust57",
+    "date": "2014-11-01",
+    "name": "Anna",
+    "msg": "This mix of features makes it a multi-paradigm language, supporting object-oriented, imperative, and functional programming styles."
+}, {
+    "id": "#Cust58",
+    "date": "2014-10-31",
+    "name": "Kim",
+    "msg": "This mix of features makes it a multi-paradigm language, supporting object-oriented, imperative, and functional programming styles."
+}, {
+    "id": "#Cust59",
+    "date": "2014-10-30",
+    "name": "Jennifer",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust60",
+    "date": "2014-10-29",
+    "name": "Jennifer",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust61",
+    "date": "2014-10-28",
+    "name": "Jennifer",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust62",
+    "date": "2014-10-27",
+    "name": "Anna",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust63",
+    "date": "2014-10-26",
+    "name": "Steve",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust64",
+    "date": "2014-10-25",
+    "name": "Jennifer",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust65",
+    "date": "2014-10-24",
+    "name": "Anna",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust66",
+    "date": "2014-10-23",
+    "name": "Jennifer",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust67",
+    "date": "2014-10-22",
+    "name": "Steve",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust68",
+    "date": "2014-10-21",
+    "name": "Lawrence",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust69",
+    "date": "2014-10-20",
+    "name": "Anna",
+    "msg": "라이브스크립트의 이름이 자바스크립트로 변경된 것은 대략 넷스케이프가 자사의 넷스케이프 네비게이터 웹 브라우저에 자바 기술에 대한 지원을 포함하기 시작할 즈음이다. 자바스크립트는 1995년 12월 출시된 넷스케이프 2.0B3에서부터 공개, 채택되었다. 자바스크립트라는 이름은 상당한 혼란을 가져왔다. 이것은 자바와 자바스크립트 간에는 구문이 유사하다는 점(양쪽 모두 C에 바탕을 두었기 때문에) 외에는 실제 관련성이 없었기 때문이다. 두 언어는 의미론적으로 매우 다르고, 특히 각각의 객체 모델은 관련성이 없는데다가 상당 부분이 호환되지 않는다."
+}, {
+    "id": "#Cust70",
+    "date": "2014-10-19",
+    "name": "Emma",
+    "msg": "라이브스크립트의 이름이 자바스크립트로 변경된 것은 대략 넷스케이프가 자사의 넷스케이프 네비게이터 웹 브라우저에 자바 기술에 대한 지원을 포함하기 시작할 즈음이다. 자바스크립트는 1995년 12월 출시된 넷스케이프 2.0B3에서부터 공개, 채택되었다. 자바스크립트라는 이름은 상당한 혼란을 가져왔다. 이것은 자바와 자바스크립트 간에는 구문이 유사하다는 점(양쪽 모두 C에 바탕을 두었기 때문에) 외에는 실제 관련성이 없었기 때문이다. 두 언어는 의미론적으로 매우 다르고, 특히 각각의 객체 모델은 관련성이 없는데다가 상당 부분이 호환되지 않는다."
+}, {
+    "id": "#Cust71",
+    "date": "2014-10-18",
+    "name": "Emma",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust72",
+    "date": "2014-10-17",
+    "name": "Anna",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust73",
+    "date": "2014-10-16",
+    "name": "Kim",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust74",
+    "date": "2014-10-15",
+    "name": "Kim",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust75",
+    "date": "2014-10-14",
+    "name": "Lawrence",
+    "msg": "라이브스크립트의 이름이 자바스크립트로 변경된 것은 대략 넷스케이프가 자사의 넷스케이프 네비게이터 웹 브라우저에 자바 기술에 대한 지원을 포함하기 시작할 즈음이다. 자바스크립트는 1995년 12월 출시된 넷스케이프 2.0B3에서부터 공개, 채택되었다. 자바스크립트라는 이름은 상당한 혼란을 가져왔다. 이것은 자바와 자바스크립트 간에는 구문이 유사하다는 점(양쪽 모두 C에 바탕을 두었기 때문에) 외에는 실제 관련성이 없었기 때문이다. 두 언어는 의미론적으로 매우 다르고, 특히 각각의 객체 모델은 관련성이 없는데다가 상당 부분이 호환되지 않는다."
+}, {
+    "id": "#Cust76",
+    "date": "2014-10-13",
+    "name": "Steve",
+    "msg": "This mix of features makes it a multi-paradigm language, supporting object-oriented, imperative, and functional programming styles."
+}, {
+    "id": "#Cust77",
+    "date": "2014-10-12",
+    "name": "Kim",
+    "msg": "라이브스크립트의 이름이 자바스크립트로 변경된 것은 대략 넷스케이프가 자사의 넷스케이프 네비게이터 웹 브라우저에 자바 기술에 대한 지원을 포함하기 시작할 즈음이다. 자바스크립트는 1995년 12월 출시된 넷스케이프 2.0B3에서부터 공개, 채택되었다. 자바스크립트라는 이름은 상당한 혼란을 가져왔다. 이것은 자바와 자바스크립트 간에는 구문이 유사하다는 점(양쪽 모두 C에 바탕을 두었기 때문에) 외에는 실제 관련성이 없었기 때문이다. 두 언어는 의미론적으로 매우 다르고, 특히 각각의 객체 모델은 관련성이 없는데다가 상당 부분이 호환되지 않는다."
+}, {
+    "id": "#Cust78",
+    "date": "2014-10-11",
+    "name": "Emma",
+    "msg": "This mix of features makes it a multi-paradigm language, supporting object-oriented, imperative, and functional programming styles."
+}, {
+    "id": "#Cust79",
+    "date": "2014-10-10",
+    "name": "Steve",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust80",
+    "date": "2014-10-09",
+    "name": "Emma",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust81",
+    "date": "2014-10-08",
+    "name": "Jennifer",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust82",
+    "date": "2014-10-07",
+    "name": "Jennifer",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust83",
+    "date": "2014-10-06",
+    "name": "Steve",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust84",
+    "date": "2014-10-05",
+    "name": "Steve",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust85",
+    "date": "2014-10-04",
+    "name": "Kim",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust86",
+    "date": "2014-10-03",
+    "name": "Lawrence",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust87",
+    "date": "2014-10-02",
+    "name": "Anna",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust88",
+    "date": "2014-10-01",
+    "name": "Jennifer",
+    "msg": "It is also used in server-side network programming with frameworks such as Node.js, game development and the creation of desktop and mobile applications."
+}, {
+    "id": "#Cust89",
+    "date": "2014-09-30",
+    "name": "Anna",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust90",
+    "date": "2014-09-29",
+    "name": "Steve",
+    "msg": "자바스크립트(JavaScript)는 객체 기반의 스크립트 프로그래밍 언어이다. 이 언어는 웹브라우저 내에서 주로 사용하며, 다른 응용프로그램의 내장 객체에도 접근할 수 있는 기능을 가지고 있다. "
+}, {
+    "id": "#Cust91",
+    "date": "2014-09-28",
+    "name": "Anna",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust92",
+    "date": "2014-09-27",
+    "name": "Jennifer",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust93",
+    "date": "2014-09-26",
+    "name": "Steve",
+    "msg": "This mix of features makes it a multi-paradigm language, supporting object-oriented, imperative, and functional programming styles."
+}, {
+    "id": "#Cust94",
+    "date": "2014-09-25",
+    "name": "Anna",
+    "msg": "This mix of features makes it a multi-paradigm language, supporting object-oriented, imperative, and functional programming styles."
+}, {
+    "id": "#Cust95",
+    "date": "2014-09-24",
+    "name": "Jennifer",
+    "msg": "This mix of features makes it a multi-paradigm language, supporting object-oriented, imperative, and functional programming styles."
+}, {
+    "id": "#Cust96",
+    "date": "2014-09-23",
+    "name": "Steve",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust97",
+    "date": "2014-09-22",
+    "name": "Jennifer",
+    "msg": "JavaScript is a dynamic computer programming language."
+}, {
+    "id": "#Cust98",
+    "date": "2014-09-21",
+    "name": "Kim",
+    "msg": "Despite some naming, syntactic, and standard library similarities, JavaScript and Java are otherwise unrelated and have very different semantics. The syntax of JavaScript is actually derived from C, while the semantics and design are influenced by Self and Scheme programming languages."
+}, {
+    "id": "#Cust99",
+    "date": "2014-09-20",
+    "name": "Lawrence",
+    "msg": "JavaScript is a dynamic computer programming language."
+}]

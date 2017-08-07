@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../style.css" type="text/css" media="screen">
+<meta content="ComboBoxRenderer,ColumnLayout.ComboBoxRenderer" name="keywords">
+<title>ColumnLayout.ComboBoxRenderer</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript">
+<!--
+				function loadClassListFrame(classListFrameURL) {
+				return;
+				}
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">AUIGrid 2.11 Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../all-classes.html')" href="../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../all-classes.html')" href="../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a href="../index.html?ColumnLayout/ComboBoxRenderer.html&amp;ColumnLayout/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="AUISoft Logo" title="AUISoft Logo" class="logoImage" src="../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Class&nbsp;ComboBoxRenderer</td><td align="right" id="subNav" class="titleTableSubNav"><a href="#styleSummary">Styles</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<div class="classDescContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable"></table>
+<span class="className">ComboBoxRenderer</span>
+<p></p>
+<p>콤보박스 렌더러는 특정 칼럼의 셀에 여러 항목 중 하나를 선택할 수 있도록 출력하는 칼럼 렌더러입니다.</p>
+<p>콤보박스와 드랍다운리스트의 차이점은 드랍다운리스트는 출력된 리스트 중 하나를 선택하는 반면 콤보박스는 출력된 리스트 중 하나를 선택하거나 직접 사용자가 다른 값을 입력 할 수 있습니다.</p>
+<p>콤보박스 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 editRenderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 editRenderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+<p></p>
+<a name="mxmlSyntaxSummary"></a><span class="classHeaderTableLabel">아래는 설정 예제 입니다.</span>
+<div class="mxmlSyntax" id="mxmlSyntax"><pre>
+var columnLayout = [ {
+     dataField : "name",
+     headerText : "Name",
+     width : 140
+}, {
+     dataField : "product",
+     headerText : "Product",
+     width : 120,
+     editRenderer : { // 편집 모드 진입 시 콤보박스리스트 출력하고자 할 때
+            type : "ComboBoxRenderer",
+            list : ["IPhone 5S", "Galaxy S5", "IPad Air", "Galaxy Note3", "LG G3", "Nexus 10"],
+            historyMode : true // 히스토리 모드 사용
+      }
+}];
+</pre>
+</div>
+<br>
+</div>
+<div class="summarySection">
+<table id="summaryTableStyle" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>NAME</th><th>Description</th>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">autoCompleteMode</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Boolean<br>
+<p>콤보 박스에서 사용자가 입력한 내용을 기반으로 필터링하여 자동완성 형으로 리스트를 출력시킬지 여부를 지정합니다.</p>
+ 기본값(default) : <code>false</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">autoEasyMode</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Boolean<br>
+<p>콤보 박스에서 자동완성 사용하는 경우(autoCompleteMode=true) 사용자가 입력한 내용을 기반으로 나온 리스트 중 기본 1개를 자동 선택하도록 할지 여부를 지정합니다.</p>
+<p>autoEasyMode=true 설정하면 아래 화살표 없이 바로 엔터키, 탭키 등으로 완료를 해도 리스트 중 1개를 선택합니다.</p>
+ 기본값(default) : <code>false</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">descendantDefaultValues </span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Array<br>
+<p>콤보박스리스트를 단계별로 출력하고자 할 때 부모(조상)에 해당되는 콤보박스리스트가 변경되면 기본값으로 바뀔 값들을 지정합니다.</p>
+<p>이 속성을 지정하면 부모(조상)에 해당되는 콤보박스리스트 값이 변경되면 지정된 기본값으로 변경됩니다.</p>
+<P>지정하지 않을 경우 부모(조상)가 변경되도 해당 값은 그대로 유지됩니다.</P>
+ 기본값(default) : <code>null</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">descendants </span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Array<br>
+<p>콤보박스리스트를 단계별로 출력하고자 할 때 영향을 받을 자손 dataField 들을 지정합니다.</p>
+<p>예를 들어 "group" 이라는 dataField 로 설정한 칼럼이 콤보박스리스트로 변경이 되면 "subGroup", "subGroup2" 가 영향을 받는 다면 이 값을 [  "subGroup", "subGroup2" ] 로 
+설정하십시오.</p>
+ 기본값(default) : <code>null</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">historyMode</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Boolean<br>
+<p>현재 칼럼의 모든 값을 콤보 박스 리스트로 추가하여 표시할지 여부를 지정합니다.</p>
+<p>예를 들어 현재 칼럼에 출력되는 값이 "A", "B", "C" 인 경우 4번째 행의 같은 칼럼에 "D" 를 사용자가 입력하면, 콤보박스 리스트에는 "D" 가 추가되어 ["A", "B", "C", "D"] 가 리스트로 출력됩니다.</p>
+<p>historyMode 는 list 속성(또는 listFunction) 과 함께 사용이 가능합니다. 즉, 기본적으로 list 에서 정의한 리스트에 사용자가 입력한 값이 추가로 리스트로 출력됩니다.</p>
+<p>단, list 속성을 정의하고, list 의 값이 key-value 를 갖는 Object 요소 배열인 경우에는 historyMode 가 무시됩니다.(keyField, valueField 사용할 때 무시됨)</p>
+ 기본값(default) : <code>false</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">keyField</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>String<br>
+ <p>list 속성의 값이 key-value 를 갖는 Object 요소 배열인 경우 key 에 해당되는 필드명을 지정합니다.</p>
+ <p>실제 적용되는 데이터 값의 필드명입니다.</p>
+  기본값(default) : <code>null</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">labelFunction</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Function<br>
+ <p>콤보박스 리스트에 출력될 리스트의 텍스트를 변경할 수 있는 함수입니다.</p>
+<p>기본적으로 list 속성에 정의된 항목이 콤보박스 리스트에 출력되나 이 함수로 출력되는 항목을 바꿀 수 있습니다.</p>
+<p>예를 들어 실제 데이터는 1, 2 와 같이 int 이나 사용자에게 보여 줄때는 "남자", "여자" 로 바꿔 표현해 줘야 할 때가 있습니다.</p>
+<p>labelFunction 은 함수를 지정해야 하며 함수 형태는 다음과 같습니다. </p>
+<ul>
+<li>rowIndex : 행 인덱스</li>
+<li>columnIndex : 칼럼 인덱스</li>
+<li>value : 원래 데이터의 해당 셀 값(value)</li>
+<li>item : 해당 행에 출력되고 있는 행 아이템 객체 (Object)</li>
+</ul>
+<pre> 
+labelFunction : function(rowIndex, columnIndex, value, item) {
+      var valueNumber = Number(value);
+      // 1인 경우 남자, 2인 경우 여자
+      if(valueNumber == 1)
+           return "남";
+      else 
+           return "여";
+} 
+</pre>
+<p> 이 함수의 반환값이 곧 해당 항목의 출력 텍스트가 됩니다.</p>
+<p> 주의 : listTemplateFunction 과 함께 사용할 수 없습니다. listTemplateFunction 이 우선 순위가 높아 labelFunction 은 무시됩니다.</p>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">list </span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Array<br>
+<p>콤보박스 리스트에 출력될 리스트 항목을 지정합니다.</p>
+<p>리스트는 배열로 지정합니다. 여기서 지정된 리스트 중 하나를 사용자는 선택할 수 있습니다.</p>
+<p>콤보박스 리스트를 사용하기 위해서 반드시 선언되어야 할 속성이지만 listFunction 으로 대체 될 수 있습니다.</p>
+<p>만약 listFunction 을 설정한다면 이 속성은 무시됩니다.</p>
+ 기본값(default) : <code>null</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">listFunction </span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Function<br>
+ <p>콤보박스 리스트에 출력될 리스트 항목을 동적으로 변경할 수 있는 함수입니다.</p>
+<p>기본적으로 list 속성에 정의된 항목이 콤보박스 리스트에 출력되나 이 함수의 반환값으로 출력되는 항목을 바꿀 수 있습니다.</p>
+<ul>
+<li>rowIndex : 행 인덱스</li>
+<li>columnIndex : 칼럼 인덱스</li>
+<li>item : 해당 행에 출력되고 있는 행 아이템 객체 (Object)</li>
+<li>dataField : 해당 셀에 출력되고 있는 데이터필드명</li>
+</ul>
+<pre> 
+listFunction : function(rowIndex, columnIndex, item, dataField) {
+      if(item.group == 1) // 상위 단계(부모)의 값이 1이라면....
+           return myGroupLevel1; // myGroupLevel1 은 미리 정의된 배열임
+      else if(item.group == 2)  // 상위 단계(부모)의 값이 2라면....
+           return myGroupLevel2; // myGroupLevel1 은 미리 정의된 배열임
+      return ["1", "2", "3"]; // 기본 리스트
+} 
+</pre>
+<p> 이 함수의 반환값이 곧 해당 항목의 출력 리스트가 됩니다.(반드시 Array를 반환하십시오.)</p>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">listTemplateFunction</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Function<br>
+<p>콤보박스 리스트에 출력될 리스트의 텍스트를 사용자 정의 할 수 있는 함수입니다.</p>
+<p>기본적으로 list 속성에 정의된 항목이 콤보박스 리스트에 출력되나 이 함수로 출력되는 항목의 HTML 템플릿을 바꿀 수 있습니다.</p>
+<p>리스트의 출력 모습을 복잡하거나, 다양한 정보를 출력시키고자 할 때 사용하십시오.</p>
+<p>listTemplateFunction 은 함수를 지정해야 하며 함수 형태는 다음과 같습니다. </p>
+<ul>
+<li>rowIndex : 행 인덱스</li>
+<li>columnIndex : 칼럼 인덱스</li>
+<li>value : 원래 데이터의 해당 셀 값(value)</li>
+<li>item : 해당 행에 출력되고 있는 행 아이템 객체 (Object)</li>
+<li>dataField : 해당 칼럼이 출력하고 있는 행 아이템의 필드명(String)</li>
+<li>listItem : list 속성에서 정의한 배열에서 개별 아이템(Object Or String)</li>
+</ul>
+<xmp> 
+listTemplateFunction : function(rowIndex, columnIndex, value, item, dataField, listItem) {
+      return '<img src="./assets/' + listItem.img + '" height="20" width="20"/><span>' + value + '</span>';
+} 
+</xmp>
+<p> 이 함수의 반환값이 곧 해당 개별 항목의 출력 HTML 이 됩니다.(innerHTML 처리됨)</p>
+<p> 주의 : labelFunction 과 함께 사용할 수 없습니다. listTemplateFunction 이 우선 순위가 높아 labelFunction 은 무시됩니다.</p>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">maxlength</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Number<br>
+<p>사용자가 입력 할 수 있는 글자수를 제한하도록 지시합니다.</p>
+ 기본값(default) : <code>10000</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">showEditorBtnOver</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Boolean<br>
+<p> 마우스 오버 시 해당 셀에 에디터 버턴을 출력시킬지 여부를 지정합니다.</p>
+<p> 에디터 버턴을 클릭하면 직접으로 수정 모드로 진입하는 역할을 합니다.</p>
+ 기본값(default) : <code>false</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">validator</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Function<br>
+<p>사용자가 입력을 완료하고 실제로 적용하기 전에 유효성 검사를 할 수 있는 함수입니다.</p>
+<p>파라메터 설명</p>
+ <ul>
+ <li>oldValue : (String) 수정 전 값</li>
+ <li>newValue : (String) 사용자가 수정 한 값. 즉, 이 값이 유효한지 검사해야 함</li>
+ <li>item : (Object) 해당 행에 출력되고 있는 행 아이템 객체 </li>
+ <li>dataField : (String) 해당 칼럼의 데이터필드명</li>
+  <li>fromClipboard : (Boolean) 클립보드(붙여넣기)로 셀 수정한지 여부</li>
+ </ul>
+ <p>함수의 리턴값은 Object 이며 해당 Object 는 validate 와 message 를 작성해 주십시오.</p>
+ <p>예를 들면 사용자가 입력한 newValue 가 유효하지 않다면 다음과 같이 return 값을 설정하십시오.</p>
+ <pre>return  { "validate" : false, "message"  : "10,000 보다 큰 수를 입력하세요." }; </pre>
+ <p>validate 가 false 인 경우 message 로 설정한 메세지가 사용자에게 출력됩니다.</p>
+ <p>함수 전체 작성 예는 다음과 같습니다.</p>
+ <pre>
+ validator : function(oldValue, newValue, item, dataField, fromClipboard) {
+       var isValid = false;
+       var numVal = Number(newValue);
+       if(!isNaN(numVal) && numVal > 10000) {
+              isValid = true;
+        }
+        return { "validate" : isValid, "message"  : "10,000 보다 큰 수를 입력하세요." };
+ }
+ </pre>
+ <p>참고 : 클립보드(붙여넣기)인 경우, 유효성 검사 실패 할 때 메세지 출력은 생략됩니다.</p>
+  기본값(default) : <code>null</code>.</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">valueField </span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>String<br>
+ <p>list 속성의 값이 key-value 를 갖는 Object 요소 배열인 경우 value 에 해당되는 필드명을 지정합니다.</p>
+ <p>콤보박스리스트에 출력되는 데이터의 필드명입니다.</p>
+  기본값(default) : <code>null</code>.</td>
+</tr>
+</table>
+</div>
+<div class="MainContent">
+<p></p>
+<center class="copyright">Copyright(c) 2014-2017 AUISoft. All Right Reserved</center>
+</div>
+</body>
+</html>
+<!--Copyright(c) 2014-2017 AUISoft. All Right Reserved-->

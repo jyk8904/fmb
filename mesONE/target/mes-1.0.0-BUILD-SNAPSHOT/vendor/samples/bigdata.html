@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+.right_style {
+	text-align:right;
+}
+</style>
+<script type="text/javascript">
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid();
+};
+
+// 칼럼 레이아웃
+var columnLayout = [ {
+		dataField : "id",
+		headerText : "ID",
+		width:80
+	}, {
+		dataField : "name",
+		headerText : "Name",
+		filter : {
+			showIcon : true
+		},
+		width:100
+	}, {
+		dataField : "country",
+		headerText : "Country",
+		filter : {
+			showIcon : true
+		},
+		width:120
+	}, {
+		dataField : "product",
+		headerText : "Product",
+		filter : {
+			showIcon : true
+		},
+		width:120
+	}, {
+		dataField : "color",
+		headerText : "Color",
+		width:120,
+		renderer : {
+			type : "IconRenderer",
+			iconPosition:"aisle",
+			iconWidth : 20, // icon 가로 사이즈, 지정하지 않으면 24로 기본값 적용됨
+			iconHeight : 20,
+			iconTableRef :  { // icon 값 참조할 테이블 레퍼런스
+				"Blue" : "./assets/blue_circle.png",
+				"Gray" : "./assets/gray_circle.png",
+				"Green" : "./assets/green_circle.png",
+				"Orange" : "./assets/orange2_circle.png",
+				"Pink" : "./assets/pink_circle.png",
+				"Violet" : "./assets/violet_circle.png",
+				"Yellow" : "./assets/yellow_circle.png",
+				"Red" : "./assets/orange_circle.png",
+				"default" : "./assets/glider.png" //default
+			}
+		}
+	}, {
+		dataField : "price",
+		headerText : "Price",
+		style : "right_style",
+		dataType : "numeric",
+		filter : {
+			showIcon : true,
+			type: "numeric"
+		}
+	}, {
+		dataField : "quantity",
+		headerText : "Quantity",
+		width:100
+	}
+];
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid() {
+	
+	// 그리드 속성 설정
+	var gridPros = {
+		
+		showRowCheckColumn: false,
+		
+		enableFilter : true,
+		
+		// row 를 구별짓는 유니크한 값을 갖는 필드 설정 ( 대용량인 경우 반드시 설정해야 함 )
+		rowIdField : "id"
+	};
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, gridPros);
+
+	// 최초 10만 행 데이터 생성하여 그리드에 삽입.
+	createRandomData(100000);
+}
+
+
+var countries = ["Korea", "USA", "UK", "Japan", "China", "France", "Italy", "Singapore", "Ireland", "Taiwan"];
+var products = ["IPhone 5S", "Galaxy S5", "IPad Air", "Galaxy Note3", "LG G3", "Nexus 10"];
+var quantities = [1, 3, 9, 7, 10, 0, 15, 20, 12, 8];
+var colors = ["Blue", "Gray", "Green", "Orange", "Pink", "Violet", "Yellow", "Red"];
+var names = ["Steve", "Anna", "Lawrence", "Kim", "Emma", "Jennifer", "Han"];
+
+// count 수만큼 랜덤 데이터 생성
+function createRandomData(count) {
+	var now = new Date();
+	var data = [];
+	var country, product, quantity, color, name, date;
+	
+	for (var i = 0; i < count; i++) {
+		country = countries[Math.floor(Math.random() * countries.length)],
+		product = products[Math.floor(Math.random() * products.length)],
+		quantity = quantities[Math.floor(Math.random() * quantities.length)],
+		color = colors[Math.floor(Math.random() * colors.length)],
+		name = names[Math.floor(Math.random() * names.length)],
+		price = Math.floor(Math.random() * 1000000);
+
+		data.push({
+			id: i + 1,
+			name : name, 
+			country : country,
+			product : product,
+			quantity : quantity,
+			color : color,
+			price : price
+		});
+		
+		// 일부러 Null 값 삽입하기 위함.
+		if(Math.random() < 0.5) {
+			delete data[data.length-1]["country"];
+		}
+	}
+   
+	// AUIGrid 에 데이터 삽입합니다.
+	AUIGrid.setGridData("#grid_wrap", data);
+
+	var endDate = new Date();
+    var dataTime = endDate.getTime() - now.getTime();
+    
+	document.getElementById("ellapse").innerHTML = count + "개 출력 소요 시간 : " + dataTime + " ms";
+};
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>많은 양의 데이터를 출력한 데모입니다.</p>
+		<p>순수 AUIGrid가 출력하는 퍼포먼스만 보기 위해 DB Select, 서버 비지니스로직 처리, 전송 등의 시간은 무시한 데모입니다.</p>
+		<p>따라서 로컬(Local) 에서 자바스크립트로 랜덤 데이터를 생성하여 그리드에 적용시킵니다.</p>
+		<p>이와 같이 단순 렌더링은 원활하게 가능하나 필터링, 정렬 등과 같이 데이터를 전체 검색(Full Scan)하고 조작해야 하는 기능<p>
+		<p>사용 시 성능이 낮은 PC나 버전이 낮은 IE 브라우저에서 한계가 있습니다.(스크립트 중지 경고가 발생할 수 있음.)</p>
+		<span class="btn" onclick="createRandomData(300000)">30만 데이터 생성</span>
+		<span class="btn" onclick="createRandomData(500000)">50만 데이터 생성</span>
+		<span class="btn" onclick="createRandomData(1000000)">100만 데이터 생성</span>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:480px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

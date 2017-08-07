@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../style.css" type="text/css" media="screen">
+<title>ColumnLayout Summary</title>
+</head>
+<body>
+<script type="text/javascript" language="javascript">
+<!--
+				function loadClassListFrame(classListFrameURL) {
+				return;
+				}
+			--></script>
+<table style="display:none" id="titleTable" cellspacing="0" cellpadding="0" class="titleTable">
+<tr>
+<td align="left" class="titleTableTitle">AUIGrid 2.11 Documentation</td><td align="right" class="titleTableTopNav"><a onclick="loadClassListFrame('../all-classes.html')" href="../package-summary.html">All&nbsp;Packages</a>&nbsp;|&nbsp;<a onclick="loadClassListFrame('../all-classes.html')" href="../class-summary.html">All&nbsp;Classes</a>&nbsp;|&nbsp;<a href="../index.html?ColumnLayout/package-detail.html&amp;ColumnLayout/class-list.html" id="framesLink1">Frames</a><a onclick="parent.location=document.location" href="" style="display:none" id="noFramesLink1">No&nbsp;Frames</a></td><td rowspan="3" align="right" class="titleTableLogo"><img alt="AUISoft Logo" title="AUISoft Logo" class="logoImage" src="../images/logo.jpg"></td>
+</tr>
+<tr class="titleTableRow2">
+<td align="left" id="subTitle" class="titleTableSubTitle">Package&nbsp;ColumnLayout</td><td align="right" id="subNav" class="titleTableSubNav"><a href="package-detail.html#classSummary">Classes</a></td>
+</tr>
+<tr class="titleTableRow3">
+<td colspan="2">&nbsp;</td>
+</tr>
+</table>
+<div class="MainContent">
+<p><div class="classDescContent">
+<!-- <a href="../package-summary.html" >
+	<span class="btn">메인으로 가기</span>
+</a>-->
+<span class="className">칼럼 레이아웃 설정에 대하여</span>
+				
+<p>칼럼 레이아웃은 반드시 배열로 선언되어야 합니다. 선언되는 배열의 요소는 Object 이며 이 Object 가 하나의 칼럼에 해당됩니다.</p>
+<P>예를 들어 칼럼 1개를 선언하고자 한다면 다음과 같습니다.</P>
+<pre>
+	var columnLayout = [ { 
+	         dataField : "type",
+	         headerText : "유형"
+	}];</pre>
+<p>칼럼 하나를 선언했지만 역시 배열로 선언된 것을 볼 수 있습니다.</p>
+<p>위 선언문(columnLayout) 에서 Object 로 선언된 것이 바로 칼럼(Column)입니다.</p>
+<p>본 문서(Documentation) 에서도 하나의 칼럼에 해당되는 Object 는 Column 으로 정의하였습니다.</p>
+<p>즉, 칼럼 하나를 대표하는 Object 를 보기 위해서는 Column 을 참고하세요</p>
+<p>아래 리스트는 칼럼 레이아웃의 속성과 해당 속성 값 중 객체에 해당되는 칼럼, 렌더러의 리스트입니다.</p>
+<p>가장 기본이 되는 객체인 <a href="./Column.html">Column</a>을 참고하십시오.</p>
+</div></p>
+<a name="classSummary"></a>
+<table class="summaryTable" cellspacing="0" cellpadding="3">
+<tr>
+<th>&nbsp;</th><th width="30%">TYPE</th><th width="70%">Description</th>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="BarRenderer.html">BarRenderer</a></td><td class="summaryTableLastCol">
+<p>바 렌더러는 특정 칼럼의 셀에 바 게이지가 출력되는 칼럼 렌더러입니다.</p>
+<p>바 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 renderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 renderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="BTCalendarRenderer.html">BTCalendarRenderer</a></td><td class="summaryTableLastCol">
+<p>부트스트랩 달력 렌더러를 출력할 수 있게 정의된 편집 렌더러입니다.</p>
+<p>editRenderer 속성으로 편집 시 부트스트랩 달력을 출력하여 날짜를 선택할 수 있게 합니다.</p>
+<p>부트스트랩 달력 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 editRenderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 editRenderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="ButtonRenderer.html">ButtonRenderer</a></td><td class="summaryTableLastCol">
+<p>버턴 렌더러는 특정 칼럼의 셀에 버턴이 출력되는 칼럼 렌더러입니다.</p>
+<p>버턴 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 renderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 renderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="CalendarRenderer.html">CalendarRenderer</a></td><td class="summaryTableLastCol">
+<p>달력 렌더러는 칼럼의 editRenderer 속성으로 편집 시 달력을 출력하여 날짜를 선택할 수 있게 정의된 렌더러입니다.</p>
+<p>달력 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 editRenderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 editRenderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="CheckBoxEditRenderer.html">CheckBoxEditRenderer</a></td><td class="summaryTableLastCol">
+<p>체크박스 렌더러는 특정 칼럼의 셀에 체크박스가 출력되는 칼럼 렌더러입니다.</p>
+<p>체크박스 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 renderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 renderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="Column.html">Column</a></td><td class="summaryTableLastCol">
+<p>칼럼 레이아웃을 선언할 때 가장 기본이 되는 Object 입니다.</p>
+<p>하나의 칼럼에 해당되며, 레이아웃 설정에선 Object 로 선언을 합니다.</p>
+</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="ComboBoxRenderer.html">ComboBoxRenderer</a></td><td class="summaryTableLastCol">
+<p>콤보박스 렌더러는 특정 칼럼의 셀에 여러 항목 중 하나를 선택할 수 있도록 출력하는 칼럼 렌더러입니다.</p>
+<p>콤보박스와 드랍다운리스트의 차이점은 드랍다운리스트는 출력된 리스트 중 하나를 선택하는 반면 콤보박스는 출력된 리스트 중 하나를 선택하거나 직접 사용자가 다른 값을 입력 할 수 있습니다.</p>
+<p>콤보박스 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 editRenderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 editRenderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="ConditionRenderer.html">ConditionRenderer</a></td><td class="summaryTableLastCol">
+<p>컨디션 렌더러는 칼럼 셀의 에디터를 동적으로 지정할 수 있습니다.</p>
+<p>일반적으로 하나의 칼럼에는 동일한 에디터가 출력됩니다.</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="DropDownListRenderer.html">DropDownListRenderer</a></td><td class="summaryTableLastCol">
+<p>드랍다운 리스트 렌더러는 특정 칼럼의 셀에 여러 항목 중 하나를 선택할 수 있도록 출력하는 칼럼 렌더러입니다.</p>
+<p>드랍다운 리스트 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 renderer, editRenderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 editRenderer 와 renderer 속성의 type 모두 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="IconRenderer.html">IconRenderer</a></td><td class="summaryTableLastCol">
+<p>아이콘 렌더러는 특정 칼럼의 셀에 아이콘이 포함되도록 출력하는 칼럼 렌더러입니다.</p>
+<p>아이콘 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 renderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 renderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="ImageRenderer.html">ImageRenderer</a></td><td class="summaryTableLastCol">
+<p>이미지 렌더러는 특정 칼럼의 셀에 이미지가 출력되는 칼럼 렌더러입니다.</p>
+<p>이미지 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 renderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 renderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="InputEditRenderer.html">InputEditRenderer</a></td><td class="summaryTableLastCol">
+<p>입력 편집 렌더러(InputEditRenderer)는 editable = true 인 경우 기본(defalut) 편집 렌더러입니다.(input[type="text"])</p>
+<p>이 렌더러는 사용자가 수정한 값의 유효성 검사(validating) 을 할 수 있으며, 숫자만 입력 가능토록 설정이 가능합니다.</p>
+<p>입력 편집 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 editRenderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 editRenderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="LinkRenderer.html">LinkRenderer</a></td><td class="summaryTableLastCol">
+<p>링크 렌더러는 a 태그의 하이퍼 링크를 출력하는 칼럼 렌더러입니다.</p>
+<p>링크 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 renderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 renderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="NumberStepRenderer.html">NumberStepRenderer</a></td><td class="summaryTableLastCol">
+<p>넘버스텝 렌더러는 특정 칼럼의 셀에 숫자를 편집하기 쉽도록 넘버 스텝핑이 출력되는 칼럼 렌더러입니다.</p>
+<p>넘버스텝 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 renderer, editRenderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 editRenderer 와 renderer 속성의 type 모두 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="RemoteListRenderer.html">RemoteListRenderer</a></td><td class="summaryTableLastCol">
+<p>리모트 리스트 렌더러는 검색을 통해 원격으로 리스트를 실시간으로 가져와 출력시키는 렌더러입니다.</p>
+<p>에디팅으로 진입하면 사용자는 수정할 값을 입력하는 것이 아니라 검색할 단어를 입력하면, 해당 단어를 파라메터로 지정된 URL 로 요청을 합니다.</p>
+<p>서버 사이드는 응답으로 JSON 또는 XML, TEXT 를 보내야 합니다.</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="SparkColumnRenderer.html">SparkColumnRenderer</a></td><td class="summaryTableLastCol">
+<p>스파크 칼럼 렌더러는 특정 칼럼의 셀에 스파크 칼럼 차트를 출력시키는 칼럼 렌더러입니다.</p>
+<p>스파크 칼럼 렌더러에 출력 시킬 데이터 설정은 dataField 속성에 컴마(,) 구분자를 사용한 복수의 데이터필드를 설정하십시오.</p>
+<p>스파크 칼럼 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 renderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 renderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="SparkLineRenderer.html">SparkLineRenderer</a></td><td class="summaryTableLastCol">
+<p>스파크 라인 렌더러는 특정 칼럼의 셀에 스파크 라인 차트를 출력시키는 칼럼 렌더러입니다.</p>
+<p>스파크 라인 렌더러에 출력 시킬 데이터 설정은 dataField 속성에 컴마(,) 구분자를 사용한 복수의 데이터필드를 설정하십시오.</p>
+<p>스파크 라인 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 renderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 renderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="SparkWinLossRenderer.html">SparkWinLossRenderer</a></td><td class="summaryTableLastCol">
+<p>스파크 승패 렌더러는 특정 칼럼의 셀에 스파크 승패 차트를 출력시키는 칼럼 렌더러입니다.</p>
+<p>스파크 승패 렌더러에 출력 시킬 데이터 설정은 dataField 속성에 컴마(,) 구분자를 사용한 복수의 데이터필드를 설정하십시오.</p>
+<p>스파크 승패 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 renderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 renderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="TemplateRenderer.html">TemplateRenderer</a></td><td class="summaryTableLastCol">
+<p>템플릿 렌더러는 HTML 그대로를 출력하는 칼럼 렌더러입니다.</td>
+</tr>
+</table>
+<p></p>
+<div>
+<p></p>
+<center class="copyright">Copyright(c) 2014-2017 AUISoft. All Right Reserved</center>
+</div>
+</div>
+</body>
+</html>
+<!--Copyright(c) 2014-2017 AUISoft. All Right Reserved-->

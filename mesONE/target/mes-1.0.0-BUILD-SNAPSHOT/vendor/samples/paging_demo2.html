@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<style type="text/css">
+/* 페이징 정보 텍스트 커스터마징*/
+.aui-grid-paging-panel .aui-grid-paging-info-text {
+	font-weight:bold;
+}
+</style>
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+// document ready (jQuery 의 $(document).ready(function() {}); 과 같은 역할을 합니다.
+function documentReady() {  
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid();
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/normal_500.json");
+
+};
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid() {
+	
+	// AUIGrid 칼럼 설정
+	var columnLayout = [{ 
+			dataField : "name",
+			headerText : "Name",
+			width : 140
+		}, {
+			dataField : "country",
+			headerText : "Country",
+			width : 120
+		}, {
+			dataField : "product",
+			headerText : "Product",
+			width: 120
+		}, {
+			dataField : "quantity",
+			headerText : "Quantity"
+		}, {
+			dataField : "price",
+			headerText : "Price",
+			dataType : "numeric"
+		}, {
+			dataField : "date",
+			headerText : "Date"
+		}
+	];
+	
+	// 그리드 속성 설정
+	var gridPros = {
+		
+		// 페이징 사용		
+		usePaging : true,
+		
+		// 한 화면 페이징 버턴 개수 5개로 지정
+		showPageButtonCount : 5,
+		
+		// 한 화면에 출력되는 행 개수 30개로 지정
+		// pageRowCount 의 크기가 너무 크면 퍼포먼스가 낮아집니다.
+		// 그리드 페이징은 해당 행 수만큼 DOM을 만들기 때문입니다.
+		pageRowCount : 30,
+		
+		// 페이징 하단에 출력되는 페이징 정보 텍스트 변경 함수
+		// 파라메터 설명 
+		// currentPage : 현재 페이지, 
+		// totalPageCount : 총 페이지 수, 
+		// currentTopNumber : 최 상단의 행 번호, 
+		// currentBottomNumber : 최 하단 행 번호,
+		// dataLen : 전체 데이터 수
+		// 리턴 : 리턴되는 스트링이 출력됩니다.
+		pagingInfoLabelFunction : function(currentPage, totalPageCount, currentTopNumber, currentBottomNumber, dataLen) {
+			return "현재 : " + currentPage + " / 전체 : " + totalPageCount + "( " + currentTopNumber + "~" + currentBottomNumber + " )";
+		},
+		
+		// 그룹핑 패널 사용
+		useGroupingPanel : true,
+	
+		groupingMessage : "여기에 칼럼을 드래그하면 그룹핑이 됩니다."
+	};
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, gridPros);
+};
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>한 화면에 나타는 행(row)의 수를 30개로 변경하고, 페이징 버턴을 5개씩 출력 시킨 모습입니다.(디폴트 행수 20개, 페이징 버턴 10개)</p>
+		<p>페이징 하단에 페이징의 현재 출력되는 행의 정보를 변경한 모습입니다.</p>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:520px; margin:0 auto;"></div>
+		
+	</div>
+	<div class="desc_bottom">
+		<p id="ellapse"></p>
+		
+	</div>
+</div>
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>

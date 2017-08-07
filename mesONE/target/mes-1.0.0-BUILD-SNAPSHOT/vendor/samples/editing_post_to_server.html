@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript">
+function documentReady() {;};
+</script>
+<style>
+.doc_list_ul > li {
+	font-size:14px;
+	font-weight:bold;
+	margin-top:14px;
+}
+.doc_list_ul > li a{
+	font-weight:normal;
+}
+</style>
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<p>AUIGrid 에서 추가, 수정, 삭제 된 행에 대한 정보를 어떻게 서버로 보내는지에 대한 설명입니다.</p>
+		<p>서버 사이드 언어와 무관하게 추가, 수정, 삭제 된 행은 JSON 형태의 AJAX POST 요청으로 서버로 전송합니다.</p>
+		<p>다음과 같이 추가, 수정, 삭제 된 행을 얻을 수 있습니다. 이를 다시 data 라는 Object 를 만들어 각각 "add", "update", "remove" 라는 key 에 넣었습니다. (이는 자유롭게 변경 가능)</p>
+<pre>
+// 추가된 행 아이템들(배열)
+var addedRowItems = AUIGrid.getAddedRowItems(myGridID);
+	 
+// 수정된 행 아이템들(배열)
+var editedRowItems = AUIGrid.getEditedRowColumnItems(myGridID); 
+	
+// 삭제된 행 아이템들(배열)
+var removedRowItems = AUIGrid.getRemovedItems(myGridID);
+
+// 서버로 보낼 데이터 작성
+var data = {
+	"add" : addedRowItems,
+	"update" : editedRowItems,
+	"remove" : removedRowItems
+};
+
+// data 가 어떻게 만들어졌는지 확인해 보십시오.
+console.log(JSON.stringify(data));
+alert(JSON.stringify(data));
+</pre>
+<p>실제로 서버로 보내게 될 data 객체는 Object - Array 의 복잡한 형태의 JSON 이 됩니다.</p>
+<p>서버 사이드에 따라 원하는 샘플 및 문서를 다운로드하여 확인하십시오.</p>
+<ul class="doc_list_ul">
+	<li>◎ Java - 스프링프레임워크(전자정부프레임워크)
+		<ul style="margin-left:60px;"><li><a href="http://auisoft.net/board/bbs/download.php?bo_table=download_list&amp;wr_id=678&amp;no=0">설명 문서 다운로드</a>
+			<a href="http://auisoft.net/board/bbs/download.php?bo_table=download_list&amp;wr_id=677&amp;no=0">샘플 소스 다운로드</a></li>
+		</ul>
+	</li>
+	<li>◎ Java - 순수 JSP
+		<ul style="margin-left:60px;"><li><a href="http://auisoft.net/board/bbs/download.php?bo_table=download_list&amp;wr_id=682&amp;no=0">설명 문서 다운로드</a>
+			<a href="http://auisoft.net/board/bbs/download.php?bo_table=download_list&amp;wr_id=681&amp;no=0">샘플 소스 다운로드</a></li>
+		</ul>
+	</li>
+	<li>◎ PHP
+		<ul style="margin-left:60px;"><li><a href="http://auisoft.net/board/bbs/download.php?bo_table=download_list&amp;wr_id=684&amp;no=0">설명 문서 다운로드</a>
+			<a href="http://auisoft.net/board/bbs/download.php?bo_table=download_list&amp;wr_id=683&amp;no=0">샘플 소스 다운로드</a></li>
+		</ul>
+	</li>
+	<li>◎ ASP.NET C#
+		<ul style="margin-left:60px;"><li><a href="http://auisoft.net/board/bbs/download.php?bo_table=download_list&amp;wr_id=680&amp;no=0">설명 문서 다운로드</a>
+			<a href="http://auisoft.net/board/bbs/download.php?bo_table=download_list&amp;wr_id=679&amp;no=0">샘플 소스 다운로드</a></li>
+		</ul>
+	</li>
+</ul>
+	
+</div>
+
+</div>
+</body>
+</html>

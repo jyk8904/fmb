@@ -1,0 +1,1927 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="Javascript DataGrid AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net">
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon">
+<meta name="og:description" content="Javascript DataGrid AUIGrid by  AUISoft">
+<link rel="stylesheet" href="../style.css" type="text/css" media="screen">
+<title>AUIGrid Documentation</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:굴림;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"맑은 고딕";
+	panose-1:2 11 5 3 2 0 0 2 0 4;}
+@font-face
+	{font-family:"\@맑은 고딕";
+	panose-1:2 11 5 3 2 0 0 2 0 4;}
+@font-face
+	{font-family:"\@굴림";
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:107%;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"맑은 고딕";}
+p
+	{margin-right:0cm;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:굴림;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:40.0pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:107%;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"맑은 고딕";}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	line-height:107%;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:3.0cm 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+</head>
+<body>
+
+<div class="MainContent">
+
+	<span class="className">간단하게 그리드 생성해 보기(Quick Start)</span>
+
+<div class=WordSection1>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+text-indent:-18.0pt;line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span><span
+style='font-size:12.0pt;color:black'>새로운<span lang=EN-US> html </span>페이지 작성하고 다음과
+같이<span lang=EN-US> html </span>파일 초안을 만듭니다<span lang=EN-US>.</span></span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='margin-left:18.0pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=601 valign=top style='width:450.8pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;!</span><span lang=EN-US style='color:#3F7F7F'>DOCTYPE</span><span
+  lang=EN-US> <span style='color:teal'>html&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>html</span><span
+  lang=EN-US> <span style='color:#7F007F'>lang</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;ko&quot;</span></i><span style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>head</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>charset</span><span style='color:
+  black'>=</span><i><span style='color:#2A00FF'>&quot;utf-8&quot;</span></i><span
+  style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;Content-Script-Type&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i><span
+  style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;Content-Style-Type&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/css&quot;</span></i><span style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;X-UA-Compatible&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;IE=edge&quot;</span></i><span style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;/</span><span lang=EN-US style='color:#3F7F7F'>head</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>body</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;/</span><span lang=EN-US style='color:#3F7F7F'>body</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:14.4pt;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='color:teal'>&lt;/</span><span
+  lang=EN-US style='color:#3F7F7F'>html</span><span lang=EN-US
+  style='color:teal'>&gt;</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:14.4pt;text-autospace:ideograph-numeric ideograph-other;word-break:
+keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+text-indent:-18.0pt;line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span><span
+lang=EN-US style='font-size:12.0pt;color:black'>head </span><span
+style='font-size:12.0pt;color:black'>태그에<span lang=EN-US> AUIGridLicense.js </span>과<span
+lang=EN-US> AUIGrid.js </span>자바스크립트 파일을 추가 시켜주십시오<span lang=EN-US>.</span></span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>AUIGridLicense.js
+</span><span style='font-size:12.0pt;color:black'>파일은<span lang=EN-US> AUIGrid </span>라이센스
+파일입니다<span lang=EN-US>. </span>평가판은 특정 기간 무료로 사용할 수 있으며 호스트
+도메인 관계없이 모든 곳에서 사용이 가능합니다<span lang=EN-US>.</span></span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>그러나 정품을 구입하게 되면
+기간의 제한은 사라지며<span lang=EN-US>, </span>지정된 곳에서 영구 사용이 가능합니다<span lang=EN-US>.</span></span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>AUIGrid
+</span><span style='font-size:12.0pt;color:black'>를 정상 출력하기 위해서 먼저 라이센스 등록을 해주십시오<span
+lang=EN-US>.</span></span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>AUIGrid.js
+</span><span style='font-size:12.0pt;color:black'>파일은 파일명 그대로 그리드 컴포넌트입니다<span
+lang=EN-US>.</span></span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='margin-left:30.0pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=601 valign=top style='width:450.8pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;!</span><span lang=EN-US style='color:#3F7F7F'>DOCTYPE</span><span
+  lang=EN-US> <span style='color:teal'>html&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>html</span><span
+  lang=EN-US> <span style='color:#7F007F'>lang</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;ko&quot;</span></i><span style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>head</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>charset</span><span style='color:
+  black'>=</span><i><span style='color:#2A00FF'>&quot;utf-8&quot;</span></i><span
+  style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;Content-Script-Type&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i><span
+  style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;Content-Style-Type&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/css&quot;</span></i><span style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;X-UA-Compatible&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;IE=edge&quot;</span></i><span style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US style='color:black'> </span><span lang=EN-US style='color:#7F007F'>type</span><span
+  lang=EN-US style='color:black'>=</span><i><span lang=EN-US style='color:#2A00FF'>&quot;text/javascript&quot;</span></i><span
+  lang=EN-US style='color:black'> </span><span lang=EN-US style='color:#7F007F'>src</span><span
+  lang=EN-US style='color:black'>=</span><i><span lang=EN-US style='color:#2A00FF'>&quot;../AUIGrid/AUIGridLicense.js&quot;</span></i><span
+  lang=EN-US style='color:teal'>/&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US style='color:black'> </span><span lang=EN-US style='color:#7F007F'>type</span><span
+  lang=EN-US style='color:black'>=</span><i><span lang=EN-US style='color:#2A00FF'>&quot;text/javascript&quot;</span></i><span
+  lang=EN-US style='color:black'> </span><span lang=EN-US style='color:#7F007F'>src</span><span
+  lang=EN-US style='color:black'>=</span><i><span lang=EN-US style='color:#2A00FF'>&quot;../AUIGrid/AUIGrid.js&quot;</span></i><span
+  lang=EN-US style='color:teal'>/&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;/</span><span lang=EN-US style='color:#3F7F7F'>head</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>body</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;/</span><span lang=EN-US style='color:#3F7F7F'>body</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:14.4pt;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='color:teal'>&lt;/</span><span
+  lang=EN-US style='color:#3F7F7F'>html</span><span lang=EN-US
+  style='color:teal'>&gt;</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:14.4pt;text-autospace:ideograph-numeric ideograph-other;word-break:
+keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+text-indent:-18.0pt;line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span><span
+lang=EN-US style='font-size:12.0pt;color:black'>XMLHttpRequest(Ajax </span><span
+style='font-size:12.0pt;color:black'>통신<span lang=EN-US>)</span>을 하기 위해 샘플에 제공된<span
+lang=EN-US> ajax.js </span>파일을 추가시켜 주십시오<span lang=EN-US>.</span></span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>만약<span
+lang=EN-US> jQuery </span>나 기타 <span lang=EN-US>
+JS </span>프레임워크를 사용한다면 해당 프레임워크에서 제공하는<span lang=EN-US> ajax </span>를 사용하면 됩니다<span
+lang=EN-US>.</span></span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>즉<span
+lang=EN-US>, jQuery </span>프레임워크 사용 시 이 부분은 생략 하십시오<span lang=EN-US>. AUIGrid </span>는
+특정 프레임워크에 종속적이지 않기 때문에 문서 상<span lang=EN-US> ajax.js </span>파일을 추가시킵니다<span
+lang=EN-US>.</span></span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='margin-left:30.0pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=601 valign=top style='width:450.8pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;!</span><span lang=EN-US style='color:#3F7F7F'>DOCTYPE</span><span
+  lang=EN-US> <span style='color:teal'>html&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>html</span><span
+  lang=EN-US> <span style='color:#7F007F'>lang</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;ko&quot;</span></i><span style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>head</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>charset</span><span style='color:
+  black'>=</span><i><span style='color:#2A00FF'>&quot;utf-8&quot;</span></i><span
+  style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;Content-Script-Type&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i><span
+  style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;Content-Style-Type&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/css&quot;</span></i><span style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;X-UA-Compatible&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;IE=edge&quot;</span></i><span style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US style='color:black'> </span><span lang=EN-US style='color:#7F007F'>type</span><span
+  lang=EN-US style='color:black'>=</span><i><span lang=EN-US style='color:#2A00FF'>&quot;text/javascript&quot;</span></i><span
+  lang=EN-US style='color:black'> </span><span lang=EN-US style='color:#7F007F'>src</span><span
+  lang=EN-US style='color:black'>=</span><i><span lang=EN-US style='color:#2A00FF'>&quot;../AUIGrid/AUIGridLicense.js&quot;</span></i><span
+  lang=EN-US style='color:teal'>/&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US style='color:black'> </span><span lang=EN-US style='color:#7F007F'>type</span><span
+  lang=EN-US style='color:black'>=</span><i><span lang=EN-US style='color:#2A00FF'>&quot;text/javascript&quot;</span></i><span
+  lang=EN-US style='color:black'> </span><span lang=EN-US style='color:#7F007F'>src</span><span
+  lang=EN-US style='color:black'>=</span><i><span lang=EN-US style='color:#2A00FF'>&quot;../AUIGrid/AUIGrid.js&quot;</span></i><span
+  lang=EN-US style='color:teal'>/&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US> <span style='color:#7F007F'>type</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i> <span
+  style='color:#7F007F'>src</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;./ajax.js&quot;</span></i><span style='color:
+  teal'>&gt;&lt;/</span><span style='color:#3F7F7F'>script</span><span
+  style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;/</span><span lang=EN-US style='color:#3F7F7F'>head</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:14.4pt;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='color:teal'>&lt;/</span><span
+  lang=EN-US style='color:#3F7F7F'>html</span><span lang=EN-US
+  style='color:teal'>&gt;</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+text-indent:-18.0pt;line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span><span
+lang=EN-US style='font-size:12.0pt;color:black'>AUIGrid </span><span
+style='font-size:12.0pt;color:black'>의 기본 디자인을 위한<span lang=EN-US> CSS </span>파일을
+추가시켜주고 그리드가 위치할 <span lang=EN-US>Div </span>태그를 하나 작성합니다<span lang=EN-US>.</span></span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>원하는 테마 스타일링이 있다면
+해당<span lang=EN-US> CSS </span>파일을 추가시키면 됩니다<span lang=EN-US>.</span></span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:14.4pt;text-autospace:ideograph-numeric ideograph-other;word-break:
+keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='margin-left:30.0pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=601 valign=top style='width:450.8pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;!</span><span lang=EN-US style='color:#3F7F7F'>DOCTYPE</span><span
+  lang=EN-US> <span style='color:teal'>html&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>html</span><span
+  lang=EN-US> <span style='color:#7F007F'>lang</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;ko&quot;</span></i><span style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>head</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>charset</span><span style='color:
+  black'>=</span><i><span style='color:#2A00FF'>&quot;utf-8&quot;</span></i><span
+  style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;Content-Script-Type&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i><span
+  style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;Content-Style-Type&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/css&quot;</span></i><span style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;X-UA-Compatible&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;IE=edge&quot;</span></i><span style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US style='color:black'> </span><span lang=EN-US style='color:#7F007F'>type</span><span
+  lang=EN-US style='color:black'>=</span><i><span lang=EN-US style='color:#2A00FF'>&quot;text/javascript&quot;</span></i><span
+  lang=EN-US style='color:black'> </span><span lang=EN-US style='color:#7F007F'>src</span><span
+  lang=EN-US style='color:black'>=</span><i><span lang=EN-US style='color:#2A00FF'>&quot;../AUIGrid/AUIGridLicense.js&quot;</span></i><span
+  lang=EN-US style='color:teal'>/&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US style='color:black'> </span><span lang=EN-US style='color:#7F007F'>type</span><span
+  lang=EN-US style='color:black'>=</span><i><span lang=EN-US style='color:#2A00FF'>&quot;text/javascript&quot;</span></i><span
+  lang=EN-US style='color:black'> </span><span lang=EN-US style='color:#7F007F'>src</span><span
+  lang=EN-US style='color:black'>=</span><i><span lang=EN-US style='color:#2A00FF'>&quot;../AUIGrid/AUIGrid.js&quot;</span></i><span
+  lang=EN-US style='color:teal'>/&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US> <span style='color:#7F007F'>type</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i> <span
+  style='color:#7F007F'>src</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;./ajax.js&quot;</span></i><span style='color:
+  teal'>&gt;&lt;/</span><span style='color:#3F7F7F'>script</span><span
+  style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>link</span><span
+  lang=EN-US> <span style='color:#7F007F'>href</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;./style/AUIGrid_style.css&quot;</span></i> <span
+  style='color:#7F007F'>rel</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;stylesheet&quot;</span></i><span
+  style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;/</span><span lang=EN-US style='color:#3F7F7F'>head</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>body</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>div</span><span
+  lang=EN-US> <span style='color:#7F007F'>id</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;grid_wrap&quot;</span></i> <span
+  style='color:#7F007F'>style</span><span style='color:black'>=&quot;</span><span
+  style='color:#7F007F'>width</span><span style='color:black'>:</span><i><span
+  style='color:#2A00E1'>800px</span></i><span style='color:black'>;</span><span
+  style='color:#7F007F'>height</span><span style='color:black'>:</span><i><span
+  style='color:#2A00E1'>480px</span></i><span style='color:black'>;&quot;</span><span
+  style='color:teal'>&gt;&lt;/</span><span style='color:#3F7F7F'>div</span><span
+  style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;/</span><span lang=EN-US style='color:#3F7F7F'>body</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:14.4pt;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='color:teal'>&lt;/</span><span
+  lang=EN-US style='color:#3F7F7F'>html</span><span lang=EN-US
+  style='color:teal'>&gt;</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+text-indent:-18.0pt;line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span><span
+style='font-size:12.0pt;color:black'>칼럼레이아웃을 작성합니다<span lang=EN-US>.</span></span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>칼럼 레이아웃은 그리드의 칼럼
+구조를 만들어내는 양식입니다<span lang=EN-US>.</span></span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>구체적인 칼럼 레이아웃에 대한
+설명은<span lang=EN-US>&nbsp;</span></span><span lang=EN-US><a
+href="../ColumnLayout/package-detail.html"><span
+lang=EN-US style='font-size:12.0pt'><span lang=EN-US>칼럼</span></span><span
+lang=EN-US style='font-size:12.0pt'><span lang=EN-US> </span></span><span
+lang=EN-US style='font-size:12.0pt'><span lang=EN-US>레이아웃</span></span><span
+lang=EN-US style='font-size:12.0pt'><span lang=EN-US> </span></span><span
+lang=EN-US style='font-size:12.0pt'><span lang=EN-US>작성에</span></span><span
+lang=EN-US style='font-size:12.0pt'><span lang=EN-US> </span></span><span
+lang=EN-US style='font-size:12.0pt'><span lang=EN-US>대하여</span></span></a></span><span
+style='font-size:12.0pt;color:black'>를 참고하여주십시오<span lang=EN-US>.</span></span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>기본 칼럼 구조인<span
+lang=EN-US>(Name, Country, Product, Quantity, Price, Date) 6 </span>개의 칼럼을 갖는 칼럼
+레이아웃을 작성하면 다음과 같습니다<span lang=EN-US>.</span></span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:14.4pt;text-autospace:ideograph-numeric ideograph-other;word-break:
+keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='margin-left:30.0pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=601 valign=top style='width:450.8pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><b><span lang=EN-US
+  style='color:#7F0055'>var</span></b><span lang=EN-US style='color:black'>
+  columnLayout = [ {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;name&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Name&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width
+  : 140</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;country&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Country&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width
+  : 120</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;product&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Product&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width:
+  120</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;quantity&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Quantity&quot;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;price&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Price&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataType
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;numeric&quot;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;date&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Date&quot;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:14.4pt;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='color:black'>];</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:14.4pt;text-autospace:ideograph-numeric ideograph-other;word-break:
+keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>칼럼 레이아웃은 배열로 작성되며<span
+lang=EN-US>, </span>배열 요소로<span lang=EN-US> Object </span>가 삽입되는데 그<span
+lang=EN-US> Object </span>가 하나의<span lang=EN-US> Column </span>이 됩니다<span
+lang=EN-US>.</span></span></p>
+
+<p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:30.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+text-indent:-18.0pt;line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span><span
+style='font-size:12.0pt;color:black'>작성된 칼럼 레이아웃을 토대로 <span lang=EN-US>AUIGrid </span>를
+생성합니다<span lang=EN-US>.</span></span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='margin-left:36.0pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=601 valign=top style='width:450.8pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'> </span><span
+  lang=EN-US style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>실제로<span
+  lang=EN-US> #grid_wrap </span>에 그리드 생성</span></p>
+  <p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='color:black'>myGridID =
+  AUIGrid.create(</span><span lang=EN-US style='color:#2A00FF'>&quot;#grid_wrap&quot;</span><span
+  lang=EN-US style='color:black'>, columnLayout);</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>create()
+</span><span style='font-size:12.0pt;color:black'>함수로 실제로 앞서 작성한 <span
+lang=EN-US>Div </span>에 그리드를 출력하게 합니다<span lang=EN-US>.</span></span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>단<span
+lang=EN-US>, create() </span>함수를 사용하기 위해서는 <span lang=EN-US>HTML DOM </span>이 준비된
+상태여야 합니다<span lang=EN-US>. </span>즉<span lang=EN-US>, body</span>의 <span
+lang=EN-US>onload, window.onload </span>이벤트 발생 후에 생성할 수 있습니다<span lang=EN-US>.(</span>즉<span
+lang=EN-US>, jQuery </span>의 <span lang=EN-US>document ready </span>함수<span
+lang=EN-US>)</span></span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>이를 종합한 소스는 다음과 같습니다<span
+lang=EN-US>.</span></span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='margin-left:36.0pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=601 valign=top style='width:450.8pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;!</span><span lang=EN-US style='color:#3F7F7F'>DOCTYPE</span><span
+  lang=EN-US> <span style='color:teal'>html&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>html</span><span
+  lang=EN-US> <span style='color:#7F007F'>lang</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;ko&quot;</span></i><span style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>head</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>charset</span><span style='color:
+  black'>=</span><i><span style='color:#2A00FF'>&quot;utf-8&quot;</span></i><span
+  style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;Content-Script-Type&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i><span
+  style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;Content-Style-Type&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/css&quot;</span></i><span style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;X-UA-Compatible&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;IE=edge&quot;</span></i><span style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US> <span style='color:#7F007F'>type</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i> <span
+  style='color:#7F007F'>src</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;../AUIGrid/AUIGridLicense.js&quot;</span></i><span
+  style='color:teal'>&gt;&lt;/</span><span style='color:#3F7F7F'>script</span><span
+  style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US> <span style='color:#7F007F'>type</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i> <span
+  style='color:#7F007F'>src</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;../AUIGrid/AUIGrid.js&quot;</span></i><span
+  style='color:teal'>&gt;&lt;/</span><span style='color:#3F7F7F'>script</span><span
+  style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US> <span style='color:#7F007F'>type</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i> <span
+  style='color:#7F007F'>src</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;./ajax.js&quot;</span></i><span style='color:
+  teal'>&gt;&lt;/</span><span style='color:#3F7F7F'>script</span><span
+  style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>link</span><span
+  lang=EN-US> <span style='color:#7F007F'>href</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;./style/AUIGrid_style.css&quot;</span></i> <span
+  style='color:#7F007F'>rel</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;stylesheet&quot;</span></i><span
+  style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US> <span style='color:#7F007F'>type</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i> <span
+  style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>칼럼 레이아웃 작성</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><b><span lang=EN-US
+  style='color:#7F0055'>var</span></b><span lang=EN-US style='color:black'>
+  columnLayout = [ {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;name&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Name&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width
+  : 140</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;country&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Country&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width
+  : 120</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;product&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Product&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width:
+  120</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;quantity&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Quantity&quot;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;price&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Price&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataType
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;numeric&quot;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;date&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Date&quot;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>];</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>윈도우<span
+  lang=EN-US> onload </span>이벤트 핸들링</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>만약<span
+  lang=EN-US> jQuery </span>사용한다면<span lang=EN-US>,
+  $(document).ready(function() {}); </span>사용하세요<span lang=EN-US>.</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>window.onload = </span><b><span lang=EN-US
+  style='color:#7F0055'>function</span></b><span lang=EN-US style='color:black'>()
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>실제로<span
+  lang=EN-US> #grid_wrap </span>에 그리드 생성</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; myGridID
+  = AUIGrid.create(</span><span lang=EN-US style='color:#2A00FF'>&quot;#grid_wrap&quot;</span><span
+  lang=EN-US style='color:black'>, columnLayout);</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>};</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;/</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;/</span><span lang=EN-US style='color:#3F7F7F'>head</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>body</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>div</span><span
+  lang=EN-US> <span style='color:#7F007F'>id</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;grid_wrap&quot;</span></i> <span
+  style='color:#7F007F'>style</span><span style='color:black'>=&quot;</span><span
+  style='color:#7F007F'>width</span><span style='color:black'>:</span><i><span
+  style='color:#2A00E1'>800px</span></i><span style='color:black'>;</span><span
+  style='color:#7F007F'>height</span><span style='color:black'>:</span><i><span
+  style='color:#2A00E1'>480px</span></i><span style='color:black'>;&quot;</span><span
+  style='color:teal'>&gt;&lt;/</span><span style='color:#3F7F7F'>div</span><span
+  style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;/</span><span lang=EN-US style='color:#3F7F7F'>body</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoListParagraph align=left style='margin:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='color:teal'>&lt;/</span><span
+  lang=EN-US style='color:#3F7F7F'>html</span><span lang=EN-US
+  style='color:teal'>&gt;</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>지금까지 작성한 <span
+lang=EN-US>html </span>파일을 브라우저로 실행시켜 보십시오<span lang=EN-US>.</span></span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>현재 그리드에 데이터만 삽입하지
+않았을 뿐 그리드 작성은 완료된 상태입니다<span lang=EN-US>.</span></span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+text-indent:-18.0pt;line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>7.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span></span><span
+lang=EN-US style='font-size:12.0pt;color:black'>Ajax </span><span
+style='font-size:12.0pt;color:black'>요청으로 응답 값 그리드에 데이터 삽입하기</span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>그리드의 데이터는 <span
+lang=EN-US>Ajax </span>요청으로 <span lang=EN-US>JSON </span>형식의 데이터를 사용할 것입니다<span
+lang=EN-US>.</span></span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>미리 준비된 샘플의<span
+lang=EN-US> normal_100.json </span>파일을 메모장으로 열어보십시오<span lang=EN-US>.
+(normal_100.json </span>파일은 <span lang=EN-US>samples/data/ </span>폴더에 존재합니다<span
+lang=EN-US>.)</span></span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>이 데이터는 서버가 만들어내야
+할 <span lang=EN-US>JSON </span>형식입니다<span lang=EN-US>.</span></span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='margin-left:36.0pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=601 valign=top style='width:450.8pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>[{</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;id&quot;</span><span lang=EN-US style='color:
+  black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;#Cust0&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;date&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;2014-10-01&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;name&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;Steve&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;country&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;USA&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;flag&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;usa.png&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;product&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;IPad
+  Air&quot;</span><span lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;color&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;Green&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;quantity&quot;</span><span lang=EN-US
+  style='color:black'>: 3,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;price&quot;</span><span lang=EN-US
+  style='color:black'>: 630700</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>}, {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;id&quot;</span><span lang=EN-US style='color:
+  black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;#Cust1&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;date&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;2014-09-30&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;name&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;Emma&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;country&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;Korea&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;flag&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;korea.png&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;product&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;LG
+  G3&quot;</span><span lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;color&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;Pink&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;quantity&quot;</span><span lang=EN-US
+  style='color:black'>: 1,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;price&quot;</span><span lang=EN-US
+  style='color:black'>: 503800</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>}, {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;id&quot;</span><span lang=EN-US style='color:
+  black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;#Cust2&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;date&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;2014-09-29&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;name&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;Emma&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;country&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;Japan&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;flag&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;japan.png&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;product&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;IPad
+  Air&quot;</span><span lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;color&quot;</span><span lang=EN-US
+  style='color:black'>: </span><span lang=EN-US style='color:#2A00FF'>&quot;Yellow&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;quantity&quot;</span><span lang=EN-US
+  style='color:black'>: 7,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp; </span><span lang=EN-US
+  style='color:#2A00FF'>&quot;price&quot;</span><span lang=EN-US
+  style='color:black'>: 66900</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>} ...</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>....</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>...</span></p>
+  <p class=MsoListParagraph align=left style='margin:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='color:black'>];</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>위 데이터를 가져오기 위해 <span
+lang=EN-US>Ajax </span>요청을 합니다<span lang=EN-US>.</span></span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='margin-left:36.0pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=601 valign=top style='width:450.8pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:#3F7F5F'>// ajax </span><span style='color:#3F7F5F'>요청 전 그리드에 로더
+  표시</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>AUIGrid.showAjaxLoader(myGridID);</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:#3F7F5F'>// ajax (XMLHttpRequest) </span><span style='color:
+  #3F7F5F'>로 그리드 데이터 요청</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>ajax( {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; url
+  : </span><span lang=EN-US style='color:#2A00FF'>”./data/normal_100.json&quot;,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; onSuccess
+  : </span><b><span lang=EN-US style='color:#7F0055'>function</span></b><span
+  lang=EN-US style='color:black'>(data) {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b><span
+  lang=EN-US style='color:#7F0055'>if</span></b><span lang=EN-US
+  style='color:black'>(!data) {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b><span
+  lang=EN-US style='color:#7F0055'>return</span></b><span lang=EN-US
+  style='color:black'>;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>그리드 데이터</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b><span
+  lang=EN-US style='color:#7F0055'>var</span></b><span lang=EN-US
+  style='color:black'> gridData = data;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>로더 제거</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US>AUIGrid.removeAjaxLoader(myGridID);</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>그리드에 데이터
+  세팅</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US>AUIGrid.setGridData(myGridID, <span style='color:black'>gridData);</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; onError
+  : </span><b><span lang=EN-US style='color:#7F0055'>function</span></b><span
+  lang=EN-US style='color:black'>(status, e) {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alert(</span><span
+  lang=EN-US style='color:#2A00FF'>&quot;</span><span style='color:#2A00FF'>데이터
+  요청에 실패하였습니다<span lang=EN-US>.\r status : &quot;</span></span><span
+  lang=EN-US style='color:black'> + status);</span></p>
+  <p class=MsoListParagraph align=left style='margin:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p>
+  <p class=MsoListParagraph align=left style='margin:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='color:black'>});</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>ajax()
+</span><span style='font-size:12.0pt;color:black'>함수는 <span lang=EN-US>3</span>번에서
+추가한 <span lang=EN-US>ajax.js </span>에서 정의된 전역 함수입니다<span lang=EN-US>.</span></span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>위에 설명했듯이 <span
+lang=EN-US>jQuery </span>를 사용한다면<span lang=EN-US> jQuery </span>에서 제공하는 <span
+lang=EN-US>ajax </span>요청을 사용하세요<span lang=EN-US>.</span></span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>이로써 모든 설정이 완료되었습니다<span
+lang=EN-US>.</span></span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>다음은 전체소스 내용입니다<span
+lang=EN-US>.</span></span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='margin-left:36.0pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=601 valign=top style='width:450.8pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;!</span><span lang=EN-US style='color:#3F7F7F'>DOCTYPE</span><span
+  lang=EN-US> <span style='color:teal'>html&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>html</span><span
+  lang=EN-US> <span style='color:#7F007F'>lang</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;ko&quot;</span></i><span style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>head</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>charset</span><span style='color:
+  black'>=</span><i><span style='color:#2A00FF'>&quot;utf-8&quot;</span></i><span
+  style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;Content-Script-Type&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i><span
+  style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;Content-Style-Type&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/css&quot;</span></i><span style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>meta</span><span
+  lang=EN-US> <span style='color:#7F007F'>http-equiv</span><span
+  style='color:black'>=</span><i><span style='color:#2A00FF'>&quot;X-UA-Compatible&quot;</span></i>
+  <span style='color:#7F007F'>content</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;IE=edge&quot;</span></i><span style='color:teal'>/&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US> <span style='color:#7F007F'>type</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i> <span
+  style='color:#7F007F'>src</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;../AUIGrid/AUIGridLicense.js&quot;</span></i><span
+  style='color:teal'>&gt;&lt;/</span><span style='color:#3F7F7F'>script</span><span
+  style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US> <span style='color:#7F007F'>type</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i> <span
+  style='color:#7F007F'>src</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;../AUIGrid/AUIGrid.js&quot;</span></i><span
+  style='color:teal'>&gt;&lt;/</span><span style='color:#3F7F7F'>script</span><span
+  style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US> <span style='color:#7F007F'>type</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i> <span
+  style='color:#7F007F'>src</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;./ajax.js&quot;</span></i><span style='color:
+  teal'>&gt;&lt;/</span><span style='color:#3F7F7F'>script</span><span
+  style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>link</span><span
+  lang=EN-US> <span style='color:#7F007F'>href</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;./style/AUIGrid_style.css&quot;</span></i> <span
+  style='color:#7F007F'>rel</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;stylesheet&quot;</span></i><span
+  style='color:teal'>&gt;&lt;/</span><span style='color:#3F7F7F'>link</span><span
+  style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US> <span style='color:#7F007F'>type</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;text/javascript&quot;</span></i> <span
+  style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>칼럼 레이아웃 작성</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><b><span lang=EN-US
+  style='color:#7F0055'>var</span></b><span lang=EN-US style='color:black'>
+  columnLayout = [ {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;name&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Name&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width
+  : 140</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;country&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Country&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width
+  : 120</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;product&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Product&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; width:
+  120</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;quantity&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Quantity&quot;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;price&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Price&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataType
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;numeric&quot;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dataField
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;date&quot;</span><span
+  lang=EN-US style='color:black'>,</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headerText
+  : </span><span lang=EN-US style='color:#2A00FF'>&quot;Date&quot;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>];</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>그리드 생성 후 해당 <span
+  lang=EN-US>ID </span>보관 변수</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><b><span lang=EN-US
+  style='color:#7F0055'>var</span></b><span lang=EN-US style='color:black'> myGridID;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>윈도우<span
+  lang=EN-US> onload </span>이벤트 핸들링</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>만약<span
+  lang=EN-US> jQuery </span>사용한다면<span lang=EN-US>,
+  $(document).ready(function() {}); </span>사용하세요<span lang=EN-US>.</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>window.onload = </span><b><span lang=EN-US
+  style='color:#7F0055'>function</span></b><span lang=EN-US style='color:black'>()
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>실제로<span
+  lang=EN-US> #grid_wrap </span>에 그리드 생성</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; myGridID
+  = AUIGrid.create(</span><span lang=EN-US style='color:#2A00FF'>&quot;#grid_wrap&quot;</span><span
+  lang=EN-US style='color:black'>, columnLayout);</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US style='color:#3F7F5F'>// Ajax </span><span style='color:#3F7F5F'>요청
+  실행</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; requestAjax();</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>};</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:#3F7F5F'>// Ajax </span><span style='color:#3F7F5F'>요청을 합니다<span
+  lang=EN-US>.</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><b><span lang=EN-US
+  style='color:#7F0055'>function</span></b><span lang=EN-US style='color:black'>
+  requestAjax() {</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:#3F7F5F'>//
+  ajax </span><span style='color:#3F7F5F'>요청 전 그리드에 로더 표시</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US>AUIGrid.showAjaxLoader(myGridID);</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:#3F7F5F'>//
+  ajax (XMLHttpRequest) </span><span style='color:#3F7F5F'>로 그리드 데이터 요청</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>ajax(
+  {</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp; url
+  : </span><span lang=EN-US style='color:#2A00FF'>”./data/normal_100.json&quot;,</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp; onSuccess
+  : </span><b><span lang=EN-US style='color:#7F0055'>function</span></b><span
+  lang=EN-US style='color:black'>(data) {</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b><span
+  lang=EN-US style='color:#7F0055'>if</span></b><span lang=EN-US
+  style='color:black'>(!data) {</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b><span
+  lang=EN-US style='color:#7F0055'>return</span></b><span lang=EN-US
+  style='color:black'>;</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>그리드 데이터</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><b><span
+  lang=EN-US style='color:#7F0055'>var</span></b><span lang=EN-US
+  style='color:black'> gridData = data;</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>로더 제거</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US>AUIGrid.removeAjaxLoader(myGridID);</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US style='color:#3F7F5F'>// </span><span style='color:#3F7F5F'>그리드에 데이터
+  세팅</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US>AUIGrid.setGridData(myGridID, <span style='color:black'>gridData);</span></span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp; },</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp; onError
+  : </span><b><span lang=EN-US style='color:#7F0055'>function</span></b><span
+  lang=EN-US style='color:black'>(status, e) {</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alert(</span><span
+  lang=EN-US style='color:#2A00FF'>&quot;</span><span style='color:#2A00FF'>데이터
+  요청에 실패하였습니다<span lang=EN-US>.\r status : &quot;</span></span><span
+  lang=EN-US style='color:black'> + status);</span></p>
+  <p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp; }</span></p>
+  <p class=MsoNormal align=left style='margin-top:0cm;margin-right:0cm;
+  margin-bottom:0cm;margin-left:20.0pt;margin-bottom:.0001pt;text-align:left;
+  line-height:normal;word-break:keep-all'><span lang=EN-US style='color:black'>});</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>};</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;/</span><span lang=EN-US style='color:#3F7F7F'>script</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US>&nbsp;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;/</span><span lang=EN-US style='color:#3F7F7F'>head</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>body</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:black'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+  lang=EN-US style='color:teal'>&lt;</span><span lang=EN-US style='color:#3F7F7F'>div</span><span
+  lang=EN-US> <span style='color:#7F007F'>id</span><span style='color:black'>=</span><i><span
+  style='color:#2A00FF'>&quot;grid_wrap&quot;</span></i> <span
+  style='color:#7F007F'>style</span><span style='color:black'>=&quot;</span><span
+  style='color:#7F007F'>width</span><span style='color:black'>:</span><i><span
+  style='color:#2A00E1'>800px</span></i><span style='color:black'>;</span><span
+  style='color:#7F007F'>height</span><span style='color:black'>:</span><i><span
+  style='color:#2A00E1'>480px</span></i><span style='color:black'>;&quot;</span><span
+  style='color:teal'>&gt;&lt;/</span><span style='color:#3F7F7F'>div</span><span
+  style='color:teal'>&gt;</span></span></p>
+  <p class=MsoNormal align=left style='margin-bottom:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:normal;word-break:keep-all'><span lang=EN-US
+  style='color:teal'>&lt;/</span><span lang=EN-US style='color:#3F7F7F'>body</span><span
+  lang=EN-US style='color:teal'>&gt;</span></p>
+  <p class=MsoListParagraph align=left style='margin:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US style='color:teal'>&lt;/</span><span
+  lang=EN-US style='color:#3F7F7F'>html</span><span lang=EN-US
+  style='color:teal'>&gt;</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span style='font-size:12.0pt;color:black'>이를 실행하면 다음과 같은 화면을
+볼 수 있습니다<span lang=EN-US>.</span></span><a href="http://auisoft.net/blog/auigrid/quick_start.html" target="_blank">(위 소스 실제 동작 화면 보기)</a></p>
+
+
+
+
+<p class=MsoListParagraph align=left style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;margin-bottom:.0001pt;text-align:left;
+line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+word-break:keep-all'><span lang=EN-US style='font-size:12.0pt;color:black'>&nbsp;</span></p>
+
+<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+ style='margin-left:36.0pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=601 valign=top style='width:450.8pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoListParagraph align=left style='margin:0cm;margin-bottom:.0001pt;
+  text-align:left;line-height:20.25pt;text-autospace:ideograph-numeric ideograph-other;
+  word-break:keep-all'><span lang=EN-US><img border=0 width=584 height=353
+  src="../images/1.png"></span></p>
+ 
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:12.0pt;line-height:107%'>&nbsp;</span></p>
+
+
+</div>
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta name="og:title" content="HTML5, 자바스크립트 데이터그리드 AUIGrid">
+<meta name="og:url" content="http://www.auisoft.net/">
+<meta name="og:description" content="HTML5, 자바스크립트 데이타그리드(javascript datagrid) AUISoft">
+<title>AUIGrid 데모, HTML5, 자바스크립트 데이터그리드 AUIGrid</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+<!-- 데모 구성용 CSS 입니다. 실제 프로젝트에서는 불필요 하니 추가할 필요 없습니다. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- ajax 요청을 위한 스크립트입니다. -->
+<!-- jQuery 사용한다면, 해당 2개의 JS는 불필요 합니다.  -->
+<script type="text/javascript" src="./ajax.js"></script>
+<script type="text/javascript" src="./common.js"></script>
+
+<!-- AUIGrid 테마 CSS 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<!-- 원하는 테마가 있다면, 다른 파일로 교체 하십시오. -->
+<link href="./style/AUIGrid_style.css" rel="stylesheet">
+
+<!-- AUIGrid 라이센스 파일입니다. 그리드 출력을 위해 꼭 삽입하십시오. -->
+<script type="text/javascript" src="../AUIGrid/AUIGridLicense.js"></script>
+
+<!-- 실제적인 AUIGrid 라이브러리입니다. 그리드 출력을 위해 꼭 삽입하십시오.--> 
+<script type="text/javascript" src="../AUIGrid/AUIGrid.js"></script>
+<script type="text/javascript" src="../pdfkit/AUIGrid.pdfkit.js"></script>
+
+<!-- 브라우저 다운로딩 할 수 있는 JS 추가 -->
+<script type="text/javascript" src="../pdfkit/FileSaver.min.js"></script>
+
+<style type="text/css">
+
+/* 커스텀 스타일 */
+.left {
+	text-align:left;
+}
+.c-red {
+	color:#CC3D3D;
+	font-weight:bold;
+}
+
+/* 드랍 리스트의 아이템 텍스트 left 로 재정의 */
+.aui-grid-drop-list-item-wrapper {
+	text-align : left;
+}
+
+/* 그리드 오버 시 행 선택자 만들기 */
+.aui-grid-body-panel table tr:hover {
+	background:#EAEAEA;
+}
+.aui-grid-main-panel .aui-grid-body-panel .aui-grid-table tr td:hover {
+	background:#EAEAEA;
+}
+
+/* 셀력션 행 대표 백그라운드 스타일 재정의 */
+.aui-grid-selection-row-bg {
+	background: #D9E5FF !important;
+	color: #000 !important;
+}
+
+/* 셀력션 행 대표 셀 이외의 백그라운드 스타일 재정의 */
+.aui-grid-selection-row-others-bg {
+	background: #D9E5FF !important;
+	color: #000 !important;
+}
+
+
+</style>
+<script type="text/javascript">
+
+// AUIGrid 생성 후 반환 ID
+var myGridID;
+
+function documentReady() {
+	
+	// AUIGrid 그리드를 생성합니다.
+	createAUIGrid(columnLayout);
+	
+	// 데이터 요청, 요청 성공 시 AUIGrid 에 데이터 삽입합니다.
+	requestData("./data/schedule_tree.json");
+
+};
+
+
+// AUIGrid 칼럼 설정
+var columnLayout = [ {
+		dataField : "id",
+		headerText : "ID",
+		width: 50
+}, {
+	    dataField: "name",
+	    headerText: "Task Name",
+	    filter : {
+	    	showIcon: true
+	    },
+	    headerTooltip : {
+			show : true,
+			tooltipHtml : '<div style="width:180px;"><p>Just an incredibly simple <span style="color:#F29661;">AUIGrid</span></p><p>Faucibus sed lobortis aliquam lorem blandit. Lorem eu nunc metus col. Commodo id in arcu ante lorem ipsum sed accumsan erat praesent faucibus commodo ac mi lacus. Adipiscing mi ac commodo. </p></div>'
+		},
+		style : "left",
+		width:300
+}, {
+		dataField : "charge",
+		headerText : "Charge",
+		filter : {
+	    	showIcon: true
+	    },
+		headerTooltip : {
+			show : true,
+			tooltipHtml : '<div style="width:120px;"><p>Things I Can Do</p><p> Integer eu ante ornare amet commetus vestibulum blandit integer in curae ac faucibus integer non. Adipiscing cubilia elementum integer lorem ipsum dolor sit amet.</p></div>'
+		},
+		style : "left",
+		width:120,
+		renderer : {
+			type : "IconRenderer",
+			iconWidth : 20, // icon 가로 사이즈, 지정하지 않으면 24로 기본값 적용됨
+			iconHeight : 20,
+			iconFunction : function(rowIndex, columnIndex, value, item) {
+				if(value && value.substr(0, 1) == "A") 
+					return "./assets/office_female.png" ;
+				return "./assets/office_man.png" ;
+			}
+		},
+		editRenderer : {
+			type : "ComboBoxRenderer",
+			showEditorBtnOver : true, // 마우스 오버 시 에디터버턴 보이기
+			historyMode : true // 콤보 리스트 외에 사용자가 다른 값을 입력하면 해당 값이 기존 list 에 추가되어 출력됨
+		}
+}, {
+		dataField: "complete",
+		headerText: "Complete(%)",
+		width : 100,
+		renderer : {
+			type : "BarRenderer",
+			min : 0,
+			max : 100
+		},
+		editRenderer : {
+			type : "NumberStepRenderer",
+			min : 0,
+			max : 100,
+			step : 1
+		},
+		styleFunction : function(rowIndex, columnIndex, value, headerText, dataField, item) {
+			if(value == 100)
+				return "c-red";
+			return "";
+		}
+}, {
+		dataField: "start",
+		headerText: "Start Date",
+		formatString : "mm/dd/yyyy",
+		dataType:"date",
+		editRenderer : {
+			type : "CalendarRenderer",
+			onlyCalendar : true, // 달력으로만 수정 가능
+			showEditorBtnOver : true, // 마우스 오버 시 에디터버턴 보이기
+			titles : ["S", "M", "T", "W", "T", "F", "S"],
+			monthTitleString : "mmm", 
+			formatMonthString : "mmm yyyy",
+			formatYearString : "yyyy",
+			showExtraDays : true, // 지난 달, 다음 달 여분의 날짜(days) 출력 안함
+			showTodayBtn : true, // 오늘 날짜 선택 버턴 출력
+			todayText : "Today" // 오늘 날짜 버턴 텍스트
+		}
+}, {
+		dataField: "end",
+		headerText: "End Date",
+		formatString : "mm/dd/yyyy",
+		dataType:"date",
+		editRenderer : {
+			type : "CalendarRenderer",
+			onlyCalendar : true, // 달력으로만 수정 가능
+			showEditorBtnOver : true, // 마우스 오버 시 에디터버턴 보이기
+			titles : ["S", "M", "T", "W", "T", "F", "S"],
+			monthTitleString : "mmm", 
+			formatMonthString : "mmm yyyy",
+			formatYearString : "yyyy",
+			showExtraDays : true, // 지난 달, 다음 달 여분의 날짜(days) 출력 안함
+			showTodayBtn : true, // 오늘 날짜 선택 버턴 출력
+			todayText : "Today" // 오늘 날짜 버턴 텍스트
+		}
+}];
+
+
+// AUIGrid 를 생성합니다.
+function createAUIGrid(columnLayout) {
+	
+	var auiGridProps = {};
+
+	auiGridProps.selectionMode = "singleRow";
+	
+	auiGridProps.editable = true;
+	
+	auiGridProps.enableFilter = true;
+	
+	auiGridProps.showStateColumn = true;
+	
+	// 트리 컬럼(즉, 폴딩 아이콘 출력 칼럼) 을 인덱스1번으로 설정함(디폴트 0번임)
+	auiGridProps.treeColumnIndex = 1;
+	
+	// 최초 보여질 때 모두 열린 상태로 출력 여부
+	auiGridProps.displayTreeOpen = true;
+	
+	// 체크박스 사용 안함
+	auiGridProps.showRowCheckColumn = false;
+
+	auiGridProps.showRowNumColumn = false;
+
+	// 실제로 #grid_wrap 에 그리드 생성
+	myGridID = AUIGrid.create("#grid_wrap", columnLayout, auiGridProps);
+	
+}
+
+var isExpanded = true;
+function expand() {
+	if (!isExpanded) {
+		AUIGrid.expandAll(myGridID);
+		isExpanded = true;
+	} else {
+		AUIGrid.collapseAll(myGridID);
+		isExpanded = false;
+	}
+}
+
+// 트리 depth 별 오픈하기
+function showItemsOnDepth(event) {
+	var depthSelect = document.getElementById("depthSelect");
+	var  depth = depthSelect.value;
+	
+	// 해당 depth 까지 오픈함
+	AUIGrid.showItemsOnDepth(myGridID, Number(depth) );
+};
+
+
+// 엑셀 내보내기(Export);
+function exportClick() {
+	
+	// 그리드가 작성한 엑셀, CSV 등의 데이터를 다운로드 처리할 서버 URL을 지시합니다.
+	// 서버 사이드 스크립트가 JSP 이라면 ./export/export.jsp 로 변환해 주십시오.
+	// 스프링 또는 MVC 프레임워크로 프로젝트가 구축된 경우 해당 폴더의 export.jsp 파일을 참고하여 작성하십시오.
+	AUIGrid.setProp(myGridID, "exportURL", "./server_script/export.php");
+	
+	// 내보내기 실행
+	AUIGrid.exportToXlsx(myGridID);
+};
+
+// PDF 내보내기(Export), AUIGrid.pdfkit.js 파일을 추가하십시오.
+function exportPdfClick() {
+	
+	// 완전한 HTML5 를 지원하는 브라우저에서만 PDF 저장 가능( IE=10부터 가능 )
+	if(!AUIGrid.isAvailabePdf(myGridID)) {
+		alert("PDF 저장은 HTML5를 지원하는 최신 브라우저에서 가능합니다.(IE는 10부터 가능)");
+		return;
+	}
+	
+	// 그리드가 작성한 엑셀, CSV 등의 데이터를 다운로드 처리할 서버 URL을 지시합니다.
+	// 서버 사이드 스크립트가 JSP 이라면 ./export/export.jsp 로 변환해 주십시오.
+	// 스프링 또는 MVC 프레임워크로 프로젝트가 구축된 경우 해당 폴더의 export.jsp 파일을 참고하여 작성하십시오.
+	AUIGrid.setProp(myGridID, "exportURL", "./server_script/export.php");
+	
+	// 내보내기 실행
+	AUIGrid.exportToPdf(myGridID, {
+		fontPath : "../pdfkit/jejugothic-regular.ttf"
+	});
+};
+
+</script>
+
+</head>
+<body>
+
+<div id="main">
+	<div class="desc">
+		<span class="btn" style="float:right;" onclick="exportClick()">엑셀(xlsx)로 저장</span>
+		<span class="btn" style="float:right;" onclick="exportPdfClick()">PDF로 저장</span>
+		<p style="clear:both;">프로젝트 일정 관리 테이블을 출력한 모습입니다. ( 계층구조 데이터 표현 )</p>
+		<ul class="nav_u">
+			<li><span onclick="expand()" class="btn">모두 열기/ 닫기</span></li>
+			<li><select id="depthSelect" onchange="showItemsOnDepth()">
+				<option value="default" selected="selected" disabled="disabled">-- 특정 계층까지만 보이기 -- </option>
+				<option value="1">계층 1 Depth 만 보이기</option>
+				<option value="2">계층 2 Depth 까지 보이기</option>
+				<option value="3">계층 3 Depth 까지 보이기</option>
+			</select></li>
+		</ul>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div id="grid_wrap" style="width:800px; height:480px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+	</div>
+</div>
+
+<div id="footer">
+     <div class="copyright">
+        <p>Copyright © 2015 AUISoft </p>
+    </div>
+</div>
+
+</body>
+</html>
