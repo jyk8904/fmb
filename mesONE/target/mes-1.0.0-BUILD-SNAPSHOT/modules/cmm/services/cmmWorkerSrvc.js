@@ -67,7 +67,7 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$location', func
 	           
            		// 워커로부터 전달되는 메시지를 받는다.
            		workerName.worker.onmessage = function(evt){ 
-           			console.log(evt)
+           			//console.log(evt)
            			if(workerName.sts=='stop'){
            				workerStart(workerName, url, func);
            			}

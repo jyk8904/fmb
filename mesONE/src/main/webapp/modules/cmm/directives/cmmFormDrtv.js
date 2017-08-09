@@ -185,11 +185,18 @@ angular
     		replace:true,
     		transclude: true,  
     		template: "<div test-ctrl2 class='titleHeader col-md-12 col-sm-12 col-xs-12'>" +
-    					"<img class ='col-lg-1 col-md-2 col-sm-2 col-xs-2' src={{logo}}>" +
+    					'<img ng-if="!isMobile" class ="col-lg-1 col-md-2 col-sm-2 col-xs-2" src={{logo}} />' +
+    					'<img ng-if="isMobile" class ="col-lg-1 col-md-2 col-sm-2 col-xs-2" ng-click="onSwipeRight()" src={{logo}} />' +
     					'<div  ng-if="!isMobile" class="col-md-5 col-sm-5 col-xs-5 col-xs-offset-1 col-lg-offset-2"><h1 class="title" style="color: white;">{{title}}</h1></div>'+
-    					'<div ng-if="isMobile" class="col-md-5 col-sm-5 col-xs-5 col-xs-offset-1 col-lg-offset-2"><h3 class="title" style="color: white;">{{title}}</h3></div>'+
+    					'<div ng-if="isMobile" class="col-md-5 col-sm-5 col-xs-5 col-xs-offset-1 col-lg-offset-2"><h4 class="title" style="color: white;">{{title}}</h4></div>'+
     					"<div class='col-lg-3 col-md-4 col-sm-4 col-xs-4 col-lg-offset-1' ng-transclude></div>"	+
-    				  "</div>"
+    				  "</div>",
+    		controller: function($scope, $attrs, $log, $mdSidenav) {
+    			$scope.onSwipeRight = function() {    
+    			    $mdSidenav('left1').open();
+
+    			}
+    		}
     	}
     })
     .directive('bcFormBody', function() {  /* 폼의 주요 Contents 부분. 테이블이 없을 경우만 사용  */

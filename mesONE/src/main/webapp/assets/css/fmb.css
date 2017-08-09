@@ -876,3 +876,10 @@ div[class^=eqpt] {
 	 height:50px;
 	 z-index:200;
 }
+
+
+/* 라인별 생산실적 */
+.lineBtn {
+	width: 35px;
+	height: 35px;
+}

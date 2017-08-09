@@ -16,7 +16,8 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 													'$window',
 													'$q',
 													'$timeout',
-	function(CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window,	$q, $timeout) {
+													'$mdSidenav',
+	function(CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window,	$q, $timeout, $mdSidenav) {
 	/*------------------------------------------
 	 * 변수 선언
 	 *-----------------------------------------*/
@@ -53,7 +54,6 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			getData();
 		}
 
-		
 	/*------------------------------------------
 	 * Function 선언
 	 *-----------------------------------------*/

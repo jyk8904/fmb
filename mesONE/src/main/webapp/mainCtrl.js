@@ -66,10 +66,11 @@ angular
 	self.btnWorkerStop = function () { workerList.workerStop(workerList.worker1); }
    	self.LotationSetting = LotationSetting;
    	self.submit1 = submitLotationSetting;
-    $scope.onSwipeRight = function() {
-        $mdSidenav('left1').open();
+/*    self.onSwipeRight = function() {
+    	alert("do it!!!");
+        //$mdSidenav('left1').open();
     };
-    $scope.onSwipeLeft =toggleLeft;
+   */ $scope.onSwipeLeft =toggleLeft;
     	
     	function toggleLeft() {
           $mdSidenav('left1').close();

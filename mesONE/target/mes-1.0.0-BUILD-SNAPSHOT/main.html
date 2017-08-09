@@ -13,8 +13,9 @@
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>FMB System</title>
+
 <style type="text/css">
     #warning-message { display: none; }
     @media only screen and (orientation:portrait){
@@ -27,12 +28,26 @@
 </style>
 
 
-	<script>
-    try{
-        window.addEventListener('load', function(){
-            setTimeout(scrollTo, 0, 0, 1);
-        }, false);
-    } catch(e){}
+<script>
+	// 모바일 브라우저 주소창 안보이게 하기
+	(function() {
+		function hideAddressBar() {
+	 
+			if (document.height <= window.outerHeight) return;		// 웹페이지의 높이가 화면높이보다 작을 때는 실행할 필요가 없으므로 종료
+	 
+			var scrollTimer = setInterval(function() {
+				if ( ! pageYOffset) {	// 모바일 브라우저에서 주소창이 보이고 있을 때는 pageYOffset = 0 이므로 이때만 실행
+					scrollTo(0, 1);		// 웹페이지를 x축 0, y축 1의 위치로 끌어올림
+				} else {
+					clearInterval(scrollTimer);		// pageYOffset !=0 인 경우 반복 종료: scrollTo(0, 1) 이 실행되었거나 사용자가 스크롤을 움직인 경우
+				}
+			}, 100);	// 100 밀리세컨드마다 반복 실행
+	 
+		};
+	 
+		window.addEventListener('load', hideAddressBar, false);		// 페이지 로드 되었을 때 실행
+		window.addEventListener('orientationchange', hideAddressBar, false);	// 화면이 가로/세로 전환되었을 때 실행
+	})();
 </script>
 
 	<!-- JQUERY -->
@@ -89,13 +104,13 @@
 </head>
 
 
-<body ng-controller="MainCtrl as vm" class="container-fluid col-md-12
+<body ng-controller="MainCtrl as vm" md-swipe-right="vm.onSwipeRight()" class="container-fluid col-md-12
  col-sm-12 col-xs-12" ng-class="{loading:loadingView}" class="container"  style="background-color:#0f2f56; padding:0">
 
-<div id="warning-message" class="hidden-xs" style="width:100%; height:100%; background-color: #050513; color:white; font-size:30pt; opacity:0.8; position:fixed; z-index:10000;" >
+<!-- <div id="warning-message" class="hidden-xs" style="width:100%; height:100%; background-color: #050513; color:white; font-size:30pt; opacity:0.8; position:fixed; z-index:10000;" >
   this website is only viewable <br> in landscape mode<br><br>
     이 페이지는가로모드만 지원합니다
-</div>
+</div> -->
 <!-- <body ng-controller="MainCtrl as vm" ng-class="{loading:loadingView}" class="container" 
 	style="width: 100%;" ng-style="vm.bgTheme === 'black' && {'background-image':'url(./assets/img/system/back.png)'} || vm.bgTheme === 'blue' && {'background-image':'url(./assets/img/system/back_blue.png)'}"> -->
 	
@@ -117,11 +132,7 @@
 	</div>   
 	
 	<!-- 모바일 버전 -->
-
-<!-- <section layout="row" flex  class="hidden-md hidden-lg"  md-swipe-left="onSwipeLeft()" md-swipe-right="onSwipeRight()" style="border:yellow 1px solid; width:5%; height:100%; position:fixed; z-index:1001;">
-</section>
-<section layout="row" flex  class="hidden-md hidden-lg"  style="border:red 1px solid; width:8%; height:100%;  z-index:1000; overflow:visible !important;">
- <md-sidenav class="md-sidenav-left" md-swipe-left="onSwipeLeft()" md-component-id="left1" md-disable-backdrop md-whiteframe="4" hide-gt-md style="z-index:1002;">
+  <md-sidenav class="md-sidenav-left" md-component-id="left1" md-disable-backdrop md-whiteframe="4" hide-gt-md style="z-index:1002;">
 
       <md-toolbar class="md-theme-indigo">
         <h1 class="md-toolbar-tools" style="float:right;" ng-click="onSwipeLeft()">≡</h1>
@@ -177,7 +188,6 @@
       </md-content>
 
     </md-sidenav>
-</section> -->
  
 	
 	<!-- <div p-ctrl data-ng-view style='width:100%; height:1016px'></div> -->

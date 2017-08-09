@@ -15,9 +15,9 @@
  */
  -->
 <!-- ngview 내부 페이지 -->
-<div class='bc-screen' style="width:initial !important;">
+<div test-ctrl class='bc-screen' style="margin:0">
 <!-- ngview 내부 header -->
-<bc-form-header logo='assets/img/system/logo.png' title="라인별 생산 실적 (A동)">
+<bc-form-header logo='assets/img/system/logo.png' title="라인별 생산 실적 (A동)" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
 </bc-form-header>	
 
 
@@ -31,7 +31,7 @@
 	<bc-form-body> 
 	<div layout="row" style="width:90%; margin:auto;">
 		<div layout="column" layout-fill layout-wrap style="width:18%; ">
-			<div flex layout="column" layout-fill layout-wrap class="headerColorNested" grid-header-ctrl data ="vm.lineList"  ng-repeat="line in vm.lineList track by $index" ng-show="$index%7==0" >
+			<div grid-header-ctrl flex layout="column" layout-fill layout-wrap class="headerColorNested" data ="vm.lineList" is-mobile="isMobile" ng-repeat="line in vm.lineList track by $index" ng-show="$index%7==0" >
 			 <div style="color:white; border:1px solid black;">구분</div>
 			 <div style="color:white; border:1px solid black;">목표</div>
 			 <div layout="row" flex style="color:white;">
@@ -49,7 +49,7 @@
 		</div>
 		
 		<div layout="cloumn" layout-wrap style="width:82%;">
-		<div grid-panel-ctrl data = "vm.lineList" flex ng-repeat="line in vm.lineList track by $index" layout="column" layout-fill layout-wrap class="colorNested" style="text-align:center;">
+		<div grid-panel-ctrl data = "vm.lineList" flex ng-repeat="line in vm.lineList track by $index" is-mobile="isMobile" layout="column" layout-fill layout-wrap class="colorNested" style="text-align:center;">
 		  <div style="color:white; border:1px solid black;display:flex; align-items:center; justify-content: center;">
 		    <div><p>{{line.lineTopNm}}</p><p>{{line.lineMidNm}}</p><p>{{line.lineBotNm}}</p></div>
 		  </div>
