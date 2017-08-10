@@ -20,6 +20,20 @@
 		min-height: 305px;
 	}
 	.largeBox {
-		min-height:305px;
+		min-height: 305px;
+	}
+	
+	/* 라인별 생산실적 */
+	.lineBtn {
+		width: 20px;
+		height: 20px;
+	}
+	.lineBtnMd {
+		width: 15px;
+		height: 15px;
+	}
+	.lineBtnSm {
+		width: 10px;
+		height: 10px;
 	}
 }

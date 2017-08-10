@@ -13,7 +13,16 @@
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- 모바일용웹 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<!-- 안드로이드 홈화면추가시 상단 주소창 제거 -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-status-bar-style" content="blue">  
+<!-- ios홈화면추가시 상단 주소창 제거 -->
+<meta name="apple-mobile-web-app-capable" content="yes"> 
+<meta name="apple-mobile-web-app-status-bar-style" content="blue">  
 <title>FMB System</title>
 
 <style type="text/css">
@@ -29,25 +38,13 @@
 
 
 <script>
-	// 모바일 브라우저 주소창 안보이게 하기
-	(function() {
-		function hideAddressBar() {
-	 
-			if (document.height <= window.outerHeight) return;		// 웹페이지의 높이가 화면높이보다 작을 때는 실행할 필요가 없으므로 종료
-	 
-			var scrollTimer = setInterval(function() {
-				if ( ! pageYOffset) {	// 모바일 브라우저에서 주소창이 보이고 있을 때는 pageYOffset = 0 이므로 이때만 실행
-					scrollTo(0, 1);		// 웹페이지를 x축 0, y축 1의 위치로 끌어올림
-				} else {
-					clearInterval(scrollTimer);		// pageYOffset !=0 인 경우 반복 종료: scrollTo(0, 1) 이 실행되었거나 사용자가 스크롤을 움직인 경우
-				}
-			}, 100);	// 100 밀리세컨드마다 반복 실행
-	 
-		};
-	 
-		window.addEventListener('load', hideAddressBar, false);		// 페이지 로드 되었을 때 실행
-		window.addEventListener('orientationchange', hideAddressBar, false);	// 화면이 가로/세로 전환되었을 때 실행
-	})();
+	function hideAddressBar() {
+	    if (document.documentElement.scrollHeight < window.outerHeight / window.devicePixelRatio)
+	        document.documentElement.style.height = (window.outerHeight / window.devicePixelRatio) + 'px';
+	    setTimeout(window.scrollTo(1, 1), 0);
+	}
+	window.addEventListener("load", function () { hideAddressBar(); });
+	window.addEventListener("orientationchange", hideAddressBar());
 </script>
 
 	<!-- JQUERY -->
@@ -101,6 +98,23 @@
 	<link rel="stylesheet" href="/mes/assets/css/fmb.css" />
 	<link rel="stylesheet" href="/mes/assets/css/fmbDash.css" />
 	<link rel="stylesheet" href="/mes/assets/css/responsive.css" />
+	
+	
+	<!-- 안드로이드 icon -->
+	<link rel="icon" href="/mes/assets/img/ico/DsFmb_logo.png">
+	<link rel="icon" sizes="76x76" href="/mes/assets/img/ico/DsFmb_logo76.png">  
+	<link rel="icon" sizes="120x120" href="/mes/assets/img/ico/DsFmb_logo.png">  
+	<link rel="icon" sizes="152x152" href="/mes/assets/img/ico/DsFmb_logo.png">
+		
+	<!-- IOS icon -->
+	<link rel="apple-touch-icon" href="/mes/assets/img/ico/DsFmb_logo.png">  
+	<link rel="apple-touch-icon" sizes="76x76" href="/mes/assets/img/ico/DsFmb_logo76.png">  
+	<link rel="apple-touch-icon" sizes="120x120" href="/mes/assets/img/ico/DsFmb_logo.png">  
+	<link rel="apple-touch-icon" sizes="152x152" href="/mes/assets/img/ico/DsFmb_logo.png">
+	
+	<!-- startup Page -->
+	<link rel="touch-startup-image" href="/mes/assets/img/ico/startup.png">
+	<link rel="apple-touch-startup-image" href="/mes/assets/img/ico/startup.png">
 </head>
 
 

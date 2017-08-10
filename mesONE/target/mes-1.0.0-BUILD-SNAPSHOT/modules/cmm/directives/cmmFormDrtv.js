@@ -188,7 +188,7 @@ angular
     					'<img ng-if="!isMobile" class ="col-lg-1 col-md-2 col-sm-2 col-xs-2" src={{logo}} />' +
     					'<img ng-if="isMobile" class ="col-lg-1 col-md-2 col-sm-2 col-xs-2" ng-click="onSwipeRight()" src={{logo}} />' +
     					'<div  ng-if="!isMobile" class="col-md-5 col-sm-5 col-xs-5 col-xs-offset-1 col-lg-offset-2"><h1 class="title" style="color: white;">{{title}}</h1></div>'+
-    					'<div ng-if="isMobile" class="col-md-5 col-sm-5 col-xs-5 col-xs-offset-1 col-lg-offset-2"><h3 class="title" style="color: white;">{{title}}</h3></div>'+
+    					'<div ng-if="isMobile" class="col-md-5 col-sm-5 col-xs-5 col-xs-offset-1 col-lg-offset-2"><h4 class="title" style="color: white;">{{title}}</h4></div>'+
     					"<div class='col-lg-3 col-md-4 col-sm-4 col-xs-4 col-lg-offset-1' ng-transclude></div>"	+
     				  "</div>",
     		controller: function($scope, $attrs, $log, $mdSidenav) {

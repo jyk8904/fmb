@@ -15,8 +15,8 @@
  */
  -->
 <!-- ngview 내부 페이지 -->
-<div class='bc-screen' style="width:initial !important;">
-<bc-form-header logo='assets/img/system/logo.png' title="TBM">
+<div test-ctrl class='bc-screen' style="margin:0">
+<bc-form-header logo='assets/img/system/logo.png' title="TBM" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
 </bc-form-header>
 	<!-- ngview 내부 header -->
 <!-- <div class='inner-header' style='width:1919px; height:116px;'>
@@ -28,7 +28,7 @@
 	<!-- ngview 내부 body -->
 	<bc-form-body>
 	<div layout="row" style="width:90%; margin:auto;">
-	 	<div grid-tbm-panel-ctrl data= "vm.Tbm" layout="column" layout-fill layout-wrap style="width:18%;" class="colorNested">
+	 	<div grid-tbm-panel-ctrl data= "vm.Tbm" is-mobile="isMobile" layout="column" layout-fill layout-wrap style="width:18%;" class="colorNested">
 			<div style="color:white; border:1px solid black;">구분</div>
 			<div style="color:white; border:1px solid black;">금일 점검예정</div>
 			<div style="color:white; border:1px solid black;">점검 진행중</div>
@@ -39,7 +39,7 @@
 		
 		
 		<div class="colList" style="width:82%;">
-		<div grid-tbm-panel-ctrl  data= "vm.Tbm" flex  layout="column" layout-fill layout-wrap  class="colorNested">
+		<div grid-tbm-panel-ctrl  data= "vm.Tbm" is-mobile="isMobile" flex  layout="column" layout-fill layout-wrap  class="colorNested">
  			<div layout="row" >
 				<div flex style="color:white; border:1px solid black;">A동</div>
 				<div flex style="color:white; border:1px solid black;">B동</div>

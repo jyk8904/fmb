@@ -25,6 +25,7 @@ angular
     var self = this;
     var workerList = CmmWorkerSrvc;
     var fact_id = "B";
+    $scope.isMobile = false;
     
     self.lineParamVo = {
     	factId : fact_id,
@@ -50,11 +51,27 @@ angular
     		return parseInt(value);
     	}
     };
-  //워커 스타트
     
+    // 모바일 체크 함수 실행
+	isMobileFunc();
+	
     getLineList();
+    
+    // 워커스타트
 	workerList.workerStart(workerList.worker2, "worker2.js", getLineList);
     
+	// 모바일 체크 함수 정의
+	function isMobileFunc(){
+		var UserAgent = navigator.userAgent;
+
+		if (UserAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null)
+		{
+			$scope.isMobile = true;
+		}else{
+			$scope.isMobile =  false;
+		}
+	}
+	
     function getLineList(){
 	//선택된 공장의 line별 데이터 가져오기
     var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do", self.lineParamVo);
