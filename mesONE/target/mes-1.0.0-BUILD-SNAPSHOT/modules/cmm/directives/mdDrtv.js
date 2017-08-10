@@ -331,8 +331,7 @@ angular
 				  var screenRate = width / default_width;
  
 					  var length = scope.data.length / 7;
-					  /*if (length < 3)
-					  {*/
+	
 						  if (length <= 1) {
 							  var header = "150";
 							  var data = "375";
@@ -390,28 +389,6 @@ angular
 						  element[0].children[4].style.height = subData + "px";
 						  element[0].children[4].style.lineHeight = subData + "px";
 						  element[0].children[4].style.fontSize = fontSize + "px";
-						  /*element[0].children[5].style.height = subData + "px";
-						  element[0].children[5].style.lineHeight = subData + "px";
-						  element[0].children[5].style.fontSize = fontSize + "px";
-						  element[0].children[6].style.height = subData + "px";
-						  element[0].children[6].style.lineHeight = subData + "px";
-						  element[0].children[6].style.fontSize = fontSize + "px";*/
-						  
-						  /*element[0].children[0].children[0].style.height = header + "px";
-						  element[0].children[0].children[1].style.height = subData + "px";
-						  element[0].children[0].children[2].children[0].style.height = data + "px";
-						  element[0].children[0].children[2].children[1].style.height = subData + "px";
-						  element[0].children[0].children[3].children[0].style.height = subData + "px";
-						  element[0].children[0].children[4].children[0].style.height = subData + "px";
-						  element[0].children[0].children[5].style.height = subData + "px";
-						  element[0].children[0].children[6].style.height = subData + "px";*/						  
-					/*	  for (var i = 0; i < 5; i++)
-						  {
-							  element[0].children[0].children[i].style.fontSize = fontSize + "px";
-							  
-							  element[0].children[0].children[i].style.fontSize = fontSize + "px";
-						  }*/
-					  /*}*/
 				  });
 			  } 
 		  }
