@@ -1,7 +1,17 @@
 /**
- * 
+ * @Class Name : worker.js
+ * @Description : 페이지 전환 설정 관리 워커
+ * @Modification Information  
+ * @
+ * @  작업일       작성자      내용
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.05.    조준연 정유경    최초생성
+ * @ 
+ * @since 
+ * @version 1.0
+ * @function
+ *
  */
-
  onmessage = function(evt){
    
     // 화면전환에 필요한 각각의 데이터를 JSON으로 받음.

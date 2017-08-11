@@ -429,7 +429,7 @@ angular
 							  var data = "31";
 							  var fontSize = "14";
 						  }
-						  
+					
 						  element[0].children[0].style.height = header + "px";
 						 /* element[0].children[0].style.lineHeight = header + "px";*/
 						  element[0].children[0].style.fontSize = fontSize + "px";
@@ -440,7 +440,7 @@ angular
 						 */ 
 						  for(var i = 1; i < 7; i++)
 						  {
-							  console.log(i)
+							 /* console.log(i)*/
 							  element[0].children[i].style.height = data + "px";
 							  element[0].children[i].style.lineHeight = data + "px";
 							  element[0].children[i].style.fontSize = fontSize + "px";
@@ -502,4 +502,4 @@ angular
 				  }, 200);
 			  } 
 		  }
-	  });
+	  }) ;

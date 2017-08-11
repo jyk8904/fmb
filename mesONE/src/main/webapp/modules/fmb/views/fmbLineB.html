@@ -46,9 +46,8 @@
 		</div>
 		
 		<div class="colList" style="width:82%;">
-		<div ng-repeat="line in vm.lineList track by $index"  layout="row"  style="width:100%;">
-		
-			<div  grid-panel-ctrl data = "vm.lineList" layout-wrap class="colorNested col" style="text-align:center;">
+		<div layout="row" layout-wrap layout-fill style="width:100%; float:left;">
+			<div grid-panel-ctrl data = "vm.lineList" ng-repeat="line in vm.lineList track by $index" class="colorNested" style="text-align:center; width:14.28%;">
 			
 			  <div style="color:white; border:1px solid black;  display:flex; align-items:center; justify-content: center;" >
 			    <div >

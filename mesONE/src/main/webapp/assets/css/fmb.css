@@ -1,3 +1,4 @@
+
 @CHARSET "UTF-8";
 
 /* css 초기화 */
@@ -14,11 +15,11 @@
 @font-face{
 	font-family:'noteSans';
 	src:url("/mes/assets/font/NotoSansCJKkr-Regular.otf");
-	src:url("../font/NotoSansCJKkr-Regular.otf"); /* , local("사용자컴퓨터 내의 폰트")' */
+	src:url("../font/NotoSansCJKkr-Regular.otf"); /* , local("사용자컴퓨터 내의 대체폰트")' */
 }
 @font-face{
 	font-family:'noteSansBlack';
-	src:url("../font/NotoSansCJKkr-Black.otf"); /* , local("사용자컴퓨터 내의 폰트")' */
+	src:url("../font/NotoSansCJKkr-Black.otf"); /* , local("사용자컴퓨터 내의 대체폰트")' */
 }
 *{
 	font-family:noteSans;
@@ -35,7 +36,7 @@ img {
 	max-width:100%;
 }
 .mouse-over-bar {
-	padding-left:170px;
+	padding-left:30px;
 	transition: top 0.3s;
 	position: absolute;
 	top: -50px;
@@ -834,17 +835,18 @@ div[class^=eqpt] {
 .dialog-tbl{
 	width:500px;
 	margin:5px; 
-	border:1px solid #a5a0a0;
+	/* border:1px solid #a5a0a0; */
 	text-align:center;
 	}
 .dialog-tbl tr{
 	padding:5px;
-	border:1px solid #a5a0a0;
+	border-bottom:1px solid #a5a0a0; 
 	}
+
 .dialog-tbl tr td:first-child{
 	padding:5px;
 	width:200px; padding:5px; 
-	border:1px solid #a5a0a0;
+	?;
 	}
 
 .dialog-tbl tr td:second-child{

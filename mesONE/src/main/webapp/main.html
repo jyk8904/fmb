@@ -70,10 +70,6 @@
    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
 
-	<!-- Bootstrap -->
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-   	<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
-   
 	<!-- DevExtreme CSS -->
 	<link rel="stylesheet" type="text/css" href="assets/css/dx.common.css" />
 	<link rel="stylesheet" type="text/css" href="assets/css/dx.light.css" />
@@ -84,9 +80,6 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"   
 		  integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"   crossorigin="anonymous">
    
-	<!-- AUIgrid CSS-->   
-	<link rel="stylesheet" href="/mes/vendor/AUIGrid/AUIGrid_style.css">
-
 	<!-- AngularJS CSS -->
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
 
@@ -101,28 +94,33 @@
 
 <div id="warning-message" class="hidden-xs" style="width:100%; height:100%; background-color: #050513; color:white; font-size:30pt; opacity:0.8; position:fixed; z-index:10000;" >
   this website is only viewable <br> in landscape mode<br><br>
-    이 페이지는가로모드만 지원합니다
+    이 페이지는 가로모드만 지원합니다
 </div>
 <!-- <body ng-controller="MainCtrl as vm" ng-class="{loading:loadingView}" class="container" 
 	style="width: 100%;" ng-style="vm.bgTheme === 'black' && {'background-image':'url(./assets/img/system/back.png)'} || vm.bgTheme === 'blue' && {'background-image':'url(./assets/img/system/back_blue.png)'}"> -->
 	
 	<!-- pc 버전 -->
 	<div class="relative hidden-xs hidden-sm">
+	
 		<div class="mouse-over-bar"> 
+			<span ng-show="loginChk">{{id}}</span>
 	    	<md-button class="md-raised md-primary" ng-click='vm.LotationSetting()'>페이지 전환 설정</md-button>
 		 	<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStart()'>Start</md-button>
 	   	 	<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStop()'>Stop</md-button>&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;
-		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbCwMonClick()'>설비 가동현황(1)</md-button>
-		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbMonClick()'>설비 가동현황(2)</md-button>
-		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbTotalClick()'>생산 자원 종합 현황</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbAndonClick()'>안돈현황</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbMonClick()'>설비가동현황</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbTotalClick()'>생산자원종합현황</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLineAClick()'>Line별 생산실적(A)</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLineBClick()'>Line별 생산실적(B)</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLineCClick()'>Line별 생산실적(C)</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbTbmClick()'>Tbm</md-button>
-			<md-button class="md-raised md-default" ng-click='vm.btnFmbModeClick()' >개발모드</md-button>
+			<md-button class="md-raised md-default" ng-click='vm.btnFmbModeClick()' ng-show="id=='developer'">개발모드</md-button>&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp;
+			
+			<md-button class="md-raised md-primary" ng-click='logOut()' ng-show="loginChk">로그아웃</md-button>
 		</div>
 	</div>   
 	
+
 	<!-- 모바일 버전 -->
 
 <!-- <section layout="row" flex  class="hidden-md hidden-lg"  md-swipe-left="onSwipeLeft()" md-swipe-right="onSwipeRight()" style="border:yellow 1px solid; width:5%; height:100%; position:fixed; z-index:1001;">
@@ -186,10 +184,26 @@
     </md-sidenav>
 </section>
  -->
+<div style="background-image: url('assets/img/bg/login-2.png'); 
+background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-index: 10000; position: fixed;" ng-show="!loginChk">
+
+     <md-input-container class="md-warn" flex-gt-sm style="position: absolute; width:250px; top: 70%; left: 76%; color:white;">
+            <label style="color:white;">ID</label>
+            <input ng-model="id"  style="color:white;">
+          </md-input-container>
+     <md-input-container class="md-warn" flex-gt-sm style="position: absolute; width:250px; top: 76%; left: 76%; color:white;"> 
+            <label style="color:white;">PASSWORD</label>
+            <input type="password" ng-model="pw" ng-keyup="keyUpLogin(ev)" style="color:white;">
+     </md-input-container>
+
+	<md-button class="md-raised" ng-click="login()" style="margin-bottom:5px; width: 250px; height: 45px; position: absolute; top: 83%; left: 76%;">Login</md-button>
+	<md-checkbox ng-model="autoLogin" aria-label="자동로그인" init="false" class="md-warn"  style=" position: absolute; top: 88.5%; left: 77%; color:white; ">자동로그인</md-checkbox>
+	
+</div>
 	
 	<!-- <div p-ctrl data-ng-view style='width:100%; height:1016px'></div> -->
 	
-	<div data-ng-view class="col-md-12 col-sm-12 col-xs-12" style="padding:0"></div>
+	<div data-ng-view class="col-md-12 col-sm-12 col-xs-12" style="padding:0" ></div>
 	
 	<bc-form-footer>
 	<!--알람정보 하단 바 시작-->
@@ -248,14 +262,10 @@
 	<script src="modules/cmm/services/cmmFactSrvc.js"></script>
 	<script src="modules/cmm/services/cmmUtilSrvc.js"></script>
 	<script src="modules/cmm/directives/cmmFormDrtv.js"></script>
-
+	
    	<!-- FMB 관리 -->
-	<script src="modules/fmb/controllers/fmb001Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmb002Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmb003Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmb004Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmb005Ctrl.js"></script>
 	<script src="modules/fmb/controllers/fmbMonCtrl.js"></script>
+	<script src="modules/fmb/controllers/fmbAndonCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbCwMonCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbMainMonCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbModeCtrl.js"></script>
@@ -269,7 +279,6 @@
 	<script src="modules/fmb/controllers/dialogCtrl.js"></script>
 	<script src="modules/fmb/controllers/uploadCtrl.js"></script>
 	<script src="modules/fmb/controllers/imageViewerCtrl.js"></script>
-	<script src="vendor/pdfkit/AUIGrid.pdfkit.js"></script>
     	
 	<!--  Modify Page 관리 -->
 	<script src="modules/cmm/directives/mdDragDrtv.js"></script>
@@ -287,9 +296,5 @@
 	<script type="text/javascript" src="vendor/amcharts_3.21.3.free/amcharts/themes/dark.js"></script>
 	
 	<!--  amChartsDirective -->
-<!-- 	<script type="text/javascript" src="modules/cmm/directives/amChartsDirective.js"></script>	   	 -->
-   	<!-- d3 -->
-   <!--  <script src="https://d3js.org/d3.v3.js"></script>
-	<script src ="modules/cmm/directives/d3Bar.js"></script> -->
-
+	<!-- <script type="text/javascript" src="modules/cmm/directives/amChartsDirective.js"></script> -->
 </html>

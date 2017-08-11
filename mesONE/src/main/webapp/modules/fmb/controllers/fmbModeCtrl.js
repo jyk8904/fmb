@@ -14,7 +14,7 @@
 
 angular
     .module('app')
-    .controller('FmbModeCtrl', ['CmmAjaxService','CmmWorkerSrvc','CmmFactSrvc', '$http', '$scope','$mdSidenav', '$filter','$window','$mdDialog', '$timeout', function (CmmAjaxService, CmmWorkerSrvc, CmmFactSrvc, $http, $scope, $mdSidenav, $filter, $window, $mdDialog, $timeout) 
+    .controller('FmbModeCtrl', ['CmmAjaxService','CmmWorkerSrvc','CmmFactSrvc', '$http', '$scope','$mdSidenav', '$filter','$window','$mdDialog', '$timeout','$rootScope','$location', function (CmmAjaxService, CmmWorkerSrvc, CmmFactSrvc, $http, $scope, $mdSidenav, $filter, $window, $mdDialog, $timeout, $rootScope, $location) 
 {
 /*----------------------------------------------------------------
 *  변수 선언
@@ -22,6 +22,13 @@ angular
 *  @ 설명
 *  
 *---------------------------------------------------------------*/
+    
+    $scope.$watch('loginChk', function(newVal, oldVal) {
+		if(newVal == false){
+			$location.url('');
+		}    	
+    }, true);
+
     
      var worker= undefined;
      var self = this;
