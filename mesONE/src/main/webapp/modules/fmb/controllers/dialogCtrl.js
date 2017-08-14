@@ -70,7 +70,8 @@ angular
     
     getSelectedPlc();
    
-	//설비상태 발생추이 가져오기
+    
+  	//설비상태 발생추이 가져오기
 	var dateRunInfoPromise = CmmAjaxService.select("/mes/bas/selectDateRunInfo.do");
 	
 	dateRunInfoPromise.then(function(data) {
@@ -242,12 +243,14 @@ angular
 			{
 				"type": "serial",
 				"categoryField": "timeMin",	
+				"mouseWheelScrollEnabled": true,
+				"mouseWheelZoomEnabled": true,
+				"startDuration" : 1,
 				"categoryAxis": {
 					"title": "시간(분)"
 				},
 				"autoZoom": true,
-				"mouseWheelScrollEnabled": true,
-				"mouseWheelZoomEnabled": true,
+			
 				"minSelectedTime": 4,
 				"rotate": true,
 				"chartScrollbar": {
