@@ -14,7 +14,7 @@
 
 angular
     .module('app')
-    .controller('FmbMonCtrl', [  'CmmAjaxService'
+    .controller('FmbMonCtrl', [   'CmmAjaxService'
     							, 'CmmModalSrvc'
     							, 'CmmWorkerSrvc'
     							, '$rootScope'
@@ -46,6 +46,13 @@ angular
 	/*------------------------------------------
      * 변수 선언
      *-----------------------------------------*/
+	$scope.$watch('loginChk', function(newVal, oldVal) {
+	if(newVal == false){
+		$location.url('');
+		}    	
+	}, true);
+
+    							    
     var self = this;
     var workerList = CmmWorkerSrvc;
     $scope.isMobile = false;
@@ -87,7 +94,96 @@ angular
     
 	// 모바일 체크 함수 실행
 	isMobileFunc();
-	
+
+    AmCharts.makeChart("eqptStsHisChart",{
+		"type": "serial",
+		"categoryField": "date",
+		"dataDateFormat": "YYYY-MM-DD",
+		"categoryAxis": {
+			"parseDates": true
+		},
+		"chartCursor": {
+			"enabled": true
+		},
+		"chartScrollbar": {
+			"enabled": true
+		},
+		"trendLines": [],
+		"graphs": [
+			{
+				"bullet": "round",
+				"id": "AmGraph-1",
+				"title": "graph 1",
+				"valueField": "column-1"
+			},
+			{
+				"bullet": "square",
+				"id": "AmGraph-2",
+				"title": "graph 2",
+				"valueField": "column-2"
+			}
+		],
+		"guides": [],
+		"valueAxes": [
+			{
+				"id": "ValueAxis-1",
+				"title": "Axis title"
+			}
+		],
+		"allLabels": [],
+		"balloon": {},
+		"legend": {
+			"enabled": true,
+			"useGraphSettings": true
+		},
+		"titles": [
+			{
+				"id": "Title-1",
+				"size": 15,
+				"text": "Chart Title"
+			}
+		],
+		"dataProvider": [
+			{
+				"date": "2014-03-01",
+				"column-1": 8,
+				"column-2": 5
+			},
+			{
+				"date": "2014-03-02",
+				"column-1": 6,
+				"column-2": 7
+			},
+			{
+				"date": "2014-03-03",
+				"column-1": 2,
+				"column-2": 3
+			},
+			{
+				"date": "2014-03-04",
+				"column-1": 1,
+				"column-2": 3
+			},
+			{
+				"date": "2014-03-05",
+				"column-1": 2,
+				"column-2": 1
+			},
+			{
+				"date": "2014-03-06",
+				"column-1": 3,
+				"column-2": 2
+			},
+			{
+				"date": "2014-03-07",
+				"column-1": 6,
+				"column-2": 8
+			}
+		]
+	}
+);
+
+
     getBgImageList();      
     // 비동기실행에 따른 이벤트 순서 제어 
     $timeout(getPlcList(), 50)
@@ -184,6 +280,7 @@ angular
           controllerAs: 'vm',
           templateUrl: '/mes/modules/fmb/views/dialog1.tmpl.html',
           parent: angular.element(document.body),
+          isolateScope: false,
           targetEvent: ev,
           clickOutsideToClose:true,
           fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.

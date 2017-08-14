@@ -2,15 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sql-bas-info">
 
-<!-- 	 품목 정보 조회 
-    <select id="selectMBasMatMst" parameterType="com.dsinfo.fmb.service.MBasMatMstVO" resultType="com.dsinfo.fmb.service.MBasMatMstVO">     	      
-        SELECT *
-          FROM MBASMATMST
-       	  WHERE 1=1
-       	   <if test="mat_cd != '' and mat_cd != null">AND MAT_CD LIKE '%'+#{mat_cd}+'%'</if>
-           <if test="mat_nm != '' and mat_nm != null">AND MAT_NM LIKE '%'+#{mat_nm}+'%'</if>	    
-    </select> -->
-     
     
 <!--  	PLCList 정보 조회 -->
     <select id="selectFmbPlc" parameterType="com.dsinfo.fmb.service.FmbPlcParamVO" resultType="com.dsinfo.fmb.service.FmbPlcVO">     	      
@@ -137,41 +128,4 @@
     -->
     
 
-    
-<!--  parameter 전송방법 : 1.vo객체로 보내기
-    <select id="selectMBasMatMst" parameterType="com.dsinfo.fmb.service.MBasMatMstVO" resultType="com.dsinfo.fmb.service.MBasMatMstVO">     	      
-        SELECT *
-          FROM MBASMATMST
-       	  WHERE 1=1
-       	   <if test="mat_cd != '' and mat_cd != null">AND MAT_CD LIKE '%'+#{mat_cd}+'%'</if>
-           <if test="mat_nm != '' and mat_nm != null">AND MAT_NM LIKE '%'+#{mat_nm}+'%'</if>	    
-    </select>    
-    
- -->
- 
- <!--  parameter :  2. hashmap형태로 보내기
- 	 
-	HashMap<String, Object> map = new HashMap<String, Object>();
-	map.put("user", userInfo);
-
-
-	public interface UserInfoMapper {
-	    public UserInfo selectFmbPlc(HashMap<String, Object> map);
-	}
-
-     <select id="selectFmbPlc" parameterType="hashmap" resultType="com.dsinfo.fmb.service.FmbPlcVO">     	      
-        {call USP_EQPT_MON_SELEC01(#{FAC_ID},#{PLC_ID})}
-    </select>
--->
-
-<!-- 
-	 parameter : 3.@String으로 보내기
-
-	public interface UserInfoMapper {
-		public UserInfo selectFmbPlc(@Param("userId") String userId, @Param("state") int state);
-
-    <select id="selectFmbPlc" resultType="com.dsinfo.fmb.service.FmbPlcVO">     	      
-        {call USP_EQPT_MON_SELEC01(#{FAC_ID},#{PLC_ID})}
-
-    </select> -->
 </mapper>

@@ -1,10 +1,11 @@
-<md-dialog aria-label="eqpt info" class="infoPopup" style="width:1500px; height:900px; border-radius:50px;"">
+<md-dialog aria-label="eqpt info" class="infoPopup" style="width:1500px; height:900px; border-radius:50px;">
   <form ng-cloak>
     <md-toolbar style="border-radius:5px 5px 0 0;">
       <div class="md-toolbar-tools">
         <h2>{{vm.plcData}}의 설비 정보</h2>
         <span flex></span>
         <md-button class="md-icon-button">
+        
           <img src="assets/img/system/close_white.png" aria-label="Close dialog" ng-click="vm.cancel()">
         </md-button>
         
@@ -13,16 +14,27 @@
 
     <md-dialog-content class="infoPopupContent">
       <div class="md-dialog-content" style="width:1500px; height:800px;">
+      
+      	<!-- 선택된 plc에 따른 이미지 보여주는 기능 추가해야함  -->
         <img class="eqptImg" src='assets/img/photo/eqptPhoto2.png' style='position:relative; width:552px; height:300px; float:left; padding:20px;'>
-		<div class="timeProd" style="position:relative; width:900px; height:300px; float:left;  padding:20px;">
-			<div class="p_title">시간별 생산량</div>
-			<div dx-chart="vm.timeProd"></div>
-			
+		<div class="timeProd" style="position:relative; width:900px; height:300px; float:left; padding:0 20px 20px 20px;">
+	
+			<div class="col-xs-12" style=" border-bottom: 3px solid rgb(105, 111, 144);
+			background-color: rgba(76, 83, 121, 0.25); float:left; font-size:20px; color:white;    border-radius: 7px 7px 0 0;">	
+			<p style="margin: 10px 0px 0px 5px;">날짜별 가동추이 </p>
+			</div>
+			<div id="DataRunInfoChart" style="width: 100%; height:100%; background-color: transparent;"></div> 	
+			<!-- <div dx-chart="vm.timeProd"></div> -->
+
 		</div>
 
-        <div class="eqptInfo" style="position:relative; width:552px; height:376px; float:left; font-size:18px; color:white; padding:20px; ">
-        <div class="p_title">설비정보</div>
-			<ul class="eqpt-info-modal" style="padding:0 !important;">
+        <div class="eqptInfo" style="position:relative; width:552px; height:376px; float:left; font-size:18px; color:white; padding:20px;">
+        <div class="col-xs-12" style="border-bottom: 3px solid rgb(105, 111, 144);
+        background-color:  rgba(76, 83, 121, 0.25); float:left; font-size:20px; color:white;    border-radius: 7px 7px 0 0;">	
+			<p style="margin: 10px 0px 0px 5px;">시간별 설비정보</p>
+		</div>
+		
+		 <ul class="eqpt-info-modal" style="padding:0 !important; float:left;">
 				<li ng-repeat="plc in vm.plc">
 					<table class="dialog-tbl">
 						<tr><td>PLC ID</td><td>{{plc.plcId}}</td></tr>
@@ -45,12 +57,19 @@
 					</table>
 				</li>
 			</ul>
-        
+	
         </div>
-        <div class="eqptRunCh" style="position:relative; width:900px; height:376px; float:left;  padding:20px;">
+      
 
-        	<div  class="p_title">시간별 가동상태변화</div>
-        	   <div dx-chart="vm.test"></div>
+        <div class="eqptRunCh" style="position:relative; width:900px; height:376px; float:left;  padding:20px 20px 0 20px; ;">
+ 			<div class="col-xs-12" style="border-bottom: 3px solid rgb(105, 111, 144);
+ 			background-color: rgba(76, 83, 121, 0.25); float:left; font-size:20px; color:white;    border-radius: 7px 7px 0 0;">	
+				<p style="margin: 10px 0px 0px 5px;">시간별 가동상태변화</p>
+			</div>
+			
+			<div id="eqptStsHisChart1" style="width: 100%; height:100%; background-color: transparent;"></div> 	
+			<!-- <amchart ng-model='areaStacked'></amchart> -->
+        	   <!-- <div dx-chart="vm.test"></div> -->
         	<!-- <div dx-chart="vm.stsProd" id="zoomedChart"></div>
         	<div dx-range-selector="vm.rangeOptions"></div> -->
         </div>

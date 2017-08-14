@@ -42,6 +42,12 @@ angular
 	/*------------------------------------------
      * 변수 선언
      *-----------------------------------------*/
+	$scope.$watch('loginChk', function(newVal, oldVal) {
+		if(newVal == false){
+			$location.url('');
+		}    	
+	}, true);
+						
     var self = this;
     var workerList = CmmWorkerSrvc;
     

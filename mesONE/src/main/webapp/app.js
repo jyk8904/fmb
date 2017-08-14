@@ -19,7 +19,7 @@
 (function () {
     'use strict';
     angular
-        .module('app', [ 'dx','angularModalService', 'ngRoute', 'ngCookies', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.tpls', 'ngFileUpload'])
+        .module('app', ['dx','angularModalService', 'ngRoute', 'ngCookies', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.tpls', 'ngFileUpload'])
         .config(config);
 //        .run(run);
 
@@ -58,35 +58,14 @@
 	        /*------------------------------------------
 	         * FMB 화면
 	         *-----------------------------------------*/
-	        .when('/Fmb001', {
-	            controller: 'Fmb001Ctrl',
-	            templateUrl: 'modules/fmb/views/fmb001.html',
-	            controllerAs: 'vm'
-	        })
-	        .when('/Fmb002', {
-	            controller: 'Fmb002Ctrl',
-	            templateUrl: 'modules/fmb/views/fmb002.html',
-	            controllerAs: 'vm'
-	        })
-	        .when('/Fmb003', {
-	            controller: 'Fmb003Ctrl',
-	            templateUrl: 'modules/fmb/views/fmb003.html',
-	            controllerAs: 'vm'
-	        })	
-      
-	        .when('/Fmb004', {
-	            controller: 'Fmb004Ctrl',
-	            templateUrl: 'modules/fmb/views/fmb004.html',
-	            controllerAs: 'vm'
-	        })
-	        .when('/Fmb005', {
-	            controller: 'Fmb005Ctrl',
-	            templateUrl: 'modules/fmb/views/fmb005.html',
-	            controllerAs: 'vm'
-	        }) 
 	        .when('/FmbMon', {
 	            controller: 'FmbMonCtrl',
 	            templateUrl: 'modules/fmb/views/fmbMon.html',
+	            controllerAs: 'vm'
+	        })
+	        .when('/FmbAndon', {
+	            controller: 'FmbAndonCtrl',
+	            templateUrl: 'modules/fmb/views/fmbAndon.html',
 	            controllerAs: 'vm'
 	        })
 	        .when('/FmbCwMon', {
@@ -104,12 +83,7 @@
 	            templateUrl: 'modules/fmb/views/fmbMode.html',
 	            controllerAs: 'vm'
 	        })
-	        .when('/Fmb008', {
-	            controller: 'Fmb008Ctrl',
-	            templateUrl: 'modules/fmb/views/fmb008.html',
-	            controllerAs: 'vm'
-	        })
-	        .when('/FmbPopup', {
+	       	.when('/FmbPopup', {
 	            controller: 'FmbPopupCtrl',
 	            templateUrl: 'modules/fmb/views/fmbPopup.html',
 	            controllerAs: 'vm'
@@ -144,7 +118,8 @@
 	            templateUrl: 'modules/fmb/views/fmbTotal.html',
 	            controllerAs: 'vm'
 	        })
-	       /* .otherwise({ redirectTo: '/Fmb001' })*/;
+
+	        /*.otherwise({ redirectTo: '/FmbLogin' })*/;
     }
     run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
     function run($rootScope, $location, $cookieStore, $http) {

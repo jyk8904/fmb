@@ -41,7 +41,21 @@ angular
                                  ) {
 	var workerList = CmmWorkerSrvc;
 	var self = this;
-
+   $scope.login = fnLogin;
+   $scope.logOut = fnLogout;
+  // $scope.autoLogin = false;
+   $scope.loginChk = false;
+   $scope.keyUpLogin = onKeyupPasswd;
+   
+   if(localStorage.getItem("autoLogin")=="true"){
+	   $scope.id = localStorage.getItem('id');
+	   $scope.pw = localStorage.getItem('password');
+	   fnLogin();
+   }
+   
+   
+    
+    
 	self.alarmListLen = {};
 
 
@@ -54,7 +68,7 @@ angular
 
 	self.vo = { PLC_ID: 'PLC-001' }
 	self.btnFmbMonClick = btnFmbMonClickHandler;
-	self.btnFmbCwMonClick = btnFmbCwMonClickHandler;
+	self.btnFmbAndonClick = btnFmbAndonClickHandler;
 	self.btnFmbTbmClick = btnFmbTbmClickHandler;
 	self.btnFmbLineAClick = btnFmbLineAClickHandler;
 	self.btnFmbLineBClick = btnFmbLineBClickHandler;
@@ -91,7 +105,7 @@ angular
 	});
    
     //전환될 페이지 리스트
-	var pageList = [{ "pageNm": "FmbCwMon"   }
+	var pageList = [{ "pageNm": "FmbAndon"   }
 			      , { "pageNm": "FmbMon"     }
 			      , { "pageNm": "FmbTotal"   }
 			      , { "pageNm": "FmbLineA"   }
@@ -204,11 +218,10 @@ angular
 	   	toggleLeft();
          $location.url('/FmbMon');
       }
-   function btnFmbCwMonClickHandler() {
-	   console.log("123");
+   function btnFmbAndonClickHandler() {
 	 	workerList.workerStop(workerList.worker1);
 	 	toggleLeft();
-       $location.url('/FmbCwMon');
+       $location.url('/FmbAndon');
        
     }
       function btnFmbTbmClickHandler() {
@@ -339,5 +352,101 @@ angular
           alert("현재 브라우저는 웹 워커를 지원하지 않습니다");
         }
       }
+    
+    
+    
+    /*로그인*/
+
+    function fnLogin(){
+        var objLogin = $scope.id
+        var objPasswd = $scope.pw;
+        var objAutoLogin= $scope.autoLogin;
+        console.log(objLogin);
+        console.log(objPasswd);
+        if(objLogin == undefined || objLogin==""){
+            alert("아이디를 입력하세요");
+            self.focusId = true;
+            return ;
+        }
+        else if(objPasswd == undefined || objPasswd==""){
+            alert("비밀번호를 입력하세요");
+            self.focusPw = true;
+            return ;
+        }
+        // 서버로 전송
+        // 아이디, 패스워드 체크
+        if((objLogin =="aaa"|| objLogin =="developer") && objPasswd =="bbb"){
+        	console.log("로그인")
+        	console.log(objAutoLogin);
+        	console.log(localStorage.getItem("autoLogin"))
+        	//자동로그인시 로컬스토리지 저장
+        	if(objAutoLogin ==true 
+        		&& (localStorage.getItem("autoLogin")==null 
+        				|| localStorage.getItem("autoLogin")=="false")){
+            	localStorage.setItem("autoLogin", true);
+            	localStorage.setItem("id", objLogin);
+            	localStorage.setItem("password", objPasswd);
+            	console.log(localStorage.getItem("autoLogin"));
+        	}
+        	 //세션저장
+            sessionStorage.setItem("id", objLogin);
+            sessionStorage.setItem("login", true);
+            
+            if(sessionStorage.getItem("login")=="true"){
+                $scope.loginChk = true
+            }
+
+            
+            
+           /*
+    	    sessionStorage.getItem("domain");
+    	    // 키에 저장된 값을 반환. 
+    	    sessionStorage.removeItem("domain");
+    	    // domain 키와 데이터 모두 삭제
+    	    sessionStorage.clear();
+    	    //저장된 모든 값 삭제
+    	        	    */
+            
+        }else{
+        	alert("아이디와 비밀번호를 확인하세요");
+        	return;
+        }
+       
+    }
+    /* 로그 아웃 */
+    function fnLogout(){
+    	console.log("로그아웃");
+    	
+    	$scope.id = "";
+    	$scope.pw = "";
+    	
+    	 //로그아웃시 자동 로그인 로컬스토리지 지움
+    	if(localStorage.getItem("autoLogin")=="true"){
+    		localStorage.removeItem("autoLogin");
+    		localStorage.removeItem("id");
+        	localStorage.removeItem("password");
+        	$scope.autoLogin = false;
+        	}       
+    	
+        sessionStorage.setItem("login", false);
+        sessionStorage.removeItem("id");
+        $scope.loginChk =false;
+    }
+    
+    /* 키보드 엔터 로그인 */
+    function onKeyupPasswd(ev){
+        var evKeyup = null;
+        if(ev)                                            // firefox
+            evKeyup = ev;    
+        else                                            // explorer
+            evKeyup = window.event;
+            
+        if(evKeyup.keyCode == 13){                        // enter key code:13
+           
+            fnLogin();    
+        }    // end if
+    } 
+
+    
 }]);
                      

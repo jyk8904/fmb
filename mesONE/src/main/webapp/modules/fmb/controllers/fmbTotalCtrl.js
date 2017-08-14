@@ -18,9 +18,15 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 													'$timeout',
 													'$mdSidenav',
 	function(CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window,	$q, $timeout, $mdSidenav) {
-	/*------------------------------------------
-	 * 변수 선언
-	 *-----------------------------------------*/
+		/*------------------------------------------
+		 * 변수 선언
+		 *-----------------------------------------*/
+		$scope.$watch('loginChk', function(newVal, oldVal) {
+			if(newVal == false){
+				$location.url('');
+			}    	
+		}, true);
+
 		var self = this;
 		var workerList = CmmWorkerSrvc;
 		$scope.isMobile = false;
