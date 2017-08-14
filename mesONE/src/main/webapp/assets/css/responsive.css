@@ -7,7 +7,24 @@
 		height: 45px;
 	}
 	
-	
+	/* 로그인 */
+	.loginId {
+		top: 50%;
+		left: 61%;
+	}
+	.loginPwd {
+		top: 66%;
+		left: 61%;
+	}
+	.loginBtn {
+		width: 128px;
+		height: 21px;
+		top: 80%;
+		left: 76%;
+	}
+	.autoLogin {
+		display: none;
+	}
 	
 	/* 대쉬보드 */
 	.gaugeTitleBox p {

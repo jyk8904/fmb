@@ -47,7 +47,6 @@
 			</div>
 		</div>
 		
-<<<<<<< HEAD
 		<div layout="column" layout-wrap style="width:82%;">
 			<div ng-repeat="line in vm.lineList track by $index"  layout="row" ng-if="$index%7==0" style="width:100%;">
 				<div  grid-panel-ctrl data = "vm.lineList" is-mobile="isMobile" flex ng-repeat="line in vm.lineList track by $index" ng-if="$index>=$parent.$index && $index<($parent.$index+7) " layout="column" layout-fill layout-wrap class="colorNested col" style="text-align:center;">
@@ -79,7 +78,7 @@
 				  	</div>
 				</div> 
 			</div>
-=======
+
 		<div class="colList" style="width:82%;">
 		<div layout="row" layout-wrap layout-fill style="width:100%; float:left;">
 			<div grid-panel-ctrl data = "vm.lineList" ng-repeat="line in vm.lineList track by $index" class="colorNested" style="text-align:center; width:14.28%;">
@@ -113,10 +112,6 @@
 			</div> 
 		
 		</div>
-		
-		
-		
->>>>>>> branch 'master' of https://github.com/jyk8904/fmb.git
 		</div>
 	</div>
 	</bc-form-body>
