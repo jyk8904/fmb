@@ -77,8 +77,6 @@ angular
     var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do", self.lineParamVo);
     promise.then(function(data){
     	self.lineList = data;
-    	console.log(self.lineList);
-    	console.log(self.lineList.length)
     	var length = self.lineList.length;
     	var dangle = length % 7;
     	if (dangle != 0) 

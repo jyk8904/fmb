@@ -883,3 +883,11 @@ div[class^=eqpt] {
 	width: 35px;
 	height: 35px;
 }
+.lineBtnMd {
+	width: 35px;
+	height: 35px;
+}
+.lineBtnSm {
+	width: 25px;
+	height: 25px;
+}

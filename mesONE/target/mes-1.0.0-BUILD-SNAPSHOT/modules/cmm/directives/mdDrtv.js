@@ -323,7 +323,6 @@ angular
 			  },
 			  link: function(scope, element, attrs) {
 				$timeout(function(){
-					console.log(element)
 				  var width = $window.innerWidth;
 				  
 				  var default_width = 1920;

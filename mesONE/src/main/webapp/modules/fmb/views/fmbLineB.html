@@ -48,8 +48,8 @@
 		</div>
 		
 		<div layout="column" layout-wrap style="width:82%;">
-			<div ng-repeat="line in vm.lineList track by $index"  layout="row" ng-show="$index%7==0" style="width:100%;">
-				<div  grid-panel-ctrl data = "vm.lineList" is-mobile="isMobile" flex ng-repeat="line in vm.lineList track by $index" ng-show="$index>=$parent.$index && $index<($parent.$index+7) " layout="column" layout-fill layout-wrap class="colorNested col" style="text-align:center;">
+			<div ng-repeat="line in vm.lineList track by $index"  layout="row" ng-if="$index%7==0" style="width:100%;">
+				<div  grid-panel-ctrl data = "vm.lineList" is-mobile="isMobile" flex ng-repeat="line in vm.lineList track by $index" ng-if="$index>=$parent.$index && $index<($parent.$index+7) " layout="column" layout-fill layout-wrap class="colorNested col" style="text-align:center;">
 					  <div style="color:white; border:1px solid black;  display:flex; align-items:center; justify-content: center;" >
 					    <div >
 					    <p style="margin-bottom:0;">{{line.lineTopNm}}</p><p style="margin-bottom:0;">{{line.lineMidNm}}</p><p style="margin-bottom:0;">{{line.lineBotNm}}</p></div>
