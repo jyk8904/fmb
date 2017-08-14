@@ -1,0 +1,39 @@
+/*responsive write by jjy - 170807*/
+
+@media screen and (max-width: 768px) {
+	
+	/* 메인 타이틀 */
+	.titleHeader {
+		height: 45px;
+	}
+	
+	
+	
+	/* 대쉬보드 */
+	.gaugeTitleBox p {
+		font-size: 20px;
+	}
+	.gaugeValueBox p {
+		font-size: 20px;
+	}
+	.smallBox {
+		min-height: 305px;
+	}
+	.largeBox {
+		min-height: 305px;
+	}
+	
+	/* 라인별 생산실적 */
+	.lineBtn {
+		width: 20px;
+		height: 20px;
+	}
+	.lineBtnMd {
+		width: 15px;
+		height: 15px;
+	}
+	.lineBtnSm {
+		width: 10px;
+		height: 10px;
+	}
+}

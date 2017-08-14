@@ -13,8 +13,18 @@
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- 모바일용웹 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<!-- 안드로이드 홈화면추가시 상단 주소창 제거 -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-status-bar-style" content="blue">  
+<!-- ios홈화면추가시 상단 주소창 제거 -->
+<meta name="apple-mobile-web-app-capable" content="yes"> 
+<meta name="apple-mobile-web-app-status-bar-style" content="blue">  
 <title>FMB System</title>
+
 <style type="text/css">
     #warning-message { display: none; }
     @media only screen and (orientation:portrait){
@@ -27,12 +37,14 @@
 </style>
 
 
-	<script>
-    try{
-        window.addEventListener('load', function(){
-            setTimeout(scrollTo, 0, 0, 1);
-        }, false);
-    } catch(e){}
+<script>
+	function hideAddressBar() {
+	    if (document.documentElement.scrollHeight < window.outerHeight / window.devicePixelRatio)
+	        document.documentElement.style.height = (window.outerHeight / window.devicePixelRatio) + 'px';
+	    setTimeout(window.scrollTo(1, 1), 0);
+	}
+	window.addEventListener("load", function () { hideAddressBar(); });
+	window.addEventListener("orientationchange", hideAddressBar());
 </script>
 
 	<!-- JQUERY -->
@@ -70,10 +82,6 @@
    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
 
-	<!-- DevExtreme CSS -->
-	<link rel="stylesheet" type="text/css" href="assets/css/dx.common.css" />
-	<link rel="stylesheet" type="text/css" href="assets/css/dx.light.css" />
-
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 		  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"   crossorigin="anonymous">
@@ -86,16 +94,37 @@
 	<!-- custom CSS -->   
 	<link rel="stylesheet" href="/mes/assets/css/fmb.css" />
 	<link rel="stylesheet" href="/mes/assets/css/fmbDash.css" />
+	<link rel="stylesheet" href="/mes/assets/css/responsive.css" />
+	
+	
+	<!-- 안드로이드 icon -->
+<!-- 	<link rel="icon" href="/mes/assets/img/ico/DsFmb_logo.png">
+	<link rel="icon" sizes="76x76" href="/mes/assets/img/ico/DsFmb_logo76.png">  
+	<link rel="icon" sizes="120x120" href="/mes/assets/img/ico/DsFmb_logo.png">  
+	<link rel="icon" sizes="152x152" href="/mes/assets/img/ico/DsFmb_logo.png"> -->
+	
+	<link rel="manifest" href="/mes/assets/js/manifest.json">
+		
+	<!-- IOS icon -->
+	<link rel="apple-touch-icon" href="/mes/assets/img/ico/DsFmb_logo.png">  
+	<link rel="apple-touch-icon" sizes="76x76" href="/mes/assets/img/ico/DsFmb_logo76.png">  
+	<link rel="apple-touch-icon" sizes="120x120" href="/mes/assets/img/ico/DsFmb_logo.png">  
+	<link rel="apple-touch-icon" sizes="152x152" href="/mes/assets/img/ico/DsFmb_logo.png">
+	<link rel="icon" sizes="192x192" href="/mes/assets/img/ico/DsFmb_logo.png">
+	
+	<!-- startup Page -->
+	<link rel="touch-startup-image" href="/mes/assets/img/ico/startup.png">
+	<link rel="apple-touch-startup-image" href="/mes/assets/img/ico/startup.png">
 </head>
 
 
-<body ng-controller="MainCtrl as vm" class="container-fluid col-md-12
+<body ng-controller="MainCtrl as vm" md-swipe-right="vm.onSwipeRight()" class="container-fluid col-md-12
  col-sm-12 col-xs-12" ng-class="{loading:loadingView}" class="container"  style="background-color:#0f2f56; padding:0">
 
-<div id="warning-message" class="hidden-xs" style="width:100%; height:100%; background-color: #050513; color:white; font-size:30pt; opacity:0.8; position:fixed; z-index:10000;" >
+<!-- <div id="warning-message" class="hidden-xs" style="width:100%; height:100%; background-color: #050513; color:white; font-size:30pt; opacity:0.8; position:fixed; z-index:10000;" >
   this website is only viewable <br> in landscape mode<br><br>
-    이 페이지는 가로모드만 지원합니다
-</div>
+    이 페이지는가로모드만 지원합니다
+</div> -->
 <!-- <body ng-controller="MainCtrl as vm" ng-class="{loading:loadingView}" class="container" 
 	style="width: 100%;" ng-style="vm.bgTheme === 'black' && {'background-image':'url(./assets/img/system/back.png)'} || vm.bgTheme === 'blue' && {'background-image':'url(./assets/img/system/back_blue.png)'}"> -->
 	
@@ -122,11 +151,7 @@
 	
 
 	<!-- 모바일 버전 -->
-
-<!-- <section layout="row" flex  class="hidden-md hidden-lg"  md-swipe-left="onSwipeLeft()" md-swipe-right="onSwipeRight()" style="border:yellow 1px solid; width:5%; height:100%; position:fixed; z-index:1001;">
-</section>
-<section layout="row" flex  class="hidden-md hidden-lg"  style="border:red 1px solid; width:8%; height:100%;  z-index:1000; overflow:visible !important;">
- <md-sidenav class="md-sidenav-left" md-swipe-left="onSwipeLeft()" md-component-id="left1" md-disable-backdrop md-whiteframe="4" hide-gt-md style="z-index:1002;">
+  <md-sidenav class="md-sidenav-left" md-component-id="left1" md-disable-backdrop md-whiteframe="4" hide-gt-md style="z-index:1002;">
 
       <md-toolbar class="md-theme-indigo">
         <h1 class="md-toolbar-tools" style="float:right;" ng-click="onSwipeLeft()">≡</h1>
@@ -182,6 +207,9 @@
       </md-content>
 
     </md-sidenav>
+<<<<<<< HEAD
+ 
+=======
 </section>
  -->
 <div style="background-image: url('assets/img/bg/login-2.png'); 
@@ -200,6 +228,7 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
 	<md-checkbox ng-model="autoLogin" aria-label="자동로그인" init="false" class="md-warn"  style=" position: absolute; top: 88.5%; left: 77%; color:white; ">자동로그인</md-checkbox>
 	
 </div>
+>>>>>>> branch 'master' of https://github.com/jyk8904/fmb.git
 	
 	<!-- <div p-ctrl data-ng-view style='width:100%; height:1016px'></div> -->
 	
@@ -207,7 +236,7 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
 	
 	<bc-form-footer>
 	<!--알람정보 하단 바 시작-->
-		<div class="col-md-12 col-sm-12 col-xs-12" style="padding:0">
+		<div class="col-md-12 col-sm-12 col-xs-12 hidden-xs" style="padding:0">
 		  <div class="alarm_data" style="background-color: rgb(255, 255, 255); width:110% !important; height: 25px;">
 	  		<marquee>
 	      		<ul id="banner" class="simply-scroll-list" style="background-color:#333;">

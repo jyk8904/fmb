@@ -27,9 +27,6 @@
 .smallBox {
 	min-height: 408px;
 }
-.largeBoxMobile {
-	max-height:600px;
-}
 .firstRow{
 	margin-bottom: 20px;
 }
@@ -131,10 +128,12 @@
 }
 .gaugeTitleBox {
 	padding-left: 0;
+	padding-right:8px;
 	margin-bottom: 5px;
 }
 .gaugeValueBox {
-	padding-left: 0;
+	padding-left: 8px;
+	padding-right:0;
 	margin-bottom: 5px;
 }
 .gaugeTitleBox p {

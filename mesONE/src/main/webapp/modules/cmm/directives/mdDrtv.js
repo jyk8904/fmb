@@ -78,6 +78,7 @@ angular
     				  
     				  element[0].children[0].style.height = origin_height * height_rate + 'px';
     				  console.log("리사이즈");
+    				  console.log(default_height, origin_height, height_rate)
     				  console.log(element);
     			  });
     		  }
@@ -128,9 +129,16 @@ angular
     		  link: function(scope, element, attrs) {
     			  $timeout(function(){
     				  var width = $window.innerWidth;
-    				  //var height = '125';
+    				  var default_width = 1920;
+    				  
+    				  var origin_height = 91;
+    				  
+    				  var screenRate = width / default_width;
+    				  
+    				  var apply_height = origin_height * screenRate;
     				  
     				  element[0].style.width = width + 'px';
+    				  element[0].style.height = apply_height + 'px';
     				  //element[0].style.height = height + 'px';
     			  });
     		  }
@@ -305,18 +313,25 @@ angular
 			 }
 		 } 
 	  })
-	  .directive('gridHeaderCtrl', function($timeout){
+	  .directive('gridHeaderCtrl', function($timeout, $window){
 		  return {
 			  restrict: 'A',
 			  scope: {
-				   data: '=data'
+				   data: '=data',
+				   isMobile : '='
+					  
 			  },
 			  link: function(scope, element, attrs) {
-				/*  $timeout(function(){*/
-					 
+				$timeout(function(){
+					console.log(element)
+				  var width = $window.innerWidth;
+				  
+				  var default_width = 1920;
+				  
+				  var screenRate = width / default_width;
+ 
 					  var length = scope.data.length / 7;
-					  /*if (length < 3)
-					  {*/
+	
 						  if (length <= 1) {
 							  var header = "150";
 							  var data = "375";
@@ -339,7 +354,12 @@ angular
 							  var subData = "31";
 							  var fontSize = "14";
 						  }
-						  
+						  if (scope.isMobile) {
+							  header = header * screenRate;
+							  data = data * screenRate;
+							  subData = subData * screenRate;
+							  fontSize = fontSize * screenRate;
+						  }
 						  element[0].children[0].style.height = header + "px";
 						  element[0].children[0].style.lineHeight = header + "px";
 						  element[0].children[0].style.fontSize = fontSize + "px";
@@ -369,46 +389,28 @@ angular
 						  element[0].children[4].style.height = subData + "px";
 						  element[0].children[4].style.lineHeight = subData + "px";
 						  element[0].children[4].style.fontSize = fontSize + "px";
-						  element[0].children[5].style.height = subData + "px";
-						  element[0].children[5].style.lineHeight = subData + "px";
-						  element[0].children[5].style.fontSize = fontSize + "px";
-						  element[0].children[6].style.height = subData + "px";
-						  element[0].children[6].style.lineHeight = subData + "px";
-						  element[0].children[6].style.fontSize = fontSize + "px";
-						  
-						  /*element[0].children[0].children[0].style.height = header + "px";
-						  element[0].children[0].children[1].style.height = subData + "px";
-						  element[0].children[0].children[2].children[0].style.height = data + "px";
-						  element[0].children[0].children[2].children[1].style.height = subData + "px";
-						  element[0].children[0].children[3].children[0].style.height = subData + "px";
-						  element[0].children[0].children[4].children[0].style.height = subData + "px";
-						  element[0].children[0].children[5].style.height = subData + "px";
-						  element[0].children[0].children[6].style.height = subData + "px";*/						  
-					/*	  for (var i = 0; i < 5; i++)
-						  {
-							  element[0].children[0].children[i].style.fontSize = fontSize + "px";
-							  
-							  element[0].children[0].children[i].style.fontSize = fontSize + "px";
-						  }*/
-					  /*}*/
-				  /*});*/
+				  });
 			  } 
 		  }
 	  })
-	  .directive('gridPanelCtrl', function($timeout){
+	  .directive('gridPanelCtrl', function($timeout, $window){
 		  return {
 			  restrict: 'A',
 			  scope: {
-				   data: '=data'
+				   data: '=data',
+				   isMobile : '='
 			  },
 			  link: function(scope, element, attrs) {
-			/*	  $timeout(function(){*/
-					 console.log(element)
-					 console.log(scope.data);
+				  $timeout(function(){
 					 
+					 var width = $window.innerWidth;
+					  
+					  var default_width = 1920;
+					  
+					  var screenRate = width / default_width;
+					  
 					  var length = scope.data.length / 7;
-					/*  if (length < 3)
-					  {*/
+
 						  if (length <= 1) {
 							  var header = "150";
 							  var data = "125";
@@ -429,40 +431,41 @@ angular
 							  var data = "31";
 							  var fontSize = "14";
 						  }
-					
+  
+						  if (scope.isMobile) {
+							  header = header * screenRate;
+							  data = data * screenRate;
+							  fontSize = fontSize * screenRate;
+						  }
+						  
+				
 						  element[0].children[0].style.height = header + "px";
 						 /* element[0].children[0].style.lineHeight = header + "px";*/
 						  element[0].children[0].style.fontSize = fontSize + "px";
-						  
-						  
-						 /* element[0].children[0].children[0].children[0].style.height = header + "px";
-						  element[0].children[0].children[0].children[0].style.fontSize = fontSize + "px";
-						 */ 
+
 						  for(var i = 1; i < 7; i++)
 						  {
-							 /* console.log(i)*/
 							  element[0].children[i].style.height = data + "px";
 							  element[0].children[i].style.lineHeight = data + "px";
 							  element[0].children[i].style.fontSize = fontSize + "px";
-							  /*element[0].children[0].children[0].children[i].style.height = data + "px";
-							  element[0].children[0].children[0].children[i].style.fontSize = fontSize + "px";*/
 						  }
-					 /* }*/
-				 /* });*/
+				  });
 			  } 
 		  }
 	  })
-	   .directive('gridTbmPanelCtrl', function($timeout){
+	   .directive('gridTbmPanelCtrl', function($timeout, $window){
 		  return {
 			  restrict: 'A',
 			  scope: {
-				   data: '=data'
+				   data: '=data',
+				   isMobile : '='
 			  },
 			  link: function(scope, element, attrs) {
 				  $timeout(function(){
-					 console.log(element)
-					 console.log(scope)
-					 console.log(scope.data);
+					  
+					  var width = $window.innerWidth;
+					  var default_width = 1920; 
+					  var screenRate = width / default_width;
 					 
 					  var length = scope.data.length / 7;
 
@@ -487,17 +490,22 @@ angular
 							  var fontSize = "14";
 						  }
 						  
+						  if (scope.isMobile) {
+							  header = header * screenRate;
+							  data = data * screenRate;
+							  fontSize = fontSize * screenRate;
+						  }
+						  
 						  element[0].children[0].style.height = header + "px";
 						  element[0].children[0].style.lineHeight = header + "px";
 						  element[0].children[0].style.fontSize = fontSize + "px";
 						  
 						  for(var i = 1; i < 7; i++)
 						  {
-							  console.log(i)
 							  element[0].children[i].style.height = data + "px";
 							  element[0].children[i].style.lineHeight = data + "px";
 							  element[0].children[i].style.fontSize = fontSize + "px";
-							  }
+						  }
 					 /* }*/
 				  }, 200);
 			  } 
