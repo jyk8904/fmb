@@ -86,8 +86,8 @@ angular
 	}, function(data) {
 		alert('fail: ' + data)
 	});
-		
-		
+
+
 	function makeDataRunInfoChart(){
 		console.log(timeProdData)
 		
@@ -96,15 +96,16 @@ angular
 				"categoryField": "dt",
 				"dataDateFormat": "MM-DD",
 				"mouseWheelZoomEnabled": true,
+				"mouseWheelScrollEnabled": true,
 				"fontFamily": "noteSans",
 				"fontSize": 18,
 				"categoryAxis": {
 					"parseDates": true
 				},
 				"theme": "dark",
-				"chartCursor": {
+			/*	"chartCursor": {
 					"enabled": true
-				},
+				},*/
 				
 				"trendLines": [],
 				"graphs": [
@@ -151,7 +152,15 @@ angular
 		);
 	}
 		
-		
+/*	chart.addListener("rendered", zoomChart);
+	zoomChart();
+
+	// this method is called when chart is first inited as we listen for "rendered" event
+	function zoomChart() {
+	    // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+	    chart.zoomToIndexes(chartData.length - 40, chartData.length - 1);
+	}
+		*/
 	function timeProd(){
 		//대기발생추이
 	    self.timeProd = {	    	
@@ -236,6 +245,8 @@ angular
 				"categoryAxis": {
 					"title": "시간(분)"
 				},
+				"autoZoom": true,
+				"mouseWheelScrollEnabled": true,
 				"mouseWheelZoomEnabled": true,
 				"minSelectedTime": 4,
 				"rotate": true,
