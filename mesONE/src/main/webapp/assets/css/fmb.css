@@ -50,6 +50,38 @@ img {
 
 }
 
+
+/* 로그인 파트 */
+.loginId {
+	position: absolute; 
+	width: 250px;
+	top: 70%; 
+	left: 76%; 
+	color: white;
+}
+.loginPwd {
+	position: absolute; 
+	width: 250px; 
+	top: 76%; 
+	left: 76%; 
+	color: white;
+}
+.loginBtn {
+	margin-bottom: 5px; 
+	width: 250px; 
+	height: 45px; 
+	position: absolute; 
+	top: 83%; 
+	left: 76%;
+}
+.autoLogin {
+	position: absolute; 
+	top: 88.5%; 
+	left: 77%; 
+	color: white;
+}
+
+
 .headerColorNested{
 	text-align:center;
 }

@@ -207,31 +207,26 @@
       </md-content>
 
     </md-sidenav>
-<<<<<<< HEAD
- 
-=======
 </section>
- -->
+
 <div style="background-image: url('assets/img/bg/login-2.png'); 
 background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-index: 10000; position: fixed;" ng-show="!loginChk">
 
-     <md-input-container class="md-warn" flex-gt-sm style="position: absolute; width:250px; top: 70%; left: 76%; color:white;">
+     <md-input-container class="md-warn loginId" flex-gt-sm>
             <label style="color:white;">ID</label>
             <input ng-model="id"  style="color:white;">
           </md-input-container>
-     <md-input-container class="md-warn" flex-gt-sm style="position: absolute; width:250px; top: 76%; left: 76%; color:white;"> 
+     <md-input-container class="md-warn loginPwd" flex-gt-sm> 
             <label style="color:white;">PASSWORD</label>
             <input type="password" ng-model="pw" ng-keyup="keyUpLogin(ev)" style="color:white;">
      </md-input-container>
 
-	<md-button class="md-raised" ng-click="login()" style="margin-bottom:5px; width: 250px; height: 45px; position: absolute; top: 83%; left: 76%;">Login</md-button>
-	<md-checkbox ng-model="autoLogin" aria-label="자동로그인" init="false" class="md-warn"  style=" position: absolute; top: 88.5%; left: 77%; color:white; ">자동로그인</md-checkbox>
+	<md-button class="md-raised loginBtn" ng-click="login()">Login</md-button>
+	<md-checkbox ng-model="autoLogin" aria-label="자동로그인" init="false" class="md-warn autoLogin">자동로그인</md-checkbox>
 	
 </div>
->>>>>>> branch 'master' of https://github.com/jyk8904/fmb.git
 	
 	<!-- <div p-ctrl data-ng-view style='width:100%; height:1016px'></div> -->
-	
 	<div data-ng-view class="col-md-12 col-sm-12 col-xs-12" style="padding:0" ></div>
 	
 	<bc-form-footer>
