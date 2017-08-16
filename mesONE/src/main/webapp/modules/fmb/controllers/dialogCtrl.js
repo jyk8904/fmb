@@ -326,7 +326,7 @@ angular
 	zoomChart();
 	
 	function zoomChart() {
-		chart.zoomToIndexes(chartData.length - 40, chartData.length - 1);
+		char.zoomToIndexes(eqptStsCstData.length - 40, eqptStsCstData.length - 1);
 	}
 	}
 
