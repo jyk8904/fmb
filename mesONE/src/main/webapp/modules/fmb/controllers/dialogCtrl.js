@@ -51,6 +51,7 @@ angular
 	var eqptStsCstData = [];
     var plcData = {};
     var timeProdData= {};
+    $scope.isMobile = false;
       
     self.plcData = CmmFactSrvc.getPlcData();
     
@@ -68,9 +69,24 @@ angular
     	$mdDialog.hide();
     };
     
+    // 모바일 체크 함수 실행
+	isMobileFunc();
+    
     getSelectedPlc();
    
     
+    // 모바일 체크 함수 정의
+	function isMobileFunc(){
+		var UserAgent = navigator.userAgent;
+
+		if (UserAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null)
+		{
+			$scope.isMobile = true;
+		}else{
+			$scope.isMobile =  false;
+		}
+	}
+	
   	//설비상태 발생추이 가져오기
 	var dateRunInfoPromise = CmmAjaxService.select("/mes/bas/selectDateRunInfo.do");
 	
@@ -99,7 +115,7 @@ angular
 				"mouseWheelZoomEnabled": true,
 				"mouseWheelScrollEnabled": true,
 				"fontFamily": "noteSans",
-				"fontSize": 18,
+				"fontSize": 10,
 				"categoryAxis": {
 					"parseDates": true
 				},
@@ -144,7 +160,7 @@ angular
 				"allLabels": [],
 				"balloon": {},
 				"legend": {
-					 "position": "right",
+					 "position": "bottom",
 					"enabled": true,
 					"useGraphSettings": true
 				},
@@ -239,27 +255,34 @@ angular
 
 	//시간별 가동상태 변화 차트 만들기
 	function makeEqptStsHischart(){
-	AmCharts.makeChart("eqptStsHisChart1",
+		// this function returns our chart data as a promise
+	var char = AmCharts.makeChart("eqptStsHisChart1",
 			{
 				"type": "serial",
 				"categoryField": "timeMin",	
-				"mouseWheelScrollEnabled": true,
+				//"mouseWheelScrollEnabled": true,
 				"mouseWheelZoomEnabled": true,
 				"startDuration" : 1,
 				"categoryAxis": {
 					"title": "시간(분)"
 				},
-				"autoZoom": true,
-			
+				"panEventsEnabled": false,
+				"pan": true,
+				//"autoZoom": true,
 				"minSelectedTime": 4,
-				"rotate": true,
+				"rotate": false,
 				"chartScrollbar": {
-					"enabled": true
+					"autoGridCount": true,
+					"graph": "AmGraph-1",
+					"scrollHeight": 40
+				},
+				"chartCursor": {
+					"limitToGraph": "AmGraph-1"
 				},
 				"depth3D": 1,
 				"startDuration": 1,
 				"fontFamily": "noteSans",
-				"fontSize": 18,
+				"fontSize": 12,
 				"color": "#FFFFFF",
 				"categoryAxis": {
 					"gridPosition": "start",
@@ -299,7 +322,12 @@ angular
 				"dataProvider": eqptStsCstData
 			}
 		);
+	char.addListener("rendered", zoomChart);
+	zoomChart();
 	
+	function zoomChart() {
+		chart.zoomToIndexes(chartData.length - 40, chartData.length - 1);
+	}
 	}
 
 	

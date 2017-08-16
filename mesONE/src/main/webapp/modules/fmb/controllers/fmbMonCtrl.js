@@ -181,9 +181,9 @@ angular
     	$mdDialog.hide();
     };
     
-    $scope.showAdvanced = function(ev) {
+    $scope.showAdvanced = function(plcId,ev) {
     	
-    	CmmFactSrvc.setPlcData(ev);
+    	CmmFactSrvc.setPlcData(plcId);
     	console.log(CmmFactSrvc.getPlcData());
     	//PlC 데이터 저장 하는 부분.
     	//CmmFactSrvc.setPlcData(ev);

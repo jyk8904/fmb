@@ -26,6 +26,18 @@
 		display: none;
 	}
 	
+	/* 설비정보 팝업 */
+	.eqptPopupTitle {
+		min-height:0;
+		height: 25px;
+	}
+	.subTitle {
+		margin-top: 10px;
+	}
+	.subTitle p {
+		margin: 5px 0 0 5px;
+	}
+	
 	/* 대쉬보드 */
 	.gaugeTitleBox p {
 		font-size: 20px;
