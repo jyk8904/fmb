@@ -392,8 +392,10 @@ angular
             sessionStorage.setItem("id", objLogin);
             sessionStorage.setItem("login", true);
             
+            btnFmbMonClickHandler();
+            
             if(sessionStorage.getItem("login")=="true"){
-                $scope.loginChk = true
+                $scope.loginChk = true;
             }
 
             
