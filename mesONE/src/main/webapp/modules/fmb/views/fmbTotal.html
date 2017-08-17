@@ -55,11 +55,11 @@
 					<div class="col-xs-6">
 						<!-- Pie Chat Area -->
 						<div class="col-xs-12" style="position:relative;">
-	       		 			<div m-resize-ctrl2 id="MobilePieChart" style="width: 100%; height: 146px; background-color: transparent;" ></div>
+	       		 			<div m-resize-ctrl2 id="MobilePieChart" style="width: 100%; height: 390px; background-color: transparent;" ></div>
 	       		 		</div>
 	       		 		<!-- BarChart Area -->
 					 	<div class="col-xs-12" style="position:relative;">
-		       				<div m-resize-ctrl2 id="MobileBarChart" style="width: 100%; height: 146px; background-color: transparent;" ></div>
+		       				<div m-resize-ctrl2 id="MobileBarChart" style="width: 100%; height: 390px; background-color: transparent;" ></div>
 						</div>
 	       		 	</div>
 	       		 	<div class="col-xs-6">
@@ -316,7 +316,7 @@
 		</div>
 	</div>
 	
- 	<div class="col-sm-6 col-md-6 col-lg-6 hidden-xs" style="padding:0;">
+ 	<div class="col-sm-6 col-md-6 col-lg-6" ng-if="isMobile == false" style="padding:0;">
 		<!-- 라인 가동 현황 -->
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 			<div class="col-xs-6" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; font-size:24px; color:white;">
@@ -456,23 +456,8 @@
 			</div>
 		</div>
  	</div>
-	</div>
-	</div>
 	<bc-bg-panel>
 	</bc-form-body>
-
-
-	<!-- ngview 내부 footer -->
-	<bc-form-footer> <!--알람정보 하단 바 시작-->
-	<div class="alarm_data">
-		<marquee>
-			<ul id="banner" class="simply-scroll-list">
-				<li ng-repeat="alarm in vm.alarmList">{{alarm.plcId}} 알람발생
-					{{alarm.stsDttm}}</li>
-			</ul>
-		</marquee>
-	</div>
-	</bc-form-footer>
 </div>
 
 
