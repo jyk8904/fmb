@@ -1,10 +1,13 @@
 /*responsive write by jjy - 170807*/
 
+
+/* smart Phone (portrait and landscape) */
 @media screen and (max-width: 768px) {
 	
 	/* 메인 타이틀 */
 	.titleHeader {
 		height: 45px;
+		margin-bottom: 1%;
 	}
 	
 	/* 로그인 */
@@ -39,19 +42,72 @@
 	}
 	
 	/* 대쉬보드 */
-	.gaugeTitleBox p {
-		font-size: 20px;
+	.chartTitle {
+		font-size: 12px;
 	}
-	.gaugeValueBox p {
-		font-size: 20px;
+	.gridArea3 .gaugeTitleBox p {
+		font-size: 16px;
+	}
+	.gridArea3 .gaugeValueBox p {
+		font-size: 16px;
 	}
 	.smallBox {
-		min-height: 305px;
+		min-height: 0;
 	}
 	.largeBox {
-		min-height: 305px;
+		min-height: 0;
 	}
-	
+	.gridArea {
+		height:100%;		
+	}
+	.gridArea p {
+		margin: 0;
+	}
+	.gridArea1 {
+		height: 72%;
+		margin-top: 5%;
+		margin-bottom: 4%;
+	}
+	.gridArea1 .titleRow {
+		height: 16%;
+	}
+	.gridArea1 > .contentRow {
+		height: 14%;
+	}
+	.gridArea2 {
+		height: 15%;
+		margin-bottom: 4%;
+	}
+	.gridArea2 .ppmTitle {
+		height: 100%;
+	}
+	.gridArea2 .ppmValue {
+		height: 100%;
+	}
+	#MobileGauge {
+		height: 55%;
+	}
+	.gridArea3 {
+		height: 45%;
+	}
+	.gridArea3 .gaugeTitleBox {
+		width: 48%;
+		height: 21%;
+		margin-right: 2%;
+		margin-bottom: 2%;
+	}
+	.gridArea3 .gaugeValueBox {
+		width: 48%;
+		height: 21%;
+		margin-right: 2%;
+		margin-bottom: 2%;
+	}
+	.gridArea4 {
+		height: 45%;
+	}
+	.gridArea4 p {
+		font-size: 10px;
+	}
 	/* 라인별 생산실적 */
 	.lineBtn {
 		width: 20px;
@@ -64,5 +120,88 @@
 	.lineBtnSm {
 		width: 10px;
 		height: 10px;
+	}
+}
+
+/* iPads (portrait and landscape) */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+    /* Styles */
+    
+    /* 대쉬보드 */
+    .chartTitle{
+    	font-size: 16px;
+    }
+	.smallBox {
+		min-height: 305px;
+	}
+	.largeBox {
+		min-height: 305px;
+	}
+	.gridArea {
+		height:100%;		
+	}
+	.gridArea p {
+		margin: 0;
+		font-size: 20px;
+	}
+	.gridArea1 {
+		height: 72%;
+		margin-top: 5%;
+		margin-bottom: 4%;
+	}
+	.gridArea1 .titleRow {
+		height: 16%;
+	}
+	.gridArea1 > .contentRow {
+		height: 14%;
+	}
+	.gridArea2 {
+		height: 15%;
+		margin-bottom: 4%;
+	}
+	.gridArea2 .ppmTitle {
+		height: 100%;
+	}
+	.gridArea2 .ppmValue {
+		height: 100%;
+	}
+	#MobileGauge {
+		height: 55%;
+	}
+	.gridArea3 {
+		height: 45%;
+	}
+	.gridArea3 .gaugeTitleBox {
+		width: 48%;
+		height: 21%;
+		margin-right: 2%;
+		margin-bottom: 2%;
+	}
+	.gridArea3 .gaugeValueBox {
+		width: 48%;
+		height: 21%;
+		margin-right: 2%;
+		margin-bottom: 2%;
+	}
+	.gridArea4 {
+		height: 45%;
+	}
+	.gridArea4 p {
+		font-size: 20px;
+	}
+	/* 로그인 */
+	.loginId {
+		top: 50%;
+		left: 61%;
+	}
+	.loginPwd {
+		top: 66%;
+		left: 61%;
+	}
+	.loginBtn {
+		width: 128px;
+		height: 21px;
+		top: 80%;
+		left: 76%;
 	}
 }

@@ -93,63 +93,138 @@
 .dashSm {
 	height: 434px;
 }
-.dBlue {
+.gridArea1 .dBlue {
+	display: table;
+	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	color: ghostWhite;
+	text-align:center;
+}
+.gridArea1 .dBlue p {
+	display: table-cell;
+	vertical-align: middle;
+}
+.gridArea1 .lGrey {
+	display: table;
+	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	color: ghostWhite;
+	text-align:center;
+}
+.gridArea1 .lGrey p {
+	display: table-cell;
+	vertical-align: middle;
+}
+.dGridArea1 .dBlue {
 	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
 	color: ghostWhite;
 	text-align:center;
 }
 
-.lGrey {
+.dGridArea1 .lGrey {
 	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
 	color: ghostWhite;
 	text-align:center;
 }
-.ppmTitle {
+.gridArea2 .ppmTitle {
+	display: table;
+	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	color: ghostWhite;
+	text-align:center;
+}
+.gridArea2 .ppmTitle p {
+	display: table-cell;
+	vertical-align: middle;
+}
+.gridArea2 .ppmValue {
+	display: table;
+	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	color: ghostWhite;
+	text-align:center;
+}
+.gridArea2 .ppmValue p {
+	display: table-cell;
+	vertical-align: middle;
+}
+.dGridArea2 .ppmTitle {
 	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
 	color: ghostWhite;
 	text-align:center;
 }
-.ppmValue {
+.dGridArea2 .ppmValue {
 	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
 	color: ghostWhite;
 	text-align:center;
 }
-/* .gaugeInfo {
-	position:absolute;
-	width:455px;
-	height: 145px;
-	top: 290px;
-	z-index:100;
-	padding: 0 20px 5px 20px;
-} */
-
 .gaugeInfo p {
 	margin: 0;
 }
-.gaugeTitleBox {
+.gridArea3 .gaugeTitleBox {
 	padding-left: 0;
 	padding-right:8px;
 	margin-bottom: 5px;
 }
-.gaugeValueBox {
+.gridArea3 .gaugeValueBox {
 	padding-left: 8px;
 	padding-right:0;
 	margin-bottom: 5px;
 }
-.gaugeTitleBox p {
+.gridArea3 .gaugeTitleBox p {
+	display: table-cell;
+	vertical-align: middle;
 	font-size: 24px;
 	color: ghostWhite;
 	text-align:center;
 }
-.gaugeValueBox p {
+.gridArea3 .gaugeValueBox p {
+	display: table-cell;
+	vertical-align: middle;
 	font-size: 24px;
 	color: ghostWhite;
 	text-align:center;
 }
-.gaugeGreyBox p {
+.gridArea3 .gaugeGreyBox {
+	display: table;
+	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.gridArea3 .gaugeBlueBox {
+	display: table;
+	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.dGridArea3 .gaugeTitleBox {
+	padding-left: 0;
+	padding-right:8px;
+	margin-bottom: 5px;
+}
+.dGridArea3 .gaugeValueBox {
+	padding-left: 8px;
+	padding-right:0;
+	margin-bottom: 5px;
+}
+.dGridArea3 .gaugeTitleBox p {
+	font-size: 24px;
+	color: ghostWhite;
+	text-align:center;
+}
+.dGridArea3 .gaugeValueBox p {
+	font-size: 24px;
+	color: ghostWhite;
+	text-align:center;
+}
+.dGridArea3 .gaugeGreyBox p {
 	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
 }
-.gaugeBlueBox p {
+.dGridArea3 .gaugeBlueBox p {
 	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
 }
 .bottomInfo {
@@ -160,60 +235,114 @@
 	z-index: 100;
 	padding: 0 20px 5px 20px;
 }
-.rankInfo p {
+.gridArea4 p {
+	margin: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.gridArea4 .infoTitle {
+	display:table;
+	width: 100%;
+	background-color: white;
+	border: 1.5px solid black;
+	margin-bottom: 2%;
+	padding-left: 2%;
+	height: 16%;
+}
+.gridArea4 .infoTitle p {
+	display: table-cell;
+	vertical-align: middle;
+}
+.gridArea4 .titleBox {
+	display: table;
+	width: 48%;
+	height: 23%;
+	margin-bottom: 2%;
+	padding-left: 5px;
+	margin-right: 2%;
+	color: white;
+}
+.gridArea4 .titleBox p {
+	display: table-cell;
+	vertical-align: middle;
+}
+.gridArea4 .valueBox {
+	display: table;
+	width: 48%;
+	height: 23%;
+	margin-bottom: 2%;
+	padding-left: 5px;
+	margin-left: 2%;
+	color: white;
+}
+.gridArea4 .valueBox p {
+	display: table-cell;
+	vertical-align: middle;
+}
+.gridArea4 .dBlue {
+	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.gridArea4 .lGrey {
+	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.dGridArea4 p {
 	margin: 0;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-.infoTitle {
+.dGridArea4 .infoTitle {
 	background-color: white;
 	margin-bottom: 5px;
 	border: 1.5px solid black;
 	padding-left: 10px;
 }
-.firstTitleBox {
+.dGridArea4 .firstTitleBox {
 	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
 	margin-bottom: 5px;
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
-.firstValueBox {
+.dGridArea4 .firstValueBox {
 	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
 	margin-bottom: 5px;
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
-.secondTitleBox {
+.dGridArea4 .secondTitleBox {
 	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
 	margin-bottom: 5px;
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
-.secondValueBox {
+.dGridArea4 .secondValueBox {
 	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
 	margin-bottom: 5px;
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
-.thirdTitleBox {
+.dGridArea4 .thirdTitleBox {
 	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
-.thirdValueBox {
+.dGridArea4 .thirdValueBox {
 	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
 
-/* test code */
+
 
 .amcharts-graph-g2 .amcharts-graph-stroke {
   stroke-dasharray: 3px 3px;

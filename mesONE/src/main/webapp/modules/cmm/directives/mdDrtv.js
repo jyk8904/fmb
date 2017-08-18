@@ -72,13 +72,40 @@ angular
     				  var height = $window.innerHeight;
     				  
     				  var default_height = 1080;
-    				  var origin_height = element[0].children[0].style.height.replace('px','');
+    				  
+    				  var target_height = 840;
+    				  
+    				  var chart_height = element[0].children[0].style.height.replace('px','');
     				  
     				  var height_rate = height / default_height;
     				  
-    				  element[0].children[0].style.height = origin_height * height_rate + 'px';
+    				  element[0].style.height = target_height * height_rate + 'px';
+    				  element[0].children[0].style.height = chart_height * height_rate + 'px';
     				  console.log("리사이즈");
-    				  console.log(default_height, origin_height, height_rate)
+    				  console.log(default_height, chart_height, height_rate)
+    				  console.log(element);
+    			  });
+    		  }
+    	  };
+      })
+      .directive('mResizeCtrl2', function($timeout, $window){
+    	  return {
+    		  restrict: 'A',
+    		  link: function(scope, element, attrs) {
+    			  $timeout(function(){
+    				  var height = $window.innerHeight;
+    				  
+    				  var default_height = 1080;
+    				  
+    				  var target_height = 840;
+    				  
+    				  var chart_height = element[0].children[0].style.height.replace('px','');
+    				  
+    				  var height_rate = height / default_height;
+    				  
+    				  element[0].style.height = target_height * height_rate + 'px';
+    				  console.log("리사이즈");
+    				  console.log(default_height, chart_height, height_rate)
     				  console.log(element);
     			  });
     		  }

@@ -106,7 +106,7 @@ angular
     			console.log('getPlcList data loading 실패');
     			}
     		);
- // 모바일 체크 함수 정의
+	// 모바일 체크 함수 정의
 	function isMobileFunc(){
 		var UserAgent = navigator.userAgent;
 

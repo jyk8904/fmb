@@ -50,6 +50,8 @@ angular
      *-----------------------------------------*/
     var self = this;
     var workerList = CmmWorkerSrvc;
+    
+    $scope.isMobile = false;
     console.log(workerList);
     //설비parameter
     self.eqptParamVo = {};
@@ -83,6 +85,9 @@ angular
         
     }
     
+    // 모바일 체크 함수 실행
+	isMobileFunc();
+	
     getBgImageList();
     
     // 비동기실행에 따른 이벤트 순서 제어 
@@ -102,6 +107,19 @@ angular
     			}
     		);
     
+    // 모바일 체크 함수 정의
+	function isMobileFunc(){
+		var UserAgent = navigator.userAgent;
+
+		if (UserAgent.match(/iPhone|iPod|iPad|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null)
+		{
+			$scope.isMobile = true;
+		}else{
+			$scope.isMobile =  false;
+		}
+		console.log($scope.isMobile)
+	}
+	
     function getPlcList(){
    		//설비 plc 데이터 가져오기
    	   		var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
