@@ -106,11 +106,11 @@ angular
     			console.log('getPlcList data loading 실패');
     			}
     		);
- // 모바일 체크 함수 정의
+	// 모바일 체크 함수 정의
 	function isMobileFunc(){
 		var UserAgent = navigator.userAgent;
 
-		if (UserAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null)
+		if (UserAgent.match(/iPhone|iPod|iPad|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null)
 		{
 			$scope.isMobile = true;
 		}else{

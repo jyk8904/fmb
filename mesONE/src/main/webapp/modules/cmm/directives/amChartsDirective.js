@@ -1,7 +1,7 @@
 'use strict';
 // 1.0.4
 
-angular.module('app').directive('amChart', ['$q', function ($q) {
+angular.module('amChartsDirective', []).directive('amChart', ['$q', function ($q) {
   return {
     restrict: 'E',
     replace: true,

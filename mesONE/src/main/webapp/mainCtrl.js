@@ -41,6 +41,7 @@ angular
                                  ) {
 	var workerList = CmmWorkerSrvc;
 	var self = this;
+	$scope.isMobile = false;
    $scope.login = fnLogin;
    $scope.logOut = fnLogout;
   // $scope.autoLogin = false;
@@ -53,6 +54,8 @@ angular
 	   fnLogin();
    }
    
+	// 모바일 체크 함수 실행
+	isMobileFunc();
     
     
 	self.alarmListLen = {};
@@ -398,6 +401,8 @@ angular
             sessionStorage.setItem("id", objLogin);
             sessionStorage.setItem("login", true);
             
+            btnFmbMonClickHandler();
+            
             if(sessionStorage.getItem("login")=="true"){
                 $scope.loginChk = true
             }
@@ -453,6 +458,19 @@ angular
         }    // end if
     } 
 
-    
+    // 모바일 체크 함수 정의
+	function isMobileFunc(){
+		var UserAgent = navigator.userAgent;
+
+		if (UserAgent.match(/iPhone|iPod|iPad|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null)
+		{
+			$scope.isMobile = true;
+		}else{
+			$scope.isMobile =  false;
+		}
+		console.log($scope.isMobile)
+		console.log( navigator.userAgent)
+	}
+	
 }]);
                      

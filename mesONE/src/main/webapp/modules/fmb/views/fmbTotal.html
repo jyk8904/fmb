@@ -20,11 +20,11 @@
 	<!-- ngview 내부 header -->
 <bc-form-header logo='assets/img/system/logo.png' title="생산 자원 종합현황" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
 		<!-- Controls -->
-		<a class="left carousel-control visible-xs" href="#FmbTotal" role="button" data-slide="prev">
+		<a class="left carousel-control" ng-if="isMobile == true" href="#FmbTotal" role="button" data-slide="prev">
 			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 			<span class="sr-only">Previous</span>
 		</a>
-		<a class="right carousel-control visible-xs" href="#FmbTotal" role="button" data-slide="next">
+		<a class="right carousel-control" ng-if="isMobile == true" href="#FmbTotal" role="button" data-slide="next">
 			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 			<span class="sr-only">Next</span>
 		</a>
@@ -36,67 +36,67 @@
 	<bc-bg-panel>
 	
 	<!-- For Mobile -->
-	 <div id="FmbTotal" class="carousel slide col-xs-12 visible-xs" style="padding:0;">
+	 <div id="FmbTotal" class="carousel slide col-xs-12" ng-if="isMobile == true" style="padding:0;">
 		<div class="carousel-inner" role="listbox" style="padding:0;">
 			<div class="col-xs-12 item active">
-				<div class="col-xs-4" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; font-size:12px; color:white;">
+				<div class="chartTitle col-xs-4" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; color:white;">
 					<p style="margin:5px 0 5px 0;">계획 진도율</p>
 				</div>
 				<div m-resize-ctrl class="col-xs-12 LargeBox" style="background-image:url(/mes/assets/img/dash/dash_panel_lg1.png); background-size: 100% 100%; background-repeat: no-repeat;">
-					<div id="MobilePlanProgress" style="width: 100%; height: 795px; background-color: transparent; position:relative;"></div>
+					<div id="MobilePlanProgress" style="width: 100%; height: 100%; background-color: transparent; position:relative;"></div>
 				</div>
 			</div>
 			
 			<div class="col-xs-12 item" style="padding:0;">
-				<div class="col-xs-4" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; font-size:12px; color:white;">
+				<div class="chartTitle col-xs-4" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat;; color:white;">
 					<p style="margin:5px 0 5px 0;">공정 불량현황</p>
 				</div>
 				<div m-resize-ctrl class="col-xs-12 largeBox" style="background-image:url(/mes/assets/img/dash/dash_panel_lg1.png); background-size: 100% 100%; background-repeat: no-repeat;">
 					<div class="col-xs-6">
 						<!-- Pie Chat Area -->
-						<div class="col-xs-12" style="position:relative;">
-	       		 			<div m-resize-ctrl2 id="MobilePieChart" style="width: 100%; height: 146px; background-color: transparent;" ></div>
+						<div class="col-xs-12" style="position:relative; height:100%">
+	       		 			<div m-resize-ctrl2 id="MobilePieChart" style="width: 100%; height: 50%; background-color: transparent;" ></div>
 	       		 		</div>
 	       		 		<!-- BarChart Area -->
 					 	<div class="col-xs-12" style="position:relative;">
-		       				<div m-resize-ctrl2 id="MobileBarChart" style="width: 100%; height: 146px; background-color: transparent;" ></div>
+		       				<div m-resize-ctrl2 id="MobileBarChart" style="width: 100%; height: 50%; background-color: transparent;" ></div>
 						</div>
 	       		 	</div>
-	       		 	<div class="col-xs-6">
+	       		 	<div class="gridArea col-xs-6">
 	       		 		<!-- Grid1 Area -->
-		       		 	<div class="col-xs-12" style="position:relative; padding-bottom:20px; padding-top:20px;">
+		       		 	<div class="gridArea1 col-xs-12" style="position:relative;">
 							<!-- Legend -->
-							<div class="col-xs-3 lGrey"><p>순위</p></div>
-							<div class="col-xs-6 lGrey"> <p>품목</p></div>
-							<div class="col-xs-3 lGrey"> <p>수량</p></div>
+							<div class="titleRow col-xs-3 lGrey"><p>순위</p></div>
+							<div class="titleRow col-xs-6 lGrey"> <p>품목</p></div>
+							<div class="titleRow col-xs-3 lGrey"> <p>수량</p></div>
 							<!-- First Row -->
-							<div class="col-xs-3 dBlue"><p>1</p></div>
-							<div class="col-xs-6 dBlue"><p>품목이 들어감.</p></div>
-							<div class="col-xs-3 dBlue"><p>수량</p></div>
+							<div class="contentRow col-xs-3 dBlue"><p>1</p></div>
+							<div class="contentRow col-xs-6 dBlue"><p>품목이 들어감.</p></div>
+							<div class="contentRow col-xs-3 dBlue"><p>수량</p></div>
 							<!-- Second Row -->
-							<div class="col-xs-3 lGrey"><p>2</p></div>
-							<div class="col-xs-6 lGrey"><p>품목이 들어감.</p></div>
-							<div class="col-xs-3 lGrey"><p>수량</p></div>
+							<div class="contentRow col-xs-3 lGrey"><p>2</p></div>
+							<div class="contentRow col-xs-6 lGrey"><p>품목이 들어감.</p></div>
+							<div class="contentRow col-xs-3 lGrey"><p>수량</p></div>
 							<!-- Third Row -->		
-							<div class="col-xs-3 dBlue"><p>3</p></div>
-							<div class="col-xs-6 dBlue"><p>품목이 들어감.</p></div>
-							<div class="col-xs-3 dBlue"><p>수량</p></div>
+							<div class="contentRow col-xs-3 dBlue"><p>3</p></div>
+							<div class="contentRow col-xs-6 dBlue"><p>품목이 들어감.</p></div>
+							<div class="contentRow col-xs-3 dBlue"><p>수량</p></div>
 							<!-- Forth Row -->
-							<div class="col-xs-3 lGrey"><p>4</p></div>
-							<div class="col-xs-6 lGrey"><p>품목이 들어감.</p></div>
-							<div class="col-xs-3 lGrey"><p>수량</p></div>
+							<div class="contentRow col-xs-3 lGrey"><p>4</p></div>
+							<div class="contentRow col-xs-6 lGrey"><p>품목이 들어감.</p></div>
+							<div class="contentRow col-xs-3 lGrey"><p>수량</p></div>
 							<!-- Fifth Row -->
-							<div class="col-xs-3 dBlue"><p>5</p></div>
-							<div class="col-xs-6 dBlue"><p>품목이 들어감.</p></div>
-							<div class="col-xs-3 dBlue"><p>수량</p></div>
+							<div class="contentRow col-xs-3 dBlue"><p>5</p></div>
+							<div class="contentRow col-xs-6 dBlue"><p>품목이 들어감.</p></div>
+							<div class="contentRow col-xs-3 dBlue"><p>수량</p></div>
 							<!-- Etc Row -->
-							<div class="col-xs-3 lGrey"><p>기타</p></div>
-							<div class="col-xs-6 lGrey"><p>품목이 들어감.</p></div>
-							<div class="col-xs-3 lGrey"><p>수량</p></div>	
+							<div class="contentRow col-xs-3 lGrey"><p>기타</p></div>
+							<div class="contentRow col-xs-6 lGrey"><p>품목이 들어감.</p></div>
+							<div class="contentRow col-xs-3 lGrey"><p>수량</p></div>	
 						</div>
 						
 						<!-- Grid2 Area -->
-						<div class="col-xs-12" style="padding-bottom:20px;">
+						<div class="gridArea2 col-xs-12" style="padding-bottom:20px;">
 							<div class="col-xs-6 ppmTitle">
 								<p>전체 불량률</p>
 							</div>
@@ -110,12 +110,12 @@
 			
 			<div class="col-xs-12 item" style="padding:0;">
 				<div class="col-xs-6">
-					<div class="col-xs-5" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; font-size:12px; color:white;">
+					<div class="chartTitle col-xs-5" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; color:white;">
 						<p style="margin:5px 0 5px 0;">라인 가동현황</p>
 					</div>
-					<div m-resize-ctrl class="col-xs-12 smallBox firstRow" style="background-image:url(/mes/assets/img/dash/dash_panel_sm1.png); background-size: 100% 100%; background-repeat: no-repeat;">
-						<div m-resize-ctrl2 id="MobileGauge" style="width: 100%; height: 396px; background-color: transparent; position:relative" ></div>
-						<div class="col-xs-12 gaugeInfo" style="position:relative; padding:0;">
+					<div m-resize-ctrl2 class="col-xs-12 smallBox firstRow" style="background-image:url(/mes/assets/img/dash/dash_panel_sm1.png); background-size: 100% 100%; background-repeat: no-repeat;">
+						<div id="MobileGauge" style="width: 100%; height: 55%; background-color: transparent; position:relative" ></div>
+						<div class="col-xs-12 gaugeInfo gridArea3" style="position:relative; padding:0;">
 							<div class="col-xs-6 gaugeTitleBox gaugeGreyBox"> 
 								<p>가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;동</p>
 							</div>
@@ -144,31 +144,31 @@
 					</div>
 				</div>
 				<div class="col-xs-6">
-					<div class="col-xs-5" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; font-size:12px; color:white;">
+					<div class="chartTitle col-xs-5" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; color:white;">
 						<p style="margin:5px 0 5px 0;">알람 발생추이</p>
 					</div>
-					<div m-resize-ctrl class="col-xs-12 smallBox firstRow" style="background-image:url(/mes/assets/img/dash/dash_panel_sm1.png); background-size: 100% 100%; background-repeat: no-repeat;">
-						<div m-resize-ctrl2 id="MobileAlarmChart" style="width: 100%; height: 396px; background-color: transparent; position:relative"></div> 	
-						<div class="col-xs-12 rankInfo" style="position:relative; padding:0;">
+					<div m-resize-ctrl2 class="col-xs-12 smallBox firstRow" style="background-image:url(/mes/assets/img/dash/dash_panel_sm1.png); background-size: 100% 100%; background-repeat: no-repeat;">
+						<div id="MobileAlarmChart" style="width: 100%; height: 55%; background-color: transparent; position:relative"></div> 	
+						<div class="col-xs-12 gridArea4" style="position:relative; padding:0;">
 							<div class="col-xs-12 infoTitle">
 								<p class="col-xs-6 titleValue">발생량 순위</p>
 							</div>
-							<div class="col-xs-6 firstTitleBox"> 
+							<div class="col-xs-6 titleBox lGrey"> 
 								<p>1. {{vm.info.alarm.firstTitle}}</p>
 							</div>
-							<div class="col-xs-6 firstValueBox"> 
+							<div class="col-xs-6 valueBox lGrey"> 
 								<p>{{vm.info.alarm.firstValue}}</p>
 							</div>
-							<div class="col-xs-6 secondTitleBox">
+							<div class="col-xs-6 titleBox dBlue">
 								<p>2. {{vm.info.alarm.secondTitle}}</p>
 							</div>
-							<div class="col-xs-6 secondValueBox">
+							<div class="col-xs-6 valueBox dBlue">
 								<p>{{vm.info.alarm.firstValue}}</p>
 							</div>
-							<div class="col-xs-6 thirdTitleBox">
+							<div class="col-xs-6 titleBox lGrey">
 								<p>3. {{vm.info.alarm.thirdTitle}}</p>
 							</div>
-							<div class="col-xs-6 thirdValueBox">
+							<div class="col-xs-6 valueBox lGrey">
 								<p>{{vm.info.alarm.thirdValue}}</p>
 							</div>	
 						</div>
@@ -177,32 +177,32 @@
 			</div>
 			<div class="col-xs-12 item" style="padding:0;">
 				<div class="col-xs-6">
-					<div class="col-xs-5" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; font-size:12px; color:white;">
+					<div class="chartTitle col-xs-5" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; color:white;">
 						<p style="margin:5px 0 5px 0;">대기 발생추이</p>
 					</div>
-					<div m-resize-ctrl class="col-xs-12 smallBox" style="background-image:url(/mes/assets/img/dash/dash_panel_sm1.png); background-size: 100% 100%; background-repeat: no-repeat;">
-						<div m-resize-ctrl2 id="MobileStandbyChart" style="width: 100%; height: 396px; background-color: transparent; position:relative"></div> 	
+					<div m-resize-ctrl2 class="col-xs-12 smallBox" style="background-image:url(/mes/assets/img/dash/dash_panel_sm1.png); background-size: 100% 100%; background-repeat: no-repeat;">
+						<div id="MobileStandbyChart" style="width: 100%; height: 55%; background-color: transparent; position:relative"></div> 	
 						
-						<div class="col-xs-12 rankInfo" style="position:relative; padding:0;">
+						<div class="col-xs-12 gridArea4" style="position:relative; padding:0;">
 							<div class="col-xs-12 infoTitle">
 								<p class="col-xs-6 titleValue">발생량 순위</p>
 							</div>
-							<div class="col-xs-6 firstTitleBox">  
+							<div class="col-xs-6 titleBox lGrey">  
 								<p>1. {{vm.info.standby.firstTitle}}</p>
 							</div>
-							<div class="col-xs-6 firstValueBox"> 
+							<div class="col-xs-6 valueBox lGrey"> 
 								<p>{{vm.info.standby.firstValue}}</p>
 							</div>
-							<div class="col-xs-6 secondTitleBox">
+							<div class="col-xs-6 titleBox dBlue">
 								<p>2. {{vm.info.standby.secondTitle}}</p>
 							</div>
-							<div class="col-xs-6 secondValueBox">
+							<div class="col-xs-6 valueBox dBlue">
 								<p>{{vm.info.standby.secondValue}}</p>
 							</div>
-							<div class="col-xs-6 thirdTitleBox">
+							<div class="col-xs-6 titleBox lGrey">
 								<p>3. {{vm.info.standby.thirdTitle}}</p>
 							</div>
-							<div class="col-xs-6 thirdValueBox">
+							<div class="col-xs-6 valueBox lGrey">
 								<p>{{vm.info.standby.thirdValue}}</p>
 							</div>	
 						
@@ -210,32 +210,32 @@
 					</div>
 				</div>
 				<div class="col-xs-6">
-					<div class="col-xs-5" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; font-size:12px; color:white;">
+					<div class="chartTitle col-xs-5" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; font-size:12px; color:white;">
 						<p style="margin:5px 0 5px 0;">비가동 발생추이</p>
 					</div>
-					<div m-resize-ctrl class="col-xs-12 smallBox" style="background-image:url(/mes/assets/img/dash/dash_panel_sm1.png); background-size: 100% 100%; background-repeat: no-repeat;">
-						<div m-resize-ctrl2 id="MobileNorunChart" style="width: 100%; height: 396px; background-color: transparent; position:relative"></div> 	
+					<div m-resize-ctrl2 class="col-xs-12 smallBox" style="background-image:url(/mes/assets/img/dash/dash_panel_sm1.png); background-size: 100% 100%; background-repeat: no-repeat;">
+						<div id="MobileNorunChart" style="width: 100%; height: 55%; background-color: transparent; position:relative"></div> 	
 
-						<div class="col-xs-12 rankInfo" style="position:relative; padding:0;">
+						<div class="col-xs-12 gridArea4" style="position:relative; padding:0;">
 							<div class="col-xs-12 infoTitle">
 								<p class="col-xs-6 titleValue">발생량 순위</p>
 							</div>
-							<div class="col-xs-6 firstTitleBox">
+							<div class="col-xs-6 titleBox lGrey">
 								<p>1. {{vm.info.norun.firstTitle}}</p>
 							</div>
-							<div class="col-xs-6 firstValueBox"> 
+							<div class="col-xs-6 valueBox lGrey"> 
 								<p>{{vm.info.norun.firstValue}}</p>
 							</div>
-							<div class="col-xs-6 secondTitleBox">
+							<div class="col-xs-6 titleBox dBlue">
 								<p>2. {{vm.info.norun.secondTitle}}</p>
 							</div>
-							<div class="col-xs-6 secondValueBox">
+							<div class="col-xs-6 valueBox dBlue">
 								<p>{{vm.info.norun.secondValue}}</p>
 							</div>
-							<div class="col-xs-6 thirdTitleBox">
+							<div class="col-xs-6 titleBox lGrey">
 								<p>3. {{vm.info.norun.thirdTitle}}</p>
 							</div>
-							<div class="col-xs-6 thirdValueBox">
+							<div class="col-xs-6 valueBox lGrey">
 								<p>{{vm.info.norun.thirdValue}}</p>
 							</div>	
 						</div>
@@ -247,7 +247,7 @@
 	
 	
 	<!-- For Desktop -->
-	<div class="col-sm-6 col-md-6 col-lg-6 hidden-xs" style="padding:0;">
+	<div class="col-sm-6 col-md-6 col-lg-6" ng-if="isMobile == false" style="padding:0;">
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 			<div class="col-xs-6" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; font-size:24px; color:white;">
 				<p style="margin:5px 0 5px 0;">계획 진도율</p>
@@ -267,7 +267,7 @@
        		 	<div id="pieChart" style="width: 100%; height: 300px; background-color: transparent; position:relative;" ></div>
        		 	
        		 	<!-- Grid1 Area -->
-       		 	<div class="col-xs-12" style="position:relative; padding-bottom:20px;">
+       		 	<div class="col-xs-12 dGridArea1" style="position:relative; padding-bottom:20px;">
 					<!-- Legend -->
 					<div class="col-xs-2 lGrey"><p>순위</p></div>
 					<div class="col-xs-7 lGrey"> <p>품목</p></div>
@@ -299,7 +299,7 @@
 				</div>
 				
 				<!-- Grid2 Area -->
-				<div class="col-xs-12" style="padding-bottom:20px;">
+				<div class="col-xs-12 dGridArea2" style="padding-bottom:20px;">
 					<div class="col-xs-8 ppmTitle">
 						<p>전체 불량률</p>
 					</div>
@@ -316,7 +316,7 @@
 		</div>
 	</div>
 	
- 	<div class="col-sm-6 col-md-6 col-lg-6 hidden-xs" style="padding:0;">
+ 	<div class="col-sm-6 col-md-6 col-lg-6" ng-if="isMobile == false" style="padding:0;">
 		<!-- 라인 가동 현황 -->
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 			<div class="col-xs-6" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; font-size:24px; color:white;">
@@ -324,7 +324,7 @@
 			</div>
 			<div class="col-xs-12 smallBox firstRow" style="background-image:url(/mes/assets/img/dash/dash_panel_sm1.png); background-size: 100% 100%; background-repeat: no-repeat;">
 				<div id="gauge" style="width: 100%; height: 240px; background-color: transparent; position:relative" ></div>
-				<div class="col-xs-12 gaugeInfo" style="position:relative;">
+				<div class="col-xs-12 gaugeInfo dGridArea3" style="position:relative;">
 					<div class="col-xs-6 gaugeTitleBox gaugeGreyBox"> 
 						<p>가&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;동</p>
 					</div>
@@ -360,7 +360,7 @@
 			</div>
 			<div class="col-xs-12 smallBox firstRow" style="background-image:url(/mes/assets/img/dash/dash_panel_sm1.png); background-size: 100% 100%; background-repeat: no-repeat;">
 				<div id="alarmChart" style="width: 100%; height: 260px; background-color: transparent; position:relative"></div> 	
-				<div class="col-xs-12 rankInfo" style="position:relative;">
+				<div class="col-xs-12 dGridArea4" style="position:relative;">
 					<div class="col-xs-12 infoTitle">
 						<p class="col-xs-6 titleValue">발생량 순위</p>
 					</div>
@@ -393,9 +393,7 @@
 			</div>
 			<div class="col-xs-12 smallBox" style="background-image:url(/mes/assets/img/dash/dash_panel_sm1.png); background-size: 100% 100%; background-repeat: no-repeat;">
 				<div id="standbyChart" style="width: 100%; height: 260px; background-color: transparent; position:relative"></div> 	
-				<!-- <div dx-data-grid="vm.standbyRankRunInfoList"></div> -->
-				
-				<div class="col-xs-12 rankInfo" style="position:relative;">
+				<div class="col-xs-12 dGridArea4" style="position:relative;">
 					<div class="col-xs-12 infoTitle">
 						<p class="col-xs-6 titleValue">발생량 순위</p>
 					</div>
@@ -428,9 +426,7 @@
 			</div>
 			<div class="col-xs-12 smallBox" style="background-image:url(/mes/assets/img/dash/dash_panel_sm1.png); background-size: 100% 100%; background-repeat: no-repeat;">
 				<div id="norunChart" style="width: 100%; height: 260px; background-color: transparent; position:relative"></div> 	
-				<!-- <div dx-data-grid="vm.noRunRankRunInfoList"></div> -->
-			
-				<div class="col-xs-12 rankInfo" style="position:relative;">
+				<div class="col-xs-12 dGridArea4" style="position:relative;">
 					<div class="col-xs-12 infoTitle">
 						<p class="col-xs-6 titleValue">발생량 순위</p>
 					</div>
@@ -456,23 +452,8 @@
 			</div>
 		</div>
  	</div>
-	</div>
-	</div>
 	<bc-bg-panel>
 	</bc-form-body>
-
-
-	<!-- ngview 내부 footer -->
-	<bc-form-footer> <!--알람정보 하단 바 시작-->
-	<div class="alarm_data">
-		<marquee>
-			<ul id="banner" class="simply-scroll-list">
-				<li ng-repeat="alarm in vm.alarmList">{{alarm.plcId}} 알람발생
-					{{alarm.stsDttm}}</li>
-			</ul>
-		</marquee>
-	</div>
-	</bc-form-footer>
 </div>
 
 

@@ -90,7 +90,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 		function isMobileFunc(){
 			var UserAgent = navigator.userAgent;
 
-			if (UserAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null)
+			if (UserAgent.match(/iPhone|iPod|iPad|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null)
 			{
 				$scope.isMobile = true;
 			}else{
@@ -1230,7 +1230,11 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 						"fontSize": 13,
 						"theme": "default",
 						"categoryAxis": {
-							"gridPosition": "start"
+							"gridPosition": "start",
+							"gridAlpha": 0.2,
+							"gridColor": "#E5E5E5",
+							"color": "#E7E7E7",
+							"axisAlpha": 0
 						},
 						"trendLines": [],
 						"graphs": [
@@ -1238,12 +1242,12 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 								"balloonText": "[[title]] of [[category]]:[[value]]",
 								"columnWidth": 0.61,
 								"fillAlphas": 1,
-								"fillColors": "#008000",
+								"fillColors": "#ecbd89",
 								"fixedColumnWidth": 20,
 								"fontSize": 4,
 								"id": "AmGraph-1",
 								"labelText": "",
-								"lineColor": "#008000",
+								"lineColor": "#FFFFFF",
 								"negativeLineAlpha": 0,
 								"title": "graph 1",
 								"type": "column",
@@ -1253,7 +1257,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 								"balloonColor": "#FFFFFF",
 								"columnWidth": 0.45,
 								"fillAlphas": 1,
-								"fillColors": "#FF8000",
+								"fillColors": "#4F8298",
 								"fixedColumnWidth": 20,
 								"id": "AmGraph-5",
 								"lineAlpha": 0,
@@ -1272,7 +1276,10 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 							{
 								"id": "ValueAxis-1",
 								"stackType": "100%",
-								"title": ""
+								"title": "",
+								"gridAlpha": 0.2,
+								"gridColor": "#E5E5E5",
+								"color": "#E7E7E7"
 							}
 						],
 						"allLabels": [],

@@ -35,6 +35,7 @@
 
 <bc-form-header logo='assets/img/system/logo.png' title="생산 자원 통합 모니터링" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
 <img src="assets/img/system/legend1.png"  style="margin-top: 30px;">
+<img src="assets/img/system/legend.png">
 </bc-form-header>
 
 <!-- ngview 내부 body -->
@@ -59,11 +60,11 @@
 				  ng-style="{'top':eqpt.cssTop, 'left': eqpt.cssLeft, 'width':eqpt.cssWidth, 'height':eqpt.cssHeight,'z-index':eqpt.cssZindex}">
 				  		
 	              <div ng-switch on="vm.stsData[$index]">  
-	               <img ng-switch-when="0" class="obj" src="{{eqpt.stsImg0}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.plcId)">
-	               <img ng-switch-when="1" class="obj" src="{{eqpt.stsImg1}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.plcId)">
-	               <img ng-switch-when="2" class="obj" src="{{eqpt.stsImg2}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.plcId)">
-	               <img ng-switch-when="3" class="obj" src="{{eqpt.stsImg3}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.plcId)">
-	               <img ng-switch-when="4" class="obj" src="{{eqpt.stsImg4}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.plcId)">
+	               <img ng-switch-when="0" class="obj" src="{{eqpt.stsImg0}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.plcId, $event)">
+	               <img ng-switch-when="1" class="obj" src="{{eqpt.stsImg1}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.plcId, $event)">
+	               <img ng-switch-when="2" class="obj" src="{{eqpt.stsImg2}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.plcId, $event)">
+	               <img ng-switch-when="3" class="obj" src="{{eqpt.stsImg3}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.plcId, $event)">
+	               <img ng-switch-when="4" class="obj" src="{{eqpt.stsImg4}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.plcId, $event)">
 	               </div> 
 				</div>
 			</li>

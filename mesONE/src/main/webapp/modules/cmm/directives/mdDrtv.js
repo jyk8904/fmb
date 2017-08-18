@@ -72,19 +72,23 @@ angular
     				  var height = $window.innerHeight;
     				  
     				  var default_height = 1080;
-    				  var origin_height = element[0].children[0].style.height.replace('px','');
+    				  
+    				  var target_height = 840;
+    				  
+    				  var chart_height = element[0].children[0].style.height.replace('px','');
     				  
     				  var height_rate = height / default_height;
     				  
-    				  element[0].children[0].style.height = origin_height * height_rate + 'px';
+    				  element[0].style.height = target_height * height_rate + 'px';
+    				  element[0].children[0].style.height = chart_height * height_rate + 'px';
     				  console.log("리사이즈");
-    				  console.log(default_height, origin_height, height_rate)
+    				  console.log(default_height, chart_height, height_rate)
     				  console.log(element);
     			  });
     		  }
     	  };
       })
-      /*.directive('mResizeCtrl2', function($timeout, $window){
+      .directive('mResizeCtrl2', function($timeout, $window){
     	  return {
     		  restrict: 'A',
     		  link: function(scope, element, attrs) {
@@ -92,18 +96,21 @@ angular
     				  var height = $window.innerHeight;
     				  
     				  var default_height = 1080;
-    				  var origin_height = element[0].style.height.replace('px','');
+    				  
+    				  var target_height = 840;
+    				  
+    				  var chart_height = element[0].children[0].style.height.replace('px','');
     				  
     				  var height_rate = height / default_height;
     				  
-    				  element[0].style.height = origin_height * height_rate + 'px';
+    				  element[0].style.height = target_height * height_rate + 'px';
     				  console.log("리사이즈");
-    				  console.log(element)
-    				  console.log(element[0].style.height, height_rate, origin_height, height);
+    				  console.log(default_height, chart_height, height_rate)
+    				  console.log(element);
     			  });
     		  }
     	  };
-      })*/
+      })
       .directive('testCtrl', function($timeout, $window){
     	  return {
     		  restrict: 'A',
@@ -144,39 +151,6 @@ angular
     		  }
     	  };
       })
- /*     .directive('uCtrl', function($timeout, $window){
-    	  return {
-    		  restrict: 'A',
-    		  link: function(scope, element, attrs) {
-   			  $timeout(function(){
-    				  var width = $window.innerWidth;
-    				  var height = $window.innerHeight;
-    				  
-    				  var default_width = 1920;
-    				  var default_height = 1080;
-	    				  if (width >= default_width) {
-	    					 var screenRate = 1; 
-	    				  }
-	    				  else {
-	    					 var screenRate = width / default_width;
-	    				  }
-	    				 console.log(element)
-	    				  var calcWidth = element[0].style.width.replace('px','') * screenRate;
-	    				  var calcHeight = element[0].style.height.replace('px','') * screenRate;
-	    				  var calcTop = element[0].style.top.replace('px','') * screenRate;
-	    				  var calcLeft = element[0].style.left.replace('px','') * screenRate;
-	    				  
-	        			  element[0].style.width = calcWidth + 'px';
-	        			  element[0].style.height = calcHeight + 'px';
-	        			  element[0].style.top = calcTop + 'px';
-	        			  element[0].style.left = calcLeft + 'px';
-	        			  console.log(calcWidth, calcHeight);
-	    				  element[0].children[0].children[0].style.width = calcWidth + 'px';
-	    				  element[0].children[0].children[0].style.height = calcHeight + 'px';
-    			  });
-    		  }
-    	  };
-      })*/
       .directive('uCtrl', function($window){
     	  return {
     		  restrict: 'A',
@@ -312,6 +286,25 @@ angular
 				 });
 			 }
 		 } 
+	  })
+	  .directive('popupCtrl', function($timeout, $window){
+		  return {
+			  restrict: 'A',
+			  link: function(scope, element, attrs) {
+				  $timeout(function(){
+					 
+					  var height = $window.innerHeight;
+					  
+					  var default_height = 1080;
+					  
+					  var screenRate = height / default_height;
+					  
+					  console.log(default_height)
+					  console.log(element)
+					  element[0].style.height = element[0].style.height.replace("px","") * screenRate + 'px';
+				  });
+			  }
+		  }
 	  })
 	  .directive('gridHeaderCtrl', function($timeout, $window){
 		  return {

@@ -120,7 +120,7 @@ angular
 	function isMobileFunc(){
 		var UserAgent = navigator.userAgent;
 
-		if (UserAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null)
+		if (UserAgent.match(/iPhone|iPod|iPad|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null)
 		{
 			$scope.isMobile = true;
 		}else{
@@ -182,9 +182,9 @@ angular
     	$mdDialog.hide();
     };
     
-    $scope.showAdvanced = function(ev) {
+    $scope.showAdvanced = function(plcId,ev) {
     	
-    	CmmFactSrvc.setPlcData(ev);
+    	CmmFactSrvc.setPlcData(plcId);
     	console.log(CmmFactSrvc.getPlcData());
     	//PlC 데이터 저장 하는 부분.
     	//CmmFactSrvc.setPlcData(ev);
