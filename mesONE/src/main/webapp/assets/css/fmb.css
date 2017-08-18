@@ -51,6 +51,9 @@ img {
 }
 
 
+.md-button {
+	margin:5px 1px !important;
+}
 /* 로그인 파트 */
 .loginId {
 	position: absolute; 
@@ -207,13 +210,7 @@ div[ng-view] {
 }
 
 /* 폼 상단의 타이틀 및 버튼 부분 */
-/*
-.bc-form-header {
-  width:100%;
-  padding: 10px 0 5px 10px;
-  border: 1px solid #ddd;
-}	
-*/
+
 .bc-form-header {
   width:1920px;
   height:125px;
@@ -570,10 +567,74 @@ inputText {
 	text-align:right;
 }
 
+.buttonArea{
+	float: right;
+	margin:-2% 6% 1.5% 6%;
+	clear: both;
+}
+.lineBTable{
+	height:900px; 
+	width:90%; 
+	border:1px solid black; 
+	margin:auto;
+	font-size:20px;
+	margin-bottom:25px;
+	color:white;
+}
 
+.lineBTable div{
+	/* flex-basis:0px;  */
+	border:1px solid black; 
+}
+.lineBTable .column{ 
+	border:1px solid black; 
+	display:flex; 
+	align-items:center; 
+	justify-content: center;
+	flex-grow:1;
+}
+.prodTable{
+	height:425px; 
+	width:90%; 
+	border:1px solid black; 
+	margin:auto;
+	font-size:20px;
+	margin-bottom:25px;
+}
 
+.prodTable div{
+	flex-basis:0px;
+}
 
+.prodTable .column{ 
+	border:1px solid black; 
+	display:flex; 
+	align-items:center; 
+	justify-content: center;
+	flex-grow:1;
+}
 
+.prodRow p:nth-child(1){
+	background-color: #404040;
+}
+.prodRow p:nth-child(2){
+	background-color: #10253F;
+}
+.prodRow p:nth-child(3){
+	background-color: #546e7a;
+}
+.prodRow p:nth-child(4){
+	background-color: #303d44;
+}
+.prodRow p:nth-child(5){
+	background-color: #262626;
+}
+.prodRow p:nth-child(6){
+	background-color: #10253F;
+}
+.prodRow p:nth-child(7){
+	background-color: #404040;
+}
 
 #overlay {
 	position: fixed;

@@ -53,7 +53,6 @@ angular
 	   fnLogin();
    }
    
-   
     
     
 	self.alarmListLen = {};
@@ -73,6 +72,7 @@ angular
 	self.btnFmbLineAClick = btnFmbLineAClickHandler;
 	self.btnFmbLineBClick = btnFmbLineBClickHandler;
 	self.btnFmbLineCClick = btnFmbLineCClickHandler;
+	self.btnFmbProdClick = btnFmbProdClickHandler;
 	self.btnFmbSpcClick = btnFmbSpcClickHandler;
 	self.btnFmbTotalClick = btnFmbTotalClickHandler;
 	self.btnFmbModeClick = btnFmbModeClickHandler;
@@ -112,6 +112,7 @@ angular
 			      , { "pageNm": "FmbLineB"   }
 			      , { "pageNm": "FmbLineC"   }
 			      , { "pageNm": "FmbTbm"     }
+			      , { "pageNm": "FmbProd" 	 }
 			      , { "pageNm": "FmbMainMon" }
 			       ]
    self.Setting={};
@@ -249,6 +250,11 @@ angular
     	  toggleLeft();
           $location.url('/FmbSpc');
        }
+      function btnFmbProdClickHandler() {
+    	  workerList.workerStop(workerList.worker1);
+    	  toggleLeft();
+          $location.url('/FmbProd');
+       }
       function btnFmbTotalClickHandler() {
     	  workerList.workerStop(workerList.worker1);
     	  toggleLeft();
@@ -325,7 +331,7 @@ angular
            workerList.worker3.worker= new Worker("worker3.js");       
          
            //Setting 정보(화면전환 시간(초))를 Worker로 넘긴다.
-           workerList.worker3.worker.postMessage(5);
+           workerList.worker3.worker.postMessage(6);
            
            // 워커로부터 전달되는 메시지를 받는다.
            		workerList.worker3.worker.onmessage = function(evt){ 

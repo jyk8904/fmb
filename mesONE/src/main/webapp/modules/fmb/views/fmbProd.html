@@ -1,0 +1,151 @@
+<!-- 
+/**  
+ * @Class Name : fmbProd.html
+ * @Description : fmbProd
+ * @Modification Information  
+ * @
+
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.08.14	 조준연 정유경
+ * 
+
+ * css: assets/css/fmb.css
+ * controller : fmbProdCtrl.js
+ *
+ */
+ -->
+ 
+<!-- ngview 내부 페이지 -->
+<div test-ctrl class='bc-screen' style="margin:0">
+<bc-form-header logo='assets/img/system/logo.png' title="생산실적 외 모니터링" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
+</bc-form-header>	
+	<!-- ngview 내부 body -->
+	<bc-form-body style="color:white;"> 
+	<div class="buttonArea">
+	<md-button class="md-raised md-default" ng-disabled="currentPage == 0" ng-click="minPage()">Previous</md-button>
+	    {{currentPage+1}} / {{totalPage}}
+	<md-button class="md-raised md-default" ng-disabled="currentPage >= totalPage-1" ng-click="plusPage()">Next</md-button>
+
+	</div>
+		<div class="prodTable colorNested" style="display:flex;  flex-direction:column">
+			<div class="row-1"  style="display:flex;  flex-direction:row; flex-grow:1.5; text-align:center;">
+			  <div class="column">라인명</div>
+			  <div style="display:flex;  flex-direction:column; flex-grow:5;">
+			  	<div class="column" style="flex-grow:1" >9월 누적</div>
+			  	<div style="display:flex; flex-direction:row; flex-grow:1;" >
+			  		<div class="column">계획수량</div>
+			  		<div class="column">실적수량</div>
+			  		<div class="column">달성률</div>
+			  		<div class="column">불량수량</div>
+			  		<div class="column">공정PPM</div>
+			  	</div>
+			  </div>
+			  
+			  <div class="row-1" style="display:flex; flex-direction:column; flex-grow:5;">
+			  	<div class="column" style="flex-grow:1" >23일</div>
+			  	<div style="display:flex;  flex-direction:row; flex-grow:1;" >
+			  		<div class="column">계획수량</div>
+			  		<div class="column">실적수량</div>
+			  		<div class="column">달성률</div>
+			  		<div class="column">불량수량</div>
+			  		<div class="column">공정PPM</div>
+			  	</div>
+			  </div>
+			</div> 		
+			<div ng-repeat="d in vm.data |  limitTo:maxSize:currentPage*maxSize" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
+				<div class="column">{{d.lineName}}</div>
+				<div class="column">{{d.plan}}</div>
+				<div class="column">{{d.prod}}</div>
+				<div class="column">{{d.archive}}%</div>
+				<div class="column">{{d.bad}}</div>
+				<div class="column">{{d.ppm}}</div>
+				<div class="column">{{d.plan}}</div>
+				<div class="column">{{d.prod}}</div>
+				<div class="column">{{d.archive}}%</div>
+				<div class="column">{{d.bad}}</div>
+				<div class="column" 
+				 ng-init="vm.planttl = vm.planttl + d.plan; 
+				 	      vm.prodttl = vm.prodttl + d.prod;
+				 	      vm.archivettl= vm.archivettl + d.archive;
+				 	      vm.archivenum = $index +1;
+				 	      vm.badttl = vm.badttl + d.bad;
+				 	      vm.ppmdttl = vm.ppmttl + d.ppm;">{{d.ppm}}</div>
+			</div>
+			
+	 	<div class="row-1" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
+			  		<div class="column">합계</div>
+			  		<div class="column">{{vm.planttl}}</div>
+			  		<div class="column">{{vm.prodttl}}</div>
+			  		<div class="column">{{vm.archivettl / vm.archivenum}}%</div>
+			  		<div class="column">{{vm.badttl}}</div>
+			  		<div class="column">{{vm.ppmdttl}}</div>
+			  		<div class="column">{{vm.planttl}}</div>
+			  		<div class="column">{{vm.prodttl}}</div>
+			  		<div class="column">{{vm.archivettl/vm.archivenum}}%</div>
+			  		<div class="column">{{vm.badttl}}</div>
+			  		<div class="column">{{vm.ppmdttl}}</div>
+			</div>  
+		</div>
+		
+				<div class="prodTable colorNested" layout="column" style="display:flex;  flex-direction:column">
+			<div class="row-1"  style="display:flex;  flex-direction:row; flex-grow:1.5; text-align:center;">
+			  <div class="column" >라인명</div>
+			  <div style="display:flex;  flex-direction:column; flex-grow:5;">
+			  	<div class="column">9월 누적</div>
+			  	<div style="display:flex;  flex-direction:row; flex-grow:1;" >
+			  		<div class="column"  >계획수량</div>
+			  		<div class="column" >실적수량</div>
+			  		<div class="column" >달성률</div>
+			  		<div class="column" >불량수량</div>
+			  		<div class="column"  >공정PPM</div>
+			  	</div>
+			  </div>
+			  
+			  <div class="row-1" style="display:flex; flex-direction:column; flex-grow:5;">
+			  	<div class="column"  >23일</div>
+			  	<div style="display:flex;  flex-direction:row; flex-grow:1;" >
+			  		<div class="column">계획수량</div>
+			  		<div class="column">실적수량</div>
+			  		<div class="column">달성률</div>
+			  		<div class="column">불량수량</div>
+			  		<div class="column">공정PPM</div>
+			  	</div>
+			  </div>
+			</div> 		
+			
+			
+			
+			<div ng-repeat="d in vm.data |  limitTo:maxSize:currentPage*maxSize" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
+				<div class="column">{{d.lineName}}</div>
+				<div class="column" >{{d.plan}}</div>
+				<div class="column" >{{d.prod}}</div>
+				<div class="column" >{{d.archive}}%</div>
+				<div class="column" >{{d.bad}}</div>
+				<div class="column" >{{d.ppm}}</div>
+				<div class="column" >{{d.plan}}</div>
+				<div class="column" >{{d.prod}}</div>
+				<div class="column" >{{d.archive}}%</div>
+				<div class="column" >{{d.bad}}</div>
+				<div class="column">{{d.ppm}}</div>
+			</div>
+			
+	 	<div class="row-1" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
+			  		<div class="column" flex =10>합계</div>
+			  		<div class="column" flex>{{vm.planttl}}</div>
+			  		<div class="column" flex>{{vm.prodttl}}</div>
+			  		<div class="column" flex>{{vm.archivettl / maxSize}}%</div>
+			  		<div class="column" flex>{{vm.badttl}}</div>
+			  		<div class="column" flex>{{vm.ppmdttl}}</div>
+			  		<div class="column" flex>{{vm.planttl}}</div>
+			  		<div class="column" flex>{{vm.prodttl}}</div>
+			  		<div class="column" flex>{{vm.archivettl/maxSize}}%</div>
+			  		<div class="column" flex>{{vm.badttl}}</div>
+			  		<div class="column" flex>{{vm.ppmdttl}}</div>
+			</div>  
+		</div>
+		
+		
+		
+		
+	</bc-form-body>
+</div>

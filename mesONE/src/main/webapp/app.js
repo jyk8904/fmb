@@ -19,7 +19,7 @@
 (function () {
     'use strict';
     angular
-        .module('app', ['dx','angularModalService', 'ngRoute', 'ngCookies', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.tpls', 'ngFileUpload'])
+        .module('app', ['angularModalService', 'ngRoute', 'ngCookies', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.tpls', 'ngFileUpload'])
         .config(config);
 //        .run(run);
 
@@ -106,6 +106,11 @@
 	        .when('/FmbLineC', {
 	            controller: 'FmbLineCCtrl',
 	            templateUrl: 'modules/fmb/views/fmbLineC.html',
+	            controllerAs: 'vm'
+	        })
+	        .when('/FmbProd', {
+	            controller: 'FmbProdCtrl',
+	            templateUrl: 'modules/fmb/views/fmbProd.html',
 	            controllerAs: 'vm'
 	        })
 	        .when('/FmbSpc', {

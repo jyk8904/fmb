@@ -25,18 +25,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="blue">  
 <title>FMB System</title>
 
-<style type="text/css">
-    #warning-message { display: none; }
-    @media only screen and (orientation:portrait){
-        #wrapper { display:none; }
-        #warning-message { display:block; }
-    }
-    @media only screen and (orientation:landscape){
-        #warning-message { display:none; }
-    }
-</style>
-
-
 <script>
 	function hideAddressBar() {
 	    if (document.documentElement.scrollHeight < window.outerHeight / window.devicePixelRatio)
@@ -66,10 +54,10 @@
    	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
    	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
    	<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
-  
-    <!-- DevExtreme dependencies-->
+<!--   
+    DevExtreme dependencies
     <script src="assets/js/dx.all.js"></script>
-    <script src="assets/js/globalize.js"></script>
+    <script src="assets/js/globalize.js"></script> -->
    
 	<!-- amCharts javascript sources -->
 	<script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
@@ -143,13 +131,12 @@
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLineBClick()'>Line별 생산실적(B)</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLineCClick()'>Line별 생산실적(C)</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbTbmClick()'>Tbm</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbProdClick()'>생산실적 외 모니터링</md-button>
 			<md-button class="md-raised md-default" ng-click='vm.btnFmbModeClick()' ng-show="id=='developer'">개발모드</md-button>&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp;
 			
 			<md-button class="md-raised md-primary" ng-click='logOut()' ng-show="loginChk">로그아웃</md-button>
 		</div>
 	</div>   
-	
-
 	<!-- 모바일 버전 -->
   <md-sidenav class="md-sidenav-left" md-component-id="left1" md-disable-backdrop md-whiteframe="4" hide-gt-md style="z-index:1002;">
 
@@ -159,15 +146,15 @@
 
       <md-content layout-margin>
 		<md-list>
-			<md-list-item class="md-2-line" ng-click="vm.btnFmbCwMonClick()">
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbAndonClick()">
 				<div class="md-list-item-text">
-					<h3>설비 가동현황(1)</h3>
+					<h3>안돈현황</h3>
 					<p></p>		
 				</div>
 			</md-list-item>
 			<md-list-item class="md-2-line" ng-click="vm.btnFmbMonClick()" >
 				<div class="md-list-item-text">
-					<h3>설비 가동현황(2)</h3>
+					<h3>설비가동현황</h3>
 					<p></p>
 				</div>
 			</md-list-item>
@@ -227,7 +214,7 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
 </div>
 	
 	<!-- <div p-ctrl data-ng-view style='width:100%; height:1016px'></div> -->
-	<div data-ng-view class="col-md-12 col-sm-12 col-xs-12" style="padding:0" ></div>
+	<div ng-clock data-ng-view class="col-md-12 col-sm-12 col-xs-12" style="padding:0" ></div>
 	
 	<bc-form-footer>
 	<!--알람정보 하단 바 시작-->
@@ -279,6 +266,7 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
    	<!-- 메인 화면 관리 -->
 	<script src="mainCtrl.js"></script>
 	<script src="modules/cmm/controllers/cmmCommonsCtrl.js"></script>
+	<script src="modules/cmm/controllers/cmmFilterCtrl.js"></script>
 	<script src="modules/cmm/controllers/cmmMatMstCtrl.js"></script>
 	<script src="modules/cmm/services/cmmAjaxSrvc.js"></script>
 	<script src="modules/cmm/services/cmmModalSrvc.js"></script>
@@ -298,6 +286,7 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
 	<script src="modules/fmb/controllers/fmbLineACtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbLineBCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbLineCCtrl.js"></script>
+	<script src="modules/fmb/controllers/fmbProdCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbSpcCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbTotalCtrl.js"></script>
 	<script src="modules/fmb/controllers/dialogCtrl.js"></script>
@@ -313,12 +302,12 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
    	<script src="worker.js"></script>
    	<script src="worker2.js"></script>
    	
-   	<!-- amchart -->
+<!--    	amchart
    	<script type="text/javascript" src="vendor/amcharts_3.21.3.free/amcharts/amcharts.js"></script>
    	<script type="text/javascript" src="vendor/amcharts_3.21.3.free/amcharts/gauge.js"></script>
 	<script type="text/javascript" src="vendor/amcharts_3.21.3.free/amcharts/serial.js"></script>
 	<script type="text/javascript" src="vendor/amcharts_3.21.3.free/amcharts/themes/dark.js"></script>
-	
+	 -->
 	<!--  amChartsDirective -->
 	<!-- <script type="text/javascript" src="modules/cmm/directives/amChartsDirective.js"></script> -->
 </html>

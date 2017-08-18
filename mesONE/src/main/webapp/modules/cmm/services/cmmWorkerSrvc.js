@@ -43,6 +43,7 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$location', func
     	//페이지 내에서 데이터를 리로드하는 워커 시작함수
     	function workerStart(workerName, url, func){
     	     //브라우저가 웹 워커를 지원하는지 검사한다 .
+    	
 	        if(!!window.Worker){    
 	           
 	           //워커가 이미 존재하면 종료시킨다 .
@@ -69,6 +70,7 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$location', func
            		workerName.worker.onmessage = function(evt){ 
            			//console.log(evt)
            			if(workerName.sts=='stop'){
+           				
            				workerStart(workerName, url, func);
            			}
            			//

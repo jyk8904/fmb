@@ -1,7 +1,7 @@
 <!-- 
 /**  
- * @Class Name : fmb006.html
- * @Description : fmb006
+ * @Class Name : fmbMon.html
+ * @Description : fmbMon
  * @Modification Information  
  * @
 
@@ -10,18 +10,31 @@
  * 
 
  * css: assets/css/fmb.css
- * controller : fmb006Ctrl.js
+ * controller : fmbMonCtrl.js
  *
  */
  -->
+ <style type="text/css">
+    #warning-message { display: none; }
+    @media only screen and (orientation:portrait){
+        #wrapper { display:none; }
+        #warning-message { display:block; }
+    }
+    @media only screen and (orientation:landscape){
+        #warning-message { display:none; }
+    }
+</style>
+ 
+
 <!-- ngview 내부 페이지 -->
 <div test-ctrl class='bc-screen' style="margin:0">
 	<script src="modules/cmm/services/cmmFactSrvc.js"></script>
+	
 
 <!-- ngview 내부 header -->
 
 <bc-form-header logo='assets/img/system/logo.png' title="생산 자원 통합 모니터링" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
-<img src="assets/img/system/legend1.png">
+<img src="assets/img/system/legend1.png"  style="margin-top: 30px;">
 </bc-form-header>
 
 <!-- ngview 내부 body -->

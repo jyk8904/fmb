@@ -104,9 +104,9 @@ angular
 					"parseDates": true
 				},
 				"theme": "dark",
-			/*	"chartCursor": {
+				"chartCursor": {
 					"enabled": true
-				},*/
+				},
 				
 				"trendLines": [],
 				"graphs": [
@@ -153,15 +153,7 @@ angular
 		);
 	}
 		
-/*	chart.addListener("rendered", zoomChart);
-	zoomChart();
 
-	// this method is called when chart is first inited as we listen for "rendered" event
-	function zoomChart() {
-	    // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
-	    chart.zoomToIndexes(chartData.length - 40, chartData.length - 1);
-	}
-		*/
 	function timeProd(){
 		//대기발생추이
 	    self.timeProd = {	    	

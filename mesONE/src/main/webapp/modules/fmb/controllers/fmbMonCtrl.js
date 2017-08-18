@@ -75,7 +75,7 @@ angular
 	    factId: 'B'
 	};
 	$scope.eachBg = {
-	    A: ''
+		  A: ''
 	 	, B: ''
 	 	, C: ''
 	 	, Comd: ''
@@ -97,22 +97,24 @@ angular
 
 
     getBgImageList();      
-    // 비동기실행에 따른 이벤트 순서 제어 
-    $timeout(getPlcList(), 50)
-    		.then(function(){//getPlcList 수행 완료 후 
-    			console.log("getPlcList 실행");
-    			$timeout(getEqptList(),600)
-    				.then(function(){//getEqptList 수행 완료 후 
-    				//bindData();
-    				console.log('getEqptList 실행');
-
-    			}, function(){//getEqptList 수행 실패 후 
-    				console.log('getEqptList 실패')
-    			});
-    		}, function(){//getPlcList 수행 실패 후 
-    			console.log('getPlcList data loading 실패');
-    			}
-    		);
+   
+	   	getData();
+	   	dataChk();
+	   
+	function dataChk(){ //function(getplcList, getEqptList, bindData) 순서제어
+	   	    if(self.plcList==undefined || self.eqptList==undefined){//모든 데이터를 읽지 못했을경우
+	   	    	$timeout(function(){
+		   	    	console.log(self.plcList==undefined, self.plcList)
+				   	console.log(self.eqptList==undefined, self.eqptList)
+	   	    	}, 100)
+	   	    	.then(function(){
+	   	    		dataChk();
+	   	    	});
+			 
+	   		}else{ 													//모든 데이터를 읽어들인 경우
+	   			bindData();
+	   		}
+	   	}
     
     // 모바일 체크 함수 정의
 	function isMobileFunc(){
@@ -169,9 +171,8 @@ angular
     }
 
 	//워커 스타트
-	workerList.workerStart(workerList.worker2, "worker2.js", getData);
-  //설비 이미지리스트 가져오기
-    
+	workerList.workerStart(workerList.worker2, "worker2.js", function(){getData(); dataChk();} );
+  
 	
     // 팝업 테스트용 코드입니다....
     
@@ -211,25 +212,26 @@ angular
 	    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
 	    	eqptPromise.then(function(data) {
 	    		self.eqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
-	    		aaa();
+	    		//bindData();
+		    	console.log("getEqptList", self.eqptList )
 	    		
 	    	}, function(data){
 	    		alert('fail: '+ data)
 	    	});
     }
     
-    function aaa(){
+    function bindData(){
 		for(var i =0; i < self.eqptList.length; i++){
 			var target = $filter('filter')(self.plcList, {plcId : self.eqptList[i].plcId});
 			self.stsData[i]= target[0].eqptSts;
 		}
-		//console.log(self.stsData[0])
 	};
     
 		function getPlcList(){
    		//설비 plc 데이터 가져오기
    	   		var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
            	plcPromise.then(function(data) {
+           		
            		//랜덤값 입력
            		for(var i = 0; i< data.length; i++){
                		var random = Math.floor(Math.random()*3);
@@ -240,7 +242,7 @@ angular
            		}
            		$scope.plcList = data;
            		self.plcList = data; //fmbplcVo가 담긴 리스트 형태리턴
-           		
+           		console.log("getPlcList", self.plcList)
            	}, function(data){
            		alert('fail: '+ data)
            });
@@ -249,6 +251,7 @@ angular
 		function getData(){
 			getEqptList();
 	   		getPlcList();
+	   		
 		} 		
 
 		

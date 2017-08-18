@@ -84,23 +84,24 @@ angular
     }
     
     getBgImageList();
+    getData();
+    dataChk();
     
-    // 비동기실행에 따른 이벤트 순서 제어 
-    $timeout(getPlcList(), 50)
-    		.then(function(){//getPlcList 수행 완료 후 
-    			console.log("getPlcList 실행");
-    			$timeout(getEqptList(),600)
-    				.then(function(){//getEqptList 수행 완료 후 
-    				//bindData();
-    				console.log('getEqptList 실행');
+    function dataChk(){ //function(getplcList, getEqptList, bindData) 순서제어
+   	    if(self.plcList==undefined || self.eqptList==undefined){//모든 데이터를 읽지 못했을경우
+   	    	$timeout(function(){
+	   	    	console.log(self.plcList==undefined, self.plcList)
+			   	console.log(self.eqptList==undefined, self.eqptList)
+   	    	}, 100)
+   	    	.then(function(){
+   	    		dataChk();
+   	    	});
+		 
+   		}else{ 													//모든 데이터를 읽어들인 경우
+   			bindData();
+   		}
+   	}
 
-    			}, function(){//getEqptList 수행 실패 후 
-    				console.log('getEqptList 실패')
-    			});
-    		}, function(){//getPlcList 수행 실패 후 
-    			console.log('getPlcList data loading 실패');
-    			}
-    		);
     
     function getPlcList(){
    		//설비 plc 데이터 가져오기
@@ -126,10 +127,7 @@ angular
 	    	//설비 이미지리스트 가져오기 메소드
 	    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
 	    	eqptPromise.then(function(data) {
-	    		$timeout(self.eqptList = data, 200)
-	    		.then(function(){
-	    			bindData();
-	    		});
+	    		self.eqptList = data;
 	    	}, function(data){
 	    		alert('fail: '+ data)
 	    	});
@@ -138,7 +136,6 @@ angular
 	function bindData(){
 		for(var i =0; i < self.eqptList.length; i++){
 			var target = $filter('filter')(self.plcList, {plcId : self.eqptList[i].plcId});
-			//console.log(self.seqptList[i].plcId);
 			self.stsData[i]= target[0].eqptSts;
 		}
 	};
@@ -182,13 +179,13 @@ angular
     	 self.showModal = !self.showModal;
     };
 
-    function aaa(){
+    function getData(){
     	getEqptList();
    		getPlcList();
      }  
     
     	//워커 스타트
-    	workerList.workerStart(workerList.worker2, "worker2.js", aaa);
+    	workerList.workerStart(workerList.worker2, "worker2.js", function(){getData(); dataChk();});
 	
 	    // 팝업 테스트용 코드입니다....
 	    

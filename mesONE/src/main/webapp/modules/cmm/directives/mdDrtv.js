@@ -198,8 +198,8 @@ angular
 	    				}
 	    				var testRate = height / default_height;
 	    				
-	    				console.log(screenRate, testRate)
-	    				console.log(scope.data)
+	    				/*console.log(screenRate, testRate)
+	    				console.log(scope.data)*/
     					scope.data.cssHeight = (parseInt(scope.data.cssHeight.replace("px","")) * screenRate) + 'px';
     					scope.data.cssWidth = (parseInt(scope.data.cssWidth.replace("px","")) * screenRate) + 'px';
     					scope.data.cssTop = (parseInt(scope.data.cssTop.replace("px","")) * screenRate) + 'px';
@@ -461,53 +461,62 @@ angular
 				   isMobile : '='
 			  },
 			  link: function(scope, element, attrs) {
-				  $timeout(function(){
-					  
-					  var width = $window.innerWidth;
-					  var default_width = 1920; 
-					  var screenRate = width / default_width;
-					 
-					  var length = scope.data.length / 7;
+				  panelCtrl();
+				  function panelCtrl(){
 
-						  if (length <= 1) {
-							  var header = "150";
-							  var data = "125";
-							  var fontSize = "27";
-						  }
-						  else if (length == 2) {
-							  var header = "90";
-							  var data = "60";
-							  var fontSize = "27";
-						  }
-						  else if (length == 3) {
-							  var header = "80";
-							  var data = "40";
-							  var fontSize = "18";
-						  }
-						  else if (length == 4) {
-							  var header = "39";
-							  var data = "31";
-							  var fontSize = "14";
-						  }
+				  $timeout(function(){
+						console.log(scope.data);
+					  if(scope.data == undefined){
+						  panelCtrl()
 						  
-						  if (scope.isMobile) {
-							  header = header * screenRate;
-							  data = data * screenRate;
-							  fontSize = fontSize * screenRate;
-						  }
-						  
-						  element[0].children[0].style.height = header + "px";
-						  element[0].children[0].style.lineHeight = header + "px";
-						  element[0].children[0].style.fontSize = fontSize + "px";
-						  
-						  for(var i = 1; i < 7; i++)
-						  {
-							  element[0].children[i].style.height = data + "px";
-							  element[0].children[i].style.lineHeight = data + "px";
-							  element[0].children[i].style.fontSize = fontSize + "px";
-						  }
-					 /* }*/
-				  }, 200);
-			  } 
-		  }
+					  }else{
+						  var width = $window.innerWidth;
+						  var default_width = 1920; 
+						  var screenRate = width / default_width;
+						 
+						  var length = scope.data.length / 7;
+
+							  if (length <= 1) {
+								  var header = "150";
+								  var data = "125";
+								  var fontSize = "27";
+							  }
+							  else if (length == 2) {
+								  var header = "90";
+								  var data = "60";
+								  var fontSize = "27";
+							  }
+							  else if (length == 3) {
+								  var header = "80";
+								  var data = "40";
+								  var fontSize = "18";
+							  }
+							  else if (length == 4) {
+								  var header = "39";
+								  var data = "31";
+								  var fontSize = "14";
+							  }
+							  
+							  if (scope.isMobile) {
+								  header = header * screenRate;
+								  data = data * screenRate;
+								  fontSize = fontSize * screenRate;
+							  }
+							  
+							  element[0].children[0].style.height = header + "px";
+							  element[0].children[0].style.lineHeight = header + "px";
+							  element[0].children[0].style.fontSize = fontSize + "px";
+							  
+							  for(var i = 1; i < 7; i++)
+							  {
+								  element[0].children[i].style.height = data + "px";
+								  element[0].children[i].style.lineHeight = data + "px";
+								  element[0].children[i].style.fontSize = fontSize + "px";
+							  }
+						}
+					
+				  });
+				  }
+			  }
+		} 
 	  }) ;

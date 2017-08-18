@@ -54,12 +54,34 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 		
 		//함수 호출 제일 중요 부분
 		//모바일과 데스크탑에 따른 함수호출분기
-		if ($scope.isMobile) {
-			MobileGetData();
-		} else {
-			getData();
-		}
-
+/*		$(window).load(function(){//페이지 로드 후에 실행
+			console.log("after load")
+			if ($scope.isMobile) {
+				MobileGetData();
+			} else {
+				getData();
+			}
+		});
+		
+*/
+	
+/*		$(window).load(function() {
+			if ($scope.isMobile) {
+				MobileGetData();
+			} else {
+				getData();
+			}
+			});
+*/
+			
+		$(document).ready(function(){//페이지 로드 후에 실행
+			console.log("after load")
+			if ($scope.isMobile) {
+				MobileGetData();
+			} else {
+				getData();
+			}
+		});
 	/*------------------------------------------
 	 * Function 선언
 	 *-----------------------------------------*/
@@ -79,6 +101,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 		// 데스크탑일 경우 함수 정의
 		function getData()
 		{
+			console.log("getData")
 			getPlanProgress();
 			getGaugeRunRate();
 			getGaugeRunInfo();
@@ -676,6 +699,8 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 						"depth3D": 10,
 						"marginRight": 10,
 						"marginTop": 30,
+						"processCount": 1001,
+						"processTimeout": 6,
 						"plotAreaBorderAlpha": 0,
 						"plotAreaBorderColor": "#008000",
 						"plotAreaFillAlphas": 0,
@@ -1260,7 +1285,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 
 
 		//워커 스타트
-	   workerList.workerStart(workerList.worker2, "worker2.js", getData);
+	  // workerList.workerStart(workerList.worker2, "worker2.js", getData);
 	
 	
 		
