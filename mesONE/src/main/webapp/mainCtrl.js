@@ -119,31 +119,8 @@ angular
 			      , { "pageNm": "FmbTbm"     }
 			      , { "pageNm": "FmbProd" 	 }
 			       ]
-   self.Setting={};
+   self.Setting=[];
 	
-	self.data = [{"lineName":"PL6 OTR", "plan":51000, "prod":46972, "archive":92, "bad":2, "ppm":43},
-		{"lineName":"L7 OTR", "plan":85000, "prod":82988, "archive":98, "bad":2, "ppm":24},
-		{"lineName":"UKL OTR", "plan":132460,"prod":133227, "archive":101, "bad":3, "ppm":23},
-		{"lineName":"CD4 OTR", "plan":47600, "prod":43776, "archive":92, "bad":2, "ppm":46},
-		{"lineName":"PL6 OTR", "plan":51000, "prod":46972, "archive":92, "bad":2, "ppm":43},
-		{"lineName":"L7 OTR", "plan":85000, "prod":82988, "archive":98, "bad":2, "ppm":24},
-		{"lineName":"UKL OTR", "plan":132460,"prod":133227, "archive":101, "bad":3, "ppm":23},
-		{"lineName":"CD4 OTR", "plan":47600, "prod":43776, "archive":92, "bad":2, "ppm":46},
-		{"lineName":"PL6 OTR", "plan":51000, "prod":46972, "archive":92, "bad":2, "ppm":43},
-		{"lineName":"L7 OTR", "plan":85000, "prod":82988, "archive":98, "bad":2, "ppm":24},
-		{"lineName":"UKL OTR", "plan":132460,"prod":133227, "archive":101, "bad":3, "ppm":23},
-		{"lineName":"CD4 OTR", "plan":47600, "prod":43776, "archive":92, "bad":2, "ppm":46},
-		{"lineName":"PL6 OTR", "plan":51000, "prod":46972, "archive":92, "bad":2, "ppm":43},
-		{"lineName":"L7 OTR", "plan":85000, "prod":82988, "archive":98, "bad":2, "ppm":24},
-		{"lineName":"UKL OTR", "plan":132460,"prod":133227, "archive":101, "bad":3, "ppm":23},
-		{"lineName":"CD4 OTR", "plan":47600, "prod":43776, "archive":92, "bad":2, "ppm":46}
-		]
-
-	//페이징관련 변수
-	$scope.totalItems = self.data.length; 									//뿌려줄 데이터 갯수
-	$scope.maxSize = 5;														//한 페이지당 보여줄 데이터 갯수
-	$scope.totalPage = Math.ceil($scope.totalItems/$scope.maxSize)			//보여줄 총 페이지 갯수 
-
 	//설비 plc 알람정보 데이터 가져오기
   	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
     $scope.alarmList = {}
@@ -173,11 +150,11 @@ angular
 								   "switchNum": Number(self.Setting[i].switchNum),			//페이지 내 데이터 갱신 횟수
 								   "pageNm":self.Setting[i].pageNm, 						//페이지 url
 								   "switcher" : self.Setting[i].switcher					//페이지 표시 여부
-								   }
+								   };
 		   }
 	   }else{
 		   for(var j =0; j<pageList.length; j++){ // 기본설정값 지정
-			   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(5), "switchNum": Number(3),  "pageNm":pageList[j].pageNm, "switcher" : true}
+			   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(5), "switchNum": Number(3),  "pageNm":pageList[j].pageNm, "switcher" : true};
 			  
 		   }
 		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));		//로컬스토리지 저장
