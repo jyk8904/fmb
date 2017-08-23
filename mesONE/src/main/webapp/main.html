@@ -22,10 +22,15 @@
 <meta name="mobile-web-app-status-bar-style" content="blue">  
 <!-- ios홈화면추가시 상단 주소창 제거 -->
 <meta name="apple-mobile-web-app-capable" content="yes"> 
-<meta name="apple-mobile-web-app-status-bar-style" content="blue">  
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
 <title>FMB System</title>
 
 <script>
+$(document).ready(function(){
+	
+	$('.')
+});
 	function hideAddressBar() {
 	    if (document.documentElement.scrollHeight < window.outerHeight / window.devicePixelRatio)
 	        document.documentElement.style.height = (window.outerHeight / window.devicePixelRatio) + 'px';
@@ -136,6 +141,7 @@
 			<md-button class="md-raised md-default" ng-click='vm.btnFmbModeClick()' ng-show="id=='developer'">개발모드</md-button>&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp;
 			
 			<md-button class="md-raised md-primary" ng-click='logOut()' ng-show="loginChk">로그아웃</md-button>
+			<md-button class="md-raised md-primary" ng-click='winClose()'>종료</md-button>
 		</div>
 	</div>   
 	<!-- 모바일 버전 -->

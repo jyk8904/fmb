@@ -81,8 +81,7 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$location', func
 	          alert("현재 브라우저는 웹 워커를 지원하지 않습니다");
 	        }
     	}
-    
-    
+    	
 	    //워커 종료
 	    function workerStop(workerName){
 	    
@@ -92,7 +91,6 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$location', func
 	        	console.log("worker stop")
 	        }
 	    }
-   
     	
     	return factory;
     }]);
