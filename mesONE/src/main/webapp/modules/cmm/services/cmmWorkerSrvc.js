@@ -66,6 +66,7 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$location',
 	           for(var i = 0; i < obj_length; i++){
 	        	   if('/'+SettingTime[i].pageNm ==$location.url()){
 	        		   workerName.worker.postMessage([SettingTime, i, switchPage]);
+	        		   
 	        	   }
 	           }
 
