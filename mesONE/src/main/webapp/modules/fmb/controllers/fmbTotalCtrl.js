@@ -17,7 +17,9 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 													'$q',
 													'$timeout',
 													'$mdSidenav',
-	function(CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window,	$q, $timeout, $mdSidenav) {
+													'$interval',
+	function(CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window,	$q, $timeout, $mdSidenav, $interval) {
+
 		/*------------------------------------------
 		 * 변수 선언
 		 *-----------------------------------------*/
@@ -29,6 +31,9 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 
 		var self = this;
 		var workerList = CmmWorkerSrvc;
+		var interval;
+		var gauge;
+		
 		$scope.isMobile = false;
 		// 변수 선언 및 디폴트 값 세팅 
 		$scope.dateRunInfoList = {};
@@ -62,6 +67,8 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			} else {
 				getData();
 			}
+			console.log("워커시간")
+			console.log(workerList.worker2.data)
 		});
 	/*------------------------------------------
 	 * Function 선언
@@ -97,7 +104,6 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			getGaugeRunInfo();
 			getDateRunInfo();
 			getRankRunInfo();
-			
 		}
 		
 		
@@ -108,13 +114,68 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			// 계획진도율 가져오기
 			var planProgressPromise = CmmAjaxService.select("/mes/bas/selectPlanProgress.do");
 				planProgressPromise.then(function(data) {
-				$scope.planProgressList = data;			
-				if ($scope.isMobile){
-					MobilePlanProgress();
-				} else {
-					planProgress();
+				$scope.planProgressList = data;
+				
+				var count = 0;
+				var quotient = parseInt($scope.planProgressList.length / 3);
+				var remainder = $scope.planProgressList.length % quotient;
+				
+				console.log(quotient, remainder)
+				if (remainder != 0) {
+					quotient = quotient + 1;
 				}
+				var endRemainder = 	$scope.planProgressList.length % quotient;
+				
+				$interval.cancel(interval);
+				
+				$scope.callInterval = function (){
+					var filteredData = [];
+					
+					if (count == 0) 
+					{
+						var startRan = 0;
+						var endRan = quotient;
+					} 
+					else if (count == 1)
+					{
+						var startRan = count * quotient;
+						var endRan = startRan + quotient;
+					}
+					else if (count == 2)
+					{
+						var startRan = count * quotient;
+						if (remainder == 0) {
+							var endRan = startRan + quotient;
+						} 
+						else {
+							var endRan = startRan + endRemainder - 1;
+						}
+					}
+					for(var i = startRan; i <endRan; i++) {
+						filteredData.push($scope.planProgressList[i]);
+					}
+					if (count < 3) 
+					{
+						count = count + 1;
+					}
+					else
+					{
+						count = 0;
+					}
+					console.log(filteredData)
+					
+					if ($scope.isMobile){
+						MobilePlanProgress(filteredData);
+					} else {
+						planProgress(filteredData);
+					}		
+				}
+				
+				$scope.callInterval();
 
+				interval = $interval(function(){
+					$scope.callInterval();
+				},10000);
 			}, function(data) {
 				alert('fail: ' + data)
 			});	
@@ -135,7 +196,6 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			var gaugeRunInfoPromise = CmmAjaxService.select("/mes/bas/selectGaugeRunInfo.do");
 				gaugeRunInfoPromise.then(function(data) {
 				gaugeRunInfoList = data;						
-
 				gaugeRunInfo();
 				
 			}, function(data) {
@@ -168,7 +228,6 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					gauge();
 					pie();
 					barChart();
-
 				}
 	
 			}, function(data) {
@@ -227,7 +286,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 		/* Desktop Function */
 		// 데스크탑에서만 사용되는 함수 정의
 		function gauge() {
-			var gauge = AmCharts.makeChart("gauge",
+		 gauge = AmCharts.makeChart("gauge",
 				{
 					"type": "gauge",
 					"marginBottom": 0,
@@ -237,7 +296,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					"theme": "dark",
 					"arrows": [
 						{
-							"value": "30"
+							"value" : 60
 						}
 					],
 					"axes": [
@@ -277,7 +336,6 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					"titles": []
 				}
 			);
-			
 			/*gauge.arrows[0].setValue(self.gaugeRunRateList[0].lineGauge.toString());
 			gauge.axes[0].setBottomText(self.gaugeRunRateList[0].lineGauge.toString() + "%");*/
 		}
@@ -668,7 +726,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					}
 				);
 		}
-		function planProgress(){
+		function planProgress(filteredData){
 			//계획진도율 차트 
 			AmCharts.makeChart("chartdiv",
 					{
@@ -749,7 +807,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 						"allLabels": [],
 						"balloon": {},
 						"titles": [],
-						"dataProvider": $scope.planProgressList
+						"dataProvider": filteredData
 					}
 				)
 		}
@@ -1188,7 +1246,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					}
 				)
 		}
-		function MobilePlanProgress(){
+		function MobilePlanProgress(filteredData){
 			//계획진도율 차트 
 			AmCharts.makeChart("MobilePlanProgress",
 					{
@@ -1266,7 +1324,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 						"allLabels": [],
 						"balloon": {},
 						"titles": [],
-						"dataProvider": $scope.planProgressList
+						"dataProvider": filteredData
 					}
 				)
 		}
@@ -1275,7 +1333,6 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 		//워커 스타트
 	   workerList.workerStart(workerList.worker2, "worker.js");
 	   workerList.workerOnmessage(workerList.worker2, getData);
-		 
 	
 		
 	}]);

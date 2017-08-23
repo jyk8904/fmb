@@ -42,11 +42,14 @@ angular
 	var workerList = CmmWorkerSrvc;
 	workerList.worker2.sts = 'off';
 	var self = this;
+	var winwin;
 	$scope.isMobile = false;
-	$scope.login = fnLogin;
-	$scope.logOut = fnLogout;
-	$scope.loginChk = false;
-	$scope.keyUpLogin = onKeyupPasswd;
+   $scope.login = fnLogin;
+   $scope.logOut = fnLogout;
+   $scope.winClose = fnWinClose;
+  // $scope.autoLogin = false;
+   $scope.loginChk = false;
+   $scope.keyUpLogin = onKeyupPasswd;
    
    if(localStorage.getItem("autoLogin")=="true"){ //자동로그인에 체크가 되어있던경우
 	   $scope.id = localStorage.getItem('id');
@@ -89,9 +92,21 @@ angular
     	alert("do it!!!");
         //$mdSidenav('left1').open();
     };
-   */ $scope.onSwipeLeft =toggleLeft;
+   */ 
+ 
+   	 	function fnWinClose() {
+		
+		   	 setTimeout(function(){
+		   	     window.open('', '_self', '');
+		   	     this.window.close();
+		   	 }, 100);
+   	   	}
+
+  
+
+   	$scope.onSwipeLeft = toggleLeft;
     	
-    	function toggleLeft() {
+    function toggleLeft() {
           $mdSidenav('left1').close();
     };
           
@@ -153,9 +168,14 @@ angular
 								   };
 		   }
 	   }else{
+
 		   for(var j =0; j<pageList.length; j++){ // 기본설정값 지정
-			   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(5), "switchNum": Number(3),  "pageNm":pageList[j].pageNm, "switcher" : true};
-			  
+			   if (j == 2) {
+				   self.Setting[j] = {"pageSeq":j+1, "rotateTime": Number(30), "dataTime": Number(30), "pageNm":pageList[j].pageNm, "switcher" : true}
+			   }else {
+			   	self.Setting[j] = {"pageSeq":j+1, "rotateTime": Number(10), "dataTime": Number(5), "pageNm":pageList[j].pageNm, "switcher" : true}
+			   }
+			   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(5), "switchNum": Number(3),  "pageNm":pageList[j].pageNm, "switcher" : true}
 		   }
 		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));		//로컬스토리지 저장
 	   }

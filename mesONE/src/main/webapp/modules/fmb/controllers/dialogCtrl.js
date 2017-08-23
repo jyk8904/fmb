@@ -262,7 +262,7 @@ angular
 				"pan": true,
 				//"autoZoom": true,
 				"minSelectedTime": 4,
-				"rotate": false,
+				"rotate": true,
 				"chartScrollbar": {
 					"autoGridCount": true,
 					"graph": "AmGraph-1",

@@ -48,6 +48,7 @@ angular
             		"</div>"
          }
       })
+      /* marquee 태그 용 */
       .directive('marqueeBanner', function($timeout){
     	  return {
     		restrict: 'A',
@@ -64,6 +65,7 @@ angular
     		}
     	  };
       })
+      /* 모바일  종합현황 용 - 뒷배경 이미지중 큰 이미지의 경우 높이를 지정하기 위해 사용 */
       .directive('mResizeCtrl', function($timeout, $window){
     	  return {
     		  restrict: 'A',
@@ -88,6 +90,7 @@ angular
     		  }
     	  };
       })
+      /* 모바일 종합현황 용 - 각 차트를 모바일 크기에 따라 높이를 계산하기 위해 사용 */
       .directive('mResizeCtrl2', function($timeout, $window){
     	  return {
     		  restrict: 'A',
@@ -111,6 +114,7 @@ angular
     		  }
     	  };
       })
+      /* 각페이지 최상단 (bc-screen) 용 */
       .directive('testCtrl', function($timeout, $window){
     	  return {
     		  restrict: 'A',
@@ -130,6 +134,7 @@ angular
     		  }
     	  };
       })
+      /* bcFormHeader 용 */
       .directive('testCtrl2', function($timeout, $window){
     	  return {
     		  restrict: 'A',
@@ -151,6 +156,7 @@ angular
     		  }
     	  };
       })
+      /* 설비 버튼 이미지 용 */
       .directive('uCtrl', function($window){
     	  return {
     		  restrict: 'A',
@@ -233,7 +239,7 @@ angular
 			 }
 		 } 
 	  })
-	  .directive('bgCtrl', function($timeout, $window){
+	 /* .directive('bgCtrl', function($timeout, $window){
 		 return {
 			 restrict: 'A',
 			 link: function(scope, element, attrs) {
@@ -263,8 +269,8 @@ angular
 				 });
 			 }
 		 } 
-	  })
-	  .directive('bgInnerCtrl', function($timeout, $window){
+	  })*/
+	 /* .directive('bgInnerCtrl', function($timeout, $window){
 		 return {
 			 restrict: 'A',
 			 link: function(scope, element, attrs) {
@@ -286,7 +292,7 @@ angular
 				 });
 			 }
 		 } 
-	  })
+	  })*/
 	  .directive('popupCtrl', function($timeout, $window){
 		  return {
 			  restrict: 'A',
@@ -306,6 +312,7 @@ angular
 			  }
 		  }
 	  })
+	  /* 라인별 생산실적 Head 용 */
 	  .directive('gridHeaderCtrl', function($timeout, $window){
 		  return {
 			  restrict: 'A',
@@ -386,6 +393,7 @@ angular
 			  } 
 		  }
 	  })
+	  /* 라인별 생산실적 panel 데이터 용 */
 	  .directive('gridPanelCtrl', function($timeout, $window){
 		  return {
 			  restrict: 'A',
@@ -446,6 +454,7 @@ angular
 			  } 
 		  }
 	  })
+	  /* TMB panel 데이터 용 */
 	   .directive('gridTbmPanelCtrl', function($timeout, $window){
 		  return {
 			  restrict: 'A',

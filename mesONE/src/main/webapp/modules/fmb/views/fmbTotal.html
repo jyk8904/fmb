@@ -33,8 +33,6 @@
 	<!-- ngview 내부 body -->
 	<bc-form-body class='col-xs-12'>
 	
-	<bc-bg-panel>
-	
 	<!-- For Mobile -->
 	 <div id="FmbTotal" class="carousel slide col-xs-12" ng-if="isMobile == true" style="padding:0;">
 		<div class="carousel-inner" role="listbox" style="padding:0;">
@@ -52,14 +50,14 @@
 					<p style="margin:5px 0 5px 0;">공정 불량현황</p>
 				</div>
 				<div m-resize-ctrl class="col-xs-12 largeBox" style="background-image:url(/mes/assets/img/dash/dash_panel_lg1.png); background-size: 100% 100%; background-repeat: no-repeat;">
-					<div class="col-xs-6">
+					<div class="col-xs-6" style="height:100%;">
 						<!-- Pie Chat Area -->
-						<div class="col-xs-12" style="position:relative; height:100%">
-	       		 			<div m-resize-ctrl2 id="MobilePieChart" style="width: 100%; height: 50%; background-color: transparent;" ></div>
+						<div class="col-xs-12" style="position:relative; padding:0; height:50%;">
+	       		 			<div m-resize-ctrl2 id="MobilePieChart" style="width: 100%; height: 100%; background-color: transparent;" ></div>
 	       		 		</div>
 	       		 		<!-- BarChart Area -->
-					 	<div class="col-xs-12" style="position:relative;">
-		       				<div m-resize-ctrl2 id="MobileBarChart" style="width: 100%; height: 50%; background-color: transparent;" ></div>
+					 	<div class="col-xs-12" style="position:relative; padding:0; height:50%;">
+		       				<div m-resize-ctrl2 id="MobileBarChart" style="width: 100%; height: 100%; background-color: transparent;" ></div>
 						</div>
 	       		 	</div>
 	       		 	<div class="gridArea col-xs-6">
@@ -452,6 +450,5 @@
 			</div>
 		</div>
  	</div>
-	<bc-bg-panel>
 	</bc-form-body>
 </div>
