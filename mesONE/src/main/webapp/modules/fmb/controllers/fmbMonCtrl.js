@@ -102,10 +102,10 @@ angular
 	   	dataChk();
 	   
 	function dataChk(){ //function(getplcList, getEqptList, bindData) 순서제어
-	   	    if(self.plcList==undefined || self.eqptList==undefined){//모든 데이터를 읽지 못했을경우
+	   	    if(self.preplcList==undefined || self.preeqptList==undefined){//모든 데이터를 읽지 못했을경우
 	   	    	$timeout(function(){
-		   	    	console.log(self.plcList==undefined, self.plcList)
-				   	console.log(self.eqptList==undefined, self.eqptList)
+/*		   	    	console.log(self.plcList==undefined, self.plcList)
+				   	console.log(self.eqptList==undefined, self.eqptList)*/
 	   	    	}, 100)
 	   	    	.then(function(){
 	   	    		dataChk();
@@ -171,8 +171,9 @@ angular
     }
 
 	//워커 스타트
-	workerList.workerStart(workerList.worker2, "worker2.js", function(){getData(); dataChk();} );
-  
+	workerList.workerStart(workerList.worker2, "worker.js");
+	workerList.workerOnmessage(workerList.worker2, function(){getData(); dataChk();} );
+	  
 	
     // 팝업 테스트용 코드입니다....
     
@@ -211,9 +212,9 @@ angular
 	    	//설비 이미지리스트 가져오기 메소드
 	    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
 	    	eqptPromise.then(function(data) {
-	    		self.eqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
+	    		self.preeqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
+	    		self.eqptList = self.preeqptList; 
 	    		//bindData();
-		    	console.log("getEqptList", self.eqptList )
 	    		
 	    	}, function(data){
 	    		alert('fail: '+ data)
@@ -241,19 +242,26 @@ angular
                		data[i].eqptSts = random;
            		}
            		$scope.plcList = data;
-           		self.plcList = data; //fmbplcVo가 담긴 리스트 형태리턴
-           		console.log("getPlcList", self.plcList)
+           		self.preplcList = data; //fmbplcVo가 담긴 리스트 형태리턴
+           		self.plcList = self.preplcList;
            	}, function(data){
            		alert('fail: '+ data)
            });
    		}
 		
 		function getData(){
+			self.preplcList = undefined;
+			self.preeqptList = undefined;
+			
 			getEqptList();
 	   		getPlcList();
-	   		
-		} 		
-
+	   			   		
+		} 	
+		
+		
+    	//워커 스타트
+    	//workerList.workerStart(workerList.worker2, "worker2.js", getData);
+	
 		
     	
 }]);

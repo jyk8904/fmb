@@ -40,6 +40,7 @@ angular
                                  , $mdSidenav
                                  ) {
 	var workerList = CmmWorkerSrvc;
+	workerList.worker2.sts = 'off';
 	var self = this;
 	var winwin;
 	$scope.isMobile = false;
@@ -50,10 +51,14 @@ angular
    $scope.loginChk = false;
    $scope.keyUpLogin = onKeyupPasswd;
    
-   if(localStorage.getItem("autoLogin")=="true"){
+   if(localStorage.getItem("autoLogin")=="true"){ //자동로그인에 체크가 되어있던경우
 	   $scope.id = localStorage.getItem('id');
 	   $scope.pw = localStorage.getItem('password');
-	   fnLogin();
+	   
+	   //로컬데이터->세션저장
+       sessionStorage.setItem("id", $scope.id);
+       sessionStorage.setItem("login", true);
+       $scope.loginChk = true;
    }
    
 	// 모바일 체크 함수 실행
@@ -61,8 +66,6 @@ angular
     
     
 	self.alarmListLen = {};
-
-
 	self.plcParamVo = {};
 	self.plcParamVo.plcId = '';
 	self.plcParamVo.factId = '';
@@ -82,7 +85,7 @@ angular
 	self.btnFmbTotalClick = btnFmbTotalClickHandler;
 	self.btnFmbModeClick = btnFmbModeClickHandler;
 	self.btnWorkerStart = WorkerStart;
-	self.btnWorkerStop = function () { workerList.workerStop(workerList.worker1); }
+	self.btnWorkerStop = function () { workerList.workerStop(workerList.worker2); }
    	self.LotationSetting = LotationSetting;
    	self.submit1 = submitLotationSetting;
 /*    self.onSwipeRight = function() {
@@ -123,7 +126,7 @@ angular
    
     //전환될 페이지 리스트
 	var pageList = [{ "pageNm": "FmbAndon"   }
-			      , { "pageNm": "FmbMon"     }
+				  , { "pageNm": "FmbMon"     }
 			      , { "pageNm": "FmbTotal"   }
 			      , { "pageNm": "FmbLineA"   }
 			      , { "pageNm": "FmbLineB"   }
@@ -132,7 +135,30 @@ angular
 			      , { "pageNm": "FmbProd" 	 }
 			       ]
    self.Setting={};
-   
+	
+	self.data = [{"lineName":"PL6 OTR", "plan":51000, "prod":46972, "archive":92, "bad":2, "ppm":43},
+		{"lineName":"L7 OTR", "plan":85000, "prod":82988, "archive":98, "bad":2, "ppm":24},
+		{"lineName":"UKL OTR", "plan":132460,"prod":133227, "archive":101, "bad":3, "ppm":23},
+		{"lineName":"CD4 OTR", "plan":47600, "prod":43776, "archive":92, "bad":2, "ppm":46},
+		{"lineName":"PL6 OTR", "plan":51000, "prod":46972, "archive":92, "bad":2, "ppm":43},
+		{"lineName":"L7 OTR", "plan":85000, "prod":82988, "archive":98, "bad":2, "ppm":24},
+		{"lineName":"UKL OTR", "plan":132460,"prod":133227, "archive":101, "bad":3, "ppm":23},
+		{"lineName":"CD4 OTR", "plan":47600, "prod":43776, "archive":92, "bad":2, "ppm":46},
+		{"lineName":"PL6 OTR", "plan":51000, "prod":46972, "archive":92, "bad":2, "ppm":43},
+		{"lineName":"L7 OTR", "plan":85000, "prod":82988, "archive":98, "bad":2, "ppm":24},
+		{"lineName":"UKL OTR", "plan":132460,"prod":133227, "archive":101, "bad":3, "ppm":23},
+		{"lineName":"CD4 OTR", "plan":47600, "prod":43776, "archive":92, "bad":2, "ppm":46},
+		{"lineName":"PL6 OTR", "plan":51000, "prod":46972, "archive":92, "bad":2, "ppm":43},
+		{"lineName":"L7 OTR", "plan":85000, "prod":82988, "archive":98, "bad":2, "ppm":24},
+		{"lineName":"UKL OTR", "plan":132460,"prod":133227, "archive":101, "bad":3, "ppm":23},
+		{"lineName":"CD4 OTR", "plan":47600, "prod":43776, "archive":92, "bad":2, "ppm":46}
+		]
+
+	//페이징관련 변수
+	$scope.totalItems = self.data.length; 									//뿌려줄 데이터 갯수
+	$scope.maxSize = 5;														//한 페이지당 보여줄 데이터 갯수
+	$scope.totalPage = Math.ceil($scope.totalItems/$scope.maxSize)			//보여줄 총 페이지 갯수 
+
 	//설비 plc 알람정보 데이터 가져오기
   	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
     $scope.alarmList = {}
@@ -148,18 +174,20 @@ angular
   	
   	
    //알람정보워커
-   Worker3Start();
+   //Worker3Start();
    defaultLotationSetting();
-
+   
+   //페이지전환 데이터 기본값 설정
    function defaultLotationSetting(){
 	   if(localStorage.getItem('SettingTime')!=null){
 		   self.Setting = JSON.parse(localStorage.getItem('SettingTime'));
 		   for (var i =0; i<self.Setting.length; i++){
-				self.Setting[i] = {"pageSeq":self.Setting[i].pageSeq, 
-								   "rotateTime": Number(self.Setting[i].rotateTime), 
-								   "dataTime": Number(self.Setting[i].dataTime),
-								   "pageNm":self.Setting[i].pageNm, 
-								   "switcher" : self.Setting[i].switcher
+				self.Setting[i] = {"pageSeq":self.Setting[i].pageSeq, 						//페이지 전환순서
+								   //"rotateTime": Number(self.Setting[i].rotateTime), 		//페이지 전환시간
+								   "dataTime": Number(self.Setting[i].dataTime),			//페이지 내 데이터 갱신 시간
+								   "switchNum": Number(self.Setting[i].switchNum),			//페이지 내 데이터 갱신 횟수
+								   "pageNm":self.Setting[i].pageNm, 						//페이지 url
+								   "switcher" : self.Setting[i].switcher					//페이지 표시 여부
 								   }
 		   }
 	   }else{
@@ -169,10 +197,11 @@ angular
 			   }else {
 			   	self.Setting[j] = {"pageSeq":j+1, "rotateTime": Number(10), "dataTime": Number(5), "pageNm":pageList[j].pageNm, "switcher" : true}
 			   }
+			   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(5), "switchNum": Number(3),  "pageNm":pageList[j].pageNm, "switcher" : true}
 		   }
-		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));
+		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));		//로컬스토리지 저장
 	   }
-	   workerList.worker2.data =JSON.parse(localStorage.getItem('SettingTime'));
+	   workerList.worker2.data =JSON.parse(localStorage.getItem('SettingTime'));    //worker2의 data로 저장
    }
 		 
    //설비 plc 알람정보 데이터 가져오기
@@ -189,150 +218,126 @@ angular
    });
 
 
-   //알람정보워커
-   Worker3Start();
-
-   defaultLotationSetting();
-
-   function defaultLotationSetting() {
-       if (localStorage.getItem('SettingTime') != null) {
-           self.Setting = JSON.parse(localStorage.getItem('SettingTime'));
-           for (var i = 0; i < self.Setting.length; i++) {
-               self.Setting[i] = { "pageSeq": self.Setting[i].pageSeq,
-                   "rotateTime": Number(self.Setting[i].rotateTime),
-                   "dataTime": Number(self.Setting[i].dataTime),
-                   "pageNm": self.Setting[i].pageNm,
-                   "switcher": self.Setting[i].switcher
-               }
-
-           }
-       } else {
-           for (var j = 0; j < pageList.length; j++) { // 기본설정값 지정
-               self.Setting[j] = { "pageSeq": j + 1, "rotateTime": Number(10), "dataTime": Number(5), "pageNm": pageList[j].pageNm, "switcher": true }
-           }
-           localStorage.setItem('SettingTime', JSON.stringify(self.Setting));
-       }
-       workerList.worker2.data = JSON.parse(localStorage.getItem('SettingTime'));
-   }
-
-
    function submitLotationSetting() {
 		  var SettingTime = [];
-		   for(var j =0; j<pageList.length; j++){
-			   SettingTime[j] = {"pageSeq":j+1, "rotateTime": Number(self.Setting[j].rotateTime), "dataTime":  Number(self.Setting[j].dataTime), "pageNm":pageList[j].pageNm, "switcher" : self.Setting[j].switcher}
+		  var rotationChk= false;
+		  for(var j =0; j<pageList.length; j++){
+			  if (self.Setting[j].switcher == true){
+				   rotationChk = true;
+			  }
+		  }
+		  if(rotationChk==false){
+			   window.alert("적어도 하나의 페이지는 선택되어야합니다.")
+			   self.showModal = false;
+			   /* 모든 페이지를 off시키고 start 버튼을 클릭했을때 무한루프생기는 것을 
+			    * 방지하기 위해서 모두 off할수 없도록 해야함
+			    * */ 
+			   
+		  }else{
+			  
+			  
+		  for(var j =0; j<pageList.length; j++){
+			   SettingTime[j] = {"pageSeq":j+1,  "dataTime":  Number(self.Setting[j].dataTime), "switchNum":  Number(self.Setting[j].switchNum), "pageNm":pageList[j].pageNm, "switcher" : self.Setting[j].switcher}
+			  
 		   }
-		   localStorage.setItem('SettingTime', JSON.stringify(SettingTime));
-		   for(var i=0; i<localStorage.length; i++){
-			   console.log(localStorage.getItem(localStorage.key(i)));
+		  		localStorage.setItem('SettingTime', JSON.stringify(SettingTime));
+			   for(var i=0; i<localStorage.length; i++){
+				   console.log(localStorage.getItem(localStorage.key(i)));
+			   }
+			   workerList.worker2.data =JSON.parse(localStorage.getItem('SettingTime'));
+			   
+			   self.showModal = false;
 		   }
-		   workerList.worker2.data =JSON.parse(localStorage.getItem('SettingTime'));
-		   workerList.worker2.sts = 'stop';
 		   
-		   self.showModal = false;
 	   }
 
    function btnFmbMonClickHandler() {
-	   	workerList.workerStop(workerList.worker1);
          //callParamSetting();
 	   	toggleLeft();
          $location.url('/FmbMon');
       }
    function btnFmbAndonClickHandler() {
-	 	workerList.workerStop(workerList.worker1);
 	 	toggleLeft();
        $location.url('/FmbAndon');
        
     }
       function btnFmbTbmClickHandler() {
-    	workerList.workerStop(workerList.worker1);
     	toggleLeft();
          $location.url('/FmbTbm');
       }
       function btnFmbLineAClickHandler() {
-    	 workerList.workerStop(workerList.worker1);
     	 toggleLeft();
           $location.url('/FmbLineA');
        }
       function btnFmbLineBClickHandler() {
-    	 workerList.workerStop(workerList.worker1);
     	 toggleLeft();
           $location.url('/FmbLineB');
        }
       function btnFmbLineCClickHandler() {
-    	  workerList.workerStop(workerList.worker1);
     	  toggleLeft();
           $location.url('/FmbLineC');
        }
       function btnFmbSpcClickHandler() {
-    	  workerList.workerStop(workerList.worker1);
     	  toggleLeft();
           $location.url('/FmbSpc');
        }
       function btnFmbProdClickHandler() {
-    	  workerList.workerStop(workerList.worker1);
     	  toggleLeft();
           $location.url('/FmbProd');
        }
       function btnFmbTotalClickHandler() {
-    	  workerList.workerStop(workerList.worker1);
     	  toggleLeft();
           $location.url('/FmbTotal');
        }
       function btnFmbModeClickHandler() {
-    	  workerList.workerStop(workerList.worker1);
           $location.url('/FmbMode');
        }
       
       function LotationSetting() {
-    	  workerList.workerStop(workerList.worker1);
          self.showModal = !self.showModal;
       }
       
   
     //Web Worker1 시작버튼 클릭 이벤트
     function WorkerStart(){
-       // 현재 페이지가 첫페이지가 아닐경우 첫페이지로 이동시킨다.
-      /* if ($location.absUrl().split('/')[5] != 'FmbMon'){
-          $location.url('/FmbMon');
-       }*/
-    	var curPageSeq;
+    	workerList.worker2.sts = 'on';	//페이지 전환 여부  상태
+    	var switchPage = workerList.worker2.sts;
+    	var curPageSeq;			
     	var curPage = $location.url();
     	for(var i = 0; i<pageList.length; i++){
     		if(curPage == '/'+pageList[i].pageNm){
-    			curPageSeq = i;
+    			curPageSeq = i; //현재 페이지 seq
     		}
     	}
-    	console.log(curPage);
-       //브라우저가 웹 워커를 지원하는지 검사한다 .
-        if(!!window.Worker){   
-        	//워커가 실행중이면 종료시킨다.
-	           if(workerList.worker1.worker!=undefined){
-	        	  workerList.worker1.worker.terminate();
-	        	  workerList.worker1.worker=undefined;
-	           }      
-            //새로운 워커(객체)를 생성한다.
-            workerList.worker1.worker= new Worker("worker.js");       
-            if(localStorage.getItem('SettingTime')!= null){
-              	 workerList.worker1.worker.postMessage([JSON.parse(localStorage.getItem('SettingTime')), curPageSeq]);
-      	     }else{
-      	    	 workerList.worker1.worker.postMessage([self.Setting, curPageSeq]);
-      	    	 //setting정보를 워커2에게 넘김
-      	    	 //callParamSetting();
-      	           // 워커로부터 전달되는 메시지를 받는다.
-      	           // 전달 받은 순서를 바탕으로 이동시킬 page를 지정한다.
-      	     }	 
-      	           workerList.worker1.worker.onmessage = function(evt){
-      	                var seq = evt.data;
-      	                var pager = JSON.parse(localStorage.getItem('SettingTime'))[seq].pageNm;
-      	                console.log('전환될 페이지 - '+ pager);
-      	                $location.url('/'+pager);
-      	                $scope.$apply();
-      	             }  
-        }else {
-          alert("현재 브라우저는 웹 워커를 지원하지 않습니다");
-        }
-      }
-    
+    	if(curPageSeq==undefined){ 	//메인페이지에서 시작할경우, 바로 첫페이지로 이동
+    		curPageSeq = 0;
+    		while(workerList.worker2.data[curPageSeq].switcher == false){
+        		curPageSeq = curPageSeq + 1;
+        		if(curPageSeq>=pageList.length){
+        			curPageSeq = 0;
+        	    }
+        	}
+    		
+    		var nextPage = pageList[curPageSeq].pageNm
+    		$location.url('/'+nextPage);
+    		
+    	}else{						//다른페이지에서 시작할경우
+    		curPageSeq = curPageSeq + 1;
+    		if(curPageSeq>=pageList.length){
+    			curPageSeq = 0;
+    	    }
+    		while(workerList.worker2.data[curPageSeq].switcher == false){
+        		curPageSeq = curPageSeq + 1;
+        		if(curPageSeq>=pageList.length){
+        			curPageSeq = 0;
+        	    }
+        	}
+    		var nextPage=pageList[curPageSeq].pageNm
+    		$location.url('/'+nextPage);
+    	 
+     	}
+    	
+    }	
     
     //설비plc 데이터 불러오기 Web Worker시작 함수
     function Worker3Start(){
@@ -382,9 +387,9 @@ angular
     /*로그인*/
 
     function fnLogin(){
-        var objLogin = $scope.id
-        var objPasswd = $scope.pw;
-        var objAutoLogin= $scope.autoLogin;
+        var objLogin = $scope.id 			//id 저장 변수	
+        var objPasswd = $scope.pw;			//pw 저장 변수
+        var objAutoLogin= $scope.autoLogin; //로그인 여부 저장 변수
         console.log(objLogin);
         console.log(objPasswd);
         if(objLogin == undefined || objLogin==""){
@@ -400,17 +405,17 @@ angular
         // 서버로 전송
         // 아이디, 패스워드 체크
         if((objLogin =="aaa"|| objLogin =="developer") && objPasswd =="bbb"){
-        	console.log("로그인")
-        	console.log(objAutoLogin);
-        	console.log(localStorage.getItem("autoLogin"))
+        	//console.log("로그인")
+        	//console.log(objAutoLogin);
+        	//console.log(localStorage.getItem("autoLogin"))
         	//자동로그인시 로컬스토리지 저장
         	if(objAutoLogin ==true 
         		&& (localStorage.getItem("autoLogin")==null 
-        				|| localStorage.getItem("autoLogin")=="false")){
+        				|| localStorage.getItem("autoLogin")=="false")){ //자동로그인 체크
             	localStorage.setItem("autoLogin", true);
             	localStorage.setItem("id", objLogin);
             	localStorage.setItem("password", objPasswd);
-            	console.log(localStorage.getItem("autoLogin"));
+            	//console.log(localStorage.getItem("autoLogin"));
         	}
         	 //세션저장
             sessionStorage.setItem("id", objLogin);
@@ -422,17 +427,6 @@ angular
                 $scope.loginChk = true
             }
 
-            
-            
-           /*
-    	    sessionStorage.getItem("domain");
-    	    // 키에 저장된 값을 반환. 
-    	    sessionStorage.removeItem("domain");
-    	    // domain 키와 데이터 모두 삭제
-    	    sessionStorage.clear();
-    	    //저장된 모든 값 삭제
-    	        	    */
-            
         }else{
         	alert("아이디와 비밀번호를 확인하세요");
         	return;
@@ -462,12 +456,12 @@ angular
     /* 키보드 엔터 로그인 */
     function onKeyupPasswd(ev){
         var evKeyup = null;
-        if(ev)                                            // firefox
+        if(ev)                                          // firefox
             evKeyup = ev;    
         else                                            // explorer
             evKeyup = window.event;
             
-        if(evKeyup.keyCode == 13){                        // enter key code:13
+        if(evKeyup.keyCode == 13){                      // enter key code:13
            
             fnLogin();    
         }    // end if
@@ -482,10 +476,11 @@ angular
 			$scope.isMobile = true;
 		}else{
 			$scope.isMobile =  false;
+		   //알람정보워커 start
+		   Worker3Start();
 		}
 		console.log($scope.isMobile)
 		console.log( navigator.userAgent)
 	}
 	
 }]);
-                     

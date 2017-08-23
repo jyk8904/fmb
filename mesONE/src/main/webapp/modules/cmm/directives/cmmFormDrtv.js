@@ -129,7 +129,7 @@ angular
     	}
     	
     })
-   .directive('bcBackPanel', function() {   /* 폼 백그라운드 패널 */
+   /*.directive('bcBackPanel', function() {    폼 백그라운드 패널 
     	return {
     		restrict: 'E',	
       		transclude: true, 
@@ -137,7 +137,7 @@ angular
     		template: "<div bg-ctrl class='background-panel' ng-transclude></div>"
     	}
     	
-    })
+    })*/
     .directive('bcBackPanel2', function() {   /* 폼 백그라운드 패널 */
     	return {
     		restrict: 'E',	

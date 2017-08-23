@@ -19,6 +19,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 													'$mdSidenav',
 													'$interval',
 	function(CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window,	$q, $timeout, $mdSidenav, $interval) {
+
 		/*------------------------------------------
 		 * 변수 선언
 		 *-----------------------------------------*/
@@ -53,34 +54,14 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 	 * Function 호출
 	 *-----------------------------------------*/
 		
-		// 모바일 체크 함수 실행
-		isMobileFunc();
-		
+
 		//함수 호출 제일 중요 부분
 		//모바일과 데스크탑에 따른 함수호출분기
-/*		$(window).load(function(){//페이지 로드 후에 실행
-			console.log("after load")
-			if ($scope.isMobile) {
-				MobileGetData();
-			} else {
-				getData();
-			}
-		});
-		
-*/
-	
-/*		$(window).load(function() {
-			if ($scope.isMobile) {
-				MobileGetData();
-			} else {
-				getData();
-			}
-			});
-*/
-
 			
 		$(document).ready(function(){//페이지 로드 후에 실행
-			console.log("after load")
+			// 모바일 체크 함수 실행
+			isMobileFunc();
+			
 			if ($scope.isMobile) {
 				MobileGetData();
 			} else {
@@ -108,7 +89,6 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 		// 데스크탑일 경우 함수 정의
 		function getData()
 		{
-			console.log("getData")
 			getPlanProgress();
 			getGaugeRunRate();
 			getGaugeRunInfo();
@@ -205,7 +185,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			// 라인가동현황게이지 가져오기
 			var gaugeRunRatePromise = CmmAjaxService.select("/mes/bas/selectGaugeRunRate.do");
 				gaugeRunRatePromise.then(function(data) {
-				self.gaugeRunRateList = data;						
+				self.gaugeRunRateList = data;				
 			}, function(data) {
 				alert('fail: ' + data)
 			});
@@ -238,18 +218,16 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					MobileAlarmDateRunInfo();
 					MobileStandbyDateRunInfo();
 					MobileNoRunDateRunInfo();
-					
+					MobileGauge();
 					MobilePie();
 					MobileBarChart();
-					MobileGauge();
 				} else {
 					alarmDateRunInfo();
 					standbyDateRunInfo();
 					noRunDateRunInfo();
-					
+					gauge();
 					pie();
 					barChart();
-					gauge();
 				}
 	
 			}, function(data) {
@@ -1353,8 +1331,8 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 
 
 		//워커 스타트
-	   workerList.workerStart(workerList.worker2, "worker2.js", getData);
-	
+	   workerList.workerStart(workerList.worker2, "worker.js");
+	   workerList.workerOnmessage(workerList.worker2, getData);
 	
 		
 	}]);

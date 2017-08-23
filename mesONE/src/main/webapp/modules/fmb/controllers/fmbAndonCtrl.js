@@ -87,16 +87,16 @@ angular
     
     // 모바일 체크 함수 실행
 	isMobileFunc();
-	
     getBgImageList();
-    getData();
+    getAndonData();
     dataChk();
     
     function dataChk(){ //function(getplcList, getEqptList, bindData) 순서제어
-   	    if(self.plcList==undefined || self.eqptList==undefined){//모든 데이터를 읽지 못했을경우
+
+      	    if(self.preplcList==undefined || self.preeqptList==undefined){//모든 데이터를 읽지 못했을경우
    	    	$timeout(function(){
-	   	    	console.log(self.plcList==undefined, self.plcList)
-			   	console.log(self.eqptList==undefined, self.eqptList)
+/*	   	    	console.log(self.plcList==undefined, self.plcList)
+			   	console.log(self.eqptList==undefined, self.eqptList)*/
    	    	}, 100)
    	    	.then(function(){
    	    		dataChk();
@@ -133,7 +133,8 @@ angular
                		}
                		data[i].eqptSts = random;
            			}
-           			self.plcList = data; 
+           			self.preplcList = data;
+           			self.plcList = self.preplcList;
            			//fmbplcVo가 담긴 리스트 형태리턴
            		
            	}, function(data){
@@ -145,7 +146,8 @@ angular
 	    	//설비 이미지리스트 가져오기 메소드
 	    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
 	    	eqptPromise.then(function(data) {
-	    		self.eqptList = data;
+	    		self.preeqptList = data;
+	    		self.eqptList = self.preeqptList;
 	    	}, function(data){
 	    		alert('fail: '+ data)
 	    	});
@@ -197,14 +199,18 @@ angular
     	 self.showModal = !self.showModal;
     };
 
-    function getData(){
+    function getAndonData(){
+    	self.preeqptList=undefined;
+    	self.preplcList=undefined;
     	getEqptList();
    		getPlcList();
-     }  
-    
+     }     
     	//워커 스타트
-    	workerList.workerStart(workerList.worker2, "worker2.js", function(){getData(); dataChk();});
-	
+    	workerList.workerStart(workerList.worker2, "worker.js");
+    	
+    	//워커 온메세지
+    	workerList.workerOnmessage(workerList.worker2, function(){getAndonData(); dataChk();});
+
 	    // 팝업 테스트용 코드입니다....
 	    
 	    var customFullscreen = false;
