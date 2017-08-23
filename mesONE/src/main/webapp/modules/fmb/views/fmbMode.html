@@ -19,13 +19,30 @@
     
 <md-form-header>
 	<!--     좌상단 버튼   -->
-	<md-config-btn></md-config-btn>
+	<md-config-btn>
+			<!-- <div class='Btn'>" +
+         			"<div ng-click='toggleLeft()' class='configBtn'>" +
+         				
+         					"<img ng-click='vm.toggleLeft()' title='설정' src='assets/img/system/config_white.png' />" +
+
+         			"</div>" +
+         			"<div ng-click='saveEqptData()' class='saveBtn'>" +
+         				"<img ng-click='vm.saveEqptData()' title='저장' src='assets/img/system/send_white.png' />" +
+         			"</div>" +
+         			"<div ng-click='uploadImg(test)' class='saveBtn'>" +
+     				"<img ng-click='vm.uploadImg()' title='저장' src='assets/img/system/upload_image.png' />" +
+     				"</div>" +
+     				"<div ng-click='FindImg()' class='saveBtn'>" +
+     				"<img ng-click='vm.FindImg(vm.eqptParamVo.factId)' title='저장' src='assets/img/system/bg_image_change.png' />" +
+     				"</div>" +
+         		"</div>" -->
+	</md-config-btn>
 	<!--     좌상단 끝   -->
 
  	<md-radio-group ng-model="vm.eqptParamVo.factId" ng-change="vm.changeFact()">
- 		<md-radio-button class="md-radio-button" value="Comb">창원공장 설비가동현황(1)</md-radio-button>
+ 		<md-radio-button class="md-radio-button" value="Comb">안돈현황</md-radio-button>
 		<!-- <md-radio-button class="md-radio-button" value="A" >A동</md-radio-button> -->
-		<md-radio-button class="md-radio-button" value="B" >창원공장 설비가동현황(2)</md-radio-button>
+		<md-radio-button class="md-radio-button" value="B" >설비가동현황</md-radio-button>
 		<!-- <md-radio-button class="md-radio-button" value="C"> C동 </md-radio-button> -->
 	</md-radio-group>
 	

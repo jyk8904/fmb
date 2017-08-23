@@ -47,7 +47,12 @@ angular
      }
 
      var workerList = CmmWorkerSrvc;
-
+     if(workerList.worker2.worker!=undefined){
+    	 	workerList.worker2.worker.terminate();
+    	 	workerList.worker2.worker=undefined; 
+    	 	workerList.worker2.sts = "off";
+	   }
+    
      self.showModal = false;
      self.selected = {};
      self.pointer = {

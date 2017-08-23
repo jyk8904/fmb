@@ -1,6 +1,6 @@
 /**
  * @Class Name : worker.js
- * @Description : 페이지 전환 설정 관리 워커
+ * @Description : 화면 전환 및 내부페이지 데이터 갱신 관리 워커
  * @Modification Information  
  * @
  * @  작업일       작성자      내용
@@ -10,53 +10,58 @@
  * @since 
  * @version 1.0
  * @function
- *
  */
- onmessage = function(evt){
-   
-    // 화면전환에 필요한 각각의 데이터를 JSON으로 받음.
-	 var jsonData = evt.data[0];
-	 var curPageSeq = evt.data[1];
-	 var maxLength = jsonData.length;
-	 var rotationSeq = 0;
-	 // 페이지 전환 간격 Default값 10초.
-	 
 
-    if(curPageSeq == null){//main에서 시작한경우 바로 페이지 전환
-    	curPageSeq = 0;
-    	 while(jsonData[curPageSeq].switcher == false){
-  		   curPageSeq++;
-    	 }
-    	postMessage(curPageSeq);
-    	rotationSeq = curPageSeq;
-    }
+
+ onmessage = function(evt){
+	 
+	var jsonData = evt.data[0];			//페이지 세팅데이터
+	var curPageSeq = evt.data[1];		//현재페이지
+	var switchPage = evt.data[2];		//페이지를 전환하는지 여부 on, off
+	var switchNum = jsonData[curPageSeq].switchNum; //현재페이지의 갱신횟수
+    var interval = jsonData[curPageSeq].dataTime *1000;	//현재페이지의 갱신시간 
+    var postNum = 0;								//페이지 갱신 횟수
+	var dataChange = true;							//데이터 갱신을 계속 하는지 여부
+	var maxLength = jsonData.length;
+	var nextPage =getNextPage();
+    //console.log(curPageSettingTime);
     
-   	var interval = jsonData[curPageSeq].rotateTime * 1000;
-    
-   	var setTimer = setInterval(timer, interval);
-    
-    function timer() {
-    	//interval을 초기화 시켜줘야 각각 Timer가 동적으로 움직임.
-    	clearInterval(setTimer);
+    if(switchPage =="on"){//페이지 전환중 -> 페이지 갱신 횟수만큼 post, 후 페이지 전환
     	
-    	rotationSeq = rotationSeq + 1;
-    	if(rotationSeq>=maxLength){//현재 마지막페이지인경우 변경될 페이지를 첫페이지로 지정
-    		rotationSeq = 0;
-	    }
+    	setInterval(post, interval);			//페이지 전환
     	
-    	while(jsonData[rotationSeq].switcher == false){
-    		rotationSeq = rotationSeq + 1;
-    		if(rotationSeq>=maxLength){
-        		rotationSeq = 0;
-    	    }
+    }else{				  //페이지 내에서 데이터만 갱신중, 계속 페이지 갱신 post
+    	
+    	setInterval(post2, interval);	//계속 페이지 갱신
+    }  
+
+    function post(){
+    	postNum+=1;
+    	if(postNum>=switchNum){
+    		dataChange=false;
     	}
-   
-    	   
-       // 화면 전환 순번을 넘김
-       postMessage(rotationSeq);
-       // 화면 별로 정의된 각각의 시간을 바탕으로 셋팅한다.
-       interval = jsonData[rotationSeq].rotateTime * 1000;
-       // 시간 설정 후 시작.
-       setTimer = setInterval(timer, interval);
+    	postMessage([dataChange, nextPage]);
     }
+    function post2(){
+       	postMessage([dataChange, nextPage]);
+    }
+    
+    function getNextPage(){
+    		//다른 페이지에서 시작한경우 seq+1
+        	curPageSeq = curPageSeq + 1;
+        	
+        	if(curPageSeq>=maxLength){//현재 마지막페이지인경우 변경될 페이지를 첫페이지로 지정
+        		curPageSeq = 0;
+    	    }
+        	
+        	while(jsonData[curPageSeq].switcher == false){
+        		curPageSeq = curPageSeq + 1;
+        		if(curPageSeq>=maxLength){
+        			curPageSeq = 0;
+        	    }
+        	}
+            return curPageSeq;
+    }
+    
+    
 }

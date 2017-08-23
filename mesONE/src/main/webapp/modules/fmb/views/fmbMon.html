@@ -34,8 +34,7 @@
 <!-- ngview 내부 header -->
 
 <bc-form-header logo='assets/img/system/logo.png' title="생산 자원 통합 모니터링" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
-<img src="assets/img/system/legend1.png"  style="margin-top: 30px;">
-<img src="assets/img/system/legend.png">
+<img class="legend" src="assets/img/system/legend1.png">
 </bc-form-header>
 
 <!-- ngview 내부 body -->
@@ -76,56 +75,3 @@
 </bc-form-body>
 </div>
 
-
-<!------------------------------------------ modal body start------------------------------------------------------->
-<modal title="설비 정보" visible="vm.showModal">
-<form role="form">
-
-	<ul class="eqpt-info-modal">
-		<li ng-repeat="plc in vm.plc">
-			<div class="form-group">
-				<label for="stsImg0"></label>
-			</div>
-			<div class="form-group">
-				<label for="plcId">PlcID </label>
-				<h5>{{plc.plcId}}</h5>
-			</div>
-			<div class="form-group">
-
-				<label for="eqptCd">설비코드 </label>
-				<h5>{{plc.eqptCd}}</h5>
-			</div>
-			<div class="form-group">
-				<label for="eqptNm">설비명</label>
-				<h5>{{plc.eqptNm}}</h5>
-			</div>
-			<div class="form-group">
-				<label for="factId">공장ID</label>
-				<h5>{{plc.factId}}</h5>
-			</div>
-			<div class="form-group">
-				<label for="lineNm">라인명 </label>
-				<h5>{{plc.lineNm}}</h5>
-			</div>
-			<div class="form-group">
-				<label for="item_Cd">제품코드 </label>
-				<h5>{{plc.item_Cd}}</h5>
-				
-			</div>
-			<div class="form-group">
-				<label for="eqptSts">설비상태 </label>
-				<h5>{{plc.eqptSts}}</h5>
-			</div>
-			<div class="form-group">
-				<label for="stsDttm">설비 </label>
-				<h5>{{plc.stsDttm}}</h5>
-			</div>
-
-		</li>
-	</ul>
-<button type="button" class="btn btn-default" data-dismiss="modal"
-		aria-hidden="true">close</button>
-</form>
-</modal>
-
-<!-------------------------------------------modal body end------------------------------------------------------->

@@ -76,8 +76,8 @@ angular
 	}
 	
     //워커 스타트
-	workerList.workerStart(workerList.worker2, "worker2.js",   getLineList);
-
+	workerList.workerStart(workerList.worker2, "worker.js");
+	workerList.workerOnmessage(workerList.worker2, getLineList);
            function getLineList(){
         	 //선택된 공장의 line별 데이터 가져오기
         	    var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do", self.lineParamVo);

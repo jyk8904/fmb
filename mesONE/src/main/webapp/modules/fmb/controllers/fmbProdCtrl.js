@@ -35,9 +35,6 @@ angular
 	isMobileFunc();
 	
 
-	
-
-    
     self.data = [{"lineName":"PL6 OTR", "plan":51000, "prod":46972, "archive":92, "bad":2, "ppm":43},
     			{"lineName":"L7 OTR", "plan":85000, "prod":82988, "archive":98, "bad":2, "ppm":24},
     			{"lineName":"UKL OTR", "plan":132460,"prod":133227, "archive":101, "bad":3, "ppm":23},
@@ -55,13 +52,14 @@ angular
     			{"lineName":"UKL OTR", "plan":132460,"prod":133227, "archive":101, "bad":3, "ppm":23},
     			{"lineName":"CD4 OTR", "plan":47600, "prod":43776, "archive":92, "bad":2, "ppm":46}
     			]
-
-	  $scope.totalItems = self.data.length;
-	  $scope.currentPage = 0;
-	  $scope.maxSize = 5;
-      $scope.startNum = $scope.currentPage*$scope.maxSize
-      $scope.endNum = $scope.currentPage*$scope.maxSize + $scope.maxSize -1
-      $scope.totalPage = Math.ceil($scope.totalItems/$scope.maxSize)
+    
+    	//페이징관련 변수
+	  $scope.totalItems = self.data.length; 									//뿌려줄 데이터 갯수
+	  $scope.currentPage = 0;													//현재페이지넘버
+	  $scope.maxSize = 5;														//한 페이지당 보여줄 데이터 갯수
+      $scope.startNum = $scope.currentPage*$scope.maxSize						//현재페이지에서 보여줄 데이터의 시작 인덱스
+      $scope.endNum = $scope.currentPage*$scope.maxSize + $scope.maxSize -1		//현재페이지에서 보여줄 데이터의 마지막 인덱스
+      $scope.totalPage = Math.ceil($scope.totalItems/$scope.maxSize)			//보여줄 총 페이지 갯수 
 	 
       $scope.planttl =0;
       $scope.prodttl = 0;
@@ -73,10 +71,15 @@ angular
       $scope.minPage = minPage;
       $scope.plusPage = plusPage;
 
+      if(workerList.worker2.data)
+/*      var worker2Data = workerList.worker2.data;
+      worker2Data = workerList.worker2.data*/
       
   	//워커 스타트
-  	workerList.workerStart(workerList.worker2, "worker2.js", pageChange);
-  	
+  	workerList.workerStart(workerList.worker2, "worker.js");
+
+  	workerList.workerOnmessage(workerList.worker2, pageChange);
+  	   
   	
   	
   	function pageChange(){
@@ -155,6 +158,10 @@ angular
     	    ,function(data){
     	    	alert('fail: '+ data)
     	    });*/
+    	    	
+    	    	
+
+    	       
     	    }
 }]);
 

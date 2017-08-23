@@ -38,8 +38,9 @@ angular
     getTbmList();
     
 	//워커 스타트
-	workerList.workerStart(workerList.worker2, "worker2.js", getTbmList);
-    
+	workerList.workerStart(workerList.worker2, "worker.js");
+	workerList.workerOnmessage(workerList.worker2, getTbmList);
+	   
 	
 	// 모바일 체크 함수 정의
 	function isMobileFunc(){

@@ -233,10 +233,11 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
 	</bc-form-footer>
 	
    <!-- 모달 body -->
+ 
    	<modal id="pageSetting" title="페이지 전환 설정" visible="vm.showModal" >
 		<form>
      		<table style="margin-left:35px;">
-    			<tr> <td></td> <td>페이지전환(초)</td> <td>데이터갱신(초)</td></tr>
+    			<tr> <td></td> <td>데이터갱신(초)</td> <td>갱신횟수</td></tr>
      			<tr ng-repeat="page in vm.Setting">
 	     			<td>  
 		     			<md-switch ng-model="page.switcher" aria-label="Switch 1" style="float:left; margin:0 10px; clear:left">
@@ -245,15 +246,16 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
 	     			</td>
 	 
 	     			<td>
-	    				<input style="width:100px; margin-right:10px;" type ="number" placeholder="페이지전환"+{{page.pageSeq}}+" time" name ="name" ng-model=page.rotateTime value={{page.rotateTime}}>&nbsp;&nbsp;&nbsp;
-	     			</td>
+	    				<input style="width:100px; margin-right:10px;" type="number" placeholder="데이터갱신"+{{page.pageSeq}}+"  data refresh time" name ="name" ng-model=page.dataTime value={{page.dataTime}}>&nbsp;&nbsp;&nbsp;
+	    			</td>
 	     			<td>
-	    			<input style="width:100px; margin-right:10px;" type="number" placeholder="데이터갱신"+{{page.pageSeq}}+"  data refresh time" name ="name" ng-model=page.dataTime value={{page.dataTime}}>
+	    				<input style="width:100px; margin-right:10px;" type ="number" placeholder="갱신횟수"+{{page.pageSeq}}+" time" name ="name" ng-model=page.switchNum value={{page.switchNum}}>
+	    				
     				</td>
      			</tr>
      		</table>
   			<br>      
-  	 		<md-button class="md-raised md-primary" type="submit" data-dismiss="modal" aria-hidden="true" ng-click="vm.submit1()" style="width:50px;margin: 0 256px;" >저장</md-button>
+  	 		<md-button class="md-raised md-primary center" type="submit" data-dismiss="modal" aria-hidden="true" ng-click="vm.submit1()" style="width:50px;margin: 0 256px;" >저장</md-button>
        		<!-- <input type="submit" value="저장"  data-dismiss="modal"  aria-hidden="true" style="width:50px;margin: 0 256px;" ng-click="vm.submit1()"/> -->
       		<!--<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">닫기</button> -->
      	</form>
@@ -301,14 +303,6 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
     
    	<!-- 워커 관리 -->
    	<script src="worker.js"></script>
-   	<script src="worker2.js"></script>
+   	<!-- <script src="worker2.js"></script> -->
    	
-<!--    	amchart
-   	<script type="text/javascript" src="vendor/amcharts_3.21.3.free/amcharts/amcharts.js"></script>
-   	<script type="text/javascript" src="vendor/amcharts_3.21.3.free/amcharts/gauge.js"></script>
-	<script type="text/javascript" src="vendor/amcharts_3.21.3.free/amcharts/serial.js"></script>
-	<script type="text/javascript" src="vendor/amcharts_3.21.3.free/amcharts/themes/dark.js"></script>
-	 -->
-	<!--  amChartsDirective -->
-	<!-- <script type="text/javascript" src="modules/cmm/directives/amChartsDirective.js"></script> -->
 </html>

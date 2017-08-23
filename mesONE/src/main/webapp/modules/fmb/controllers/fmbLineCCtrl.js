@@ -64,7 +64,8 @@ angular
     getLineList();
     
 	//워커 스타트
-	workerList.workerStart(workerList.worker2, "worker2.js", getLineList);
+	workerList.workerStart(workerList.worker2, "worker.js");
+	workerList.workerOnmessage(workerList.worker2, getLineList);
     
 	// 모바일 체크 함수 정의
 	function isMobileFunc(){
