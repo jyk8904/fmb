@@ -90,7 +90,7 @@ angular
     		  }
     	  };
       })
-      /* 모바일 종합현황 용 - 각 차트를 모바일 크기에 따라 높이를 계산하기 위해 사용 */
+      /* 모바일 종합현황 용 - 각 차트를 모바일 크기에 따라 높이를 계산하기 위해 사용 
       .directive('mResizeCtrl2', function($timeout, $window){
     	  return {
     		  restrict: 'A',
@@ -113,7 +113,7 @@ angular
     			  });
     		  }
     	  };
-      })
+      })*/
       /* 각페이지 최상단 (bc-screen) 용 */
       .directive('testCtrl', function($timeout, $window){
     	  return {
@@ -156,6 +156,37 @@ angular
     		  }
     	  };
       })
+      .directive('backPanelCtrl', function($timeout, $window){
+    	  return {
+    		  restrict: 'A',
+    		  link: function(scope, element, attrs) {
+    			  $timeout(function(){
+	    			  var default_width = 1920;
+	    			  var default_height = 1080;
+	    			  
+	    			  var width = $window.innerWidth;
+	    			  var height = $window.innerHeight;
+	    			  
+	    			  var wScreenRate = width * 9;
+	    			  var hScreenRate = height * 16;
+	    			  
+	    			  var bg_size = 1920;
+	    			  
+	    			  if (wScreenRate > hScreenRate) {
+	    				  var screenRate = height / default_height;
+	    			  }
+	    			  
+	    			  var target_width = bg_size * screenRate;
+	    			  
+	    			  var target_left = (width - target_width) / 2;
+	    			  
+	    			  console.log(target_width, target_left)
+	    			  element[0].style.width = target_width + 'px';
+	    			  element[0].style.left = target_left + 'px';
+    			  });
+    		  }
+    	  }
+      })
       /* 설비 버튼 이미지 용 */
       .directive('uCtrl', function($window){
     	  return {
@@ -170,20 +201,39 @@ angular
 		  				  
 		  				var default_width = 1920;
 		  				var default_height = 900;
+		  				
+		  				var wScreenRate = width * 9;
+		    			var hScreenRate = height * 16;
 	    				if (width >= default_width) {
 	    					var screenRate = 1; 
 	    				}
 	    				else {
 	    					var screenRate = width / default_width;
 	    				}
-	    				var testRate = height / default_height;
 	    				
-	    				/*console.log(screenRate, testRate)
-	    				console.log(scope.data)*/
-    					scope.data.cssHeight = (parseInt(scope.data.cssHeight.replace("px","")) * screenRate) + 'px';
-    					scope.data.cssWidth = (parseInt(scope.data.cssWidth.replace("px","")) * screenRate) + 'px';
-    					scope.data.cssTop = (parseInt(scope.data.cssTop.replace("px","")) * screenRate) + 'px';
-    					scope.data.cssLeft = (parseInt(scope.data.cssLeft.replace("px","")) * screenRate) + 'px';
+	    				if (wScreenRate > hScreenRate) 
+	    				{
+		    				var screenRate = height / 1080;
+		    				
+		    				console.log(screenRate)
+		    				var bg_size = 1920;
+		    				
+		    				var bg_width = bg_size * screenRate;
+		    				
+		    				var target_left = (width - bg_width) / 2;
+		    				
+		    				scope.data.cssHeight = (parseInt(scope.data.cssHeight.replace("px","")) * screenRate) + 'px';
+	    					scope.data.cssWidth = (parseInt(scope.data.cssWidth.replace("px","")) * screenRate) + 'px';
+	    					scope.data.cssTop = (parseInt(scope.data.cssTop.replace("px","")) * screenRate) + 'px';
+	    					scope.data.cssLeft = ((parseInt(scope.data.cssLeft.replace("px","")) * screenRate) + target_left) + 'px';
+	    				}
+	    				else 
+	    				{
+	    					scope.data.cssHeight = (parseInt(scope.data.cssHeight.replace("px","")) * screenRate) + 'px';
+	    					scope.data.cssWidth = (parseInt(scope.data.cssWidth.replace("px","")) * screenRate) + 'px';
+	    					scope.data.cssTop = (parseInt(scope.data.cssTop.replace("px","")) * screenRate) + 'px';
+	    					scope.data.cssLeft = (parseInt(scope.data.cssLeft.replace("px","")) * screenRate) + 'px';
+	    				}
     			  });
     		  }
     	  };
@@ -324,13 +374,23 @@ angular
 			  link: function(scope, element, attrs) {
 				$timeout(function(){
 					console.log(element)
-				  var width = $window.innerWidth;
-				  
-				  var default_width = 1920;
-				  
-				  var screenRate = width / default_width;
- 
-					  var length = scope.data.length / 7;
+					var width = $window.innerWidth;
+					var height = $window.innerHeight;
+					 
+					var default_width = 1920;
+					var default_height = 1080;
+					
+					var wScreenRate = width * 9;
+					var hScreenRate = height * 16;
+					
+					if (wScreenRate > hScreenRate){
+						var screenRate = height / default_height;
+					}
+					else {
+						var screenRate = width / default_width;
+					}
+					
+					var length = scope.data.length / 7;
 	
 						  if (length <= 1) {
 							  var header = "150";
@@ -404,11 +464,21 @@ angular
 			  link: function(scope, element, attrs) {
 				  $timeout(function(){
 					 
-					 var width = $window.innerWidth;
+					  var width = $window.innerWidth;
+					  var height = $window.innerHeight;
 					  
 					  var default_width = 1920;
+					  var default_height = 1080;
 					  
-					  var screenRate = width / default_width;
+					  var wScreenRate = width * 9;
+					  var hScreenRate = height * 16;
+					  
+					  if (wScreenRate > hScreenRate){
+							var screenRate = height / default_height;
+					  }
+						else {
+							var screenRate = width / default_width;
+					  }
 					  
 					  var length = scope.data.length / 7;
 
@@ -473,8 +543,20 @@ angular
 						  
 					  }else{
 						  var width = $window.innerWidth;
-						  var default_width = 1920; 
-						  var screenRate = width / default_width;
+						  var height = $window.innerHeight;
+						  
+						  var default_width = 1920;
+						  var default_height = 1080;
+						  
+						  var wScreenRate = width * 9;
+						  var hScreenRate = height * 16;
+						  
+						  if (wScreenRate > hScreenRate){
+								var screenRate = height / default_height;
+						  }
+							else {
+								var screenRate = width / default_width;
+						  }
 						 
 						  var length = scope.data.length / 7;
 
@@ -489,7 +571,7 @@ angular
 								  var fontSize = "27";
 							  }
 							  else if (length == 3) {
-								  var header = "80";
+								  var header = "70";
 								  var data = "40";
 								  var fontSize = "18";
 							  }
