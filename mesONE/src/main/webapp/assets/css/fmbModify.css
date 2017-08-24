@@ -280,7 +280,7 @@ div[class^=eqpt] {
 	color : rgb(65, 66, 196);
 }
 md-sideNav {
-	width:500px; !important;
+	width:35%; !important;
 	max-width:600px; !important;
 }
 md-sideNav ul{

@@ -521,4 +521,30 @@ angular
 				  }
 			  }
 		} 
+	  }) 
+	  .directive('prodPanelCtrl', function($timeout, $window){
+		  return {
+			  restrict: 'A',
+			  scope: {
+				/*   data: '=data',*/
+				   isMobile : '='
+			  },
+			  link: function(scope, element, attrs) {
+				  panelCtrl();
+				  function panelCtrl(){
+					  var width = $window.innerWidth;
+					  var default_width = 1920; 
+					  var screenRate = width / default_width;
+				  if (scope.isMobile) {
+					  	var fontSize = 20;
+					  	var height = 8650;
+					  	fontSize = fontSize * screenRate;
+					  	height = height * screenRate
+				  		console.log(screenRate)
+						element[0].style.fontSize = fontSize+ "px";
+				  		element[0].style.height = height+ "px";
+				  }
+				 }
+			  }
+		} 
 	  }) ;

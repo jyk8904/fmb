@@ -134,6 +134,9 @@ angular
 			    			var detNewVal = obj[f];
 			    			var detOldVal = oldVal[i][f];
 			    			
+			    			
+			    			
+			    		
 			    			if (detNewVal !== detOldVal) {
 			    				var updateIndex = i;
 			    				if (self.eqptList[i].status == 'keep') {
@@ -201,6 +204,7 @@ angular
     	{
     		var detect = $filter('filter')(self.eqptList, {plcId : plcId , status : '!delete'});
     		console.log(detect);
+    		
 		    	var data = {  eqptCnm : cnm
 		    			    , plcId : plcId
 		    			    , eqptType : type
@@ -212,7 +216,11 @@ angular
 		    				, cssTop : '230px'
 		    				, cssLeft : '550px'
 		    				, status : 'insert'
-		    				, stsImg0: 'assets/img/button/Yellow25.png'
+		    				, stsImg0: 'assets/img/button/color25.png'
+		    				, stsImg1: 'assets/img/button/Green25.png'
+		    				, stsImg2: 'assets/img/button/White25.png'
+		    				, stsImg3: 'assets/img/button/Blue25.png'
+		    				, stsImg4: 'assets/img/button/Red25.png'
 		    			   };
 		    	var check=true;
 		    	if(data.plcId=='None'){
@@ -237,6 +245,15 @@ angular
     };
     
     self.saveEqptData = function(){
+    	console.log(self.eqptList)
+    	for(var i=0; i< self.eqptList.length; i++){
+    		var stsImg = self.eqptList[i].stsImg0
+    		self.eqptList[i].stsImg1 = stsImg.replace('color', 'Green');
+    		self.eqptList[i].stsImg2 = stsImg.replace('color', 'White');
+    		self.eqptList[i].stsImg3 = stsImg.replace('color', 'Blue');
+    		self.eqptList[i].stsImg4 = stsImg.replace('color', 'Red');
+    	}	
+    	
     	 var eqptPromise = CmmAjaxService.save("/mes/bas/saveFmbEqpt.do", self.eqptList);
     };
     
@@ -375,7 +392,12 @@ angular
     	 target[0]['cssHeight'] = $scope.configSetting.height;
     	 target[0]['cssWidth'] = $scope.configSetting.width;
     	 target[0]['stsImg0'] = $scope.configSetting.imgUrl;
-    	 if (target[0]['status'] != 'delete' && target[0]['status'] != 'insert')
+    	 target[0]['stsImg1'] = $scope.configSetting.imgUrl.replace('color', 'Green');
+    	 target[0]['stsImg2'] = $scope.configSetting.imgUrl.replace('color', 'White');
+    	 target[0]['stsImg3'] = $scope.configSetting.imgUrl.replace('color', 'Blue');
+    	 target[0]['stsImg4'] = $scope.configSetting.imgUrl.replace('color', 'Red');
+    	 
+    	if (target[0]['status'] != 'delete' && target[0]['status'] != 'insert')
     	 {
     		 target[0]['status'] = "update";
     	 }

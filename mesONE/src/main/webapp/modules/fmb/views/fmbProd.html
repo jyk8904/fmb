@@ -27,7 +27,8 @@
 	<md-button class="md-raised md-default" ng-disabled="currentPage >= totalPage-1" ng-click="plusPage()">Next</md-button>
 
 	</div>
-		<div class="prodTable colorNested" style="display:flex;  flex-direction:column">
+		<!-- For Mobile/ For Desktop -->
+		<div prod-panel-ctrl is-mobile="isMobile" class="prodTable colorNested" style="display:flex;  flex-direction:column">
 			<div class="row-1"  style="display:flex;  flex-direction:row; flex-grow:1.5; text-align:center;">
 			  <div class="column">라인명</div>
 			  <div style="display:flex;  flex-direction:column; flex-grow:5;">
@@ -87,7 +88,11 @@
 			</div>  
 		</div>
 		
-				<div class="prodTable colorNested" layout="column" style="display:flex;  flex-direction:column">
+		
+		
+		
+		<!-- For Desktop -->
+		<div ng-if="isMobile == false" class="prodTable colorNested" layout="column" style="display:flex;  flex-direction:column">
 			<div class="row-1"  style="display:flex;  flex-direction:row; flex-grow:1.5; text-align:center;">
 			  <div class="column" >라인명</div>
 			  <div style="display:flex;  flex-direction:column; flex-grow:5;">
