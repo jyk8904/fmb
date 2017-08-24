@@ -186,7 +186,7 @@
        <ul>
          <li u-ctrl data='eqpt' ng-repeat="eqpt in vm.eqptList" ng-hide="eqpt.status =='delete'">
           <div task-data="vm.eqptList" target-data="$index" ng-draggable='dragOptions' class="{{eqpt.eqptCnm}}" status="{{eqpt.status}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
-            ng-style="{'top':eqpt.cssTop, 'left': eqpt.cssLeft, 'width':eqpt.cssWidth, 'height':eqpt.cssHeight,'z-index':eqpt.cssZindex}">
+            ng-style="{'position':'absolute', 'top':eqpt.cssTop, 'left': eqpt.cssLeft, 'width':eqpt.cssWidth, 'height':eqpt.cssHeight,'z-index':eqpt.cssZindex}">
                      
                <img ng-mouseover='hoverIn()' ng-mouseleave='hoverOut()'  class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
            		<span class="hint" ng-show="hover" >{{eqpt.plcId}}</span>
