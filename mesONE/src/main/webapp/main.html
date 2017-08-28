@@ -123,13 +123,19 @@ $(document).ready(function(){
 	style="width: 100%;" ng-style="vm.bgTheme === 'black' && {'background-image':'url(./assets/img/system/back.png)'} || vm.bgTheme === 'blue' && {'background-image':'url(./assets/img/system/back_blue.png)'}"> -->
 	
 	<!-- pc 버전 -->
+
 	<div class="relative" ng-if="isMobile == false">
 	
 		<div class="mouse-over-bar"> 
 			<span ng-show="loginChk">{{id}}</span>
 	    	<md-button class="md-raised md-primary" ng-click='vm.LotationSetting()'>페이지 전환 설정</md-button>
-		 	<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStart()'>Start</md-button>
-	   	 	<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStop()'>Stop</md-button>&nbsp;||&nbsp;
+	 			<!-- <div ng-switch on="vm.switchPage">
+			   	<button ng-switch-when="off" class="md-raised md-primary" ng-click='vm.btnWorkerStart()'>Start</md-button>
+		   	 	<button ng-switch-when="on" class="md-raised md-primary" ng-click='vm.btnWorkerStop()'>Stop</md-button>
+		   	</div>  -->
+		     
+		 	<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStart()' ng-hide="vm.switchPage=='on'" title="START">▶</md-button>
+	   	 	<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStop()' ng-show="vm.switchPage=='on'" title="STOP">■</md-button>&nbsp;||&nbsp;
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbAndonClick()'>안돈현황</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbMonClick()'>설비가동현황</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbTotalClick()'>생산자원종합현황</md-button>
@@ -143,6 +149,7 @@ $(document).ready(function(){
 			<md-button class="md-raised md-primary" ng-click='logOut()' ng-show="loginChk">로그아웃</md-button>
 			<md-button class="md-raised md-primary" ng-click='winClose()'>종료</md-button>
 		</div>
+		
 	</div>   
 	
 	<!-- 모바일 버전 -->
@@ -254,7 +261,7 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
      			<tr ng-repeat="page in vm.Setting">
 	     			<td>  
 		     			<md-switch ng-model="page.switcher" aria-label="Switch 1" style="float:left; margin:0 10px; clear:left">
-		     			<label style="width:150px; margin-left: 20px;">{{page.pageNm}}</label>
+		     			<label style="width:150px; margin-left: 20px;">{{page.pageNmKr}}</label>
 		     			</md-switch>
 	     			</td>
 	 

@@ -54,7 +54,10 @@ angular
 	self.target = {
 			num : null
 	};
-	
+	self.delTarget = {
+			file_p_path: null,
+			seq : null
+	};
     self.cancel = function() {
     	$mdDialog.hide();
     	console.log("팝업끔")
@@ -97,6 +100,28 @@ angular
     		console.log(self.saveBgImageVo)
     		var eqptPromise = CmmAjaxService.save("/mes/bas/saveBgImage.do", self.saveBgImageVo);
     	}
+    };
+    
+    
+    self.imgDel = function imgDel(target) {
+    	console.log(target);
+    	
+    	console.log(self.images[target].file_p_path);
+    	console.log(self.images[target].seq);
+    	self.delTarget.seq = self.images[target].seq;
+    	self.delTarget.file_p_path = self.images[target].file_p_path;
+    	console.log(self.delTarget);
+    	var promise = CmmAjaxService.del("/mes/bas/delFmbImage.do", self.delTarget);
+    	
+        promise.then(function(data){
+        	self.target.num = null;
+        	getImages();
+        	console.log("선택해제")
+        }
+        ,function(data){
+        	alert('fail: '+ data)
+        });
+    	
     };
 }]);
 

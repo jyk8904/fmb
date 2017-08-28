@@ -67,8 +67,6 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			} else {
 				getData();
 			}
-			console.log("워커시간")
-			console.log(workerList.worker2.data)
 		});
 	/*------------------------------------------
 	 * Function 선언

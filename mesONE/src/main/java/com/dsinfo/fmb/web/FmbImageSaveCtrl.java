@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dsinfo.fmb.service.*;
 import com.dsinfo.sys.service.MSysRtnMsgVO;
+import com.mysql.fabric.Response;
 import com.dsinfo.bcf.service.*;
 import com.dsinfo.bcf.service.impl.MBcfTransactionManager;
 
@@ -193,6 +195,50 @@ public class FmbImageSaveCtrl {
         //return new ResponseEntity<MSysRtnMsgVO>(mBcfBizService.getMSysRtnMsgVO(), HttpStatus.OK);
     }
     
+    
+    
+    @RequestMapping(value = "/bas/delFmbImage.do", method = RequestMethod.POST)
+    public ResponseEntity<List<String>> delImage(@RequestBody FmbImageVO vo)  {
+    	//RequestBody : JSON형태로 보낸 vo를 컬럼명이 똑같으면 FmbPlcParamVO형태로 알아서 매핑,변환 
+    	MBcfTransactionManager transaction = null;
+      
+    	List list = new ArrayList();
+    	String message = "";
+        String imgSeq = vo.getFile_p_path(); 		//db 삭제용 파라미터
+    	File file = new File(vo.getFile_p_path());  //파일 삭제용 파라미터
+        
+        try {
+        	transaction = mBcfBizService.getTransactionManager();
+            transaction.start();
+            mBcfBizService.delete("sql-bas-info.delFmbImage", vo);
+            
+        }  catch (Exception ie) {
+            log.error("FmbImageSaveController:delFmbImage:" +  ie.toString());
+            //  mBcfBizService.insertSysErrMsg(sqlID, ie.toString());
+            if (transaction != null) 
+                transaction.rollback();
+        }finally{
+        	 if( file.exists() ){
+                 if(file.delete()){
+                     message = "파일이 삭제되었습니다.";
+                     transaction.commit();
+                 }else{
+                     message = "삭제 실패하였습니다.";
+                     if (transaction != null) 
+                         transaction.rollback();
+                 }
+             }else{
+                message = "파일이 존재하지 않습니다.";
+                if (transaction != null) 
+                    transaction.rollback();
+             }
+        	        	 
+        	 if (transaction != null) 
+                 transaction.end();
+        }
+        list.add(message);
+        return new ResponseEntity<List<String>>(list, HttpStatus.OK);
+    }
     //uuid생성 
     public static String getUuid() { return UUID.randomUUID().toString().replaceAll("-", ""); }
 

@@ -85,7 +85,7 @@ angular
 	self.btnFmbTotalClick = btnFmbTotalClickHandler;
 	self.btnFmbModeClick = btnFmbModeClickHandler;
 	self.btnWorkerStart = WorkerStart;
-	self.btnWorkerStop = function () { workerList.workerStop(workerList.worker2); }
+	self.btnWorkerStop = function () { workerList.workerStop(workerList.worker2); self.switchPage = "off"}
    	self.LotationSetting = LotationSetting;
    	self.submit1 = submitLotationSetting;
 /*    self.onSwipeRight = function() {
@@ -125,14 +125,14 @@ angular
 	});
    
     //전환될 페이지 리스트
-	var pageList = [{ "pageNm": "FmbAndon"   }
-				  , { "pageNm": "FmbMon"     }
-			      , { "pageNm": "FmbTotal"   }
-			      , { "pageNm": "FmbLineA"   }
-			      , { "pageNm": "FmbLineB"   }
-			      , { "pageNm": "FmbLineC"   }
-			      , { "pageNm": "FmbTbm"     }
-			      , { "pageNm": "FmbProd" 	 }
+	var pageList = [{ "pageNm": "FmbAndon", 	"pageNmKr": "안돈 모니터링"		}
+				  , { "pageNm": "FmbMon", 		"pageNmKr": "설비 가동현황"		}
+			      , { "pageNm": "FmbTotal", 	"pageNmKr": "생산자원 종합현황"	}
+			      , { "pageNm": "FmbLineA", 	"pageNmKr": "라인별 생산실적(A)"}
+			      , { "pageNm": "FmbLineB",		"pageNmKr": "라인별 생산실적(B)"}
+			      , { "pageNm": "FmbLineC", 	"pageNmKr": "라인별 생산실적(C)"}
+			      , { "pageNm": "FmbTbm", 		"pageNmKr": "TBM"     		}
+			      , { "pageNm": "FmbProd", 		"pageNmKr": "생산실적 외 모니터링"}
 			       ]
    self.Setting=[];
 	
@@ -164,6 +164,7 @@ angular
 								   "dataTime": Number(self.Setting[i].dataTime),			//페이지 내 데이터 갱신 시간
 								   "switchNum": Number(self.Setting[i].switchNum),			//페이지 내 데이터 갱신 횟수
 								   "pageNm":self.Setting[i].pageNm, 						//페이지 url
+								   "pageNmKr":self.Setting[i].pageNmKr, 					//페이지명
 								   "switcher" : self.Setting[i].switcher					//페이지 표시 여부
 								   };
 		   }
@@ -171,11 +172,11 @@ angular
 
 		   for(var j =0; j<pageList.length; j++){ // 기본설정값 지정
 			   if (j == 2) {
-				   self.Setting[j] = {"pageSeq":j+1, "rotateTime": Number(30), "dataTime": Number(30), "pageNm":pageList[j].pageNm, "switcher" : true}
+				   self.Setting[j] = {"pageSeq":j+1, "rotateTime": Number(30), "dataTime": Number(30), "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr, "switcher" : true}
 			   }else {
-			   	self.Setting[j] = {"pageSeq":j+1, "rotateTime": Number(10), "dataTime": Number(5), "pageNm":pageList[j].pageNm, "switcher" : true}
+			   	self.Setting[j] = {"pageSeq":j+1, "rotateTime": Number(10), "dataTime": Number(5), "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
 			   }
-			   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(5), "switchNum": Number(3),  "pageNm":pageList[j].pageNm, "switcher" : true}
+			   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(5), "switchNum": Number(3),  "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
 		   }
 		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));		//로컬스토리지 저장
 	   }
@@ -215,7 +216,7 @@ angular
 			  
 			  
 		  for(var j =0; j<pageList.length; j++){
-			   SettingTime[j] = {"pageSeq":j+1,  "dataTime":  Number(self.Setting[j].dataTime), "switchNum":  Number(self.Setting[j].switchNum), "pageNm":pageList[j].pageNm, "switcher" : self.Setting[j].switcher}
+			   SettingTime[j] = {"pageSeq":j+1,  "dataTime":  Number(self.Setting[j].dataTime), "switchNum":  Number(self.Setting[j].switchNum), "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr, "switcher" : self.Setting[j].switcher}
 			  
 		   }
 		  		localStorage.setItem('SettingTime', JSON.stringify(SettingTime));
@@ -279,7 +280,7 @@ angular
     //Web Worker1 시작버튼 클릭 이벤트
     function WorkerStart(){
     	workerList.worker2.sts = 'on';	//페이지 전환 여부  상태
-    	var switchPage = workerList.worker2.sts;
+    	self.switchPage = workerList.worker2.sts;
     	var curPageSeq;			
     	var curPage = $location.url();
     	for(var i = 0; i<pageList.length; i++){

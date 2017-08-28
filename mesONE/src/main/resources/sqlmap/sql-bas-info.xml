@@ -98,6 +98,10 @@
         {call USP_FMB_IMAGE_DATA_SELECT01()}
     </select> 
     
+    <!-- Fmb Image 삭제 -->    
+    <delete id="delFmbImage" parameterType="com.dsinfo.fmb.service.FmbImageVO">     	      
+        {call USP_FMB_IMAGE_DATA_DELETE01(#{seq})}
+    </delete> 
     <!-- Fmb 뒷배경 Image 저장  -->
     <update id="updateFmbBgImage" parameterType="com.dsinfo.fmb.service.FmbBgImageVO">     	      
         {call USP_FMB_BG_IMAGE_DATA_UPDATE01(#{fact_id}, #{img_seq})}

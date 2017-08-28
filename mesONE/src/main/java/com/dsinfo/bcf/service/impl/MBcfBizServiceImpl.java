@@ -75,6 +75,7 @@ public class MBcfBizServiceImpl extends MBcfAbsServiceImpl implements MBcfBizSer
 	 }
 	 
 	 
+	 
 	 /**
 	     * 데이터를 등록한다.
 	     * @param vo - 등록할 정보가 담긴  MBcfAbsVO를 상속받은 VO객체
