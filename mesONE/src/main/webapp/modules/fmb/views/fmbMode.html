@@ -15,7 +15,7 @@
  -->
 
 <!-- ngview 내부 페이지 -->
-<div test-ctrl class='md-screen'>
+<div test-ctrl custom-keypress class='md-screen'>
     
 <md-form-header>
 	<!--     좌상단 버튼   -->
@@ -181,7 +181,7 @@
    	<img ng-switch-when="C" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.C}}' style="padding:0"/>
    	<img ng-switch-when="Comb" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.Comb}}' style="padding:0"/>
     </div>
-	<div class="EQPT col-md-12 col-sm-12 col-xs-12" style="padding:0">	 
+	<div id="EQPT" class="EQPT col-md-12 col-sm-12 col-xs-12" style="padding:0">	 
    <!-- 설비이미지 repeat -->
        <ul>
          <li u-ctrl data='eqpt' ng-repeat="eqpt in vm.eqptList" ng-hide="eqpt.status =='delete'">
@@ -194,7 +194,7 @@
          </li>
       </ul>
       <div class="pointer" ng-class=" {'show_animate' : vm.pointer.animateTrigger === 'on'}" style="position:absolute; display: {{vm.pointer.display}}; width:25px; height:25px; z-index:900; top:{{vm.pointer.top}}; left:{{vm.pointer.left}};"><img src="assets/img/system/arrow.png"/></div>
-    </div>
+   </div>
    </bc-back-panel2>
       <!--설비클래스 삽입 끝-->
 </bc-form-body>

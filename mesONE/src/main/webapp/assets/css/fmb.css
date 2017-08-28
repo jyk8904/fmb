@@ -173,6 +173,9 @@ div[ng-view] {
 
 }
 
+.md-raised{
+	margin: 6px 0px;
+}
 /* 화면 내부 폼. 화면 당 1개 이상 폼으로 구성됨 
    bc-form
        -- bc-form-header

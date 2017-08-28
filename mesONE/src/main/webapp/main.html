@@ -127,7 +127,7 @@
 			<span ng-show="loginChk">{{id}}</span>
 	    	<md-button class="md-raised md-primary" ng-click='vm.LotationSetting()'>페이지 전환 설정</md-button>
 		 	<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStart()'>Start</md-button>
-	   	 	<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStop()'>Stop</md-button>&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;
+	   	 	<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStop()'>Stop</md-button>&nbsp;||&nbsp;
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbAndonClick()'>안돈현황</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbMonClick()'>설비가동현황</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbTotalClick()'>생산자원종합현황</md-button>
@@ -136,21 +136,22 @@
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLineCClick()'>Line별 생산실적(C)</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbTbmClick()'>Tbm</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbProdClick()'>생산실적 외 모니터링</md-button>
-			<md-button class="md-raised md-default" ng-click='vm.btnFmbModeClick()' ng-show="id=='developer'">개발모드</md-button>&nbsp;&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;&nbsp;
+			<md-button class="md-raised md-default" ng-click='vm.btnFmbModeClick()' ng-show="id=='developer'">개발모드</md-button>&nbsp;||&nbsp;
 			
 			<md-button class="md-raised md-primary" ng-click='logOut()' ng-show="loginChk">로그아웃</md-button>
 			<md-button class="md-raised md-primary" ng-click='winClose()'>종료</md-button>
 		</div>
 	</div>   
+	
 	<!-- 모바일 버전 -->
-  <md-sidenav class="md-sidenav-left" md-component-id="left1" md-disable-backdrop md-whiteframe="4" ng-if="isMobile == true" hide-gt-md style="z-index:1002;">
+  <md-sidenav class="md-sidenav-left" md-component-id="left1" md-disable-backdrop md-whiteframe="4" ng-if="isMobile == true" hide-gt-md style="z-index:1002; overflow:hidden;">
 
       <md-toolbar class="md-theme-indigo">
         <h1 class="md-toolbar-tools" style="float:right;" ng-click="onSwipeLeft()">≡</h1>
       </md-toolbar>
 
-      <md-content layout-margin>
-		<md-list>
+      <md-content class="sideNavCtnt" layout-margin>
+		<md-list class="sideNavLst">
 			<md-list-item class="md-2-line" ng-click="vm.btnFmbAndonClick()">
 				<div class="md-list-item-text">
 					<h3>안돈현황</h3>
@@ -194,7 +195,13 @@
 					<h3>Tbm</h3>
 					<p></p>
 				</div>
-			</md-list-item>			
+			</md-list-item>	
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbProdClick()" >
+				<div class="md-list-item-text">
+					<h3>생산실적 외</h3>
+					<p></p>
+				</div>
+			</md-list-item>				
 		</md-list>
       </md-content>
 
