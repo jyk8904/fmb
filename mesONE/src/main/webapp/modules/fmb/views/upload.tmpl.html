@@ -1,5 +1,5 @@
 
-<md-dialog aria-label="eqpt info" class="infoPopup" style="width:1500px; height:900px;">
+<md-dialog aria-label="eqpt info" class="infoPopup" style="max-width: 40% !important; width:800px; height:395px;">
   <form ng-cloak>
     <md-toolbar>
       <div class="md-toolbar-tools">
@@ -12,30 +12,44 @@
     </md-toolbar>
 
     <md-dialog-content class="infoPopupContent">
-      <div class="md-dialog-content" style="width:1500px; height:800px; color:honeydew;">
+      <div class="md-dialog-content" style="max-width: 100% !important; padding-top:5px; width:800px; height:330px; color:honeydew;">
       <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-          <h3>업로드 선택</h3>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-left:25px;">
+          <h4>업로드 선택</h4>
           <div class="example">
             <form name="form" role="form">
-            	<div class="form-group" style="width:700px; border:3px solid">
-            <!-- <div class="button" ng-model="file" name="file" ngf-select ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">파일선택</div> -->
-            	<!-- <input type="file" ng-file-select="onFileSelect()"> -->
-    			<input type="file" ng-model="file" name="file"  ngf-select="onFileSelect($file)" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB" value="$file" style="padding:30px"> 
-   				<!-- <button type="submit" >업로드</button> -->
-   				<md-button class="md-raised" type="submit" ng-click="submit()" style="color:black; margin:30px;">업 로 드</md-button>
+            	<div class="form-group" style="width:700px; border:3px solid; padding:10px;">
+          
+   				
+   				<div class="imageInfo" >
+		          	  <div style="width:90%; margin:5px 5px; float:left;padding-top:5px;">
+		          	  <md-progress-linear md-mode="determinate" value="{{imageInfo.percentage}}"></md-progress-linear>
+		          	  </div>
+		        <span style="float:left; padding-top:7px;">{{imageInfo.percentage}} %</span>
+	          	</div>
+   				<md-button class="md-raised uploadButton">이미지 선택</md-button>
+    			
+   				<input type="file"  id="ex_file" ng-model="file" name="file"  
+   				ngf-select="onFileSelect($file)" ngf-max-size="20MB" value="$file" class="upload"> 
+   				
+   				<div style="margin:auto; width:13%;">
+   				<md-button class="md-raised md-primary" type="submit" ng-click="submit()" ngf-pattern="'image/*'"  ngf-accept="'image/*'" required="" style="color:white; font-weight: bold;">업 로 드</md-button>
    				</div>
+   				</div>
+   				
 			</form>            
           </div>
           <div class="imageInfo" ng-show="imageInfo.show">
-          	  <h3>업로드 달성률</h3>
-          	  <h5>{{imageInfo.percentage}} %</h5>
-          	  <md-progress-linear md-mode="determinate" value="{{imageInfo.percentage}}"></md-progress-linear>
-	          <h3>업로드 이미지 정보</h3>
-	          <h5>이미지 명 : </h5> <h5>{{imageInfo.name}}</h5>
-	          <h5>사이즈 : </h5> <h5>{{imageInfo.size}}</h5>
-	          <h5>타입 : </h5> <h5>{{imageInfo.type}}</h5>
-	          <h5>파일 수정일 : </h5> <h5>{{imageInfo.date}}</h5>
+	          <h4>업로드 이미지 정보</h4>
+	          <div style="display:flex; flex-direction:row">
+				<div style="display:flex; flex-grow:1;"><h5>이미지 명 : {{imageInfo.name}}</h5></div>
+				<div style="display:flex; flex-grow:1;"><h5>사이즈 :{{imageInfo.size}}</h5></div>
+
+			  </div>
+			  <div style="display:flex; flex-direction:row">
+				<div style="display:flex; flex-grow:1;"><h5>타입 : {{imageInfo.type}}</h5></div>
+				<div style="display:flex; flex-grow:1;"><h5>파일 수정일 : {{imageInfo.date}}</h5></div>
+			  </div>
           </div>
         </div>
       </div>

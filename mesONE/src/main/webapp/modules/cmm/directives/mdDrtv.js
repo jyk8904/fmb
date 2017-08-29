@@ -33,17 +33,17 @@ angular
             template:"<div class='Btn'>" +
             			"<div ng-click='toggleLeft()' class='configBtn'>" +
             				
-            					"<img ng-click='vm.toggleLeft()' title='설정' src='assets/img/system/config_white.png' />" +
+            				"<img ng-click='vm.toggleLeft()' title='설정' src='assets/img/system/config_white.png' />" +
 
             			"</div>" +
             			"<div ng-click='saveEqptData()' class='saveBtn'>" +
             				"<img ng-click='vm.saveEqptData()' title='저장' src='assets/img/system/send_white.png' />" +
             			"</div>" +
             			"<div ng-click='uploadImg(test)' class='saveBtn'>" +
-        				"<img ng-click='vm.uploadImg()' title='저장' src='assets/img/system/upload_image.png' />" +
+        				"<img ng-click='vm.uploadImg()' title='업로드' src='assets/img/system/upload_image.png' />" +
         				"</div>" +
         				"<div ng-click='FindImg()' class='saveBtn'>" +
-        				"<img ng-click='vm.FindImg(vm.eqptParamVo.factId)' title='저장' src='assets/img/system/bg_image_change.png' />" +
+        				"<img ng-click='vm.FindImg(vm.eqptParamVo.factId)' title='찾기' src='assets/img/system/bg_image_change.png' />" +
         				"</div>" +
             		"</div>"
          }
@@ -405,8 +405,8 @@ angular
 							  var fontSize = "27";
 						  }else if (length == 3) {
 							  var header = "80";
-							  var data = "120";
-							  var subData = "40";
+							  var data = "114";
+							  var subData = "38";
 							  var fontSize = "18";
 						  }else if (length == 4) {
 							  var header = "39";
@@ -494,7 +494,7 @@ angular
 						  }
 						  else if (length == 3) {
 							  var header = "80";
-							  var data = "40";
+							  var data = "38";
 							  var fontSize = "18";
 						  }
 						  else if (length == 4) {
@@ -524,7 +524,7 @@ angular
 			  } 
 		  }
 	  })
-	  /* TMB panel 데이터 용 */
+	  /* TBM panel 데이터 용 */
 	   .directive('gridTbmPanelCtrl', function($timeout, $window){
 		  return {
 			  restrict: 'A',
@@ -561,9 +561,9 @@ angular
 						  var length = scope.data.length / 7;
 
 							  if (length <= 1) {
-								  var header = "150";
-								  var data = "125";
-								  var fontSize = "27";
+								  var header = "180";
+								  var data = "145";
+								  var fontSize = "32";
 							  }
 							  else if (length == 2) {
 								  var header = "90";
@@ -593,9 +593,11 @@ angular
 							  
 							  for(var i = 1; i < 7; i++)
 							  {
-								  element[0].children[i].style.height = data + "px";
-								  element[0].children[i].style.lineHeight = data + "px";
-								  element[0].children[i].style.fontSize = fontSize + "px";
+								  if(element[0].children[i]!=null||element[0].children[i]!=undefined){
+									  element[0].children[i].style.height = data + "px";
+									  element[0].children[i].style.lineHeight = data + "px";
+									  element[0].children[i].style.fontSize = fontSize + "px";
+								  }
 							  }
 						}
 					

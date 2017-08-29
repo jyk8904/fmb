@@ -23,6 +23,7 @@ angular.module('app').factory('CmmAjaxService', ['CmmModalSrvc', '$http', '$q','
         selectOne : selectOne,
         saveGrid: saveGrid,
         save: save,
+        del: del,
         isNewRow : isNewRow
     };
 
@@ -178,6 +179,43 @@ angular.module('app').factory('CmmAjaxService', ['CmmModalSrvc', '$http', '$q','
     			}
     		}
 		)
+		return deferred.promise;
+    }
+    /* @내용 : 삭제
+    * @매개변수 :  
+    *     url : 요청 url
+    *     gridID : 저장할 그리드 객체
+    * @리턴값 :
+    * 		신규 : true
+    * 		기존 : false
+    */
+    
+    
+    function del(url, jsonObj) {
+        var deferred = $q.defer();
+        console.log(jsonObj)
+		CmmModalSrvc.getYesNo('알림','삭제하시겠습니까?' ).then(
+    		function (result) {
+    			
+    			console.log(result)
+    			if (result == true) { // yes버튼 클릭
+    			    
+    				$http.post(url, jsonObj)
+			        .then(function (response) {//삭제성공시
+			        	deferred.resolve(response.data);
+			            console.log(response.data)
+			            CmmModalSrvc.showMessage(response.data[0]);
+			        },
+			        function(httpError){
+			            deferred.reject(httpError.data);
+			            console.log(httpError.data)
+			        });
+    			}else { //no 버튼 클릭
+    				CmmModalSrvc.showMessage("취소되었습니다.");
+		            deferred.reject(httpError.data);
+				}
+    		}
+		);
 		return deferred.promise;
     }
 

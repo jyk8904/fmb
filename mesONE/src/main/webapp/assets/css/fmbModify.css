@@ -204,7 +204,7 @@ body {
 md-config-btn .configBtn {
 	position: relative;
 	float:left;
-	margin: 30px 15px 0 30px;
+	margin: 30px 0 0 30px;
 	width: 54px;
 }
 md-config-btn .configBtn img {
@@ -213,7 +213,7 @@ md-config-btn .configBtn img {
 md-config-btn .saveBtn {
 	position: relative;
 	float:left;
-	margin: 30px 15px 0 30px;
+	margin: 30px 0 0 30px;
 	width: 54px;	
 }
 md-config-btn .saveBtn img {
