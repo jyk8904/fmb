@@ -28,7 +28,6 @@ angular
 			$location.url('');
 		}    	
     }, true);
-
     
      var worker= undefined;
      var self = this;
@@ -45,7 +44,8 @@ angular
      $scope.hoverOut = function(){
     	 this.hover = false;
      }
-
+     $scope.sensRating = 1;
+     $scope.sensRating1 = 1;
      var workerList = CmmWorkerSrvc;
      if(workerList.worker2.worker!=undefined){
     	 	workerList.worker2.worker.terminate();
@@ -177,7 +177,9 @@ angular
     };
     
     
-
+    self.sensChange = function(sensRating){
+    	$scope.sensRating1 = sensRating;
+    }
 
 
     function leadingZeros(n, digits) {
@@ -203,7 +205,6 @@ angular
     	if (cnm != null && cnm != "" && type != null && type != "" && plcId != null && plcId != "")
     	{
     		var detect = $filter('filter')(self.eqptList, {plcId : plcId , status : '!delete'});
-    		console.log(detect);
     		
 		    	var data = {  eqptCnm : cnm
 		    			    , plcId : plcId
@@ -245,7 +246,7 @@ angular
     };
     
     self.saveEqptData = function(){
-    	console.log(self.eqptList)
+
     	for(var i=0; i< self.eqptList.length; i++){
     		var stsImg = self.eqptList[i].stsImg0
     		self.eqptList[i].stsImg1 = stsImg.replace('color', 'Green');

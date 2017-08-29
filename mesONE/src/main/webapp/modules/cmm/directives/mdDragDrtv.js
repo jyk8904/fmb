@@ -93,10 +93,16 @@ angular
 			   dragOptions: '=ngDraggable'
 			 , eqptList: '=taskData'
 			 , $index: '=targetData'
+		     , rating: '=rating'
 		   },
 		   link: function(scope, element, attr) {
-			   
 			   element.draggable({ grid: [1, 1]});
+			   
+			   scope.$watch('rating', function(newVal, oldVal){
+				   if (newVal){
+					   element.draggable({ grid: [scope.rating, scope.rating]});
+				   }
+			   }, true);
 			   
 			   var startX, startY, x = 0, y = 0,
 		   	   start, stop, drag, container;
@@ -113,6 +119,7 @@ angular
 
 			// Bind mousedown event
 			      element.on('mousedown', function(e) {
+			    	  console.log(scope.rating)
 			        e.preventDefault();
 			        startX = e.clientX - element[0].offsetLeft;
 			        startY = e.clientY - element[0].offsetTop;
@@ -122,15 +129,6 @@ angular
 			        if (start) start(e);
 			        
 			        makeLiner(startX, startY);
-			        //customKeypressCtrl.keyStatus(element);
-			        /*for (var i = 0; i < scope.eqptList.length; i++)
-			        {
-			        	var snapLineTop = scope.eqptList[i].cssTop;
-			        	var snapLineLeft = scope.eqptList[i].cssLeft;
-			        	
-			        	angular.element(document.getElementById('EQPT')).append($compile("<div class='snapLiner' style='position:absolute; width:1920px; height:1px; top:" + snapLineTop + "'></div>")(scope));
-			        	angular.element(document.getElementById('EQPT')).append($compile("<div class='snapLiner' style='position:absolute; width:1px; height:900px; left:" + snapLineLeft + "'></div>")(scope));
-			        }*/
 			        
 			      });
 			   
