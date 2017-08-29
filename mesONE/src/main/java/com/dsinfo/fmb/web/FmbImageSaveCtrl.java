@@ -199,16 +199,16 @@ public class FmbImageSaveCtrl {
     
     @RequestMapping(value = "/bas/delFmbImage.do", method = RequestMethod.POST)
     public ResponseEntity<List<String>> delImage(@RequestBody FmbImageVO vo)  {
-    	//RequestBody : JSON형태로 보낸 vo를 컬럼명이 똑같으면 FmbPlcParamVO형태로 알아서 매핑,변환 
-    	MBcfTransactionManager transaction = null;
+        //RequestBody : JSON형태로 보낸 vo를 컬럼명이 똑같으면 FmbPlcParamVO형태로 알아서 매핑,변환 
+        MBcfTransactionManager transaction = null;
       
-    	List list = new ArrayList();
-    	String message = "";
-        String imgSeq = vo.getFile_p_path(); 		//db 삭제용 파라미터
-    	File file = new File(vo.getFile_p_path());  //파일 삭제용 파라미터
+        List list = new ArrayList();
+        String message = "";
+        String imgSeq = vo.getFile_p_path();        //db 삭제용 파라미터
+        File file = new File(vo.getFile_p_path());  //파일 삭제용 파라미터
         
         try {
-        	transaction = mBcfBizService.getTransactionManager();
+            transaction = mBcfBizService.getTransactionManager();
             transaction.start();
             mBcfBizService.delete("sql-bas-info.delFmbImage", vo);
             
@@ -218,7 +218,7 @@ public class FmbImageSaveCtrl {
             if (transaction != null) 
                 transaction.rollback();
         }finally{
-        	 if( file.exists() ){
+             if( file.exists() ){
                  if(file.delete()){
                      message = "파일이 삭제되었습니다.";
                      transaction.commit();
@@ -232,8 +232,8 @@ public class FmbImageSaveCtrl {
                 if (transaction != null) 
                     transaction.rollback();
              }
-        	        	 
-        	 if (transaction != null) 
+                         
+             if (transaction != null) 
                  transaction.end();
         }
         list.add(message);

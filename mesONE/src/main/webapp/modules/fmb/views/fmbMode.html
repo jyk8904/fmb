@@ -49,6 +49,9 @@
 		<!-- <md-radio-button class="md-radio-button" value="C"> C동 </md-radio-button> -->
 	</md-radio-group>
 	
+      <md-slider flex md-discrete ng-model="vm.sensRating" step="1" min="1" max="10" aria-label="rating" ng-change="vm.sensChange(vm.sensRating)" style="width: 400px; left: 1400px; margin-top: 40px;">
+      </md-slider>
+      
 </md-form-header>
 
 <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4" ng-style="{'opacity' : vm.opacityData / 100, 'z-index' : 910}">
@@ -188,7 +191,7 @@
    <!-- 설비이미지 repeat -->
        <ul>
          <li u-ctrl data='eqpt' ng-repeat="eqpt in vm.eqptList" ng-hide="eqpt.status =='delete'">
-          <div task-data="vm.eqptList" target-data="$index" ng-draggable='dragOptions' class="{{eqpt.eqptCnm}}" status="{{eqpt.status}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
+          <div task-data="vm.eqptList" target-data="$index" ng-draggable='dragOptions' rating='sensRating1' class="{{eqpt.eqptCnm}}" status="{{eqpt.status}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
             ng-style="{'position':'absolute', 'top':eqpt.cssTop, 'left': eqpt.cssLeft, 'width':eqpt.cssWidth, 'height':eqpt.cssHeight,'z-index':eqpt.cssZindex}">
                      
                <img ng-mouseover='hoverIn()' ng-mouseleave='hoverOut()'  class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
