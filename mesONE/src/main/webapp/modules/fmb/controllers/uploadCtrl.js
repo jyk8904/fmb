@@ -19,11 +19,13 @@ angular
 							, '$scope'
 							, '$mdDialog'
 							, 'Upload'
+							, '$timeout'
 							, function (CmmModalSrvc
 									, CmmAjaxService
 									, $scope
 									, $mdDialog
 									, Upload
+									, $timeout
 									) 
 {
 								
@@ -80,19 +82,20 @@ angular
 								            url: 'bas/saveImage.do',
 								            data: {file: file}
 								        }).then(function (resp) { //done
-								        	console.log(resp)
-								            console.log('Success ' + resp.config.data.file.name + '  uploaded.  Response: ' + resp.data);
+								        	console.log('Success ' + resp.config.data.file.name + '  uploaded.  Response: ' + resp.data);
 								        }, function (resp) { 	  // fail
 								            console.log('Error status: ' + resp.status);
 								        }, function (evt) { 	  //finally
-								        	console.log(evt)
-								            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-								            $scope.imageInfo.percentage = progressPercentage;
-								            if (progressPercentage == 100) {
-								            	alert("업로드가 완료되었습니다.");
-								            }
-								            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+								        	if(evt.type=="load"){
+								        		var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+								        		   $scope.imageInfo.percentage = progressPercentage;
+									            $timeout(function(){
+									            	 if ($scope.imageInfo.percentage == 100) {
+											            	alert("업로드가 완료되었습니다.");
+											            }
+									            }, 500);
+									        }
 								        });
 								    };
-    
+								
 }]);

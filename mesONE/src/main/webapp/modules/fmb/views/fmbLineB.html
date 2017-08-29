@@ -30,19 +30,19 @@
 		<div layout="column" layout-wrap style="width:18%;">
 			<div layout="row" ng-repeat="line in vm.lineList track by $index" ng-if="$index%7==0" style="width:100%">
 				<div grid-header-ctrl layout="column" layout-fill layout-wrap class="headerColorNested" data ="vm.lineList" is-mobile="isMobile" ng-if="$parent.$index%7==0" >
-				 <div style="color:white; border:1px solid black;">구분</div>
-				 <div style="color:white; border:1px solid black;">목표</div>
+				 <div style="color:white;">구분</div>
+				 <div style="color:white;">목표</div>
 				 <div layout="row" flex style="color:white;">
-					 <div flex style="color:white; border:1px solid black;">실적</div>
+					 <div flex style="color:white;">실적</div>
 					 <div layout="column" flex style="color:white; ">
-						 <div flex style="color:white; border:1px solid black;">주간</div>
-						 <div flex style="color:white; border:1px solid black;">야간</div>
-						 <div flex style="color:white; border:1px solid black;">합계</div>
+						 <div flex style="color:white;">주간</div>
+						 <div flex style="color:white;">야간</div>
+						 <div flex style="color:white;">합계</div>
 					 </div>
 				 </div>
 				 
-				 <div style="color:white; border:1px solid black;">달성률(%)</div>
-				 <div style="color:white; border:1px solid black;">가동상태</div>
+				 <div style="color:white;">달성률(%)</div>
+				 <div style="color:white;">가동상태</div>
 				</div>
 			</div>
 		</div>
@@ -50,26 +50,26 @@
 		<div layout="column" layout-wrap style="width:82%;">
 			<div ng-repeat="line in vm.lineList track by $index"  layout="row" ng-if="$index%7==0" style="width:100%;">
 				<div  grid-panel-ctrl data = "vm.lineList" is-mobile="isMobile" flex ng-repeat="line in vm.lineList track by $index" ng-if="$index>=$parent.$index && $index<($parent.$index+7) " layout="column" layout-fill layout-wrap class="colorNested col" style="text-align:center;">
-					  <div style="color:white; border:1px solid black;  display:flex; align-items:center; justify-content: center;" >
+					  <div style="color:white;  display:flex; align-items:center; justify-content: center;" >
 					    <div >
 					    <p style="margin-bottom:0;">{{line.lineTopNm}}</p><p style="margin-bottom:0;">{{line.lineMidNm}}</p><p style="margin-bottom:0;">{{line.lineBotNm}}</p></div>
 					  </div>
-					  <div style="color:white; border:1px solid black;">
+					  <div style="color:white;">
 					   {{vm.parseInt(line.dgoal) + vm.parseInt(line.ngoal)}}
 					  </div>
-					  <div style="color:white; border:1px solid black;">
+					  <div style="color:white;">
 					    {{vm.parseInt(line.dcount)}}
 					  </div>
-					  <div style="color:white; border:1px solid black;"> 
+					  <div style="color:white;"> 
 					   {{vm.parseInt(line.ncount)}}
 					  </div>
-					  <div style="color:white; border:1px solid black;">	
+					  <div style="color:white;">	
 					    {{vm.parseInt(line.dcount) + vm.parseInt(line.ncount)}}
 					  </div>
-					  <div style="color:white; border:1px solid black;">
+					  <div style="color:white;">
 					    {{vm.parseInt(line.drate) + vm.parseInt(line.nrate)}}
 					  </div>
-				    <div ng-switch on="line.eqptSts"  style="border:1px solid black;">
+				    <div ng-switch on="line.eqptSts">
 						<img ng-switch-when="0" class="obj lineBtnSm" src="/mes/assets/img/button/Yellow25.png" align="center">
 						<img ng-switch-when="1" class="obj lineBtnSm" src="/mes/assets/img/button/Green25.png" align="center">
 						<img ng-switch-when="2" class="obj lineBtnSm" src="/mes/assets/img/button/White25.png" align="center">

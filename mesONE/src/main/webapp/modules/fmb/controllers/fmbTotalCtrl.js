@@ -18,7 +18,9 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 													'$timeout',
 													'$mdSidenav',
 													'$interval',
-	function(CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window,	$q, $timeout, $mdSidenav, $interval) {
+													'$location',
+													
+	function(CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window,	$q, $timeout, $mdSidenav, $interval, $location) {
 
 		/*------------------------------------------
 		 * 변수 선언
@@ -48,7 +50,18 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 		self.gauge = {
 				run: "null", standby: "null", norun: "null", alarm: "null"
 		};
-			
+
+		var SettingTime = workerList.worker2.data 
+		console.log($location.url());
+		console.log(SettingTime);
+		for(var i =0; i < SettingTime.length; i++){
+			console.log(SettingTime[i]);
+			if('/'+ SettingTime[i].pageNm== $location.url()){
+				var thisDataTime= SettingTime[i].dataTime * 1000
+				console.log(thisDataTime)
+				break;
+			}
+		}
 		
 	/*------------------------------------------
 	 * Function 호출
@@ -109,6 +122,49 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 		// 공용 함수 정의
 		
 		function getPlanProgress() {
+			// 계획진도율 가져오기
+			var planProgressPromise = CmmAjaxService.select("/mes/bas/selectPlanProgress.do");
+				planProgressPromise.then(function(data) {
+				$scope.planProgressList = data;
+				var count = 3;														// 나눠 보여줄 횟수
+				var quotient = parseInt($scope.planProgressList.length /count); 	// 몫: 한번에 보여줄 데이터 갯수
+				var remainder = $scope.planProgressList.length % quotient;			// 나머지
+				var startRan =0;													// 한번에 보여줄 데이터의 첫번째 num
+				var endRan =0;														// 한번에 보여줄 데이터의 마지막 num
+				
+				getFltrdData();
+				$interval( getFltrdData, thisDataTime/count, count-1); 
+							// 			 FmbTotal의 datatime/횟수
+				
+				function getFltrdData(){
+					var filteredData = [];
+					startRan= endRan;
+						if(remainder!=0){
+							remainder -= 1;
+							endRan= endRan + quotient + 1;
+						}else{
+							endRan= endRan + quotient;
+						}
+					$timeout(function(){
+						for(var j=startRan; j<endRan; j++){
+							console.log(startRan, endRan)
+							filteredData.push($scope.planProgressList[j]);
+						}
+					},400).then(function(){
+						
+						if ($scope.isMobile){
+							MobilePlanProgress(filteredData);
+						} else {
+							planProgress(filteredData);
+						}	
+					})
+				}
+			}, function(data) {
+				alert('fail: ' + data)
+			});	
+		}
+		
+/*		function getPlanProgress() {
 			// 계획진도율 가져오기
 			var planProgressPromise = CmmAjaxService.select("/mes/bas/selectPlanProgress.do");
 				planProgressPromise.then(function(data) {
@@ -177,7 +233,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			}, function(data) {
 				alert('fail: ' + data)
 			});	
-		}
+		}*/
 		
 		function getGaugeRunRate() {
 			// 라인가동현황게이지 가져오기

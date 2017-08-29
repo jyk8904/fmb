@@ -29,32 +29,33 @@
 	<bc-form-body>
 	<div layout="row" style="width:90%; margin:auto;">
 	 	<div grid-tbm-panel-ctrl data= "vm.Tbm" is-mobile="isMobile" layout="column" layout-fill layout-wrap style="width:18%;" class="colorNested">
-			<div style="color:white; border:1px solid black;">구분</div>
-			<div style="color:white; border:1px solid black;">금일 점검예정</div>
-			<div style="color:white; border:1px solid black;">점검 진행중</div>
-			<div style="color:white; border:1px solid black;">금일 점검완료</div>
-			<div style="color:white; border:1px solid black;">금주 점검예정</div>
-			<div style="color:white; border:1px solid black;">금주 점검완료</div>
+			<div style="color:white; border-radius:20px 0 0 0;">구분</div>
+			<div style="color:white;">금일 점검예정</div>
+			<div style="color:white;">점검 진행중</div>
+			<div style="color:white;">금일 점검완료</div>
+			<div style="color:white;">금주 점검예정</div>
+			<div style="color:white;  border-radius:0 0 0 20px;">금주 점검완료</div>
 		</div>
 		
 		
 		<div class="colList" style="width:82%;">
-		<div grid-tbm-panel-ctrl  data= "vm.Tbm" is-mobile="isMobile" flex  layout="column" layout-fill layout-wrap  class="colorNested">
- 			<div layout="row" >
-				<div flex style="color:white; border:1px solid black;">A동</div>
-				<div flex style="color:white; border:1px solid black;">B동</div>
-				<div flex style="color:white; border:1px solid black;">C동</div>
-				<div flex style="color:white; border:1px solid black;">기타</div>
-				<div flex style="color:white; border:1px solid black;">합계</div>
+		<div grid-tbm-panel-ctrl  data= "vm.Tbm" is-mobile="isMobile" flex  layout="column" layout-fill layout-wrap  class="colorNested"
+		>
+ 			<div layout="row" style="border-radius:0 20px 0 0;">
+				<div flex style="color:white;">A동</div>
+				<div flex style="color:white;">B동</div>
+				<div flex style="color:white;">C동</div>
+				<div flex style="color:white;">기타</div>
+				<div flex style="color:white;">합계</div>
 			</div>
 			
 
-			<div layout="row" flex  ng-repeat="tbm in vm.Tbm track by $index">
-				<div flex style="color:white; border:1px solid black;">{{tbm.factA}}</div>
-				<div flex style="color:white; border:1px solid black;">{{tbm.factB}}</div>
-				<div flex style="color:white; border:1px solid black;">{{tbm.factC}}</div>
-				<div flex style="color:white; border:1px solid black;">{{tbm.factX}}</div>
-				<div flex style="color:white; border:1px solid black;">{{tbm.total}}</div>
+			<div layout="row" flex  ng-repeat="tbm in vm.Tbm track by $index" style="">
+				<div flex style="color:white;">{{tbm.factA}}</div>
+				<div flex style="color:white;">{{tbm.factB}}</div>
+				<div flex style="color:white;">{{tbm.factC}}</div>
+				<div flex style="color:white;">{{tbm.factX}}</div>
+				<div flex style="color:white;">{{tbm.total}}</div>
 			</div>
 		</div>
 	</div>
