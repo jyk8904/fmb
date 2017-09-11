@@ -1,8 +1,8 @@
 /**  
- * @Class Name : fmb006Ctrl.js
- * @Description : fmb006 
+ * @Class Name : fmbTbmCtrl.js
+ * @Description : fmbTbm
  * @Modification Information  
- * @
+ * @ 
  * @ 작업일       작성자      내용
  * @ ----------  ---------  -------------------------------
  * @ 2017.05.29  정유경    최초생성
@@ -35,10 +35,12 @@ angular
     // 모바일 체크 함수 실행
 	isMobileFunc();
     
+	//데이터 가져오기
     getTbmList();
     
 	//워커 스타트
 	workerList.workerStart(workerList.worker2, "worker.js");
+	//워커 온메세지
 	workerList.workerOnmessage(workerList.worker2, getTbmList);
 	   
 	
@@ -54,8 +56,8 @@ angular
 		}
 	}
 	
+	//TBM데이터 가져오기
     function getTbmList(){
-    	//TBM데이터 가져오기
     	var promise = CmmAjaxService.selectAll("/mes/bas/selectFmbTbm.do");
     	promise.then(function(data){
     		self.Tbm = data;

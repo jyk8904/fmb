@@ -2,7 +2,7 @@
  * @Class Name : fmb008Ctrl.js
  * @Description : fmb008 
  * @Modification Information  
- * @
+ * @사용x
  * @ 작업일       작성자      내용
  * @ ----------  ---------  -------------------------------
  * @ 2017.05.29  정유경       최초생성

@@ -1,6 +1,6 @@
 /**  
- * @Class Name : fmbLinCtrl.js
- * @Description : fmbLine
+ * @Class Name : fmbLinACtrl.js
+ * @Description : fmbLineA
  * @Modification Information  
  * @
  * @ 작업일       작성자      내용
@@ -77,39 +77,41 @@ angular
 	
     //워커 스타트
 	workerList.workerStart(workerList.worker2, "worker.js");
+	//워커 온메세지
 	workerList.workerOnmessage(workerList.worker2, getLineList);
-           function getLineList(){
-        	 //선택된 공장의 line별 데이터 가져오기
-        	    var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do", self.lineParamVo);
-        	    promise.then(function(data){
-        	    	self.lineList = data;
-        	    	var length = self.lineList.length;
-        	    	var dangle = length % 7;
-        	    	if (dangle != 0) 
-        	    	{
-        	    		var blankCount = 7- dangle;
-        	    		for (var i = 0; i < blankCount; i++)
-        	    		{
-        	    			var data = {  dcount : ''
-        			    			    , dgoal : ''
-        			    			    , drate : ''
-        			    			    , eqptSts : ''
-        			    			    , desc : null
-        			    			    , lineBotNm : ''
-        			    			    , lineCd : ''
-        			    				, lineMidNm : ''
-        			    				, lineNm : ''
-        			    				, lineTopNm : ''
-        			    				, ncount : ''
-        			    				, ngoal : ''
-        			    				, nrate : ''
-        			    			   };
-        	    			self.lineList.push(data);
-        	    		}
-        	    	}
-        	    }
-        	    ,function(data){
-        	    	alert('fail: '+ data)
-        	    });
-          }
+
+	//선택된 공장의 line별 데이터 가져오기
+   function getLineList(){
+	    var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do", self.lineParamVo);
+	    promise.then(function(data){
+	    	self.lineList = data;
+	    	var length = self.lineList.length;
+	    	var dangle = length % 7;
+	    	if (dangle != 0) 
+	    	{
+	    		var blankCount = 7- dangle;
+	    		for (var i = 0; i < blankCount; i++)
+	    		{
+	    			var data = {  dcount : ''
+			    			    , dgoal : ''
+			    			    , drate : ''
+			    			    , eqptSts : ''
+			    			    , desc : null
+			    			    , lineBotNm : ''
+			    			    , lineCd : ''
+			    				, lineMidNm : ''
+			    				, lineNm : ''
+			    				, lineTopNm : ''
+			    				, ncount : ''
+			    				, ngoal : ''
+			    				, nrate : ''
+			    			   };
+	    			self.lineList.push(data);
+	    		}
+	    	}
+	    }
+	    ,function(data){
+	    	alert('fail: '+ data)
+	    });
+  }
 }]);

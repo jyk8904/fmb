@@ -2,7 +2,7 @@
  * @Class Name : fmbModeCtrl.js
  * @Description : fmbMode 
  * @Modification Information  
- * @
+ * @ 개발모드
  * @ 작업일       작성자      내용
  * @ ----------  ---------  -------------------------------
  * @ 2017.05.29  정유경       최초생성
@@ -28,9 +28,8 @@ angular
 			$location.url('');
 		}    	
     }, true);
-    
-     var worker= undefined;
      var self = this;
+     
      $scope.buttons = [
     	 {'name':'Yellow25', 'value':'assets/img/button/Yellow25.png'},
     	 {'name':'Blue25', 'value': 'assets/img/button/Blue25.png'},
@@ -52,7 +51,10 @@ angular
     	 	workerList.worker2.worker=undefined; 
     	 	workerList.worker2.sts = "off";
 	   }
-    
+     if(workerList.worker3.worker!=undefined){
+ 	 	workerList.worker3.worker.terminate();
+ 	 	workerList.worker3.worker=undefined; 
+	   }
      self.showModal = false;
      self.selected = {};
      self.pointer = {
@@ -70,7 +72,8 @@ angular
      //설비parameter
      self.eqptParamVo = {
     		  factId: 'Comb'
-		   	, plcId: ''
+		   	, eqptType: 'PLC'
+		   	, id : ''
 		   	, eqptCnm: ''
      };
 
@@ -79,7 +82,30 @@ angular
  			  plcId: ''
  			, factId: 'Comb'
  	};
- 	
+ 	//spc parameter
+ 	self.spcParamVo = {
+ 			  plcId: ''
+ 		 	, factId: 'Comb'	
+ 			//spc 프로시저 완성후 수정
+ 	}
+ 	//andon parameter
+ 	self.andonParamVo = {
+ 			 plcId: ''
+		   , factId: 'Comb'	 			
+ 			//andon 프로시저 완성후 수정
+ 	}
+ 	//count parameter
+ 	self.countParamVo = {
+			 plcId: ''
+		   , factId: 'Comb'	
+			   
+ 	}
+ 	$scope.crtEqtp = {
+		 	  cnm  : ''
+			, type : ''
+			, id : ''
+			, factId : ''
+ 	}
     self.BgList = {
     		   factId: '' 
     };
@@ -112,7 +138,7 @@ angular
 *---------------------------------------------------------------*/ 	
  	
     self.changeFact = changeFact;
-     
+    self.changeType = changeType;
     self.deleteDiv = function (index) {
     	console.log(index)
     	self.eqptList[index].status = "delete";
@@ -154,24 +180,90 @@ angular
     }, true);
 
     self.crtEqptModal = function(){
-    	var classList = $filter('orderBy')(self.eqptList,'eqptCnm');
-    	if (classList.length == 0) {
-    		$scope.crtEqpt.cnm = 'eqpt001';
+    	if(self.eqptParamVo.eqptType=="PLC"){
+    		var classList = $filter('orderBy')(self.eqptList,'eqptCnm');
+        	if (classList.length == 0) {
+        		$scope.crtEqpt.cnm = 'eqpt001';
+        	}
+        	else 
+        	{
+    	    	var latestNum = classList[classList.length - 1].eqptCnm.split('eqpt')[1];
+    	    	
+    	    	$scope.crtEqpt.cnm = 'eqpt' + leadingZeros(parseInt(latestNum) + 1, 3);
+        	}
+        	   
+    	  	  var tmp={}, res=[];
+    		  for(var i=0;i<self.plcList.length;i++) tmp[self.plcList[i].plcId]=1;
+    		  for(var i=0;i<self.eqptList.length;i++) { if(tmp[self.eqptList[i].id]) delete tmp[self.eqptList[i].id]; }
+    		  for(var k in tmp) res.push(k);
+    		  console.log(res);
+    		  self.plcLst = res;
+    		  console.log(self.plcLst);
+        	
+        	
+    	}else if(self.eqptParamVo.eqptType=="SPC"){
+    		var classList = $filter('orderBy')(self.eqptList,'eqptCnm');
+        	if (classList.length == 0) {
+        		$scope.crtEqpt.cnm = 'eqpt001';
+        	}
+        	else 
+        	{
+    	    	var latestNum = classList[classList.length - 1].eqptCnm.split('eqpt')[1];
+    	    	
+    	    	$scope.crtEqpt.cnm = 'eqpt' + leadingZeros(parseInt(latestNum) + 1, 3);
+        	}
+        	   
+    	  	  var tmp={}, res=[];
+    		  for(var i=0;i<self.spcList.length;i++) tmp[self.spcList[i].plcId]=1;
+    		  for(var i=0;i<self.eqptList.length;i++) { if(tmp[self.eqptList[i].id]) delete tmp[self.eqptList[i].id]; }
+    		  for(var k in tmp) res.push(k);
+    		  console.log(res);
+    		  self.spcLst = res;
+    		  console.log(self.spcLst);
+    		
+    	}else if(self.eqptParamVo.eqptType=="ANDON"){
+    		var classList = $filter('orderBy')(self.eqptList,'eqptCnm');
+        	if (classList.length == 0) {
+        		$scope.crtEqpt.cnm = 'eqpt001';
+        	}
+        	else 
+        	{
+    	    	var latestNum = classList[classList.length - 1].eqptCnm.split('eqpt')[1];
+    	    	
+    	    	$scope.crtEqpt.cnm = 'eqpt' + leadingZeros(parseInt(latestNum) + 1, 3);
+        	}
+        	   
+    	  	  var tmp={}, res=[];
+    		  for(var i=0;i<self.andonList.length;i++) tmp[self.andonList[i].plcId]=1;
+    		  for(var i=0;i<self.eqptList.length;i++) { if(tmp[self.eqptList[i].id]) delete tmp[self.eqptList[i].id]; }
+    		  for(var k in tmp) res.push(k);
+    		  console.log(res);
+    		  self.andonLst = res;
+    		  console.log(self.andonLst);
+    		
+    		
+    	}else if(self.eqptParamVo.eqptType=="COUNT"){
+    		var classList = $filter('orderBy')(self.eqptList,'eqptCnm');
+        	if (classList.length == 0) {
+        		$scope.crtEqpt.cnm = 'eqpt001';
+        	}
+        	else 
+        	{
+    	    	var latestNum = classList[classList.length - 1].eqptCnm.split('eqpt')[1];
+    	    	
+    	    	$scope.crtEqpt.cnm = 'eqpt' + leadingZeros(parseInt(latestNum) + 1, 3);
+        	}
+        	   
+    	  	  var tmp={}, res=[];
+    	  		  for(var i=0;i<self.countList.length;i++) tmp[self.countList[i].plcId]=1;
+    	  	  if(self.eqptList!=null){
+    	  		  for(var i=0;i<self.eqptList.length;i++) { if(tmp[self.eqptList[i].id]) delete tmp[self.eqptList[i].id]; }
+    	  	  }
+    		  for(var k in tmp) res.push(k);
+    		  console.log(res);
+    		  self.countLst = res;
+    		  console.log(self.countLst);
     	}
-    	else 
-    	{
-	    	var latestNum = classList[classList.length - 1].eqptCnm.split('eqpt')[1];
-	    	
-	    	$scope.crtEqpt.cnm = 'eqpt' + leadingZeros(parseInt(latestNum) + 1, 3);
-    	}
-    	   
-	  	  var tmp={}, res=[];
-		  for(var i=0;i<self.plcList.length;i++) tmp[self.plcList[i].plcId]=1;
-		  for(var i=0;i<self.eqptList.length;i++) { if(tmp[self.eqptList[i].plcId]) delete tmp[self.eqptList[i].plcId]; }
-		  for(var k in tmp) res.push(k);
-		  console.log(res);
-		  self.plcLst = res;
-		  console.log(self.plcLst);
     	
     	self.showModal = !self.showModal;
     };
@@ -197,17 +289,17 @@ angular
     $scope.submit = function(){	
     	var cnm = $scope.crtEqpt.cnm;
     	var type = $scope.crtEqpt.type;
-    	var plcId = $scope.crtEqpt.plcId;
+    	var id = $scope.crtEqpt.id;
     	var factId = self.eqptParamVo.factId
 
     	
-    	console.log(cnm,type,plcId)
-    	if (cnm != null && cnm != "" && type != null && type != "" && plcId != null && plcId != "")
+    	console.log(cnm,type,id,factId)
+    	if (cnm != null && cnm != "" && type != null && type != "" && id != null && id != "")
     	{
-    		var detect = $filter('filter')(self.eqptList, {plcId : plcId , status : '!delete'});
+    		var detect = $filter('filter')(self.eqptList, {id : id , status : '!delete'});
     		
 		    	var data = {  eqptCnm : cnm
-		    			    , plcId : plcId
+		    			    , id : id
 		    			    , eqptType : type
 		    			    , factId : factId
 		    			    , desc : null
@@ -224,11 +316,11 @@ angular
 		    				, stsImg4: 'assets/img/button/Red25.png'
 		    			   };
 		    	var check=true;
-		    	if(data.plcId=='None'){
+		    	if(data.id=='None'){
 		    		check =false;
 		    	}
 		    	for(var i=0; i<self.eqptList.length; i++){
-			    	if(data.plcId ==self.eqptList[i].plcId){
+			    	if(data.id ==self.eqptList[i].id){
 			    	 check = false;
 			    	}
 		    	}
@@ -240,7 +332,7 @@ angular
 		    	}
     	}
     	else {
-    		console.log(cnm,type,plcId)
+    		console.log(cnm,type,id)
     		alert("모든 칸을 기입해야합니다.");
     	}
     };
@@ -261,13 +353,15 @@ angular
     //설비 이미지리스트 가져오기
     function getEqptList(){
     	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
+    	console.log("getEqtpList")
     	eqptPromise.then(function(data) {
     		self.eqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
     		for(var i = 0; i < self.eqptList.length; i++){
     			self.eqptList[i]['status'] = "keep";
     		}
     	}, function(data){
-    	alert('fail: '+ data)
+    		console.log(data);
+    	//alert('fail: '+ data)
     });    	
     
     }
@@ -278,11 +372,45 @@ angular
     	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
     	plcPromise.then(function(data) {
     		self.plcList = data; //fmbplcVo가 담긴 리스트 형태리턴
+    		console.log(self.plcList)
+    	}, function(data){
+    		console.log(data)
+    		alert('fail: '+ data)
+    	});
+    }
+    function getAndonList(){
+    	
+    	//설비 Andon 데이터 가져오기   andon프로시저 생성후 수정해야함 
+    	var andonPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.spcParamVo);
+    		andonPromise.then(function(data) {
+    		self.andonList = data; //fmbplcVo가 담긴 리스트 형태리턴
+    		console.log(self.andonList)
     	}, function(data){
     		alert('fail: '+ data)
     	});
     }
-    
+    function getSpcList(){
+    	
+    	//설비 Spc 데이터 가져오기   프로시저 생성후 수정해야함 
+    	var spcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.spcParamVo);
+    		spcPromise.then(function(data) {
+    		self.spcList = data; 
+    		console.log(self.spcList)
+    	}, function(data){
+    		alert('fail: '+ data)
+    	});
+    }
+    function getCountList(){
+    	
+    	//설비 count 데이터 가져오기    프로시저 생성후 수정해야함 
+    	var countPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.countParamVo);
+    		countPromise.then(function(data) {
+    		self.countList = data; 
+    		console.log(self.countList)
+    	}, function(data){
+    		alert('fail: '+ data)
+    	});
+    }
     function getBgImageList() {
         
     	var bgImagePromise = CmmAjaxService.select("/mes/bas/selectFmbBgImage.do", self.BgList);
@@ -345,10 +473,37 @@ angular
     function changeFact(){
     	getEqptList();
      	getPlcList();
+     	getAndonList();
+     	getSpcList();
+     	getCountList();
      	var factId = self.eqptParamVo.factId;
 
      	self.plcParamVo.factId= factId ;
-
+     	$scope.crtEqtp.factId = factId;
+    }
+    
+    function changeType(){
+    	if(self.eqptParamVo.eqptType=="PLC"){ 			//추후 type별 다른 로직 구성해야함.
+    		getEqptList();
+         	getPlcList();
+    	}else if(self.eqptParamVo.eqptType=="ANDON"){
+    		getEqptList();
+         	getAndonList();
+    		console.log("ANDON")
+    	}else if(self.eqptParamVo.eqptType=="SPC"){
+    		getEqptList();
+         	getSpcList();
+    		console.log("SPC")
+    	}else if(self.eqptParamVo.eqptType=="COUNT"){
+    		getEqptList();
+         	getCountList();
+         	console.log("COUNT")
+    	}
+    	
+    	var eqptType = self.eqptParamVo.eqptType;
+    	self.plcParamVo.eqptType= eqptType;
+     	$scope.crtEqtp.type = eqptType;
+     	
     }
     
     
@@ -387,7 +542,7 @@ angular
     	 var target = $filter('filter')(self.eqptList, {eqptCnm : cnm});
     	 target[0]['eqptCnm'] = $scope.configSetting.cnm;
     	 target[0]['eqptType'] = $scope.configSetting.type;
-    	 target[0]['plcId'] = $scope.configSetting.plcId;
+    	 target[0]['id'] = $scope.configSetting.id;
     	 target[0]['cssTop'] = $scope.configSetting.top;
     	 target[0]['cssLeft'] = $scope.configSetting.left;
     	 target[0]['cssHeight'] = $scope.configSetting.height;

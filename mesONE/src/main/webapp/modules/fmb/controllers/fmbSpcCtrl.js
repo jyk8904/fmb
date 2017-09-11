@@ -1,12 +1,12 @@
 /**  
- * @Class Name : fmb006Ctrl.js
- * @Description : fmb006 
+ * @Class Name : fmbSpcCtrl.js
+ * @Description : fmbSpc 
  * @Modification Information  
  * @
  * @ 작업일       작성자      내용
  * @ ----------  ---------  -------------------------------
  * @ 2017.05.29  정유경    최초생성
- * @ 
+ * @ 사용x
  * 
  */
 

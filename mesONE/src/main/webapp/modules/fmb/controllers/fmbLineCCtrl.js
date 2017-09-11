@@ -65,6 +65,7 @@ angular
     
 	//워커 스타트
 	workerList.workerStart(workerList.worker2, "worker.js");
+	//워커 온메세지
 	workerList.workerOnmessage(workerList.worker2, getLineList);
     
 	// 모바일 체크 함수 정의
@@ -79,9 +80,8 @@ angular
 		}
 	}
 	
-    function getLineList(){
-    
 	//선택된 공장의 line별 데이터 가져오기
+    function getLineList(){
     var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do", self.lineParamVo);
     promise.then(function(data){
     	self.lineList = data;

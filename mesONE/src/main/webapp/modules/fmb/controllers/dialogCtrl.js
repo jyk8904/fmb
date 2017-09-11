@@ -1,6 +1,6 @@
 /**  
- * @Class Name : fmbCwMonCtrl.js
- * @Description : fmbCwMon
+ * @Class Name : dialogCtrl.js
+ * @Description : dialogCtrl.html 설비모니터링 내 팝업창 컨트롤러
  * @Modification Information  
  * @
  * @ 작업일        작성자          내용
@@ -91,9 +91,7 @@ angular
 	var dateRunInfoPromise = CmmAjaxService.select("/mes/bas/selectDateRunInfo.do");
 	
 	dateRunInfoPromise.then(function(data) {
-			
 		self.timeProdData = data;
-		console.log(self.timeProdData);
 		$timeout(function(){}, 200)
     	.then(function(){
     		timeProdData = self.timeProdData;
@@ -104,9 +102,7 @@ angular
 		alert('fail: ' + data)
 	});
 
-
 	function makeDataRunInfoChart(){
-		console.log(timeProdData)
 		
 		AmCharts.makeChart("DataRunInfoChart",{
 				"type": "serial",
@@ -321,7 +317,6 @@ angular
 		char.zoomToIndexes(eqptStsCstData.length - 40, eqptStsCstData.length - 1);
 	}
 	}
-
 	
 	//시간별 가동상태 변화 데이터 커스터마이징
 	function getCstData(){
@@ -376,11 +371,12 @@ angular
 					}
 		}
 	}
-
+	//선택된 plc 데이터 가져오기
 	function getSelectedPlc(){
-				
 		var promise = CmmAjaxService.selectOne("/mes/bas/selectFmbPlc.do", self.plcSelectedVo);
         promise.then(function(data){
+        	
+        	//DB 연동 후 제거해야함, plc 상태 랜덤지정
         	for(var i = 0; i< data.length; i++){
            		var random = Math.floor(Math.random()*3);
            		if(random==0){
@@ -390,13 +386,10 @@ angular
        		}
         	
         	self.plc = data;//fmbPlcVo가 담긴 리스트 형태리턴
-        	
-        	
         }
         ,function(data){
         	alert('fail: '+ data)
         });
-    	
     };
     
 }]);

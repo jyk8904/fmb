@@ -43,8 +43,8 @@ public class FmbEqptCtrl {
 		try {
 			//5. sql-bas-info.xml의  id가 selectFmbPlc인 select 실행
 			fmbEqptVO = (List<FmbEqptVO>) mBcfBizService.select("sql-bas-info.selectFmbEqpt", vo);
-			System.out.println("vo" +vo.getPlcId());
-			log.info(vo.getPlcId());
+
+			log.info(vo.getEqptType());
 			log.error(vo.getFactId());
 			
 			return new ResponseEntity<List<FmbEqptVO>>(fmbEqptVO, HttpStatus.OK);

@@ -617,11 +617,12 @@ angular
 				  panelCtrl();
 				  function panelCtrl(){
 					  var width = $window.innerWidth;
+					  console.log(width)
 					  var default_width = 1920; 
 					  var screenRate = width / default_width;
 				  if (scope.isMobile) {
 					  	var fontSize = 20;
-					  	var height = 8650;
+					  	var height = 850;
 					  	fontSize = fontSize * screenRate;
 					  	height = height * screenRate
 				  		console.log(screenRate)

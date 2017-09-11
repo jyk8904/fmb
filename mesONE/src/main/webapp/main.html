@@ -5,6 +5,7 @@
  * @  수정일            수정자              수정내용
  * @ ----------------------------------------------------
  * @version 1.0
+ 
  * @see
  -->
 
@@ -15,7 +16,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <!-- 모바일용웹 -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="w
+idth=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- 안드로이드 홈화면추가시 상단 주소창 제거 -->
 <meta name="mobile-web-app-capable" content="yes">
@@ -142,10 +144,10 @@
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLineCClick()'>Line별 생산실적(C)</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbTbmClick()'>Tbm</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbProdClick()'>생산실적 외 모니터링</md-button>
-			<md-button class="md-raised md-default" ng-click='vm.btnFmbModeClick()' ng-show="id=='developer'">개발모드</md-button>&nbsp;||&nbsp;
+			<md-button class="md-raised md-default" ng-click='vm.btnFmbModeClick()' ng-show="id=='developer'" >개발모드</md-button>
 			
-			<md-button class="md-raised md-primary" ng-click='logOut()' ng-show="loginChk">로그아웃</md-button>
-			<md-button class="md-raised md-primary" ng-click='winClose()'>종료</md-button>
+			<md-button class="md-raised md-primary" ng-click='winClose()' style="float:right;">종료</md-button>
+			<md-button class="md-raised md-primary" ng-click='logOut()' ng-show="loginChk" style="float:right;">로그아웃</md-button>
 		</div>
 		
 	</div>   
@@ -154,7 +156,9 @@
   <md-sidenav class="md-sidenav-left" md-component-id="left1" md-disable-backdrop md-whiteframe="4" ng-if="isMobile == true" hide-gt-md style="z-index:1002; overflow:hidden;">
 
       <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools" style="float:right;" ng-click="onSwipeLeft()">≡</h1>
+
+        <h1 class="md-toolbar-tools" ng-click="onSwipeLeft()">≡&nbsp;&nbsp; &nbsp;&nbsp;{{id}} <md-button class="md-raised md-primary" ng-click='logOut()' ng-show="loginChk" style="margin-top:0;margin-left:2px;">로그아웃</md-button></h1>
+
       </md-toolbar>
 
       <md-content class="sideNavCtnt" layout-margin>
@@ -237,8 +241,11 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
 	
 	<bc-form-footer>
 	<!--알람정보 하단 바 시작-->
+		
 		<div class="col-md-12 col-sm-12 col-xs-12" ng-if="isMobile == false" style="padding:0">
 		  <div class="alarm_data" style="background-color: rgb(255, 255, 255); width:110% !important; height: 25px;">
+		  
+			<img src="assets/img/system/img_top_ico.gif" style="margin: -11px 0px 0px -5px; width: 42px; position: absolute; z-index: 1000;">
 	  		<marquee>
 	      		<ul id="banner" class="simply-scroll-list" style="background-color:#333;">
 	      			<li marquee-banner alarm-list="alarmList"  ng-repeat="alarm in alarmList track by $index">

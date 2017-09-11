@@ -39,6 +39,7 @@ angular
                                  , $rootScope
                                  , $mdSidenav
                                  ) {
+
 	var workerList = CmmWorkerSrvc;
 	workerList.worker2.sts = 'off';
 	var self = this;
@@ -51,7 +52,7 @@ angular
    $scope.loginChk = false;
    $scope.keyUpLogin = onKeyupPasswd;
    
-   if(localStorage.getItem("autoLogin")=="true"){ //자동로그인에 체크가 되어있던경우
+   if(localStorage.getItem("autoLogin")=="true"){ //자동로그인에 체크가 되어있던 경우, 로컬에서 가져와서 세션, 스코프에 저장
 	   $scope.id = localStorage.getItem('id');
 	   $scope.pw = localStorage.getItem('password');
 	   
@@ -59,6 +60,9 @@ angular
        sessionStorage.setItem("id", $scope.id);
        sessionStorage.setItem("login", true);
        $scope.loginChk = true;
+   }else{										 //세션정보 만료 전, 새로고침한 경우 세션에서 가져와서 스코프에 저장
+	   $scope.id = sessionStorage.getItem("id");
+	   $scope.loginChk = sessionStorage.getItem("login");
    }
    
 	// 모바일 체크 함수 실행
@@ -383,7 +387,7 @@ angular
         }
         // 서버로 전송
         // 아이디, 패스워드 체크
-        if((objLogin =="aaa"|| objLogin =="developer") && objPasswd =="bbb"){
+        if(((objLogin =="aaa"|| objLogin =="developer") && objPasswd =="bbb") || (objLogin=="CTR" && objPasswd=="ctr")){
         	//console.log("로그인")
         	//console.log(objAutoLogin);
         	//console.log(localStorage.getItem("autoLogin"))
@@ -426,7 +430,7 @@ angular
         	localStorage.removeItem("password");
         	$scope.autoLogin = false;
         	}       
-    	
+    	//세션지움
         sessionStorage.setItem("login", false);
         sessionStorage.removeItem("id");
         $scope.loginChk =false;

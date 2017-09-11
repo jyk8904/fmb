@@ -36,11 +36,7 @@
 		 <ul>
 			<!-- 설비이미지 repeat -->
 			<li u-ctrl data="eqpt" ng-repeat="eqpt in vm.eqptList track by $index">
-			 <!-- <div class="{{eqpt.eqptCnm}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
-				  style="top:{{eqpt.cssTop}}; left: {{eqpt.cssLeft}}; 
-				  		 width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}}; 
-				  		 z-index:{{eqpt.cssZindex}};"> -->
-				  <div class="{{eqpt.eqptCnm}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
+			  <div class="{{eqpt.eqptCnm}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
 				  ng-style="{'top':eqpt.cssTop, 'left': eqpt.cssLeft, 'width':eqpt.cssWidth, 'height':eqpt.cssHeight,'z-index':eqpt.cssZindex}">
 				  		
 	              <div ng-switch on="vm.stsData[$index]">  

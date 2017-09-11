@@ -7,7 +7,9 @@ public class FmbEqptParamVO extends MBasAbsVO {
 
 	//DB컬럼이름과 같게 지정
 	private String fact_id;   // 공장 ID
-	private String plc_id;    // PLC ID
+	private String eqpt_type; // type
+	
+	private String id;   	  //  ID
 	private String eqpt_cnm;  // 설비클래스명
 		
 	//생성자
@@ -23,15 +25,22 @@ public class FmbEqptParamVO extends MBasAbsVO {
 	public void setFactId(String fact_id) {
 		this.fact_id = fact_id;
 	}
+	
+	public String getEqptType() {
+		return eqpt_type;
+	}
 
+	public void setEqptType(String eqpt_type) {
+		this.eqpt_type = eqpt_type;
+	}
 
-	public String getPlcId() {
-		return plc_id;
+	public String getId() {
+		return id;
 	}
 
 
-	public void setPlcId(String plc_id) {
-		this.plc_id = plc_id;
+	public void setPlcId(String id) {
+		this.id = id;
 	}
 
 

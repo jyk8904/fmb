@@ -1,15 +1,14 @@
 /**  
- * @Class Name : fmbCwMonCtrl.js
- * @Description : fmbCwMon
+ * @Class Name : imageViewerCtrl.js
+ * @Description : imageViewer
  * @Modification Information  
- * @
+ * @ 개발모드에서 저장되어있는 이미지를 보여주는 팝업창
  * @ 작업일        작성자          내용
  * @ ----------  ------------  -------------------------------
  * @ 2017.07.03  조준연, 정유경    최초생성
  * @ 
  * 
  */
-
 'use strict';
 
 angular
@@ -60,7 +59,6 @@ angular
 	};
     self.cancel = function() {
     	$mdDialog.hide();
-    	console.log("팝업끔")
     };
     
 	getImages();
@@ -70,7 +68,6 @@ angular
 		var promise = CmmAjaxService.selectOne("/mes/bas/selectFmbImage.do");
         promise.then(function(data){
         	self.images = data;//fmbPlcVo가 담긴 리스트 형태리턴
-        	console.log(data);
         }
         ,function(data){
         	alert('fail: '+ data)
@@ -81,9 +78,8 @@ angular
     	self.target.num = index;
     };
     
+    //이미지 선택하기
     self.saveBgImg = function saveBgImg(target) {
-    	
-    	console.log(target);
     	if (Object.keys(target).length === 0 || target === undefined || target.num === null) 
     	{
     		alert("이미지가 선택되지 않았습니다. 이미지를 선택해주세요.");
@@ -97,26 +93,19 @@ angular
     				  factId : factId
     				, imgSeq : targetData
     		}
-    		console.log(self.saveBgImageVo)
     		var eqptPromise = CmmAjaxService.save("/mes/bas/saveBgImage.do", self.saveBgImageVo);
     	}
     };
     
-    
+    //저장된 이미지 지우기
     self.imgDel = function imgDel(target) {
-    	console.log(target);
-    	
-    	console.log(self.images[target].file_p_path);
-    	console.log(self.images[target].seq);
     	self.delTarget.seq = self.images[target].seq;
     	self.delTarget.file_p_path = self.images[target].file_p_path;
-    	console.log(self.delTarget);
     	var promise = CmmAjaxService.del("/mes/bas/delFmbImage.do", self.delTarget);
     	
         promise.then(function(data){
         	self.target.num = null;
         	getImages();
-        	console.log("선택해제")
         }
         ,function(data){
         	alert('fail: '+ data)

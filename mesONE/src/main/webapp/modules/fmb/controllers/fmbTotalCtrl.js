@@ -1,8 +1,13 @@
 /**
- * @Class Name : fmb006Ctrl.js
- * @Description : fmb006
- * @Modification Information @ @ 작업일 작성자 내용 @ ---------- ---------
- * ------------------------------- @ 2017.05.29 정유경 최초생성 @
+ * @Class Name : fmbTotalCtrl.js
+ * @Description : fmbTotal
+ * @Modification Information 
+ * @ 
+ * @ 작업일 작성자 내용
+ * @ ---------- ---------
+ * ------------------------------- 
+ * @ 2017.05.29 정유경 최초생성 
+ * @
  * 
  */
 
@@ -126,15 +131,17 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			var planProgressPromise = CmmAjaxService.select("/mes/bas/selectPlanProgress.do");
 				planProgressPromise.then(function(data) {
 				$scope.planProgressList = data;
-				var count = 3;														// 나눠 보여줄 횟수
+				var count = 3;														// 다량의 데이터를 나눠 보여줄 횟수
 				var quotient = parseInt($scope.planProgressList.length /count); 	// 몫: 한번에 보여줄 데이터 갯수
 				var remainder = $scope.planProgressList.length % quotient;			// 나머지
 				var startRan =0;													// 한번에 보여줄 데이터의 첫번째 num
 				var endRan =0;														// 한번에 보여줄 데이터의 마지막 num
 				
+				
 				getFltrdData();
+				//FmbTotal의 (datatime/횟수)를 interval 지정하여 다량의 데이터를 나눠보여줌 
 				$interval( getFltrdData, thisDataTime/count, count-1); 
-							// 			 FmbTotal의 datatime/횟수
+							
 				
 				function getFltrdData(){
 					var filteredData = [];
@@ -269,6 +276,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 				$scope.dateRunInfoList[data.length-1].bulletClass = "lastBullet";
 				
 				if ($scope.isMobile) {
+					console.log($scope.dateRunInfoList);
 					MobileAlarmDateRunInfo();
 					MobileStandbyDateRunInfo();
 					MobileNoRunDateRunInfo();
@@ -294,7 +302,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			var rankRunInfoPromise = CmmAjaxService.select("/mes/bas/selectRankRunInfo.do");
 				rankRunInfoPromise.then(function(data) {
 				rankRunInfoList = data;
-				
+			
 				alarmRankRunInfo();
 				standbyRankRunInfo();
 				noRunRankRunInfo();
@@ -348,6 +356,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					"marginRight": 0,
 					"marginTop": 0,
 					"theme": "dark",
+					"startDuration": 0,
 					"arrows": [
 						{
 							"value" : 60
@@ -402,7 +411,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 				  dataDateFormat: "MM/DD",
 				  dataProvider: $scope.dateRunInfoList,
 				  addClassNames: true,
-				  startDuration: 1,
+				  startDuration: 0,
 				  color: "#FFFFFF",
 				  marginLeft: 0,
 
@@ -475,8 +484,8 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 				    labelText: "[[alarm_tm]]",
 				    labelPosition: "right",
 				    balloonText: "Time:[[value]]",
-				    showBalloon: true,
-				    animationPlayed: true,
+				    showBalloon: true/*,
+				    animationPlayed: true,*/
 				  }],
 				  chartCursor: {
 				    zoomable: false,
@@ -497,7 +506,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					  dataProvider: $scope.dateRunInfoList,
 
 					  addClassNames: true,
-					  startDuration: 1,
+					  startDuration: 0,
 					  color: "#FFFFFF",
 					  marginLeft: 0,
 
@@ -569,8 +578,8 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					    labelText: "[[alarm_tm]]",
 					    labelPosition: "right",
 					    balloonText: "Time:[[value]]",
-					    showBalloon: true,
-					    animationPlayed: true,
+					    showBalloon: true/*,
+					    animationPlayed: true,*/
 					  }],
 					  chartCursor: {
 					    zoomable: false,
@@ -590,7 +599,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					  dataProvider: $scope.dateRunInfoList,
 
 					  addClassNames: true,
-					  startDuration: 1,
+					  startDuration:0,
 					  color: "#FFFFFF",
 					  marginLeft: 0,
 
@@ -662,8 +671,8 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					    labelText: "[[alarm_tm]]",
 					    labelPosition: "right",
 					    balloonText: "Time:[[value]]",
-					    showBalloon: true,
-					    animationPlayed: true,
+					    showBalloon: true/*,
+					    animationPlayed: true,*/
 					  }],
 					  chartCursor: {
 					    zoomable: false,
@@ -692,7 +701,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 						"angle": 20,
 						"depth3D": 30,
 						"sequencedAnimation": false,
-						"startDuration": 1,
+						"startDuration": 0,
 						"startEffect": "easeOutSine",
 						"fontSize": 12,
 						"categoryAxis": {
@@ -763,6 +772,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 						"marginBottom": 0,
 						"marginTop": 0,
 						"startRadius": "100%",
+						"startDuration": 0,
 						"sequencedAnimation": false,
 						"titleField": "category",
 						"valueField": "column-1",
@@ -798,7 +808,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 						"plotAreaBorderColor": "#008000",
 						"plotAreaFillAlphas": 0,
 						"sequencedAnimation": false,
-						"startDuration": 1,
+						"startDuration": 0,
 						"startEffect": "easeOutSine",
 						"backgroundColor": "#E7E7E7",
 						"borderColor": "#E7E7E7",
@@ -928,13 +938,14 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 		
 		//알람발생추이
 		function MobileAlarmDateRunInfo() {
+			console.log($scope.dateRunInfoList);
 			AmCharts.makeChart("MobileAlarmChart", {
 				  type: "serial",
 				  theme: "dark",
 				  dataDateFormat: "MM/DD",
 				  dataProvider: $scope.dateRunInfoList,
 				  addClassNames: true,
-				  startDuration: 1,
+				  startDuration: 0,
 				  color: "#FFFFFF",
 				  marginLeft: 0,
 
@@ -1007,8 +1018,8 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 				    labelText: "[[alarm_tm]]",
 				    labelPosition: "right",
 				    balloonText: "Time:[[value]]",
-				    showBalloon: true,
-				    animationPlayed: true,
+				    showBalloon: true/*,
+				    animationPlayed: true,*/
 				  }],
 				  chartCursor: {
 				    zoomable: false,
@@ -1029,7 +1040,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					  dataProvider: $scope.dateRunInfoList,
 
 					  addClassNames: true,
-					  startDuration: 1,
+					  startDuration: 0,
 					  color: "#FFFFFF",
 					  marginLeft: 0,
 
@@ -1101,8 +1112,8 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					    labelText: "[[alarm_tm]]",
 					    labelPosition: "right",
 					    balloonText: "Time:[[value]]",
-					    showBalloon: true,
-					    animationPlayed: true,
+					    showBalloon: true/*,
+					    animationPlayed: true,*/
 					  }],
 					  chartCursor: {
 					    zoomable: false,
@@ -1122,7 +1133,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					  dataProvider: $scope.dateRunInfoList,
 
 					  addClassNames: true,
-					  startDuration: 1,
+					  startDuration:0,
 					  color: "#FFFFFF",
 					  marginLeft: 0,
 
@@ -1194,8 +1205,8 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					    labelText: "[[alarm_tm]]",
 					    labelPosition: "right",
 					    balloonText: "Time:[[value]]",
-					    showBalloon: true,
-					    animationPlayed: true,
+					    showBalloon: true/*,
+					    animationPlayed: true,*/
 					  }],
 					  chartCursor: {
 					    zoomable: false,
@@ -1242,7 +1253,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 						"angle": 20,
 						"depth3D": 30,
 						"sequencedAnimation": false,
-						"startDuration": 1,
+						"startDuration": 0,
 						"startEffect": "easeOutSine",
 						"fontSize": 12,
 						"categoryAxis": {
@@ -1316,7 +1327,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 						"plotAreaBorderColor": "#008000",
 						"plotAreaFillAlphas": 0.46,
 						"sequencedAnimation": false,
-						"startDuration": 1,
+						"startDuration": 0,
 						"startEffect": "easeOutSine",
 						"backgroundColor": "#E7E7E7",
 						"borderColor": "#E7E7E7",

@@ -8,8 +8,8 @@ public class FmbEqptVO extends MBasAbsVO {
 	//DB컬럼이름과 같게 지정
 	private String fact_id;		// 공장 ID
 	private String eqpt_cnm;  	// 설비클래스명
-	private String eqpt_type; 	// 타입(활성화여부)
-	private String plc_id;    	// PLC ID
+	private String eqpt_type; 	// 타입(PLC/SPC/COUNT/ANDON)
+	private String id;    		// ID
 	private String css_top;		// css top
 	private String css_left;	// css left
 	private String css_width;	// css width
@@ -51,12 +51,12 @@ public class FmbEqptVO extends MBasAbsVO {
 		this.eqpt_type = eqpt_type;
 	}
 
-	public String getPlcId() {
-		return plc_id;
+	public String getId() {
+		return id;
 	}
 
-	public void setPlcId(String plc_id) {
-		this.plc_id = plc_id;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getCssTop() {

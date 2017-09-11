@@ -1,8 +1,8 @@
 /**  
  * @Class Name : fmbAndon.js
- * @Description : fmbAndon
+ * @Description : fmbAndon.html 
  * @Modification Information  
- * @
+ * @ 안돈신호 모니터링 임시페이지
  * @ 작업일       작성자      내용
  * @ ----------  ---------  -------------------------------
  * @ 2017.08.09  정유경    최초생성
@@ -52,18 +52,18 @@ angular
     var workerList = CmmWorkerSrvc;
     
     $scope.isMobile = false;
-    console.log(workerList);
     //설비parameter
     self.eqptParamVo = {};
     self.eqptParamVo.factId = 'Comb';
-    self.eqptParamVo.plcId = '';
+	self.eqptParamVo.eqptType='ANDON';
+    self.eqptParamVo.id ='';
     self.eqptParamVo.eqptCnm ='';
     
 	//plc parameter
 	self.plcParamVo={};
 	self.plcParamVo.plcId ='';
 	self.plcParamVo.factId ='';
-	
+	 
 	self.stsData = {};
     self.BgList = {
  		   factId: 'Comb' 
@@ -102,7 +102,7 @@ angular
    	    		dataChk();
    	    	});
 		 
-   		}else{ 													//모든 데이터를 읽어들인 경우
+   		}else{ 																//모든 데이터를 읽어들인 경우
    			bindData();
    		}
    	}
@@ -121,8 +121,8 @@ angular
 		console.log($scope.isMobile)
 	}
 	
+	//설비 plc 데이터 가져오기
     function getPlcList(){
-   		//설비 plc 데이터 가져오기
    	   		var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
            	plcPromise.then(function(data) {
            		//랜덤값 입력
@@ -142,8 +142,8 @@ angular
            });
    		}
 
+    //설비 이미지리스트 가져오기
     function getEqptList(){
-	    	//설비 이미지리스트 가져오기 메소드
 	    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
 	    	eqptPromise.then(function(data) {
 	    		self.preeqptList = data;
@@ -152,14 +152,15 @@ angular
 	    		alert('fail: '+ data)
 	    	});
 	}
-
+    //plc, eqpt list 바인딩
 	function bindData(){
 		for(var i =0; i < self.eqptList.length; i++){
 			var target = $filter('filter')(self.plcList, {plcId : self.eqptList[i].plcId});
 			self.stsData[i]= target[0].eqptSts;
 		}
 	};
-	 
+	
+	//해당 동의 배경이미지가져오기 
     function getBgImageList() {
         
     	var bgImagePromise = CmmAjaxService.select("/mes/bas/selectFmbBgImage.do", self.BgList);
@@ -187,6 +188,7 @@ angular
     	});
     }
     
+    //선택된 plc에 대한 정보 가져오기
 	function getSelectedPlc(){
 		var promise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcSelectedVo);
         promise.then(function(data){
@@ -199,6 +201,7 @@ angular
     	 self.showModal = !self.showModal;
     };
 
+    
     function getAndonData(){
     	self.preeqptList=undefined;
     	self.preplcList=undefined;
@@ -212,13 +215,13 @@ angular
     	workerList.workerOnmessage(workerList.worker2, function(){getAndonData(); dataChk();});
 
 	    // 팝업 테스트용 코드입니다....
-	    
 	    var customFullscreen = false;
 	    
 	    $scope.cancel = function() {
 	    	$mdDialog.hide();
 	    };
 	    
+	    //설비버튼 클릭시, 팝업창 open
 	    $scope.showAdvanced = function(ev) {
 	    	
 	    	CmmFactSrvc.setPlcData(ev);

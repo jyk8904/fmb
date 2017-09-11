@@ -2,7 +2,7 @@
  * @Class Name : fmbCwMonCtrl.js
  * @Description : fmbCwMon
  * @Modification Information  
- * @
+ * @ 사용x
  * @ 작업일       작성자      내용
  * @ ----------  ---------  -------------------------------
  * @ 2017.06.29  정유경    최초생성

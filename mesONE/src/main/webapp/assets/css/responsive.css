@@ -76,6 +76,12 @@
 	.gridArea3 .gaugeValueBox p {
 		font-size: 16px;
 	}
+	.gridArea4 .titleBox {
+		padding:0;
+	} 
+	.gridArea4 .valueBox {
+		padding:0;
+	}
 	.smallBox {
 		min-height: 0;
 	}
@@ -95,9 +101,11 @@
 	}
 	.gridArea1 .titleRow {
 		height: 16%;
+		padding:0;
 	}
 	.gridArea1 > .contentRow {
 		height: 14%;
+		padding:0;
 	}
 	.gridArea2 {
 		height: 15%;
@@ -105,27 +113,35 @@
 	}
 	.gridArea2 .ppmTitle {
 		height: 100%;
+		padding:0 5px;
 	}
 	.gridArea2 .ppmValue {
 		height: 100%;
 	}
 	#MobileGauge {
-		height: 55%;
+		height: 150px;
+		margin: 10px 0 -20px 0;s
+	}
+	#MobileNorunChart, #MobileStandbyChart, #MobileAlarmChart{
+		height: 150px;
+		margin: 10px 0 0 0;
 	}
 	.gridArea3 {
 		height: 45%;
 	}
-	.gridArea3 .gaugeTitleBox {
+	.gridArea3 .gaugeT{
 		width: 48%;
 		height: 21%;
-		margin-right: 2%;
-		margin-bottom: 2%;
+		margin-right: 2%;/* 
+		margin-bottom: 2%; */
+		padding:0;
 	}
 	.gridArea3 .gaugeValueBox {
 		width: 48%;
 		height: 21%;
 		margin-right: 2%;
-		margin-bottom: 2%;
+		/* margin-bottom: 2%; */
+		padding:0;
 	}
 	.gridArea4 {
 		height: 45%;
@@ -186,6 +202,7 @@
 		min-height: 305px;
 	}
 	.gridArea {
+		padding:0 !important;
 		height:100%;		
 	}
 	.gridArea p {
@@ -193,29 +210,41 @@
 		font-size: 20px;
 	}
 	.gridArea1 {
+		padding:0 !important;
 		height: 72%;
 		margin-top: 5%;
 		margin-bottom: 4%;
 	}
 	.gridArea1 .titleRow {
 		height: 16%;
+		padding:0 !importants;
 	}
 	.gridArea1 > .contentRow {
 		height: 14%;
+		padding:0;
 	}
 	.gridArea2 {
 		height: 15%;
 		margin-bottom: 4%;
+		padding:0;
 	}
 	.gridArea2 .ppmTitle {
 		height: 100%;
+		padding: 0 5px;
 	}
 	.gridArea2 .ppmValue {
 		height: 100%;
 	}
 	#MobileGauge {
-		height: 55%;
+	    height: 323px;
+    	margin: 20px 0 -30px 0;
 	}
+	
+	#MobileNorunChart, #MobileStandbyChart, #MobileAlarmChart{
+	    height: 300px;
+    	margin: 0px 0 0px 0;
+	}
+	
 	.gridArea3 {
 		height: 45%;
 	}
@@ -224,15 +253,24 @@
 		height: 21%;
 		margin-right: 2%;
 		margin-bottom: 2%;
+		padding:0;
 	}
 	.gridArea3 .gaugeValueBox {
 		width: 48%;
 		height: 21%;
 		margin-right: 2%;
 		margin-bottom: 2%;
+		padding:0;
 	}
+	
 	.gridArea4 {
 		height: 45%;
+	}
+	.gridArea4 .titleBox {
+		padding:0;
+	} 
+	.gridArea4 .valueBox {
+		padding:0;
 	}
 	.gridArea4 p {
 		font-size: 20px;

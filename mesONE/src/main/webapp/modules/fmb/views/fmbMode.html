@@ -20,14 +20,10 @@
 <md-form-header>
 	<!--     좌상단 버튼   -->
 	<md-config-btn>
-			<!-- mdDrtv.js
-				 monFileSelect($file)
-				 dConfigBtn -->
+			<!-- mdDrtv.js/monFileSelect($file)/ mdConfigBtn -->
 			<!-- <div class='Btn'>" +
          			"<div ng-click='toggleLeft()' class='configBtn'>" +
-         				
          					"<img ng-click='vm.toggleLeft()' title='설정' src='assets/img/system/config_white.png' />" +
-
          			"</div>" +
          			"<div ng-click='saveEqptData()' class='saveBtn'>" +
          				"<img ng-click='vm.saveEqptData()' title='저장' src='assets/img/system/send_white.png' />" +
@@ -41,13 +37,20 @@
          		"</div>" -->
 	</md-config-btn>
 	<!--     좌상단 끝   -->
-
- 	<md-radio-group ng-model="vm.eqptParamVo.factId" ng-change="vm.changeFact()">
- 		<md-radio-button class="md-radio-button" value="Comb">안돈현황</md-radio-button>
+	<!-- 공장별 보기 -->
+	 <md-radio-group ng-model="vm.eqptParamVo.factId" ng-change="vm.changeFact()">
+ 		<md-radio-button class="md-radio-button" value="Comb">전체공장</md-radio-button>
 		<!-- <md-radio-button class="md-radio-button" value="A" >A동</md-radio-button> -->
-		<md-radio-button class="md-radio-button" value="B" >설비가동현황</md-radio-button>
+		<!-- <md-radio-button class="md-radio-button" value="B" >B동</md-radio-button> -->
 		<!-- <md-radio-button class="md-radio-button" value="C"> C동 </md-radio-button> -->
 	</md-radio-group>
+	
+	<!-- Type별 보기 -->
+	<md-radio-group ng-model="vm.eqptParamVo.eqptType" ng-change="vm.changeType()">
+ 		<md-radio-button class="md-radio-button" value="ANDON">안돈현황</md-radio-button>
+		<md-radio-button class="md-radio-button" value="PLC" >설비가동현황</md-radio-button>
+		<md-radio-button class="md-radio-button" value="COUNT" >생산현황</md-radio-button>
+	</md-radio-group>	
 	
       <md-slider flex md-discrete ng-model="vm.sensRating" step="1" min="1" max="10" aria-label="rating" ng-change="vm.sensChange(vm.sensRating)" style="width: 400px; left: 1400px; margin-top: 40px;">
       </md-slider>
@@ -73,7 +76,7 @@
 						<md-tab-body>
 				      		<md-list-item class="md-2-line" ng-class=" {'list_selected' : vm.selected === $index}" ng-repeat="eqpts in vm.eqptList" ng-click="vm.setSelectedData($index)" ng-hide="eqpts.status == 'delete'">
 					      		<div class="md-list-item-text" layout="column">
-					      			<h3>{{ eqpts.plcId }}</h3>
+					      			<h3>{{ eqpts.id }}</h3>
 					      			<div ng-switch on="eqpts.status">
 					      			<p ng-switch-when="insert">신규</p>
 					      			<p ng-switch-when="update">수정</p>
@@ -102,13 +105,14 @@
             				<md-option><em>None</em></md-option>
             				<md-option value="PLC"> PLC </md-option>
             				<md-option value="SPC"> SPC </md-option>
-            				<md-option value="ETC"> ETC </md-option>
+            				<md-option value="ANDON"> ANDON </md-option>
+            				<md-option value="COUNT"> COUNT </md-option>
           				</md-select>
           			</md-input-container>
         			
 	   				<md-input-container>
           				<label>PLC_ID</label>
-          				<md-select ng-model="vm.eqptList[vm.configSetting.index].plcId">
+          				<md-select ng-model="vm.eqptList[vm.configSetting.index].id">
             				<md-option><em>None</em></md-option>
             				<md-option ng-repeat="plc in vm.plcList" value="{{plc.plcId}}">
               					{{plc.plcId}}
@@ -191,11 +195,17 @@
    <!-- 설비이미지 repeat -->
        <ul>
          <li u-ctrl data='eqpt' ng-repeat="eqpt in vm.eqptList" ng-hide="eqpt.status =='delete'">
-          <div task-data="vm.eqptList" target-data="$index" ng-draggable='dragOptions' rating='sensRating1' class="{{eqpt.eqptCnm}}" status="{{eqpt.status}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
+          <div task-data="vm.eqptList" target-data="$index" ng-draggable='dragOptions' rating='sensRating1' class="{{eqpt.eqptCnm}}" status="{{eqpt.status}}" type="{{eqpt.eqptType}}" plc="{{eqpt.id}}"
             ng-style="{'position':'absolute', 'top':eqpt.cssTop, 'left': eqpt.cssLeft, 'width':eqpt.cssWidth, 'height':eqpt.cssHeight,'z-index':eqpt.cssZindex}">
-                     
-               <img ng-mouseover='hoverIn()' ng-mouseleave='hoverOut()'  class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
-           		<span class="hint" ng-show="hover" >{{eqpt.plcId}}</span>
+               
+                 	<div ng-switch on="vm.eqptParamVo.eqptType">
+		              	<img ng-switch-when="PLC" ng-mouseover='hoverIn()' ng-mouseleave='hoverOut()'  class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
+					   	<div ng-switch-when="SPC" ng-mouseover='hoverIn()' ng-mouseleave='hoverOut()'  class="obj"  align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};background-color:red;">111</div>
+					   	<div ng-switch-when="COUNT" ng-mouseover='hoverIn()' ng-mouseleave='hoverOut()'  class="obj" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};background-color:blue;">111</div>
+					   	<img ng-switch-when="ANDON" ng-mouseover='hoverIn()' ng-mouseleave='hoverOut()'  class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
+					   	
+				    </div>      
+           		<span class="hint" ng-show="hover">{{eqpt.id}}</span>
             </div>
          </li>
       </ul>
@@ -220,21 +230,53 @@
          <div class="form-group">
             <md-input-container>
   				<label>Type</label>
-  				<md-select ng-model="crtEqpt.type">
+  				<md-select ng-model="crtEqpt.type" ng-init="vm.eqptParamVo.eqptType">
     				<md-option><em>None</em></md-option>
     				<md-option value="PLC"> PLC </md-option>
     				<md-option value="SPC"> SPC </md-option>
-    				<md-option value="ETC"> ETC </md-option>
+    				<md-option value="ANDON"> ANDON </md-option>
+    				<md-option value="COUNT"> COUNT </md-option>
   				</md-select>
   			</md-input-container>
          </div>
-         <div class="form-group">
-            <md-input-container>
-   				<label>PLC_ID</label>
-   				<md-select ng-model="crtEqpt.plcId">
+         <div class="form-group" ng-switch on="crtEqpt.type">
+            
+            <md-input-container ng-switch-when="PLC">
+           		 <label>PLC_ID</label>
+           		   	<md-select ng-model="crtEqpt.id">
      				<md-option><em>None</em></md-option>
      				<md-option ng-repeat="plc in vm.plcLst" value="{{plc}}">
        					{{plc}}
+     				</md-option>
+   				</md-select>
+   			</md-input-container>
+   			
+   			<md-input-container ng-switch-when="SPC">
+           		 <label>SPC_ID</label>
+           		   	<md-select ng-model="crtEqpt.id">
+     				<md-option><em>None</em></md-option>
+     				<md-option ng-repeat="plc in vm.plcLst" value="{{plc}}">
+       					{{plc}}
+     				</md-option>
+   				</md-select>
+   			</md-input-container>
+   			
+  	 	<md-input-container ng-switch-when="ANDON">
+           		 <label>ANDON_ID</label>
+           		   	<md-select ng-model="crtEqpt.id">
+     				<md-option><em>None</em></md-option>
+     				<md-option ng-repeat="andon in vm.andonLst" value="{{andon}}">
+       					{{andon}}
+     				</md-option>
+   				</md-select>
+   			</md-input-container>
+   			
+   			<md-input-container ng-switch-when="COUNT">
+           		 <label>COUNT_ID</label>
+           		   	<md-select ng-model="crtEqpt.id">
+     				<md-option><em>None</em></md-option>
+     				<md-option ng-repeat="count in vm.countLst" value="{{count}}">
+       					{{count}}
      				</md-option>
    				</md-select>
    			</md-input-container>

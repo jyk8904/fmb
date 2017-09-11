@@ -8,27 +8,26 @@
         {call USP_EQPT_MON_SELEC01(#{fact_id},#{plc_id})}
 
     </select>
-
  	<!-- EqptCSSList 정보 조회 -->
     <select id="selectFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbEqptParamVO" resultType="com.dsinfo.fmb.service.FmbEqptVO">     	      
-        {call USP_EQPT_CSS_SEL01(#{fact_id},#{plc_id},#{eqpt_cnm})}
+        {call USP_EQPT_CSS_SEL01(#{fact_id},#{eqpt_type},#{id},#{eqpt_cnm})}
     </select>
 
 	<!-- EqptCSSList 정보 생성  -->
     <insert id="insertFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbModEqptVO">     	      
-        {call USP_EQPT_CSS_INS01(#{eqpt_cnm}, #{eqpt_type}, #{fact_id}, #{plc_id}, #{css_top}
+        {call USP_EQPT_CSS_INS01(#{eqpt_cnm}, #{eqpt_type}, #{fact_id}, #{id}, #{css_top}
         , #{css_left}, #{css_width}, #{css_height}, #{css_zindex}, #{sts_img0}, #{sts_img1}, #{sts_img2}, #{sts_img3}, #{sts_img4})}
     </insert>
     
  	<!-- EqptCSSList 정보 갱신 -->
     <update id="updateFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbModEqptVO">     	      
-        {call USP_EQPT_CSS_UPD01(#{eqpt_cnm}, #{eqpt_type}, #{fact_id}, #{plc_id}, #{css_top}
+        {call USP_EQPT_CSS_UPD01(#{eqpt_cnm}, #{eqpt_type}, #{fact_id}, #{id}, #{css_top}
         , #{css_left}, #{css_width}, #{css_height}, #{css_zindex}, #{sts_img0}, #{sts_img1}, #{sts_img2}, #{sts_img3}, #{sts_img4})}
     </update>
     
     <!-- EqptCSSList 정보 삭제 -->
     <delete id="deleteFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbModEqptVO" >     	      
-        {call USP_EQPT_CSS_DEL01(#{fact_id}, #{plc_id}, #{eqpt_cnm})}
+        {call USP_EQPT_CSS_DEL01(#{fact_id},#{eqpt_type},#{id}, #{eqpt_cnm})}
     </delete>
     
 	<!-- Line별 생산실적 정보조회 -->
