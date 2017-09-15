@@ -7,24 +7,14 @@
  * @ ---------- ---------
  * ------------------------------- 
  * @ 2017.05.29 정유경 최초생성 
- * @
+ * @ 2017.09.15 조준연 수정
  * 
  */
 
 'use strict';
 var rankRunInfoList;
 var gaugeRunInfoList;
-angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
-													'CmmWorkerSrvc',
-													'$http',
-													'$scope',
-													'$window',
-													'$q',
-													'$timeout',
-													'$mdSidenav',
-													'$interval',
-													'$location',
-													
+angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc','$http','$scope','$window','$q','$timeout','$mdSidenav','$interval','$location',										
 	function(CmmAjaxService, CmmWorkerSrvc, $http, $scope, $window,	$q, $timeout, $mdSidenav, $interval, $location) {
 
 		/*------------------------------------------
@@ -40,11 +30,21 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 		var workerList = CmmWorkerSrvc;
 		var interval;
 		var gauge;
+		var ajaxCall = null;
+		var chartCall = null;
+		var filteredData = null;
+		var splitChartInterval = null;
+		var splitChartData = null;
+		var chartFlag = false;
 		
 		$scope.isMobile = false;
 		// 변수 선언 및 디폴트 값 세팅 
 		$scope.dateRunInfoList = {};
 		$scope.planProgressList = {};	
+		
+		filteredData = [{ actYn: "", avgCount: "-1146", avgCountPer: "-157", curCountPer: "102", desc: "null", goalCount: "730", goalCountPer: "0", lineCd: "0802", lineNm: "AXLE ASS'Y\n(DH/HI/KH)", totCount: "749" }
+	    , { actYn: "", avgCount: "-1146", avgCountPer: "-157", curCountPer: "102", desc: "null", goalCount: "20", goalCountPer: "0", lineCd: "0802", lineNm: "AXLE ASS'Y\n(DH/HI/KH)1", totCount: "549" }
+	    , { actYn: "", avgCount: "-1146", avgCountPer: "-157", curCountPer: "102", desc: "null", goalCount: "200", goalCountPer: "0", lineCd: "0802", lineNm: "AXLE ASS'Y\n(DH/HI/KH)2", totCount: "249"}];
 
 		self.info = {
 				alarm : { firstTitle : "null", firstValue : "null", secondTitle : "null", secondValue : "null", thirdTitle : "null", thirdValue : "null" },
@@ -52,37 +52,48 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 				standby : { firstTitle : "null", firstValue : "null", secondTitle : "null", secondValue : "null", thirdTitle : "null", thirdValue : "null" }
 		};
 		
-		self.gauge = {
-				run: "null", standby: "null", norun: "null", alarm: "null"
-		};
+		self.gauge = {run: "null", standby: "null", norun: "null", alarm: "null"};
 
-		var SettingTime = workerList.worker2.data 
-		console.log($location.url());
-		console.log(SettingTime);
+		var SettingTime = workerList.worker2.data;
+		
 		for(var i =0; i < SettingTime.length; i++){
-			console.log(SettingTime[i]);
 			if('/'+ SettingTime[i].pageNm== $location.url()){
 				var thisDataTime= SettingTime[i].dataTime * 1000
-				console.log(thisDataTime)
 				break;
 			}
+		}
+		
+		ajaxCall = function() {
+			getPlanProgress();
+			getGaugeRunRate();
+			getGaugeRunInfo();
+			getDateRunInfo();
+			getRankRunInfo();
+			$timeout.cancel(ajaxCall);
+		}
+		
+		chartCall = function() {
+			if (chartFlag == true){
+				AmCharts.clear();
+				console.log(AmCharts)
+			}
+			chartBind();
+			$timeout.cancel(chartCall);
+			chartFlag = true;
 		}
 		
 	/*------------------------------------------
 	 * Function 호출
 	 *-----------------------------------------*/
-		
-
 		//함수 호출 제일 중요 부분
 		//모바일과 데스크탑에 따른 함수호출분기
 			
-		$(document).ready(function(){//페이지 로드 후에 실행
+		angular.element(document).ready(function(){//페이지 로드 후에 실행
 			// 모바일 체크 함수 실행
 			isMobileFunc();
-			
 			if ($scope.isMobile) {
 				MobileGetData();
-			} else {
+			} else {	
 				getData();
 			}
 		});
@@ -105,271 +116,173 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 		// 데스크탑일 경우 함수 정의
 		function getData()
 		{
-			getPlanProgress();
-			getGaugeRunRate();
-			getGaugeRunInfo();
-			getDateRunInfo();
-			getRankRunInfo();
+			$timeout(ajaxCall, 100);
+			$timeout(chartCall, 500);
 		}
 		
 		//모바일일 경우 함수 정의
 		function MobileGetData()
 		{
-			getPlanProgress();
-			getGaugeRunRate();
-			getGaugeRunInfo();
-			getDateRunInfo();
-			getRankRunInfo();
+			$timeout(ajaxCall, 10);
+			$timeout(chartCall, 300);	
 		}
-		
 		
 		// 모바일 & 데스크탑에서 사용 되는 함수 정의
 		// 공용 함수 정의
+		function chartBind() {
+			splitPlanProgress();
+			
+			if ($scope.isMobile){
+				
+				MobileAlarmDateRunInfo();
+				MobileStandbyDateRunInfo();
+				//MobileNoRunDateRunInfo();
+				MobilePie();
+				MobileBarChart();
+			} else {
+				
+				alarmDateRunInfo();
+				standbyDateRunInfo();
+				//noRunDateRunInfo();
+				pie();
+				barChart();
+			}
+			
+			rankRunInfo();
+		}
+		
+		function splitPlanProgress() {
+			var firstFlag = true;
+			var count = 3;														// 다량의 데이터를 나눠 보여줄 횟수
+			var quotient = parseInt($scope.planProgressList.length /count); 	// 몫: 한번에 보여줄 데이터 갯수
+			var remainder = $scope.planProgressList.length % quotient;			// 나머지
+			var startRan =0;													// 한번에 보여줄 데이터의 첫번째 num
+			var endRan =0;														// 한번에 보여줄 데이터의 마지막 num
+			getFltrdData();
+			//FmbTotal의 (datatime/횟수)를 interval 지정하여 다량의 데이터를 나눠보여줌 
+			$interval.cancel(splitChartInterval);
+			splitChartInterval = $interval( getFltrdData, thisDataTime/count, count-1); 
+						
+			function getFltrdData(){
+				if (firstFlag == true){
+					startRan = 0;
+					endRan = 0;
+				}
+				var filteredData = [];
+				startRan= endRan;
+				if(remainder!=0){
+					remainder -= 1;
+					endRan= endRan + quotient + 1;
+				}else{
+					endRan= endRan + quotient;
+				}
+				splitChartData = function(){
+					$timeout.cancel(splitChartData);
+					for(var j=startRan; j<endRan; j++){
+						filteredData.push($scope.planProgressList[j]);
+					}
+					if ($scope.isMobile) {
+                        MobilePlanProgress();
+                    } else {
+                        planProgress(filteredData);
+                    }
+					firstFlag = false;
+				}
+				$timeout(splitChartData, 30);
+			}
+		}
 		
 		function getPlanProgress() {
 			// 계획진도율 가져오기
 			var planProgressPromise = CmmAjaxService.select("/mes/bas/selectPlanProgress.do");
 				planProgressPromise.then(function(data) {
-				$scope.planProgressList = data;
-				var count = 3;														// 다량의 데이터를 나눠 보여줄 횟수
-				var quotient = parseInt($scope.planProgressList.length /count); 	// 몫: 한번에 보여줄 데이터 갯수
-				var remainder = $scope.planProgressList.length % quotient;			// 나머지
-				var startRan =0;													// 한번에 보여줄 데이터의 첫번째 num
-				var endRan =0;														// 한번에 보여줄 데이터의 마지막 num
-				
-				
-				getFltrdData();
-				//FmbTotal의 (datatime/횟수)를 interval 지정하여 다량의 데이터를 나눠보여줌 
-				$interval( getFltrdData, thisDataTime/count, count-1); 
-							
-				
-				function getFltrdData(){
-					var filteredData = [];
-					startRan= endRan;
-						if(remainder!=0){
-							remainder -= 1;
-							endRan= endRan + quotient + 1;
-						}else{
-							endRan= endRan + quotient;
-						}
-						$timeout(function(){
-						for(var j=startRan; j<endRan; j++){
-							filteredData.push($scope.planProgressList[j]);
-						}
-					},400).then(function(){
-						
-						if ($scope.isMobile){
-							MobilePlanProgress(filteredData);
-						} else {
-							planProgress(filteredData);
-						}	
-					})
-				}
+					planProgressPromise = null;
+					$scope.planProgressList = data;
 			}, function(data) {
 				alert('fail: ' + data)
 			});	
-				
-				
-				/*자원해제*/
-				/*planProgressPromise = null;
-				count = null;
-				quotient = null;
-				remainder = null;
-				startRan = null;
-				endRan = null;		
-				filteredData = null;*/
-				
 		}
-		
-/*		function getPlanProgress() {
-			// 계획진도율 가져오기
-			var planProgressPromise = CmmAjaxService.select("/mes/bas/selectPlanProgress.do");
-				planProgressPromise.then(function(data) {
-				$scope.planProgressList = data;
-				
-				var count = 0;
-				var quotient = parseInt($scope.planProgressList.length / 3);
-				var remainder = $scope.planProgressList.length % quotient;
-				
-				console.log(quotient, remainder)
-				if (remainder != 0) {
-					quotient = quotient + 1;
-				}
-				var endRemainder = 	$scope.planProgressList.length % quotient;
-				
-				$interval.cancel(interval);
-				
-				$scope.callInterval = function (){
-					var filteredData = [];
-					
-					if (count == 0) 
-					{
-						var startRan = 0;
-						var endRan = quotient;
-					} 
-					else if (count == 1)
-					{
-						var startRan = count * quotient;
-						var endRan = startRan + quotient;
-					}
-					else if (count == 2)
-					{
-						var startRan = count * quotient;
-						if (remainder == 0) {
-							var endRan = startRan + quotient;
-						} 
-						else {
-							var endRan = startRan + endRemainder - 1;
-						}
-					}
-					for(var i = startRan; i <endRan; i++) {
-						filteredData.push($scope.planProgressList[i]);
-					}
-					if (count < 3) 
-					{
-						count = count + 1;
-					}
-					else
-					{
-						count = 0;
-					}
-					console.log(filteredData)
-					
-					if ($scope.isMobile){
-						MobilePlanProgress(filteredData);
-					} else {
-						planProgress(filteredData);
-					}		
-				}
-				
-				$scope.callInterval();
-
-				interval = $interval(function(){
-					$scope.callInterval();
-				},10000);
-			}, function(data) {
-				alert('fail: ' + data)
-			});	
-		}*/
 		
 		function getGaugeRunRate() {
 			// 라인가동현황게이지 가져오기
 			var gaugeRunRatePromise = CmmAjaxService.select("/mes/bas/selectGaugeRunRate.do");
 				gaugeRunRatePromise.then(function(data) {
-				self.gaugeRunRateList = data;				
-			}, function(data) {
-				alert('fail: ' + data)
-			});
-				/*자원해제*/
-				//gaugeRunRatePromise = null
-				
+					gaugeRunRatePromise = null;
+					self.gaugeRunRateList = data;
+					if ($scope.isMobile){
+						MobileGaugeFunc();
+					} else {
+						gaugeFunc();
+					}
+				}, function(data) {
+					alert('fail: ' + data)
+				});			
 		}	
 		
 		function getGaugeRunInfo() {	
 			// 라인가동현황 그리드 가져오기
 			var gaugeRunInfoPromise = CmmAjaxService.select("/mes/bas/selectGaugeRunInfo.do");
 				gaugeRunInfoPromise.then(function(data) {
-				gaugeRunInfoList = data;						
-				gaugeRunInfo();
-				
-			}, function(data) {
-				alert('fail: ' + data)
-			});
-				/*자원해제*/
-				//gaugeRunInfoPromise =null;
+					gaugeRunInfoPromise = null;
+					gaugeRunInfoList = data;
+				}, function(data) {
+					alert('fail: ' + data)
+				});
 		}
 		
 		function getDateRunInfo() {
-			//카운트 초기화
-			
-			$scope.dateRunInfoList = "";
 			//설비상태 발생추이 가져오기
 			var dateRunInfoPromise = CmmAjaxService.select("/mes/bas/selectDateRunInfo.do");
 				dateRunInfoPromise.then(function(data) {
-				
-				$scope.dateRunInfoList = data;
-				$scope.dateRunInfoList[data.length-1].bulletClass = "lastBullet";
-				
-				if ($scope.isMobile) {
-					console.log($scope.dateRunInfoList);
-					MobileAlarmDateRunInfo();
-					MobileStandbyDateRunInfo();
-					MobileNoRunDateRunInfo();
-					MobileGauge();
-					MobilePie();
-					MobileBarChart();
-				} else {
-					alarmDateRunInfo();
-					standbyDateRunInfo();
-					noRunDateRunInfo();
-					gauge();
-					pie();
-					barChart();
-				}
-	
+					dateRunInfoPromise = null;
+					$scope.dateRunInfoList = data;
+					//$scope.dateRunInfoList[data.length-1].bulletClass = "lastBullet";
 			}, function(data) {
 				alert('fail: ' + data)
-			});
-				/*자원해제*/
-				//dateRunInfoPromise = null;
-				
-				
+			});		
 		}	
 		
 		function getRankRunInfo() {
 			//설비상태별 발생량 순위 가져오기
 			var rankRunInfoPromise = CmmAjaxService.select("/mes/bas/selectRankRunInfo.do");
 				rankRunInfoPromise.then(function(data) {
-				rankRunInfoList = data;
-			
-				alarmRankRunInfo();
-				standbyRankRunInfo();
-				noRunRankRunInfo();
-
+					rankRunInfoPromise = null;
+					rankRunInfoList = data;
 			}, function(data) {
 				alert('fail: ' + data)
 			});
-				/*자원해제*/
-				rankRunInfoPromise = null;
 		}	
 
 			
-		function alarmRankRunInfo(){
-		//알람 발생량 순위 그리드
-			self.info.alarm.firstTitle = rankRunInfoList["0"].alarmNm;
-			self.info.alarm.firstValue = rankRunInfoList["0"].alarmTm+ "시간 (" + rankRunInfoList["0"].alarmCount + " 번)";
-			self.info.alarm.secondTitle = rankRunInfoList["1"].alarmNm;
-			self.info.alarm.secondValue = rankRunInfoList["1"].alarmTm+ "시간 (" + rankRunInfoList["1"].alarmCount + " 번)";
-			self.info.alarm.thirdTitle = rankRunInfoList["2"].alarmNm;
-			self.info.alarm.thirdValue = rankRunInfoList["2"].alarmTm+ "시간 (" + rankRunInfoList["2"].alarmCount + " 번)";
+		function rankRunInfo(){
+			//알람 발생량 순위 그리드
+			if (rankRunInfoList !=  null || angular.isUndefined(rankRunInfoList) == false){
+				self.info.alarm.firstTitle = rankRunInfoList["0"].alarmNm;
+				self.info.alarm.firstValue = rankRunInfoList["0"].alarmTm+ "시간 (" + rankRunInfoList["0"].alarmCount + " 번)";
+				self.info.alarm.secondTitle = rankRunInfoList["1"].alarmNm;
+				self.info.alarm.secondValue = rankRunInfoList["1"].alarmTm+ "시간 (" + rankRunInfoList["1"].alarmCount + " 번)";
+				self.info.alarm.thirdTitle = rankRunInfoList["2"].alarmNm;
+				self.info.alarm.thirdValue = rankRunInfoList["2"].alarmTm+ "시간 (" + rankRunInfoList["2"].alarmCount + " 번)";
+				//대기 발생량 순위 그리드
+				self.info.standby.firstTitle = rankRunInfoList["0"].standbysNm;
+				self.info.standby.firstValue = rankRunInfoList["0"].standbyTm+ "시간 (" + rankRunInfoList["0"].standbyCount + " 번)";
+				self.info.standby.secondTitle = rankRunInfoList["1"].standbysNm;
+				self.info.standby.secondValue = rankRunInfoList["1"].standbyTm+ "시간 (" + rankRunInfoList["1"].standbyCount + " 번)";
+				self.info.standby.thirdTitle = rankRunInfoList["2"].standbysNm;
+				self.info.standby.thirdValue = rankRunInfoList["2"].standbyTm+ "시간 (" + rankRunInfoList["2"].standbyCount + " 번)";
+				//비가동 발생량 순위 그리드
+				/*self.info.norun.firstTitle = rankRunInfoList["0"].noRunNm;
+				self.info.norun.firstValue = rankRunInfoList["0"].noRunTm+ "시간 (" + rankRunInfoList["0"].noRunCount + " 번)";
+				self.info.norun.secondTitle = rankRunInfoList["1"].noRunNm;
+				self.info.norun.secondValue = rankRunInfoList["1"].noRunTm+ "시간( " + rankRunInfoList["1"].noRunCount + " 번)";
+				self.info.norun.thirdTitle = rankRunInfoList["2"].noRunNm;
+				self.info.norun.thirdValue = rankRunInfoList["2"].noRunTm+ "시간 (" + rankRunInfoList["2"].noRunCount + " 번)";*/
+			}	
 		}	
-		
-		function standbyRankRunInfo(){
-			//대기 발생량 순위 그리드
-			self.info.standby.firstTitle = rankRunInfoList["0"].standbysNm;
-			self.info.standby.firstValue = rankRunInfoList["0"].standbyTm+ "시간 (" + rankRunInfoList["0"].standbyCount + " 번)";
-			self.info.standby.secondTitle = rankRunInfoList["1"].standbysNm;
-			self.info.standby.secondValue = rankRunInfoList["1"].standbyTm+ "시간 (" + rankRunInfoList["1"].standbyCount + " 번)";
-			self.info.standby.thirdTitle = rankRunInfoList["2"].standbysNm;
-			self.info.standby.thirdValue = rankRunInfoList["2"].standbyTm+ "시간 (" + rankRunInfoList["2"].standbyCount + " 번)";
-		}			
-		
-		function noRunRankRunInfo(){
-			//비가동 발생량 순위 그리드
-			self.info.norun.firstTitle = rankRunInfoList["0"].noRunNm;
-			self.info.norun.firstValue = rankRunInfoList["0"].noRunTm+ "시간 (" + rankRunInfoList["0"].noRunCount + " 번)";
-			self.info.norun.secondTitle = rankRunInfoList["1"].noRunNm;
-			self.info.norun.secondValue = rankRunInfoList["1"].noRunTm+ "시간( " + rankRunInfoList["1"].noRunCount + " 번)";
-			self.info.norun.thirdTitle = rankRunInfoList["2"].noRunNm;
-			self.info.norun.thirdValue = rankRunInfoList["2"].noRunTm+ "시간 (" + rankRunInfoList["2"].noRunCount + " 번)";
-		}
-		
-	
-		
+
 		/* Desktop Function */
 		// 데스크탑에서만 사용되는 함수 정의
-		function gauge() {
-			 console.log(self.gaugeRunRateList[0].lineGauge);
+		function gaugeFunc() {
 		 gauge = AmCharts.makeChart("gauge",
 				{
 					"type": "gauge",
@@ -381,13 +294,13 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					"startDuration": 0,
 					"arrows": [
 						{
-							"value" : self.gaugeRunRateList[0].lineGauge
+							//"value" : "0"
 						}
 					],
 					"axes": [
 						{	
 							"axisThickness": 1,
-							"bottomText":  self.gaugeRunRateList[0].lineGauge+"%",
+							"bottomText":  "0%",
 							"bottomTextFontSize": 20,
 							"bottomTextYOffset": -20,
 							"endValue": 100,
@@ -421,299 +334,33 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					"titles": []
 				}
 			);
-		
-			/*gauge.arrows[0].setValue(self.gaugeRunRateList[0].lineGauge);
-			gauge.axes[0].setBottomText(self.gaugeRunRateList[0].lineGauge.toString() + "%");*/
+		 	if (self.gaugeRunRateList != null || angular.isUndefined(self.gaugeRunRateList) == false)
+	 		{
+		 		gauge.arrows[0].setValue(self.gaugeRunRateList[0].lineGauge);
+				gauge.axes[0].setBottomText(self.gaugeRunRateList[0].lineGauge.toString() + "%");
+				gauge.validateData();
+	 		}
+		 	
+		 	if (gaugeRunInfoList != null || angular.isUndefined(gaugeRunInfoList) == false)
+		 	{
+		 		//라인가동현황 그리드
+				self.gauge.run = gaugeRunInfoList["0"].runCount + " 라 인";
+				self.gauge.standby = gaugeRunInfoList["0"].standbyCount + " 라 인";
+				self.gauge.norun = gaugeRunInfoList["0"].noRunCount + " 라 인";
+				self.gauge.alarm = gaugeRunInfoList["0"].alarmCount + " 라 인";
+		 	}
 		}
 		
 		//알람발생추이
 		function alarmDateRunInfo() {
-			AmCharts.makeChart("alarmChart", {
-				  type: "serial",
-				  theme: "dark",
-				  dataDateFormat: "MM/DD",
-				  dataProvider: $scope.dateRunInfoList,
-				  addClassNames: true,
-				  startDuration: 0,
-				  color: "#FFFFFF",
-				  marginLeft: 0,
-
-				  categoryField: "dt",
-				  categoryAxis: {
-				    parseDates: true,
-				    minPeriod: "DD",
-				    autoGridCount: false,
-				    gridCount: 50,
-				    gridAlpha: 0.1,
-				    gridColor: "#FFFFFF",
-				    axisColor: "#555555",
-				    dateFormats: [{
-				        period: 'DD',
-				        format: 'DD'
-				    }, {
-				        period: 'WW',
-				        format: 'MMM DD'
-				    }, {
-				        period: 'MM',
-				        format: 'MMM'
-				    }, {
-				        period: 'YYYY',
-				        format: 'YYYY'
-				    }]
-				  },
-
-				  valueAxes: [{
-				    id: "a1",
-				    title: "",
-				    gridAlpha: 0,
-				    axisAlpha: 0
-				  },{
-				    id: "a2",
-				    position: "right",
-				    gridAlpha: 0,
-				    axisAlpha: 0,
-				    labelsEnabled: false
-				  }
-				  ],
-				  graphs: [{
-				    id: "g1",
-				    valueField:  "alarm_count",
-				    title:  "",
-				    type:  "column",
-				    fillAlphas:  0.9,
-				    valueAxis:  "a1",
-				    balloonText:  "[[value]] 번",
-				    legendValueText:  "[[value]] Count",
-				    legendPeriodValueText:  "total: [[value.sum]] Count",
-				    lineColor:  "#E74C3C",
-				    alphaField:  "alpha",
-				  },{
-				    id: "g2",
-				    valueField: "alarm_tm",
-				    classNameField: "bulletClass",
-				    title: "",
-				    type: "line",
-				    valueAxis: "a2",
-				    lineColor: "#786c56",
-				    lineThickness: 2,
-				    legendValueText: "[[description]]/[[value]]",
-				    descriptionField: "townName",
-				    bullet: "round",
-				    bulletSizeField: "alarm_dur",
-				    bulletBorderColor: "#786c56",
-				    bulletBorderAlpha: 1,
-				    bulletBorderThickness: 3,
-				    bulletColor: "#000000",
-				    labelText: "[[alarm_tm]]",
-				    labelPosition: "right",
-				    balloonText: "Time:[[value]]",
-				    showBalloon: true/*,
-				    animationPlayed: true,*/
-				  }],
-				  chartCursor: {
-				    zoomable: false,
-				    categoryBalloonDateFormat: "DD",
-				    cursorAlpha: 0,
-				    valueBalloonsEnabled: false
-				  }
-				})
+			AmCharts.makeChart("alarmChart", { type: "serial", theme: "dark", dataDateFormat: "YYYYMMDD", dataProvider: $scope.dateRunInfoList, addClassNames: true, color: "#FFFFFF", marginLeft: 0, categoryField: "dt", categoryAxis: { parseDates: true, minPeriod: "DD", autoGridCount: false, gridCount: 50, gridAlpha: 0.1, gridColor: "#FFFFFF", axisColor: "#555555", dateFormats: [{ period: 'DD', format: 'DD' }, { period: 'WW', format: 'MMM DD' }, { period: 'MM', format: 'MMM' }, { period: 'YYYY', format: 'YYYY'}] }, valueAxes: [{ id: "a1", title: "", gridAlpha: 0, axisAlpha: 0 }, { id: "a2", position: "right", gridAlpha: 0, axisAlpha: 0, labelsEnabled: false}], graphs: [{ id: "g1", valueField: "alarm_count", type: "column", fillAlphas: 0.9, valueAxis: "a1", balloonText: "[[value]] 번", legendValueText: "[[value]] Count", legendPeriodValueText: "total: [[value.sum]] Count", lineColor: "#E74C3C", alphaField: "alpha" },{ id: "g2", valueField: "alarm_tm", type: "line", valueAxis: "a2", lineColor: "#ea9170", bullet: "round", bulletSize: 11, lineThickness: 3, legendValueText: "[[description]]/[[value]]", labelText: "[[alarm_tm]]", labelPosition: "right", balloonText: "Time:[[value]]", showBalloon: true, animationPlayed: true}], chartCursor: { zoomable: false, categoryBalloonDateFormat: "DD", cursorAlpha: 0, valueBalloonsEnabled: false} });
+				
 			}
 	
 			
-			//대기발생추이
-		    function standbyDateRunInfo() {	    	
-		    	AmCharts.makeChart("standbyChart", {
-					  type: "serial",
-					  theme: "dark",
-					  dataDateFormat: "MM/DD",
-					  dataProvider: $scope.dateRunInfoList,
-
-					  addClassNames: true,
-					  startDuration: 0,
-					  color: "#FFFFFF",
-					  marginLeft: 0,
-
-					  categoryField: "dt",
-					  categoryAxis: {
-					    parseDates: true,
-					    minPeriod: "DD",
-					    autoGridCount: false,
-					    gridCount: 50,
-					    gridAlpha: 0.1,
-					    gridColor: "#FFFFFF",
-					    axisColor: "#555555",
-					    dateFormats: [{
-					        period: 'DD',
-					        format: 'DD'
-					    }, {
-					        period: 'WW',
-					        format: 'MMM DD'
-					    }, {
-					        period: 'MM',
-					        format: 'MMM'
-					    }, {
-					        period: 'YYYY',
-					        format: 'YYYY'
-					    }]
-					  },
-
-					  valueAxes: [{
-					    id: "a1",
-					    title: "",
-					    gridAlpha: 0,
-					    axisAlpha: 0
-					  },{
-					    id: "a2",
-					    position: "right",
-					    gridAlpha: 0,
-					    axisAlpha: 0,
-					    labelsEnabled: false
-					  }],
-					  graphs: [{
-					    id: "g1",
-					    valueField:  "standby_count",
-					    title:  "",
-					    type:  "column",
-					    fillAlphas:  0.9,
-					    valueAxis:  "a1",
-					    balloonText:  "[[value]] 번",
-					    legendValueText:  "[[value]] Count",
-					    legendPeriodValueText:  "total: [[value.sum]] Count",
-					    lineColor:  "#BDC3C7",
-					    alphaField:  "alpha",
-					  },{
-					    id: "g2",
-					    valueField: "standby_tm",
-					    classNameField: "bulletClass",
-					    title: "",
-					    type: "line",
-					    valueAxis: "a2",
-					    lineColor: "#786c56",
-					    lineThickness: 2,
-					    legendValueText: "[[description]]/[[value]]",
-					    descriptionField: "townName",
-					    bullet: "round",
-					    bulletSizeField: "alarm_dur",
-					    bulletBorderColor: "#786c56",
-					    bulletBorderAlpha: 1,
-					    bulletBorderThickness: 3,
-					    bulletColor: "#000000",
-					    labelText: "[[alarm_tm]]",
-					    labelPosition: "right",
-					    balloonText: "Time:[[value]]",
-					    showBalloon: true/*,
-					    animationPlayed: true,*/
-					  }],
-					  chartCursor: {
-					    zoomable: false,
-					    categoryBalloonDateFormat: "DD",
-					    cursorAlpha: 0,
-					    valueBalloonsEnabled: false
-					  }
-					})
-		    }
-
-			//비가동 발생추이
-		    function noRunDateRunInfo() {
-		    	AmCharts.makeChart("norunChart", {
-					  type: "serial",
-					  theme: "dark",
-					  dataDateFormat: "MM/DD",
-					  dataProvider: $scope.dateRunInfoList,
-
-					  addClassNames: true,
-					  startDuration:0,
-					  color: "#FFFFFF",
-					  marginLeft: 0,
-
-					  categoryField: "dt",
-					  categoryAxis: {
-					    parseDates: true,
-					    minPeriod: "DD",
-					    autoGridCount: false,
-					    gridCount: 50,
-					    gridAlpha: 0.1,
-					    gridColor: "#FFFFFF",
-					    axisColor: "#555555",
-					    dateFormats: [{
-					        period: 'DD',
-					        format: 'DD'
-					    }, {
-					        period: 'WW',
-					        format: 'MMM DD'
-					    }, {
-					        period: 'MM',
-					        format: 'MMM'
-					    }, {
-					        period: 'YYYY',
-					        format: 'YYYY'
-					    }]
-					  },
-
-					  valueAxes: [{
-					    id: "a1",
-					    title: "",
-					    gridAlpha: 0,
-					    axisAlpha: 0
-					  },{
-					    id: "a2",
-					    position: "right",
-					    gridAlpha: 0,
-					    axisAlpha: 0,
-					    labelsEnabled: false
-					  }],
-					  graphs: [{
-					    id: "g1",
-					    valueField:  "norun_count",
-					    title:  "",
-					    type:  "column",
-					    fillAlphas:  0.9,
-					    valueAxis:  "a1",
-					    balloonText:  "[[value]] 번",
-					    legendValueText:  "[[value]] Count",
-					    legendPeriodValueText:  "total: [[value.sum]] Count",
-					    lineColor:  "#F9E79F",
-					    alphaField:  "alpha",
-					  },{
-					    id: "g2",
-					    valueField: "norun_tm",
-					    classNameField: "bulletClass",
-					    title: "",
-					    type: "line",
-					    valueAxis: "a2",
-					    lineColor: "#786c56",
-					    lineThickness: 2,
-					    legendValueText: "[[description]]/[[value]]",
-					    descriptionField: "townName",
-					    bullet: "round",
-					    bulletSizeField: "alarm_dur",
-					    bulletBorderColor: "#786c56",
-					    bulletBorderAlpha: 1,
-					    bulletBorderThickness: 3,
-					    bulletColor: "#000000",
-					    labelText: "[[alarm_tm]]",
-					    labelPosition: "right",
-					    balloonText: "Time:[[value]]",
-					    showBalloon: true/*,
-					    animationPlayed: true,*/
-					  }],
-					  chartCursor: {
-					    zoomable: false,
-					    categoryBalloonDateFormat: "DD",
-					    cursorAlpha: 0,
-					    valueBalloonsEnabled: false
-					  }
-					})
-		    }
-		
-			
-			
-		function gaugeRunInfo(){
-			//라인가동현황 그리드
-			self.gauge.run = gaugeRunInfoList["0"].runCount + " 라 인";
-			self.gauge.standby = gaugeRunInfoList["0"].standbyCount + " 라 인";
-			self.gauge.norun = gaugeRunInfoList["0"].noRunCount + " 라 인";
-			self.gauge.alarm = gaugeRunInfoList["0"].alarmCount + " 라 인";
+		//대기발생추이
+		function standbyDateRunInfo() {	    	
+		    AmCharts.makeChart("standbyChart", { type: "serial", theme: "dark", dataDateFormat: "YYYYMMDD", dataProvider: $scope.dateRunInfoList, addClassNames: true, color: "#FFFFFF", marginLeft: 0, categoryField: "dt", categoryAxis: { parseDates: true, minPeriod: "DD", autoGridCount: false, gridCount: 50, gridAlpha: 0.1, gridColor: "#FFFFFF", axisColor: "#555555", dateFormats: [{ period: 'DD', format: 'DD' }, { period: 'WW', format: 'MMM DD' }, { period: 'MM', format: 'MMM' }, { period: 'YYYY', format: 'YYYY'}] }, valueAxes: [{ id: "a1", title: "", gridAlpha: 0, axisAlpha: 0 }, { id: "a2", position: "right", gridAlpha: 0, axisAlpha: 0, labelsEnabled: false}], graphs: [{ id: "g1", valueField: "standby_count", type: "column", fillAlphas: 0.9, valueAxis: "a1", balloonText: "[[value]] 번", legendValueText: "[[value]] Count", legendPeriodValueText: "total: [[value.sum]] Count", lineColor: "#BDC3C7", alphaField: "alpha" },{ id: "g2", valueField: "standby_tm", type: "line", valueAxis: "a2", lineColor: "#f9fcfc", bullet: "round", bulletSize: 11, lineThickness: 3, legendValueText: "[[description]]/[[value]]", labelText: "[[alarm_tm]]", labelPosition: "right", balloonText: "Time:[[value]]", showBalloon: true, animationPlayed: true}], chartCursor: { zoomable: false, categoryBalloonDateFormat: "DD", cursorAlpha: 0, valueBalloonsEnabled: false} });
 		}
 
 		function barChart() {
@@ -825,8 +472,6 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 						"depth3D": 10,
 						"marginRight": 10,
 						"marginTop": 30,
-						"processCount": 1001,
-						"processTimeout": 6,
 						"plotAreaBorderAlpha": 0,
 						"plotAreaBorderColor": "#008000",
 						"plotAreaFillAlphas": 0,
@@ -903,7 +548,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 		/* Mobile Function */
 		// 모바일에서만 사용되는 함수 정의
 		
-		function MobileGauge() {
+		function MobileGaugeFunc() {
 			var MobileGauge = AmCharts.makeChart("MobileGauge",
 				{
 					"type": "gauge",
@@ -914,7 +559,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					"theme": "dark",
 					"arrows": [
 						{
-							"value": "30"
+							"value": "0"
 						}
 					],
 					"axes": [
@@ -956,13 +601,19 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 				}
 			);
 			
-			/*gauge.arrows[0].setValue(self.gaugeRunRateList[0].lineGauge.toString());
-			gauge.axes[0].setBottomText(self.gaugeRunRateList[0].lineGauge.toString() + "%");*/
+			gauge.arrows[0].setValue(self.gaugeRunRateList[0].lineGauge.toString());
+			gauge.axes[0].setBottomText(self.gaugeRunRateList[0].lineGauge.toString() + "%");
+			gauge.validateData();
+			
+			//라인가동현황 그리드
+			self.gauge.run = gaugeRunInfoList["0"].runCount + " 라 인";
+			self.gauge.standby = gaugeRunInfoList["0"].standbyCount + " 라 인";
+			self.gauge.norun = gaugeRunInfoList["0"].noRunCount + " 라 인";
+			self.gauge.alarm = gaugeRunInfoList["0"].alarmCount + " 라 인";
 		}
 		
 		//알람발생추이
 		function MobileAlarmDateRunInfo() {
-			console.log($scope.dateRunInfoList);
 			AmCharts.makeChart("MobileAlarmChart", {
 				  type: "serial",
 				  theme: "dark",
@@ -1335,7 +986,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					}
 				)
 		}
-		function MobilePlanProgress(filteredData){
+		function MobilePlanProgress(){
 			//계획진도율 차트 
 			AmCharts.makeChart("MobilePlanProgress",
 					{

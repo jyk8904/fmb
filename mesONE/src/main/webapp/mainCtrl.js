@@ -52,6 +52,8 @@ angular
   // $scope.autoLogin = false;
    $scope.loginChk = false;
    $scope.keyUpLogin = onKeyupPasswd;
+   $scope.scroll = true;
+   $scope.duration = 60000;
    
    if(localStorage.getItem("autoLogin")=="true"){ //자동로그인에 체크가 되어있던 경우, 로컬에서 가져와서 세션, 스코프에 저장
 	   $scope.id = localStorage.getItem('id');
@@ -193,7 +195,6 @@ angular
 					$scope.alarmList = alarmList;
 					$scope.alarmListLen = $scope.alarmList.length;	// 알람리스트 갯수
 					$scope.alarmListWdth = alarmListWdth;
-					//alarmList = null;
 					plcPromise = null;
 				}, function(data){
 					/*alert('fail: '+ data)*/
@@ -291,7 +292,6 @@ angular
 	   }
    
  	function dataTimeChk(index){
-	 		console.log(self.Setting[index].dataTime)
 	 		if(self.Setting[index].dataTime<5||self.Setting[index].dataTime==null){
 	 			alert("데이터 갱신 시간은 5초 이상이어야합니다.")
 	 			self.Setting[index].dataTime=5;
@@ -611,7 +611,5 @@ angular
 		   //알람정보워커 start
 		   Worker3Start();
 		}
-		console.log($scope.isMobile)
-		console.log( navigator.userAgent)
 	}
 }]);
