@@ -4,6 +4,7 @@ package com.dsinfo.fmb.service;
 /*LINE별 생산실적 모니터링 VO*/
 
 public class FmbLineVO extends MBasAbsVO {
+	private String prod_dt;
 	private String prod_mon;
 	private String fact_id;
 	private String line_cd;
@@ -37,6 +38,14 @@ public class FmbLineVO extends MBasAbsVO {
 	
 	public String getFactId() {
 		return fact_id;
+	}
+
+	public String getProdDt() {
+		return prod_dt;
+	}
+
+	public void setProdDt(String prod_dt) {
+		this.prod_dt = prod_dt;
 	}
 
 	public String getProdMon() {

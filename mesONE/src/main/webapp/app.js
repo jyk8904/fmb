@@ -93,24 +93,79 @@
 	            templateUrl: 'modules/fmb/views/fmbTbm.html',
 	            controllerAs: 'vm'
 	        })	 
-      	    .when('/FmbLineA', {
-	            controller: 'FmbLineACtrl',
-	            templateUrl: 'modules/fmb/views/fmbLineA.html',
+      	    .when('/FmbLine001', {
+	            controller: 'FmbLine001Ctrl',
+	            templateUrl: 'modules/fmb/views/fmbLine001.html',
 	            controllerAs: 'vm'
 	        })
-	        .when('/FmbLineB', {
-	            controller: 'FmbLineBCtrl',
-	            templateUrl: 'modules/fmb/views/fmbLineB.html',
+	        .when('/FmbLine002', {
+	            controller: 'FmbLine002Ctrl',
+	            templateUrl: 'modules/fmb/views/fmbLine002.html',
 	            controllerAs: 'vm'
 	        })
-	        .when('/FmbLineC', {
-	            controller: 'FmbLineCCtrl',
-	            templateUrl: 'modules/fmb/views/fmbLineC.html',
+	        .when('/FmbLine003', {
+	            controller: 'FmbLine003Ctrl',
+	            templateUrl: 'modules/fmb/views/fmbLine003.html',
 	            controllerAs: 'vm'
 	        })
-	        .when('/FmbProd', {
-	            controller: 'FmbProdCtrl',
-	            templateUrl: 'modules/fmb/views/fmbProd.html',
+	        .when('/FmbLine004', {
+	            controller: 'FmbLine004Ctrl',
+	            templateUrl: 'modules/fmb/views/fmbLine004.html',
+	            controllerAs: 'vm'
+	        })
+	        .when('/FmbLine005', {
+	            controller: 'FmbLine005Ctrl',
+	            templateUrl: 'modules/fmb/views/fmbLine005.html',
+	            controllerAs: 'vm'
+	        })
+	        .when('/FmbLine006', {
+	            controller: 'FmbLine006Ctrl',
+	            templateUrl: 'modules/fmb/views/fmbLine006.html',
+	            controllerAs: 'vm'
+	        })
+	        .when('/FmbLine007', {
+	            controller: 'FmbLine007Ctrl',
+	            templateUrl: 'modules/fmb/views/fmbLine007.html',
+	            controllerAs: 'vm'
+	        })
+	        .when('/FmbFactAll', {
+	            controller: 'FmbFactAllCtrl',
+	            templateUrl: 'modules/fmb/views/fmbFactAll.html',
+	            controllerAs: 'vm'
+	        })
+	        .when('/FmbFact001', {
+	            controller: 'FmbFact001Ctrl',
+	            templateUrl: 'modules/fmb/views/fmbFact001.html',
+	            controllerAs: 'vm'
+	        })
+	        .when('/FmbFact002', {
+	            controller: 'FmbFact002Ctrl',
+	            templateUrl: 'modules/fmb/views/fmbFact002.html',
+	            controllerAs: 'vm'
+	        })
+	        .when('/FmbFact003', {
+	            controller: 'FmbFact003Ctrl',
+	            templateUrl: 'modules/fmb/views/fmbFact003.html',
+	            controllerAs: 'vm'
+	        })
+	        .when('/FmbFact004', {
+	            controller: 'FmbFact004Ctrl',
+	            templateUrl: 'modules/fmb/views/fmbFact004.html',
+	            controllerAs: 'vm'
+	        })
+	        .when('/FmbFact005', {
+	            controller: 'FmbFact005Ctrl',
+	            templateUrl: 'modules/fmb/views/fmbFact005.html',
+	            controllerAs: 'vm'
+	        })
+	        .when('/FmbFact006', {
+	            controller: 'FmbFact006Ctrl',
+	            templateUrl: 'modules/fmb/views/fmbFact006.html',
+	            controllerAs: 'vm'
+	        })
+	        .when('/FmbFact007', {
+	            controller: 'FmbFact007Ctrl',
+	            templateUrl: 'modules/fmb/views/fmbFact007.html',
 	            controllerAs: 'vm'
 	        })
 	        .when('/FmbSpc', {

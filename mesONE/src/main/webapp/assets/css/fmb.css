@@ -36,7 +36,7 @@ img {
 
 
 .mouse-over-bar {
-	padding:30px 20px; 
+	padding:20px 20px; 
 	transition: left 0.3s;
 	position: absolute;
 	top: 0;
@@ -54,7 +54,9 @@ img {
 	border-right-width: 0px;
 }
 .mouse-over-bar > button{
-	width:135px;
+	width:135px	;
+	margin-top:5px;
+	margin-bottom:5px;
 }
 /* 로그인 파트 */
 .loginId {
@@ -92,7 +94,6 @@ form input.ng-ivnalid{
 	border: 1px solid red;
 	
 }
-
 
 
 
@@ -152,7 +153,36 @@ form input.ng-ivnalid{
 .colorNested > div:nth-child(7){
 	background-color: #2c3a49;
 }
+.headerColorNested{
+	text-align:center;
+	border-right:2px solid #a8a7a7;
+}
 
+.headerColorNested > div:nth-child(1){
+	background-color: #0a1b2f;
+	border-bottom:2px solid #a8a7a7;
+}
+.headerColorNested > div:nth-child(2){
+	background-color: #1c2a3c;
+}
+.headerColorNested > div:nth-child(3){
+	background-color: #21374c;
+}
+.headerColorNested > div:nth-child(3) > div > div:nth-child(2){
+	background-color: #2f485b;
+}
+.headerColorNested > div:nth-child(3) > div > div:nth-child(3){
+	background-color: #21374c;
+}
+.headerColorNested > div:nth-child(4){
+	background-color: #1c2a3c;
+}
+.headerColorNested > div:nth-child(5){
+	background-color: #2c3a49;
+}
+.headerColorNested > div:nth-child(6){
+	background-color: #2c3a49;
+}
 
 .timeSettingPage label{
 	width:100px;
@@ -623,14 +653,50 @@ inputText {
 	flex-grow:1;
 }
 .prodTable{
-	height:425px; 
+	height:900px; 
 	width:90%; 
-	
 	margin:auto;
-	font-size:20px;
-	margin-bottom:25px;
+	font-size:25px;
+	margin-bottom:15px;
+	text-align:center;
 }
 
+.prodTable > div:nth-child(1){
+	background-color: #0a1b2f;
+	border-bottom:2px solid #a8a7a7;
+}
+.prodTable > div:nth-child(6n+2){
+	background-color: #1c2a3c;
+}
+.prodTable > div:nth-child(6n+3){
+	background-color: #21374c;
+}
+.prodTable > div:nth-child(6n+4){
+	background-color: #2f485b;
+}
+.prodTable > div:nth-child(6n+5){
+	background-color: #21374c;
+}
+.prodTable > div:nth-child(6){
+	background-color: #1c2a3c;
+}
+.prodTable > div:nth-child(7){
+	background-color: #2c3a49;
+}
+
+.prodTable> div:last-child{
+	border-top:2px solid #a8a7a7;
+	background-color: #0a1b2f;
+}
+
+
+.prodTable >div:not(.row-1)	 .column:first-child{
+	font-size:22px;	
+	letter-spacing: -1px;
+}
+.prodTable .leftborder{
+	border-left:1px solid rgba(168, 167, 167, 0.47); 
+}
 .prodTable div{
 	flex-basis:0px;
 }

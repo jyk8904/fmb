@@ -37,7 +37,7 @@
     
 	<!-- Line별 생산실적 정보조회 -->
     <select id="selectFmbLine"  parameterType="com.dsinfo.fmb.service.FmbLineVO" resultType="com.dsinfo.fmb.service.FmbLineVO">     	      
-        {call USP_DAILY_PROD_SELEC02(#{fact_id})}
+        {call USP_DAILY_PROD_SELEC01(#{fact_id})}
 
     </select> 
     

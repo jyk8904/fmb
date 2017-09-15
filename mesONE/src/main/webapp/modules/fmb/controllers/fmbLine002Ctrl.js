@@ -14,7 +14,7 @@
 
 angular
     .module('app')
-    .controller('FmbLineACtrl'
+    .controller('FmbLine002Ctrl'
     		, [	'CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc','$http','$scope','$window','$q','$location'
      , function (CmmAjaxService , CmmModalSrvc , CmmWorkerSrvc , $http , $scope , $window , $q , $location) 
 {
@@ -30,7 +30,7 @@ angular
 	    
     var self = this;
     var workerList = CmmWorkerSrvc;
-    var fact_id = "A";
+    var fact_id = "002";
     $scope.isMobile = false;
     
     self.lineParamVo = {
@@ -82,9 +82,11 @@ angular
 
 	//선택된 공장의 line별 데이터 가져오기
    function getLineList(){
+	   console.log(getLineList)
 	    var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do", self.lineParamVo);
 	    promise.then(function(data){
 	    	self.lineList = data;
+	    	console.log(data)
 	    	var length = self.lineList.length;
 	    	var dangle = length % 7;
 	    	if (dangle != 0) 

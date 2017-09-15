@@ -130,7 +130,6 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			// 계획진도율 가져오기
 			var planProgressPromise = CmmAjaxService.select("/mes/bas/selectPlanProgress.do");
 				planProgressPromise.then(function(data) {
-				console.log(data)
 				$scope.planProgressList = data;
 				var count = 3;														// 다량의 데이터를 나눠 보여줄 횟수
 				var quotient = parseInt($scope.planProgressList.length /count); 	// 몫: 한번에 보여줄 데이터 갯수
@@ -153,9 +152,8 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 						}else{
 							endRan= endRan + quotient;
 						}
-					$timeout(function(){
+						$timeout(function(){
 						for(var j=startRan; j<endRan; j++){
-							console.log(startRan, endRan)
 							filteredData.push($scope.planProgressList[j]);
 						}
 					},400).then(function(){

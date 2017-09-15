@@ -622,7 +622,7 @@ angular
 					  var screenRate = width / default_width;
 				  if (scope.isMobile) {
 					  	var fontSize = 20;
-					  	var height = 850;
+					  	var height = 950;
 					  	fontSize = fontSize * screenRate;
 					  	height = height * screenRate
 				  		console.log(screenRate)

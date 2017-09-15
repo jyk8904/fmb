@@ -40,9 +40,10 @@ angular
                                  , $mdSidenav
                                  ) {
 
+    var self = this;
 	var workerList = CmmWorkerSrvc;
-	workerList.worker2.sts = 'off';
-	var self = this;
+	workerList.worker2.sts = 'on';
+	self.switchPage = workerList.worker2.sts;
 	var winwin;
 	$scope.isMobile = false;
    $scope.login = fnLogin;
@@ -81,10 +82,21 @@ angular
 	self.btnFmbMonClick = btnFmbMonClickHandler;
 	self.btnFmbAndonClick = btnFmbAndonClickHandler;
 	self.btnFmbTbmClick = btnFmbTbmClickHandler;
-	/*self.btnFmbLineAClick = btnFmbLineAClickHandler;
-	self.btnFmbLineBClick = btnFmbLineBClickHandler;
-	self.btnFmbLineCClick = btnFmbLineCClickHandler;*/
-	self.btnFmbProdClick = btnFmbProdClickHandler;
+	self.btnFmbLine001Click = btnFmbLine001ClickHandler;
+	self.btnFmbLine002Click = btnFmbLine002ClickHandler;
+	self.btnFmbLine003Click = btnFmbLine003ClickHandler;
+	self.btnFmbLine004Click = btnFmbLine004ClickHandler;
+	self.btnFmbLine005Click = btnFmbLine005ClickHandler;
+	self.btnFmbLine006Click = btnFmbLine006ClickHandler;
+	self.btnFmbLine007Click = btnFmbLine007ClickHandler;
+	self.btnFmbFactAllClick = btnFmbFactAllClickHandler;
+	self.btnFmbFact001Click = btnFmbFact001ClickHandler;
+	self.btnFmbFact002Click = btnFmbFact002ClickHandler;
+	self.btnFmbFact003Click = btnFmbFact003ClickHandler;
+	self.btnFmbFact004Click = btnFmbFact004ClickHandler;
+	self.btnFmbFact005Click = btnFmbFact005ClickHandler;
+	self.btnFmbFact006Click = btnFmbFact006ClickHandler;
+	self.btnFmbFact007Click = btnFmbFact007ClickHandler;
 	self.btnFmbSpcClick = btnFmbSpcClickHandler;
 	self.btnFmbTotalClick = btnFmbTotalClickHandler;
 	self.btnFmbModeClick = btnFmbModeClickHandler;
@@ -138,11 +150,22 @@ angular
 	var pageList = [/*{ "pageNm": "FmbAndon", 	"pageNmKr": "안돈 모니터링"		}*/
 				   { "pageNm": "FmbMon", 		"pageNmKr": "설비 가동현황"		}
 			      , { "pageNm": "FmbTotal", 	"pageNmKr": "생산자원 종합현황"	}
-/*			      , { "pageNm": "FmbLineA", 	"pageNmKr": "라인별 생산실적(A)"}
-			      , { "pageNm": "FmbLineB",		"pageNmKr": "라인별 생산실적(B)"}
-			      , { "pageNm": "FmbLineC", 	"pageNmKr": "라인별 생산실적(C)"}*/
+			      , { "pageNm": "FmbLine001", 	"pageNmKr": "라인001 생산실적"}
+			      , { "pageNm": "FmbLine002",	"pageNmKr": "라인002 생산실적"}
+			      , { "pageNm": "FmbLine003", 	"pageNmKr": "라인003 생산실적"}
+			      , { "pageNm": "FmbLine004", 	"pageNmKr": "라인004 생산실적"}
+			      , { "pageNm": "FmbLine005", 	"pageNmKr": "라인005 생산실적"}
+			      , { "pageNm": "FmbLine006", 	"pageNmKr": "라인006 생산실적"}
+			      , { "pageNm": "FmbLine007", 	"pageNmKr": "라인007 생산실적"}
+			      , { "pageNm": "FmbFactAll", 	"pageNmKr": "반별 생산실적"}
+			      , { "pageNm": "FmbFact001", 	"pageNmKr": "반별 생산실적(001)"}
+			      , { "pageNm": "FmbFact002",	"pageNmKr": "반별 생산실적(002)"}
+			      , { "pageNm": "FmbFact003", 	"pageNmKr": "반별 생산실적(003)"}
+			      , { "pageNm": "FmbFact004", 	"pageNmKr": "반별 생산실적(004)"}
+			      , { "pageNm": "FmbFact005", 	"pageNmKr": "반별 생산실적(005)"}
+			      , { "pageNm": "FmbFact006", 	"pageNmKr": "반별 생산실적(006)"}
+			      , { "pageNm": "FmbFact007", 	"pageNmKr": "반별 생산실적(007)"}
 			      , { "pageNm": "FmbTbm", 		"pageNmKr": "TBM"     		}
-			      , { "pageNm": "FmbProd", 		"pageNmKr": "생산실적 외 모니터링"}
 			       ]
 	self.Setting=[];
 	$scope.alarmList=[];
@@ -163,7 +186,6 @@ angular
 							data[i].charLen = String(data[i].lineNm).length; // 라인명 글자수 
 							data[i].wdth= data[i].charLen * 14.5 + 311;//(li의 width값 = 글자수 *15px + 311px)
 							alarmListWdth = alarmListWdth + data[i].wdth + 10; //margin-right:10px
-							console.log(alarmListWdth)
 							alarmList.push(data[i]);
 						}
 					}
@@ -171,7 +193,6 @@ angular
 					$scope.alarmList = alarmList;
 					$scope.alarmListLen = $scope.alarmList.length;	// 알람리스트 갯수
 					$scope.alarmListWdth = alarmListWdth;
-					console.log($scope.alarmListWdth)
 					//alarmList = null;
 					plcPromise = null;
 				}, function(data){
@@ -208,6 +229,7 @@ angular
 			   }else {
 			   		self.Setting[j] = {"pageSeq":j+1, "rotateTime": Number(10), "dataTime": Number(5), "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
 			   }*/
+			   console.log(self.Setting[j])
 			   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(5), "switchNum": Number(1),  "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
 		   }
 		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));		//로컬스토리지 저장
@@ -303,26 +325,103 @@ angular
     	toggleLeft();
          $location.url('/FmbTbm');
       }
-    /*  function btnFmbLineAClickHandler() {
+      function btnFmbLine001ClickHandler() {
     	 toggleLeft();
-          $location.url('/FmbLineA');
+          $location.url('/FmbLine001');
        }
-      function btnFmbLineBClickHandler() {
+      function btnFmbLine002ClickHandler() {
     	 toggleLeft();
-          $location.url('/FmbLineB');
+          $location.url('/FmbLine002');
        }
-      function btnFmbLineCClickHandler() {
+      function btnFmbLine003ClickHandler() {
     	  toggleLeft();
-          $location.url('/FmbLineC');
-       }*/
+          $location.url('/FmbLine003');
+       }
+      function btnFmbLine004ClickHandler() {
+    	  toggleLeft();
+          $location.url('/FmbLine004');
+       }
+      function btnFmbLine005ClickHandler() {
+    	  toggleLeft();
+          $location.url('/FmbLine005');
+       }
+      function btnFmbLine006ClickHandler() {
+    	  toggleLeft();
+          $location.url('/FmbLine006');
+       }
+      function btnFmbLine007ClickHandler() {
+    	  toggleLeft();
+          $location.url('/FmbLine007');
+       }
+      function btnFmbFactAllClickHandler() {
+      	 toggleLeft();
+            $location.url('/FmbFactAll');
+         }
+      function btnFmbFact001ClickHandler() {
+     	 toggleLeft();
+           $location.url('/FmbFact001');
+        }
+       function btnFmbFact002ClickHandler() {
+     	 toggleLeft();
+           $location.url('/FmbFact002');
+        }
+       function btnFmbFact003ClickHandler() {
+     	  toggleLeft();
+           $location.url('/FmbFact003');
+        }
+       function btnFmbFact004ClickHandler() {
+     	  toggleLeft();
+           $location.url('/FmbFact004');
+        }
+       function btnFmbFact005ClickHandler() {
+     	  toggleLeft();
+           $location.url('/FmbFact005');
+        }
+       function btnFmbFact006ClickHandler() {
+     	  toggleLeft();
+           $location.url('/FmbFact006');
+        }
+       function btnFmbFact007ClickHandler() {
+     	  toggleLeft();
+           $location.url('/FmbFact007');
+        }
       function btnFmbSpcClickHandler() {
     	  toggleLeft();
           $location.url('/FmbSpc');
        }
-      function btnFmbProdClickHandler() {
+      function btnFmbFactAllClickHandler() {
     	  toggleLeft();
-          $location.url('/FmbProd');
+          $location.url('/FmbFactAll');
        }
+      function btnFmbFact001ClickHandler() {
+    	  toggleLeft();
+          $location.url('/FmbFact001');
+       }
+      function btnFmbFact002ClickHandler() {
+    	  toggleLeft();
+          $location.url('/FmbFact002');
+       }
+      function btnFmbFact003ClickHandler() {
+    	  toggleLeft();
+          $location.url('/FmbFact003');
+       }
+      function btnFmbFact004ClickHandler() {
+    	  toggleLeft();
+          $location.url('/FmbFact004');
+       }
+      function btnFmbFact005ClickHandler() {
+    	  toggleLeft();
+          $location.url('/FmbFact005');
+       }
+      function btnFmbFact006ClickHandler() {
+    	  toggleLeft();
+          $location.url('/FmbFact006');
+       }
+      function btnFmbFact007ClickHandler() {
+    	  toggleLeft();
+          $location.url('/FmbFact007');
+       }
+      
       function btnFmbTotalClickHandler() {
     	  toggleLeft();
           $location.url('/FmbTotal');
@@ -337,8 +436,10 @@ angular
       
   
     //Web Worker1 시작버튼 클릭 이벤트
+     /* 워커 시작시 다음페이지로 이동.
+      	각페이지에서 워커를 시작함  	*/
     function WorkerStart(){
-    	workerList.worker2.sts = 'on';	//페이지 전환 여부  상태
+    	workerList.worker2.sts = 'on';	//페이지 전환 여부  상태(워커스타트)
     	self.switchPage = workerList.worker2.sts;
     	var curPageSeq;			
     	var curPage = $location.url();

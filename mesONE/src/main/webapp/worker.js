@@ -14,7 +14,7 @@
 
 
  onmessage = function(evt){
-	 
+	 console.log(evt.data[0])
 	var jsonData = evt.data[0];			//페이지 세팅데이터
 	var maxLength = jsonData.length;
 	var curPageSeq = evt.data[1];		//현재페이지

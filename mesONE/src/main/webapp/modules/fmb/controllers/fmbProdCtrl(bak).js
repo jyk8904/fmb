@@ -15,8 +15,8 @@
 angular
     .module('app')
     .controller('FmbProdCtrl'
-    		 , ['CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc','$http','$scope','$window','$q','$location', '$filter'
-     , function (CmmAjaxService , CmmModalSrvc , CmmWorkerSrvc , $http , $scope , $window , $q , $location, $filter)
+    		 , ['CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc','$http','$scope','$window','$q','$location', '$filter', '$interval'
+     , function (CmmAjaxService , CmmModalSrvc , CmmWorkerSrvc , $http , $scope , $window , $q , $location, $filter, $interval)
 {
 	/*------------------------------------------
      * 변수 선언
@@ -35,18 +35,18 @@ angular
         	}
     // 모바일 체크 함수 실행
 	isMobileFunc();
-	
+
       //페이징관련 변수
 	  $scope.totalItems = self.lineList; 										//뿌려줄 데이터 갯수
-	  $scope.currentPage = 0;													//현재페이지넘버
+	  $scope.currentPage =-1;													//현재페이지넘버
 	  $scope.maxSize = 7;														//한 페이지당 보여줄 데이터 갯수
       $scope.startNum = $scope.currentPage*$scope.maxSize						//현재페이지에서 보여줄 데이터의 시작 인덱스
       $scope.endNum = $scope.currentPage*$scope.maxSize + $scope.maxSize -1		//현재페이지에서 보여줄 데이터의 마지막 인덱스
-      $scope.totalPage = Math.ceil($scope.totalItems/$scope.maxSize)			//보여줄 총 페이지 갯수 
+      $scope.totalPage =4;														//보여줄 총 페이지 갯수 
 	 
       $scope.minPage = minPage;     //이전버튼 클릭 이벤트
       $scope.plusPage = plusPage;   //다음버튼 클릭 이벤트
-
+  		
       if(workerList.worker2.data)
 /*      var worker2Data = workerList.worker2.data;
       worker2Data = workerList.worker2.data*/
@@ -54,12 +54,22 @@ angular
   	//워커 스타트
   	workerList.workerStart(workerList.worker2, "worker.js");
     //워커 온메세지
-  	/*workerList.workerOnmessage(workerList.worker2, pageChange);*/
-      workerList.workerOnmessage(workerList.worker2, function(){console.log('onmessage')});
+  	workerList.workerOnmessage(workerList.worker2, getData);
+      /*workerList.workerOnmessage(workerList.worker2, function(){console.log('onmessage')});*/
   	// 워커에게서 메세지를 받을때마다 페이지 전환
+  	var SettingTime = workerList.worker2.data 
+  	for(var i =0; i < SettingTime.length; i++){
+		console.log(SettingTime[i]);
+		if('/'+ SettingTime[i].pageNm== $location.url()){
+			var thisDataTime= SettingTime[i].dataTime * 1000
+			console.log(thisDataTime)
+			break;
+		}
+	}
   	function pageChange(){
+  		
   		if($scope.currentPage >= $scope.totalPage-1 ){
-  			$scope.currentPage = 0
+  			$scope.currentPage = 0	//첫페이지로 이동
   			self.goalttl =0;
   	    	self.countttl = 0;
   	    	self.ratettl= 0;
@@ -68,11 +78,13 @@ angular
   			
   		}else{
   			plusPage();
+  			
   		}
-  		$scope.$apply();
+
   	}
   	
     function minPage(){	//이전페이지 이동
+    	
     	$scope.currentPage=$scope.currentPage-1;
     		self.goalttl =0;
 	    	self.countttl = 0;
@@ -90,7 +102,7 @@ angular
     	self.defectttl = 0;
     	self.ppmttl = 0;
 		
-    	console.log("plusPage",$scope.currentPage)
+    	console.log("plusPage",$scope.currentPage);
     	
          
     }
@@ -138,8 +150,9 @@ angular
       function getData(){
     	  getLineList();
     	  getFactList();
-    	  console.log(self.factList);
-    	  console.log(self.lineList);
-    	    }
+
+    	$interval(pageChange(), thisDataTime/4); 
+
+      }
 }]);
 

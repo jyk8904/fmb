@@ -128,23 +128,33 @@ idth=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<div class="relative" ng-if="isMobile == false">
 	
 		<div class="mouse-over-bar"> 
-			<p ng-show="loginChk" style="text-align: center;">{{id}}님 </p>
 	    	<md-button class="left- md-raised md-primary" ng-click='vm.LotationSetting()'>페이지 전환 설정</md-button>
 	 			<!-- <div ng-switch on="vm.switchPage">
 			   	<button ng-switch-when="off" class="md-raised md-primary" ng-click='vm.btnWorkerStart()'>Start</md-button>
 		   	 	<button ng-switch-when="on" class="md-raised md-primary" ng-click='vm.btnWorkerStop()'>Stop</md-button>
 		   	</div>  -->
 		     
-		 	<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStart()' ng-hide="vm.switchPage=='on'" title="START">▶</md-button>
 	   	 	<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStop()' ng-show="vm.switchPage=='on'" title="STOP">■</md-button>
+		 	<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStart()' ng-hide="vm.switchPage=='on'" title="START">▶</md-button>
 		 	<!-- <md-button class="md-raised md-default" ng-click='vm.btnFmbAndonClick()'>안돈현황</md-button> -->
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbMonClick()'>설비가동현황</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbTotalClick()'>생산자원종합현황</md-button>
-<!-- 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLineAClick()'>Line별 생산실적(A)</md-button>
-		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLineBClick()'>Line별 생산실적(B)</md-button>
-		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLineCClick()'>Line별 생산실적(C)</md-button> -->
+ 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLine001Click()'>Line001 생산실적</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLine002Click()'>Line002 생산실적</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLine003Click()'>Line003 생산실적</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLine004Click()'>Line004 생산실적</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLine005Click()'>Line005 생산실적</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLine006Click()'>Line006 생산실적</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbLine007Click()'>Line007 생산실적</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbFactAllClick()'>반별 생산실적</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbFact001Click()'>반별 생산실적(001)</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbFact002Click()'>반별 생산실적(002)</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbFact003Click()'>반별 생산실적(003)</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbFact004Click()'>반별 생산실적(004)</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbFact005Click()'>반별 생산실적(005)</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbFact006Click()'>반별 생산실적(006)</md-button>
+		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbFact007Click()'>반별 생산실적(007)</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbTbmClick()'>Tbm</md-button>
-		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbProdClick()'>반별 생산실적</md-button>
 			<md-button class="md-raised md-default" ng-click='vm.btnFmbModeClick()' ng-show="id=='admin'" >개발모드</md-button>
 			
 			<md-button class="md-raised md-primary" ng-click='winClose()'>종료</md-button>
@@ -184,36 +194,102 @@ idth=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 					
 				</div>
 			</md-list-item>
-			<!-- <md-list-item class="md-2-line" ng-click="vm.btnFmbLineAClick()" >
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbLine001Click()" >
 				<div class="md-list-item-text">
-					<h3>Line별 생산실적(A)</h3>
+					<h3>Line001 생산실적</h3>
 					<p></p>
 				</div>
 			</md-list-item>
-			<md-list-item class="md-2-line" ng-click="vm.btnFmbLineBClick()">
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbLine002Click()">
 				<div class="md-list-item-text">
-					<h3>Line별 생산실적(B)</h3>
+					<h3>Line002 생산실적</h3>
 					<p></p>
 				</div>
 			</md-list-item>
-			<md-list-item class="md-2-line" ng-click="vm.btnFmbLineCClick()" >
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbLine003lick()" >
 				<div class="md-list-item-text" >
-					<h3>Line별 생산실적(C)</h3>
+					<h3>Line003 생산실적</h3>
 					<p></p>
 				</div>
-			</md-list-item> -->
+			</md-list-item>
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbLine004Click()" >
+				<div class="md-list-item-text">
+					<h3>Line004 생산실적</h3>
+					<p></p>
+				</div>
+			</md-list-item>
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbLine005Click()">
+				<div class="md-list-item-text">
+					<h3>Line005 생산실적</h3>
+					<p></p>
+				</div>
+			</md-list-item>
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbLine006Click()" >
+				<div class="md-list-item-text" >
+					<h3>Line006 생산실적</h3>
+					<p></p>
+				</div>
+			</md-list-item>
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbLine007Click()" >
+				<div class="md-list-item-text">
+					<h3>Line007 생산실적</h3>
+					<p></p>
+				</div>
+			</md-list-item>
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbFactAllClick()" >
+				<div class="md-list-item-text">
+					<h3>반별 생산실적</h3>
+					<p></p>
+				</div>
+			</md-list-item>		
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbFact001Click()" >
+				<div class="md-list-item-text">
+					<h3>반별 생산실적(001)</h3>
+					<p></p>
+				</div>
+			</md-list-item>	
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbFact002Click()" >
+				<div class="md-list-item-text">
+					<h3>반별 생산실적(002)</h3>
+					<p></p>
+				</div>
+			</md-list-item>	
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbFact003Click()" >
+				<div class="md-list-item-text">
+					<h3>반별 생산실적(003)</h3>
+					<p></p>
+				</div>
+			</md-list-item>	
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbFact004Click()" >
+				<div class="md-list-item-text">
+					<h3>반별 생산실적(004)</h3>
+					<p></p>
+				</div>
+			</md-list-item>	
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbFact005Click()" >
+				<div class="md-list-item-text">
+					<h3>반별 생산실적(005)</h3>
+					<p></p>
+				</div>
+			</md-list-item>	
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbFact006Click()" >
+				<div class="md-list-item-text">
+					<h3>반별 생산실적(006)</h3>
+					<p></p>
+				</div>
+			</md-list-item>	
+			<md-list-item class="md-2-line" ng-click="vm.btnFmbFact007Click()" >
+				<div class="md-list-item-text">
+					<h3>반별 생산실적(007)</h3>
+					<p></p>
+				</div>
+			</md-list-item>			
 			<md-list-item class="md-2-line" ng-click="vm.btnFmbTbmClick()" >
 				<div class="md-list-item-text">
 					<h3>Tbm</h3>
 					<p></p>
 				</div>
 			</md-list-item>	
-			<md-list-item class="md-2-line" ng-click="vm.btnFmbProdClick()" >
-				<div class="md-list-item-text">
-					<h3>반별 생산실적</h3>
-					<p></p>
-				</div>
-			</md-list-item>				
 		</md-list>
       </md-content>
 
@@ -332,10 +408,21 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
 	<script src="modules/fmb/controllers/fmbModeCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbPopupCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbTbmCtrl.js"></script>
-	<script src="modules/fmb/controllers/fmbLineACtrl.js"></script>
-	<script src="modules/fmb/controllers/fmbLineBCtrl.js"></script>
-	<script src="modules/fmb/controllers/fmbLineCCtrl.js"></script>
-	<script src="modules/fmb/controllers/fmbProdCtrl.js"></script>
+	<script src="modules/fmb/controllers/fmbLine001Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmbLine002Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmbLine003Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmbLine004Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmbLine005Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmbLine006Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmbLine007Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmbFactAllCtrl.js"></script>
+	<script src="modules/fmb/controllers/fmbFact001Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmbFact002Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmbFact003Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmbFact004Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmbFact005Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmbFact006Ctrl.js"></script>
+	<script src="modules/fmb/controllers/fmbFact007Ctrl.js"></script>
 	<script src="modules/fmb/controllers/fmbSpcCtrl.js"></script>
 	<script src="modules/fmb/controllers/fmbTotalCtrl.js"></script>
 	<script src="modules/fmb/controllers/dialogCtrl.js"></script>
@@ -348,7 +435,7 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
 	<link rel="stylesheet" href="/mes/assets/css/fmbModify.css" />
     
    	<!-- 워커 관리 -->
-   	<script src="worker.js"></script>
+  <!--  	<script src="worker.js"></script> -->
    	<!-- <script src="worker2.js"></script> -->
    	
 </html>

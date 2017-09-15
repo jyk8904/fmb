@@ -17,7 +17,7 @@
 <!-- ngview 내부 페이지 -->
 <div test-ctrl class='bc-screen' style="margin:0">
 <!-- ngview 내부 header -->
-<bc-form-header logo='assets/img/system/logo.png' title="라인별 생산 실적 (A동)" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
+<bc-form-header logo='assets/img/system/logo.png' title="라인001 생산 실적" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
 </bc-form-header>	
 
 
@@ -51,9 +51,10 @@
 		</div>
 		
 		<div layout="cloumn" layout-wrap style="width:82%;">
-		<div grid-panel-ctrl data = "vm.lineList" flex ng-repeat="line in vm.lineList track by $index" is-mobile="isMobile" layout="column" layout-fill layout-wrap class="colorNested" style="text-align:center;">
+		<div ng-repeat="line in vm.lineList track by $index" layout="row" ng-if ="$index%7==0" style="width:100%;">
+		<div grid-panel-ctrl data = "vm.lineList" flex ng-repeat="line in vm.lineList track by $index" ng-if="$index>=$parent.$index &&$index<($parent.$index+7)" is-mobile="isMobile" layout="column" layout-fill layout-wrap class="colorNested" style="text-align:center;">
 		  <div style="color:white;display:flex; align-items:center; justify-content: center;">
-		    <div><p style="margin-bottom:0;">{{line.lineTopNm}}</p><p style="margin-bottom:0;">{{line.lineMidNm}}</p><p style="margin-bottom:0;">{{line.lineBotNm}}</p></div>
+		    <div><p style="margin-bottom:0;">{{line.lineNm.split(' ')[0]}}</p><p>{{line.lineNm.split(' ')[1]}} {{line.lineNm.split(' ')[3]}}</p></div>
 		  </div>
 		  <div  style="color:white;">
 		   {{vm.parseInt(line.dgoal) + vm.parseInt(line.ngoal)}}
@@ -71,13 +72,14 @@
 		    {{vm.parseInt(line.drate) + vm.parseInt(line.nrate)}}
 		  </div>
 		    <div ng-switch on="line.eqptSts" >
-				<img ng-switch-when="0" class="obj lineBtn" src="/mes/assets/img/button/Yellow25.png" align="center">
+				<img ng-switch-when="0" class="obj lineBtn" src="/mes/assets/img/button/Red25.png" align="center">
 				<img ng-switch-when="1" class="obj lineBtn" src="/mes/assets/img/button/Green25.png" align="center">
 				<img ng-switch-when="2" class="obj lineBtn" src="/mes/assets/img/button/White25.png" align="center">
 				<img ng-switch-when="3" class="obj lineBtn" src="/mes/assets/img/button/Blue25.png" align="center">
-				<img ng-switch-when="4" class="obj lineBtn" src="/mes/assets/img/button/Red25.gif" align="center">
+				<img ng-switch-when="4" class="obj lineBtn" src="/mes/assets/img/button/Red25.png" align="center">
 		  	</div>
-		</div> 
+		</div>
+		</div>
 		</div>
 	</div>
 
