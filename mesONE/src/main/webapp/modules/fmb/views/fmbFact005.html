@@ -1,0 +1,89 @@
+<!-- 
+/**  
+ * @Class Name : fmbProd.html
+ * @Description : fmbProd
+ * @Modification Information  
+ * @
+
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.08.14	 조준연 정유경
+ * 
+
+ * css: assets/css/fmb.css
+ * controller : fmbProdCtrl.js
+ *
+ */
+ -->
+ 
+<!-- ngview 내부 페이지 -->
+<div test-ctrl class='bc-screen' style="margin:0">
+<bc-form-header logo='assets/img/system/logo.png' title="반별 생산실적005" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
+</bc-form-header>	
+	<!-- ngview 내부 body -->
+	<bc-form-body style="color:white;"> 
+
+		<!-- For Mobile/ For Desktop -->
+		<!-- 계산식 확인해보기 -->			
+		<div prod-panel-ctrl  is-mobile="isMobile" class="prodTable colorNested" style="display:flex;  flex-direction:column">
+			<div class="row-1" style="display:flex;  flex-direction:row; flex-grow:1.5; text-align:center;">
+			  <div class="column" style="display:flex; flex-direction:column; flex-grow:1.5;" >라인명</div>
+			  <div class="leftborder" style="display:flex;  flex-direction:column; flex-grow:5;">
+			  	<div class="column" style="flex-grow:1" >{{vm.lineList[0].prodDt.substr(4,2)}}월 누적</div>
+			  	<div style="display:flex; flex-direction:row; flex-grow:1;" >
+			  		<div class="column">계획수량</div>
+			  		<div class="column">실적수량</div>
+			  		<div class="column">달성률</div>
+			  		<div class="column">불량수량</div>
+			  		<div class="column">공정PPM</div>
+			  	</div>
+			  </div>
+			  
+			  <div class="row-1 leftborder" style="display:flex; flex-direction:column; flex-grow:5;">
+			  	<div class="column" style="flex-grow:1" >{{vm.lineList[0].prodDt.substr(6,2)}}일</div>
+			  	<div style="display:flex;  flex-direction:row; flex-grow:1;" >
+			  		<div class="column">계획수량</div>
+			  		<div class="column">실적수량</div>
+			  		<div class="column">달성률</div>
+			  		<div class="column">불량수량</div>
+			  		<div class="column">공정PPM</div>
+			  	</div>
+			  </div>
+			</div>	
+			
+			<div  ng-repeat="line in vm.lineList" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
+				<div class="column " style="display:flex; flex-direction:column; flex-grow:1.5;">{{line.lineNm}}</div>
+				<div class="column leftborder">{{line.dgoal+ line.ngoal|number:0}}</div>
+				<div class="column">{{line.dcount+ line.ncount|number:0}}</div>
+				<div class="column">{{(line.dcount+ line.ncount)/(line.dgoal+ line.ngoal)*100|number:1}}%</div><!-- 계산식 확인해보기 -->
+				<div class="column">{{line.defectCount|number:0}}</div>
+				<div class="column">{{line.defectCount/(line.dcount+line.ncount)*100000|number:0}}</div>
+				
+				<div class="column leftborder">{{line.dgoalMon + line.ngoalMon |number:0}}</div>
+				<div class="column">{{line.dcountMon+ line.ncountMon|number:0}}</div>
+				<div class="column">{{(line.dcountMon+ line.ncountMon)/(line.dgoalMon + line.ngoalMon)*100|number:1}}%</div>
+				<div class="column">{{line.defectCountMon}}</div>
+				<div class="column" 
+				 ng-init="vm.goalttl = vm.goalttl +line.dgoal + line.ngoal; 
+				 	      vm.countttl = vm.countttl + line.dcount+ line.ncount;
+				 	      vm.defectttl = vm.defectttl + line.defectCount;
+				 	      vm.ppmttl = vm.ppmttl + line.ppm;">{{line.defectCountMon/(line.dcountMon+line.ncountMon)*100000|number:0}}</div>
+			</div>
+	 		<div class="row-1" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
+		  		<div class="column" style="display:flex; flex-direction:column; flex-grow:1.5;">합계</div>
+		  		<div class="column leftborder">{{vm.goalttl|number:0}}</div>
+		  		<div class="column">{{vm.countttl|number:0}}</div>
+		  		<div class="column">{{vm.countttl/ vm.goalttl * 100 | number:1}}%</div>
+		  		<div class="column">{{vm.defectttl|number:0}}</div>
+		  		<div class="column">{{vm.ppmttl|number:0}}</div>
+		  		
+		  		<div class="column  leftborder">{{vm.goalttl|number:0}}</div>
+		  		<div class="column">{{vm.countttl|number:0}}</div>
+		  		<div class="column">{{vm.countttl/vm.goalttl*100|number:1}}%</div>
+		  		<div class="column">{{vm.defectttl|number:0}}</div>
+		  		<div class="column">{{vm.defectttl/vm.countttl * 100000|number:1}}</div>
+		  	
+			</div>  
+		</div>
+	
+	</bc-form-body>
+</div>
