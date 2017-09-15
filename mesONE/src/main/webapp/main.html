@@ -60,11 +60,8 @@ idth=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
    	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
    	<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
    	
-<!--   
-    DevExtreme dependencies
-    <script src="assets/js/dx.all.js"></script>
-    <script src="assets/js/globalize.js"></script> -->
-   
+   	<script src="assets/js/angular.marquee.js"></script>
+   	
 	<!-- amCharts javascript sources -->
 	<script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
 	<script type="text/javascript" src="https://cdn.amcharts.com/lib/3/serial.js"></script>
@@ -247,14 +244,13 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
 		  <div class="alarm_data" style="background-color: rgb(255, 255, 255); width:110% !important; height: 25px;">
 		  
 			<img src="assets/img/system/img_top_ico.gif" style="margin: -11px 0px 0px -5px; width: 42px; position: absolute; z-index: 1000;">
-	  		<marquee style="height:28px; ">
-	  		<!-- <marquee scrolldelay="1" scrollamount="5px" style="height:28px; "> -->
+	  		<div angular-marquee scroll="scroll" duration="duration" style="height:28px;">
 	      		<ul id="banner" class="simply-scroll-list" style="background-color:#333;" ng-style="{'width':alarmListWdth}">
 	      			<li marquee-banner alarm-list="alarmList"  ng-repeat="alarm in alarmList track by $index" ng-style="{'width':alarm.wdth}">
 	       				<strong>{{alarm.lineNm}}라인 알람발생  {{alarm.stsDttm.substr(0,19)}}</strong>
 	      			</li>
 	    		</ul>
-	    	</marquee>
+	    	</div>
 	    	
 	    	<!-- 	  		<marquee style="height:28px; ">
 	  		<marquee scrolldelay="1" scrollamount="5px" style="height:28px; ">

@@ -344,7 +344,7 @@
 
 
 
-.amcharts-graph-g2 .amcharts-graph-stroke {
+/* .amcharts-graph-g2 .amcharts-graph-stroke {
   stroke-dasharray: 3px 3px;
   stroke-linejoin: round;
   stroke-linecap: round;
@@ -404,8 +404,8 @@
   stroke-linejoin: round;
   stroke-linecap: round;
   stroke-dasharray: 500%;
-  stroke-dasharray: 0 \0/;    /* fixes IE prob */
-  stroke-dashoffset: 0 \0/;   /* fixes IE prob */
+  stroke-dasharray: 0 \0/;    fixes IE prob
+  stroke-dashoffset: 0 \0/;   fixes IE prob
   -webkit-animation: am-draw 40s;
   animation: am-draw 40s;
 }
@@ -424,5 +424,5 @@
     100% {
         stroke-dashoffset: 0%;
     }
-}
+} */
        

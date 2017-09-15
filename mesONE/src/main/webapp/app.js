@@ -19,7 +19,7 @@
 (function () {
     'use strict';
     angular
-        .module('app', ['angularModalService', 'ngRoute', 'ngCookies', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.tpls', 'ngFileUpload','angular.filter'])
+        .module('app', ['angularModalService', 'ngRoute', 'ngCookies', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.tpls', 'ngFileUpload', 'angular.filter', 'angular-marquee'])
         .config(config);
 //        .run(run);
 
