@@ -17,7 +17,7 @@
  
 <!-- ngview 내부 페이지 -->
 <div test-ctrl class='bc-screen' style="margin:0">
-<bc-form-header logo='assets/img/system/logo.png' title="생산실적 외 모니터링" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
+<bc-form-header logo='assets/img/system/logo.png' title="반별 생산실적" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
 </bc-form-header>	
 	<!-- ngview 내부 body -->
 	<bc-form-body style="color:white;"> 
@@ -28,11 +28,13 @@
 
 	</div>
 		<!-- For Mobile/ For Desktop -->
-		<div prod-panel-ctrl is-mobile="isMobile" class="prodTable colorNested" style="display:flex;  flex-direction:column">
-			<div class="row-1"  style="display:flex;  flex-direction:row; flex-grow:1.5; text-align:center;">
-			  <div class="column">라인명</div>
+		<!-- 계산식 확인해보기 -->			
+		<div prod-panel-ctrl  is-mobile="isMobile"  ng-switch on="currentPage" class="prodTable colorNested" style="display:flex;  flex-direction:column">
+			<div class="row-1" style="display:flex;  flex-direction:row; flex-grow:1.5; text-align:center;">
+			  <div class="column" ng-switch-when="0" >반</div>
+			  <div class="column" ng-switch-default >라인명</div>
 			  <div style="display:flex;  flex-direction:column; flex-grow:5;">
-			  	<div class="column" style="flex-grow:1" >9월 누적</div>
+			  	<div class="column" style="flex-grow:1" >{{vm.factList[0].prodDt.substr(4,2)}}월 누적</div>
 			  	<div style="display:flex; flex-direction:row; flex-grow:1;" >
 			  		<div class="column">계획수량</div>
 			  		<div class="column">실적수량</div>
@@ -43,7 +45,7 @@
 			  </div>
 			  
 			  <div class="row-1" style="display:flex; flex-direction:column; flex-grow:5;">
-			  	<div class="column" style="flex-grow:1" >23일</div>
+			  	<div class="column" style="flex-grow:1" >{{vm.factList[0].prodDt.substr(6,2)}}일</div>
 			  	<div style="display:flex;  flex-direction:row; flex-grow:1;" >
 			  		<div class="column">계획수량</div>
 			  		<div class="column">실적수량</div>
@@ -52,49 +54,75 @@
 			  		<div class="column">공정PPM</div>
 			  	</div>
 			  </div>
-			</div> 		
-			<div ng-repeat="d in vm.data |  limitTo:maxSize:currentPage*maxSize" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
-				<div class="column">{{d.lineName}}</div>
-				<div class="column">{{d.plan}}</div>
-				<div class="column">{{d.prod}}</div>
-				<div class="column">{{d.archive}}%</div>
-				<div class="column">{{d.bad}}</div>
-				<div class="column">{{d.ppm}}</div>
-				<div class="column">{{d.plan}}</div>
-				<div class="column">{{d.prod}}</div>
-				<div class="column">{{d.archive}}%</div>
-				<div class="column">{{d.bad}}</div>
+			</div>		
+			<!-- 1페이지일 경우 -->
+			<div ng-switch-when="0" ng-repeat="fact in vm.factList |  limitTo:maxSize:currentPage*maxSize" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
+				<div class="column">{{fact.factId}}</div>
+				<div class="column">{{fact.dgoal+ fact.ngoal}}</div>
+				<div class="column">{{fact.dcount+ fact.ncount}}</div>
+				<div class="column">{{(fact.dcount+ fact.ncount)/(fact.dgoal+ fact.ngoal)*100|number:0}}%</div><!-- 계산식 확인해보기 -->
+				<div class="column">{{fact.defectCount}}</div>
+				<div class="column">{{fact.defectCount/(fact.dcount+fact.ncount)*100000|number:0}}</div>
+				
+				<div class="column">{{fact.dgoalMon + fact.ngoalMon}}</div>
+				<div class="column">{{fact.dcountMon+ fact.ncountMon}}</div>
+				<div class="column">{{(fact.drateMon+fact.nrateMon)/2|number:0}}%</div>
+				<div class="column">{{fact.defectCountMon}}</div>
 				<div class="column" 
-				 ng-init="vm.planttl = vm.planttl + d.plan; 
-				 	      vm.prodttl = vm.prodttl + d.prod;
-				 	      vm.archivettl= vm.archivettl + d.archive;
-				 	      vm.archivenum = $index +1;
-				 	      vm.badttl = vm.badttl + d.bad;
-				 	      vm.ppmdttl = vm.ppmttl + d.ppm;">{{d.ppm}}</div>
+				 ng-init="vm.goalttl = vm.goalttl +fact.dgoal + fact.ngoal; 
+				 	      vm.countttl = vm.countttl + fact.dcount+ fact.ncount;
+				 	      vm.defectttl = vm.defectttl + fact.defectCount;
+				 	      vm.ppmttl = vm.ppmttl + fact.ppm;">{{fact.defectCountMon/(fact.dcountMon+fact.ncountMon)*100000|number:0}}</div>
 			</div>
-			
-	 	<div class="row-1" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
-			  		<div class="column">합계</div>
-			  		<div class="column">{{vm.planttl}}</div>
-			  		<div class="column">{{vm.prodttl}}</div>
-			  		<div class="column">{{vm.archivettl / vm.archivenum}}%</div>
-			  		<div class="column">{{vm.badttl}}</div>
-			  		<div class="column">{{vm.ppmdttl}}</div>
-			  		<div class="column">{{vm.planttl}}</div>
-			  		<div class="column">{{vm.prodttl}}</div>
-			  		<div class="column">{{vm.archivettl/vm.archivenum}}%</div>
-			  		<div class="column">{{vm.badttl}}</div>
-			  		<div class="column">{{vm.ppmdttl}}</div>
+			<!-- 1페이지일 경우 끝 -->
+			<!-- 2,3,4페이지일 경우 -->
+			<div ng-switch-default ng-repeat="line in vm.lineList |  limitTo:maxSize:currentPage*maxSize" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
+				<div class="column">{{line.lineNm}}</div>
+				<div class="column">{{line.dgoal + line.ngoal}}</div>
+				<div class="column">{{line.dcount+ line.ncount}}</div>
+				<div class="column">{{(line.dgoal + line.ngoal)/(line.dcount+ line.ncount)*100|number:0}}%</div>
+				<div class="column">{{line.defectCount}}</div>
+				<div class="column">{{line.defectCount/(line.dcount+line.ncount)*100|number:0}}</div>
+				
+				<div class="column">{{line.dgoalMon + line.ngoalMon}}</div>
+				<div class="column">{{line.dcountMon+ line.ncountMon}}</div>
+				<div class="column">{{(line.dcountMon+ line.ncountMon)/(line.dgoalMon + line.ngoalMon)*100|number:0}}%</div>
+				<div class="column">{{line.defectCountMon}}</div>
+				<div class="column">{{line.defectCountMon/(line.dcountMon+line.ncountMon)*100|number:0}}</div>
+				<div class="column" 
+				 ng-init="vm.goalttl = vm.goalttl + line.plan; 
+				 	      vm.countttl = vm.countttl + line.prod;
+				 	      vm.ratettl= vm.ratettl + line.archive;
+				 	      vm.defectttl = vm.defectttl + line.bad;
+				 	      vm.ppmttl = vm.ppmttl + line.ppm;">{{line.defectCount/(line.dcount+line.ncount)*100 |number:0}}</div>
+			</div>
+			<!-- 2,3,4페이지일 경우 끝  -->
+	 		<div class="row-1" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
+		  		<div class="column">합계</div>
+		  		<div class="column">{{vm.goalttl}}</div>
+		  		<div class="column">{{vm.countttl}}</div>
+		  		<div class="column">{{vm.countttl/ vm.goalttl * 100 | number:0}}%</div>
+		  		<div class="column">{{vm.defectttl}}</div>
+		  		<div class="column">{{vm.ppmttl}}</div>
+		  		
+		  		<div class="column">{{vm.goalttl}}</div>
+		  		<div class="column">{{vm.countttl}}</div>
+		  		<div class="column">{{vm.countttl/vm.goalttl*100|number:0}}%</div>
+		  		<div class="column">{{vm.defectttl}}</div>
+		  		<div class="column">{{vm.defectttl/vm.countttl * 100000|number:0}}</div>
+		  	
 			</div>  
 		</div>
 		
 		
+	
 		
 		
-		<!-- For Desktop -->
-		<div ng-if="isMobile == false" class="prodTable colorNested" layout="column" style="display:flex;  flex-direction:column">
+		
+		<!-- For Desktop 아랫줄-->
+		<div ng-repeat="(key, value) in vm.lineList |groupBy: 'factId'" ng-if="isMobile == false" class="prodTable colorNested" layout="column" style="display:flex;  flex-direction:column">
 			<div class="row-1"  style="display:flex;  flex-direction:row; flex-grow:1.5; text-align:center;">
-			  <div class="column" >라인명</div>
+			  <div class="column" >{{key}}</div>
 			  <div style="display:flex;  flex-direction:column; flex-grow:5;">
 			  	<div class="column">9월 누적</div>
 			  	<div style="display:flex;  flex-direction:row; flex-grow:1;" >
@@ -120,37 +148,44 @@
 			
 			
 			
-			<div ng-repeat="d in vm.data |  limitTo:maxSize:currentPage*maxSize" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
-				<div class="column">{{d.lineName}}</div>
-				<div class="column" >{{d.plan}}</div>
-				<div class="column" >{{d.prod}}</div>
-				<div class="column" >{{d.archive}}%</div>
-				<div class="column" >{{d.bad}}</div>
-				<div class="column" >{{d.ppm}}</div>
-				<div class="column" >{{d.plan}}</div>
-				<div class="column" >{{d.prod}}</div>
-				<div class="column" >{{d.archive}}%</div>
-				<div class="column" >{{d.bad}}</div>
-				<div class="column">{{d.ppm}}</div>
+		<div ng-repeat="line in value" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
+				<div class="column">{{line.lineNm}}</div>
+				<div class="column">{{line.dgoal + line.ngoal}}</div>
+				<div class="column">{{line.dcount+ line.ncount}}</div>
+				<div class="column">{{(line.dgoal + line.ngoal)/(line.dcount+ line.ncount)*100|number:0}}%</div>
+				<div class="column">{{line.defectCount}}</div>
+				<div class="column">{{line.defectCount/(line.dcount+line.ncount)*100|number:0}}</div>
+				
+				<div class="column">{{line.dgoalMon + line.ngoalMon}}</div>
+				<div class="column">{{line.dcountMon+ line.ncountMon}}</div>
+				<div class="column">{{(line.dcountMon+ line.ncountMon)/(line.dgoalMon + line.ngoalMon)*100|number:0}}%</div>
+				<div class="column">{{line.defectCountMon}}</div>
+				<div class="column">{{line.defectCountMon/(line.dcountMon+line.ncountMon)*100|number:0}}</div>
+				<div class="column" 
+				 ng-init="vm.goalttl = vm.goalttl + line.plan; 
+				 	      vm.countttl = vm.countttl + line.prod;
+				 	      vm.ratettl= vm.ratettl + line.archive;
+				 	      vm.defectttl = vm.defectttl + line.bad;
+				 	      vm.ppmttl = vm.ppmttl + line.ppm;">{{line.defectCount/(line.dcount+line.ncount)*100 |number:0}}</div>
 			</div>
 			
-	 	<div class="row-1" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
-			  		<div class="column" flex =10>합계</div>
-			  		<div class="column" flex>{{vm.planttl}}</div>
-			  		<div class="column" flex>{{vm.prodttl}}</div>
-			  		<div class="column" flex>{{vm.archivettl / maxSize}}%</div>
-			  		<div class="column" flex>{{vm.badttl}}</div>
-			  		<div class="column" flex>{{vm.ppmdttl}}</div>
-			  		<div class="column" flex>{{vm.planttl}}</div>
-			  		<div class="column" flex>{{vm.prodttl}}</div>
-			  		<div class="column" flex>{{vm.archivettl/maxSize}}%</div>
-			  		<div class="column" flex>{{vm.badttl}}</div>
-			  		<div class="column" flex>{{vm.ppmdttl}}</div>
+	 		<div class="row-1" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
+		  		<div class="column">합계</div>
+		  		<div class="column">{{vm.goalttl}}</div>
+		  		<div class="column">{{vm.countttl}}</div>
+		  		<div class="column">{{vm.countttl/ vm.goalttl * 100 | number:0}}%</div>
+		  		<div class="column">{{vm.defectttl}}</div>
+		  		<div class="column">{{vm.ppmttl}}</div>
+		  		
+		  		<div class="column">{{vm.goalttl}}</div>
+		  		<div class="column">{{vm.countttl}}</div>
+		  		<div class="column">{{vm.countttl/vm.goalttl*100|number:0}}%</div>
+		  		<div class="column">{{vm.defectttl}}</div>
+		  		<div class="column">{{vm.defectttl/vm.countttl * 100000|number:0}}</div>
+		  	
 			</div>  
 		</div>
 		
-		
-		
-		
+
 	</bc-form-body>
 </div>

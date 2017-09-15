@@ -49,7 +49,7 @@ angular
          }
       })
       /* marquee 태그 용 */
-      .directive('marqueeBanner', function($timeout){
+/*      .directive('marqueeBanner', function($timeout){
     	  return {
     		restrict: 'A',
     		scope: {
@@ -59,12 +59,12 @@ angular
     			$timeout(function(){
     				var alarmList = scope.alarmList;
     				var listCount = Object.keys(alarmList).length;
-    				var calcWidth = (listCount * 430) + 40;
+    				var calcWidth = (listCount * 480) + 40;
     				element[0].parentNode.style.width = calcWidth + 'px';
     			});
     		}
     	  };
-      })
+      })*/
       /* 모바일  종합현황 용 - 뒷배경 이미지중 큰 이미지의 경우 높이를 지정하기 위해 사용 */
       .directive('mResizeCtrl', function($timeout, $window){
     	  return {

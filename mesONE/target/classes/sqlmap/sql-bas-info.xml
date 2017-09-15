@@ -5,9 +5,14 @@
     
 <!--  	PLCList 정보 조회 -->
     <select id="selectFmbPlc" parameterType="com.dsinfo.fmb.service.FmbPlcParamVO" resultType="com.dsinfo.fmb.service.FmbPlcVO">     	      
-        {call USP_EQPT_MON_SELEC01(#{fact_id},#{plc_id})}
+        {call USP_EQPT_FMB_SELEC01(#{fact_id},#{plc_id})}
 
     </select>
+     <select id="selectFmbPlc2" parameterType="com.dsinfo.fmb.service.FmbPlcParamVO2" resultType="com.dsinfo.fmb.service.FmbPlcVO2">     	      
+        {call USP_EQPT_MON_SELEC03(#{eqpt_cd})}
+
+    </select>
+    
  	<!-- EqptCSSList 정보 조회 -->
     <select id="selectFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbEqptParamVO" resultType="com.dsinfo.fmb.service.FmbEqptVO">     	      
         {call USP_EQPT_CSS_SEL01(#{fact_id},#{eqpt_type},#{id},#{eqpt_cnm})}
@@ -34,6 +39,11 @@
     <select id="selectFmbLine"  parameterType="com.dsinfo.fmb.service.FmbLineVO" resultType="com.dsinfo.fmb.service.FmbLineVO">     	      
         {call USP_DAILY_PROD_SELEC02(#{fact_id})}
 
+    </select> 
+    
+    <!-- 반별(fact) 생산실적 정보조회 -->
+    <select id="selectFmbFact"  parameterType="com.dsinfo.fmb.service.FmbFactVO" resultType="com.dsinfo.fmb.service.FmbFactVO">     	      
+        {call USP_DAILY_PROD_SELEC03()}
     </select> 
     
 <!--     SPC 정보조회
@@ -114,17 +124,17 @@
  <!--
     EqptCSSList 정보 생성
     <insert id="selectFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbEqptParamVO">     	      
-        {call USP_EQPT_MON_SELEC01(#{fact_id},#{plc_id},#{eqpt_cnm})}
+        {call USP_EQPT_FMB_SELEC01(#{fact_id},#{plc_id},#{eqpt_cnm})}
     </insert>
     
     EqpCSStList 정보 수정
     <update id="selectFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbEqptParamVO">     	      
-        {call USP_EQPT_MON_SELEC01(#{fact_id},#{plc_id},#{eqpt_cnm})}
+        {call USP_EQPT_FMB_SELEC01(#{fact_id},#{plc_id},#{eqpt_cnm})}
     </update>
     
     EqptCSSList 정보 삭제
     <select id="selectFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbEqptParamVO" resultType="com.dsinfo.fmb.service.FmbEqptVO">     	      
-        {call USP_EQPT_MON_SELEC01(#{fact_id},#{plc_id},#{eqpt_cnm})}
+        {call USP_EQPT_FMB_SELEC01(#{fact_id},#{plc_id},#{eqpt_cnm})}
 
     </select>
     

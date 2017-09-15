@@ -185,12 +185,16 @@ angular
     		replace:true,
     		transclude: true,  
     		template: "<div test-ctrl2 class='titleHeader col-md-12 col-sm-12 col-xs-12'>" +
-    					'<img ng-if="!isMobile" class ="col-lg-1 col-md-2 col-sm-2 col-xs-2" src={{logo}} />' +
+	    				'<img ng-if="!isMobile" class ="col-lg-1 col-md-2 col-sm-2 col-xs-2" style="padding:1.8%;"src={{logo}} />' +
     					'<img ng-if="isMobile" class ="col-lg-1 col-md-2 col-sm-2 col-xs-2" ng-click="onSwipeRight()" src={{logo}} />' +
-    					'<div  ng-if="!isMobile" class="col-md-5 col-sm-5 col-xs-5 col-xs-offset-1 col-lg-offset-2"><h1 class="title" style="color: white;">{{title}}</h1></div>'+
-    					'<div ng-if="isMobile" class="col-md-5 col-sm-5 col-xs-5 col-xs-offset-1 col-lg-offset-2"><h4 class="title" style="color: white;">{{title}}</h4></div>'+
-    					"<div class='col-lg-3 col-md-4 col-sm-4 col-xs-4 col-lg-offset-1' ng-transclude></div>"	+
-    				  "</div>",
+    					
+    					'<div  ng-if="!isMobile" class="col-md-4 col-sm-4 col-xs-4 col-xs-offset-1 col-lg-offset-1"><h1 class="title" style="color: white; font-family:noteSansBlack; font-size:40px;;">{{title}}</h1></div>'+
+    					'<div ng-if="isMobile" class="col-md-4 col-sm4-4 col-xs-4 col-xs-offset-1 col-lg-offset-2"><h4 class="title" style="color: white;">{{title}}</h4></div>'+
+
+    					"<div class='col-lg-6 col-md-6 col-sm-6 col-xs-6' ng-transclude></div>"	+
+    				  
+    					"</div>",
+    				 /* col-lg-offset-1*/
     		controller: function($scope, $attrs, $log, $mdSidenav) {
     			$scope.onSwipeRight = function() {    
     			    $mdSidenav('left1').open();

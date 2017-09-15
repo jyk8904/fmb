@@ -22,7 +22,7 @@
       <div class="col-xs-12 col-sm-12 col-md-12 md-toolbar-tools">
         <h2 class="col-xs-9 col-sm-11 col-md-11">{{vm.plcData}}의 설비 정보</h2>
 
-        <!-- Controls -->
+        <!-- FOR MOBILE Controls -->
         <div class="col-xs-2" ng-if="isMobile == true">
 			<a class="left carousel-control" href="#FmbMon" role="button" data-slide="prev">
 				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -33,9 +33,9 @@
 				<span class="sr-only">Next</span>
 			</a>
 		</div>
-        <md-button class="col-xs-1 col-sm-1 col-md-1 text-right md-icon-button">
-        
-          <img src="assets/img/system/close_white.png" aria-label="Close dialog" ng-click="vm.cancel()">
+		
+        <md-button class="col-xs-1 col-sm-1 col-md-1 text-right md-icon-button" ng-click="vm.cancel()">
+          <img src="assets/img/system/close_white.png" aria-label="Close dialog">
         </md-button>
         
       </div>
@@ -59,19 +59,19 @@
 	
 	        <div class="col-xs-12 col-sm-5 col-md-5 item eqptInfo" style="position:relative; width:100%; height:100%; float:left; font-size:10px; color:white;">
 		        <div class="col-xs-12 subTitle" style="border-bottom: 3px solid rgb(105, 111, 144); background-color:  rgba(76, 83, 121, 0.25); float:left; font-size:12px; color:white; border-radius: 7px 7px 0 0;">	
-					<p">시간별 설비정보</p>
+					<p>시간별 설비정보</p>
 				</div>
 				
 				 <ul class="col-xs-12 eqpt-info-modal" style="padding:0 !important; float:left; margin-bottom:0;">
-					<li ng-repeat="plc in vm.plc">
+					<li>
 						<table popup-ctrl class="dialog-tbl" style="margin:0; width:100%; height:684px;">
-							<tr><td>PLC ID</td><td>{{plc.plcId}}</td></tr>
-							<tr><td>설비코드</td><td>{{plc.eqptCd}}</td></tr>
-							<tr><td>설비명</td><td>{{plc.eqptNm}}</td></tr>
-							<tr><td>주간실적 / 야간실적</td><td>{{plc.dcount}} / {{plc.ncount}}</td></tr>
-							<tr><td>생산시간</td><td>{{plc.prodDt}}</td></tr>
-							<tr><td>정지 LOSS</td><td>{{}}</td></tr>
-							<tr ng-switch on="plc.eqptSts">
+							<tr><td>PLC ID</td><td>{{vm.plc.plcId}}</td></tr>
+							<tr><td>설비코드</td><td>{{vm.plc.eqptCd}}</td></tr>
+							<tr><td>설비명</td><td>{{vm.plc.eqptNm}}</td></tr>
+							<tr><td>주간실적 / 야간실적</td><td>{{vm.plc.dcount}} / {{vm.plc.ncount}}</td></tr>
+							<tr><td>생산시간</td><td>{{vm.plc.prodDt}}</td></tr>
+							<tr><td>정지 LOSS</td><td>{{vm.plc.norunsum}}</td></tr>
+							<tr ng-switch on="vm.plc.eqptSts">
 								<td>설비상태</td>
 								<td ng-switch-when="0" >비가동</td>
 								<td ng-switch-when="1" >가동</td>
@@ -79,8 +79,8 @@
 								<td ng-switch-when="3" >수리</td>
 								<td ng-switch-when="4" >알람</td>
 							</tr>
-							<tr><td>ACT UPH</td><td></td></tr>
-							<tr><td>순간정지</td><td></td></tr>
+							<tr><td>ACT UPH</td><td>{{vm.plc.uph}}</td></tr>
+							<tr><td>순간정지</td><td>{{vm.plc.alramcnt}}</td></tr>
 						</table>
 					</li>
 				</ul>
@@ -117,25 +117,26 @@
 			</div>
 			
 			 <ul class="col-xs-12 eqpt-info-modal" style="padding:0 !important; float:left;">
-				<li ng-repeat="plc in vm.plc">
+				<li>
 					<table class="dialog-tbl">
-						<tr><td>PLC ID</td><td>{{plc.plcId}}</td></tr>
-						<tr><td>설비코드</td><td>{{plc.eqptCd}}</td></tr>
-						<tr><td>설비명</td><td>{{plc.eqptNm}}</td></tr>
-						<tr><td>주간실적</td><td>{{plc.dcount}}</td></tr>
-						<tr><td>야간실적</td><td>{{plc.ncount}}</td></tr>
-						<tr><td>생산시간</td><td>{{plc.prodDt}}</td></tr>
-						<tr><td>정지 LOSS</td><td>{{}}</td></tr>
-						<tr ng-switch on="plc.eqptSts">
+						<tr><td>PLC ID</td><td>{{vm.plc.plcId}}</td></tr>
+						<tr><td>설비코드</td><td>{{vm.plc.eqptCd}}</td></tr>
+						<tr><td>설비명</td><td>{{vm.plc.eqptNm}}</td></tr>
+						<tr><td>주간실적</td><td>{{vm.plc.dcount}}</td></tr>
+						<tr><td>야간실적</td><td>{{vm.plc.ncount}}</td></tr>
+						<tr><td>생산시간</td><td>{{vm.plc.prodDt}}</td></tr>
+						<tr><td>정지 LOSS</td><td>{{vm.plc.norunsum}}</td></tr>
+						<tr ng-switch on="vm.plc.eqptSts">
 							<td>설비상태</td>
 							<td ng-switch-when="0" >비가동</td>
 							<td ng-switch-when="1" >가동</td>
 							<td ng-switch-when="2" >대기</td>
 							<td ng-switch-when="3" >수리</td>
 							<td ng-switch-when="4" >알람</td>
+							<td ng-switch-default  ></td>
 						</tr>
-						<tr><td>ACT UPH</td><td></td></tr>
-						<tr><td>순간정지</td><td></td></tr>
+						<tr><td>ACT UPH</td><td>{{vm.plc.uph}}</td></tr>
+						<tr><td>순간정지</td><td>{{vm.plc.alramcnt}}</td></tr>
 					</table>
 				</li>
 			</ul>

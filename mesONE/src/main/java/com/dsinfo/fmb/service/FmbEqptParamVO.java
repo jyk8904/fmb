@@ -8,7 +8,6 @@ public class FmbEqptParamVO extends MBasAbsVO {
 	//DB컬럼이름과 같게 지정
 	private String fact_id;   // 공장 ID
 	private String eqpt_type; // type
-	
 	private String id;   	  //  ID
 	private String eqpt_cnm;  // 설비클래스명
 		

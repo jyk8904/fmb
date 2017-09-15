@@ -126,19 +126,22 @@ angular
    	   		var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
            	plcPromise.then(function(data) {
            		//랜덤값 입력
-           			for(var i = 0; i< data.length; i++){
+           		/*	for(var i = 0; i< data.length; i++){
                		var random = Math.floor(Math.random()*3);
                		if(random==0){
                			random = 4;
                		}
                		data[i].eqptSts = random;
-           			}
+           			}*/
+           		
+           			//데이터를 가져오는동안 깜빡임 방지
            			self.preplcList = data;
            			self.plcList = self.preplcList;
            			//fmbplcVo가 담긴 리스트 형태리턴
            		
            	}, function(data){
-           		alert('fail: '+ data)
+           		/*alert('fail: '+ data)*/
+           		console.log('fail: '+ data);
            });
    		}
 
@@ -149,14 +152,16 @@ angular
 	    		self.preeqptList = data;
 	    		self.eqptList = self.preeqptList;
 	    	}, function(data){
-	    		alert('fail: '+ data)
+	    		/*alert('fail: '+ data)*/
+	    		console.log('fail'+data);
 	    	});
 	}
     //plc, eqpt list 바인딩
 	function bindData(){
 		for(var i =0; i < self.eqptList.length; i++){
-			var target = $filter('filter')(self.plcList, {plcId : self.eqptList[i].plcId});
+			var target = $filter('filter')(self.plcList, {plcId : self.eqptList[i].id});
 			self.stsData[i]= target[0].eqptSts;
+			/*self.stsData[i]= target[0];*/	//plc리스트에서 상태값 뿐만ㅇㅏ니라 다른 데이터도 연동시킬때 사용
 		}
 	};
 	
@@ -184,7 +189,8 @@ angular
        		
         	}
     	}, function(data) {
-    		alert('fail:' + data)
+    		/*alert('fail:' + data)*/
+    		console.log('fail: '+ data);
     	});
     }
     
@@ -222,9 +228,9 @@ angular
 	    };
 	    
 	    //설비버튼 클릭시, 팝업창 open
-	    $scope.showAdvanced = function(ev) {
+	    $scope.showAdvanced = function(id, ev) {
 	    	
-	    	CmmFactSrvc.setPlcData(ev);
+	    	CmmFactSrvc.setPlcData(id);
 	    	console.log(CmmFactSrvc.getPlcData());
 	    	//PlC 데이터 저장 하는 부분.
 	    	//CmmFactSrvc.setPlcData(ev);

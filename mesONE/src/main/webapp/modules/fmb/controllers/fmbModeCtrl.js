@@ -36,12 +36,13 @@ angular
     	 {'name':'Red25', 'value' : 'assets/img/button/Red25.png'},
     	 {'name':'직접입력', 'value': ''}
     	 ]
-    
-     $scope.hoverIn = function(){
-    	 this.hover = true;
+    $scope.hover=[];
+     $scope.hoverIn = function(index){
+    	 $scope.hover[index] = true;
+    	 
      }
-     $scope.hoverOut = function(){
-    	 this.hover = false;
+     $scope.hoverOut = function(index){
+    	 $scope.hover[index] = false;
      }
      $scope.sensRating = 1;
      $scope.sensRating1 = 1;
@@ -58,7 +59,8 @@ angular
      self.showModal = false;
      self.selected = {};
      self.pointer = {
-    		  display : 'none'
+    		  /*display : 'none'*/
+    		  display : false
      		, top : '0px'
      		, left : '0px'
      };
@@ -71,7 +73,7 @@ angular
      
      //설비parameter
      self.eqptParamVo = {
-    		  factId: 'Comb'
+    		  factId: 'Comb'		//전체
 		   	, eqptType: 'PLC'
 		   	, id : ''
 		   	, eqptCnm: ''
@@ -142,6 +144,8 @@ angular
     self.deleteDiv = function (index) {
     	console.log(index)
     	self.eqptList[index].status = "delete";
+    	console.log(self.eqptList[index].status)
+       	console.log(self.eqptList)	
     }
 
     self.toggleLeft = buildToggler('left');
@@ -159,8 +163,6 @@ angular
 		    				
 			    			var detNewVal = obj[f];
 			    			var detOldVal = oldVal[i][f];
-			    			
-			    			
 			    			
 			    		
 			    			if (detNewVal !== detOldVal) {
@@ -183,13 +185,13 @@ angular
     	if(self.eqptParamVo.eqptType=="PLC"){
     		var classList = $filter('orderBy')(self.eqptList,'eqptCnm');
         	if (classList.length == 0) {
-        		$scope.crtEqpt.cnm = 'eqpt001';
+        		$scope.crtEqpt.cnm = 'plc001';
         	}
         	else 
         	{
-    	    	var latestNum = classList[classList.length - 1].eqptCnm.split('eqpt')[1];
+    	    	var latestNum = classList[classList.length - 1].eqptCnm.split('plc')[1];
     	    	
-    	    	$scope.crtEqpt.cnm = 'eqpt' + leadingZeros(parseInt(latestNum) + 1, 3);
+    	    	$scope.crtEqpt.cnm = 'plc' + leadingZeros(parseInt(latestNum) + 1, 3);
         	}
         	   
     	  	  var tmp={}, res=[];
@@ -204,13 +206,13 @@ angular
     	}else if(self.eqptParamVo.eqptType=="SPC"){
     		var classList = $filter('orderBy')(self.eqptList,'eqptCnm');
         	if (classList.length == 0) {
-        		$scope.crtEqpt.cnm = 'eqpt001';
+        		$scope.crtEqpt.cnm = 'spc001';
         	}
         	else 
         	{
-    	    	var latestNum = classList[classList.length - 1].eqptCnm.split('eqpt')[1];
+    	    	var latestNum = classList[classList.length - 1].eqptCnm.split('spc')[1];
     	    	
-    	    	$scope.crtEqpt.cnm = 'eqpt' + leadingZeros(parseInt(latestNum) + 1, 3);
+    	    	$scope.crtEqpt.cnm = 'spc' + leadingZeros(parseInt(latestNum) + 1, 3);
         	}
         	   
     	  	  var tmp={}, res=[];
@@ -224,13 +226,13 @@ angular
     	}else if(self.eqptParamVo.eqptType=="ANDON"){
     		var classList = $filter('orderBy')(self.eqptList,'eqptCnm');
         	if (classList.length == 0) {
-        		$scope.crtEqpt.cnm = 'eqpt001';
+        		$scope.crtEqpt.cnm = 'andon001';
         	}
         	else 
         	{
-    	    	var latestNum = classList[classList.length - 1].eqptCnm.split('eqpt')[1];
+    	    	var latestNum = classList[classList.length - 1].eqptCnm.split('andon')[1];
     	    	
-    	    	$scope.crtEqpt.cnm = 'eqpt' + leadingZeros(parseInt(latestNum) + 1, 3);
+    	    	$scope.crtEqpt.cnm = 'andon' + leadingZeros(parseInt(latestNum) + 1, 3);
         	}
         	   
     	  	  var tmp={}, res=[];
@@ -245,13 +247,13 @@ angular
     	}else if(self.eqptParamVo.eqptType=="COUNT"){
     		var classList = $filter('orderBy')(self.eqptList,'eqptCnm');
         	if (classList.length == 0) {
-        		$scope.crtEqpt.cnm = 'eqpt001';
+        		$scope.crtEqpt.cnm = 'count001';
         	}
         	else 
         	{
-    	    	var latestNum = classList[classList.length - 1].eqptCnm.split('eqpt')[1];
+    	    	var latestNum = classList[classList.length - 1].eqptCnm.split('count')[1];
     	    	
-    	    	$scope.crtEqpt.cnm = 'eqpt' + leadingZeros(parseInt(latestNum) + 1, 3);
+    	    	$scope.crtEqpt.cnm = 'count' + leadingZeros(parseInt(latestNum) + 1, 3);
         	}
         	   
     	  	  var tmp={}, res=[];
@@ -346,14 +348,14 @@ angular
     		self.eqptList[i].stsImg3 = stsImg.replace('color', 'Blue');
     		self.eqptList[i].stsImg4 = stsImg.replace('color', 'Red');
     	}	
-    	
+    	console.log(self.eqptList);
     	 var eqptPromise = CmmAjaxService.save("/mes/bas/saveFmbEqpt.do", self.eqptList);
     };
     
     //설비 이미지리스트 가져오기
     function getEqptList(){
     	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
-    	console.log("getEqtpList")
+    	console.log("getEqptList")
     	eqptPromise.then(function(data) {
     		self.eqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
     		for(var i = 0; i < self.eqptList.length; i++){
@@ -371,22 +373,36 @@ angular
     	//설비 plc 데이터 가져오기
     	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
     	plcPromise.then(function(data) {
-    		self.plcList = data; //fmbplcVo가 담긴 리스트 형태리턴
-    		console.log(self.plcList)
+    		var dataList= [];
+    		for(var i=0; i<data.length; i++){
+    			if(data[i].plcId.split('_')[0]=="MPLC"){
+    				dataList.push(data[i]);
+    			}
+    
+    		}
+    		self.plcList = dataList;
+    		//self.plcList = data; //fmbplcVo가 담긴 리스트 형태리턴
     	}, function(data){
-    		console.log(data)
-    		alert('fail: '+ data)
+    		/*alert('fail: '+ data)*/
+    		console.log('fail'+data);
     	});
     }
     function getAndonList(){
     	
     	//설비 Andon 데이터 가져오기   andon프로시저 생성후 수정해야함 
-    	var andonPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.spcParamVo);
+    	var andonPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.andonParamVo);
     		andonPromise.then(function(data) {
-    		self.andonList = data; //fmbplcVo가 담긴 리스트 형태리턴
+			var dataList= [];
+    		for(var i=0; i<data.length; i++){
+    			if(data[i].plcId.split('_')[0]=="APLC"){
+    				dataList.push(data[i]);
+    			}
+    		}
+    		self.andonList = dataList;
     		console.log(self.andonList)
     	}, function(data){
-    		alert('fail: '+ data)
+    		/*alert('fail: '+ data)*/
+    		console.log('fail'+data);
     	});
     }
     function getSpcList(){
@@ -397,7 +413,8 @@ angular
     		self.spcList = data; 
     		console.log(self.spcList)
     	}, function(data){
-    		alert('fail: '+ data)
+    		/*alert('fail: '+ data)*/
+    		console.log('fail'+data);
     	});
     }
     function getCountList(){
@@ -408,7 +425,8 @@ angular
     		self.countList = data; 
     		console.log(self.countList)
     	}, function(data){
-    		alert('fail: '+ data)
+    		/*alert('fail: '+ data)*/
+    		console.log('fail'+data);
     	});
     }
     function getBgImageList() {
@@ -434,7 +452,8 @@ angular
        		
         	}
     	}, function(data) {
-    		alert('fail:' + data)
+    		/*alert('fail: '+ data)*/
+    		console.log('fail'+data);
     	});
     }
     
@@ -448,7 +467,8 @@ angular
      function buildToggler(componentId) {
          return function() {
         	 self.pointer.animateTrigger = 'off';
-        	 self.pointer.display = 'none';
+        	 /*self.pointer.display = 'none';*/
+        	 self.pointer.display = false;
         	 self.selected = {};
         	 self.configSetting = {};
         	 $mdSidenav(componentId).toggle();
@@ -530,7 +550,8 @@ angular
     	 self.pointer.left = self.eqptList[index].cssLeft;
     	 
     	 self.pointer.animateTrigger = 'on';
-    	 self.pointer.display = 'block';
+    	 /*self.pointer.display = 'block';*/
+    	 self.pointer.display = true;
      }
      
      // 설정한 요소들에 대하여 실제 HTML에 적용 시킨다.

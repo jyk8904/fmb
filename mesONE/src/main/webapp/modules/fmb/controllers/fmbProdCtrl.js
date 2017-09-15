@@ -30,45 +30,20 @@ angular
     var self = this;
     var workerList = CmmWorkerSrvc;
     $scope.isMobile = false;
-    
+    self.lineParamVo = {	
+        	factId:''
+        	}
     // 모바일 체크 함수 실행
 	isMobileFunc();
 	
-	
-	//DB 연동 후에 바꿔야할 data
-    self.data = [{"lineName":"PL6 OTR", "plan":51000, "prod":46972, "archive":92, "bad":2, "ppm":43},
-    			{"lineName":"L7 OTR", "plan":85000, "prod":82988, "archive":98, "bad":2, "ppm":24},
-    			{"lineName":"UKL OTR", "plan":132460,"prod":133227, "archive":101, "bad":3, "ppm":23},
-    			{"lineName":"CD4 OTR", "plan":47600, "prod":43776, "archive":92, "bad":2, "ppm":46},
-    			{"lineName":"PL6 OTR", "plan":51000, "prod":46972, "archive":92, "bad":2, "ppm":43},
-    			{"lineName":"L7 OTR", "plan":85000, "prod":82988, "archive":98, "bad":2, "ppm":24},
-    			{"lineName":"UKL OTR", "plan":132460,"prod":133227, "archive":101, "bad":3, "ppm":23},
-    			{"lineName":"CD4 OTR", "plan":47600, "prod":43776, "archive":92, "bad":2, "ppm":46},
-    			{"lineName":"PL6 OTR", "plan":51000, "prod":46972, "archive":92, "bad":2, "ppm":43},
-    			{"lineName":"L7 OTR", "plan":85000, "prod":82988, "archive":98, "bad":2, "ppm":24},
-    			{"lineName":"UKL OTR", "plan":132460,"prod":133227, "archive":101, "bad":3, "ppm":23},
-    			{"lineName":"CD4 OTR", "plan":47600, "prod":43776, "archive":92, "bad":2, "ppm":46},
-    			{"lineName":"PL6 OTR", "plan":51000, "prod":46972, "archive":92, "bad":2, "ppm":43},
-    			{"lineName":"L7 OTR", "plan":85000, "prod":82988, "archive":98, "bad":2, "ppm":24},
-    			{"lineName":"UKL OTR", "plan":132460,"prod":133227, "archive":101, "bad":3, "ppm":23},
-    			{"lineName":"CD4 OTR", "plan":47600, "prod":43776, "archive":92, "bad":2, "ppm":46}
-    			]
-    
       //페이징관련 변수
-	  $scope.totalItems = self.data.length; 									//뿌려줄 데이터 갯수
+	  $scope.totalItems = self.lineList; 										//뿌려줄 데이터 갯수
 	  $scope.currentPage = 0;													//현재페이지넘버
-	  $scope.maxSize = 5;														//한 페이지당 보여줄 데이터 갯수
+	  $scope.maxSize = 7;														//한 페이지당 보여줄 데이터 갯수
       $scope.startNum = $scope.currentPage*$scope.maxSize						//현재페이지에서 보여줄 데이터의 시작 인덱스
       $scope.endNum = $scope.currentPage*$scope.maxSize + $scope.maxSize -1		//현재페이지에서 보여줄 데이터의 마지막 인덱스
       $scope.totalPage = Math.ceil($scope.totalItems/$scope.maxSize)			//보여줄 총 페이지 갯수 
 	 
-      $scope.planttl =0;
-      $scope.prodttl = 0;
-      $scope.archivettl= 0;
-      $scope.archivenum = 0;
-      $scope.badttl = 0;
-      $scope.ppmdttl = 0;
-      
       $scope.minPage = minPage;     //이전버튼 클릭 이벤트
       $scope.plusPage = plusPage;   //다음버튼 클릭 이벤트
 
@@ -79,19 +54,17 @@ angular
   	//워커 스타트
   	workerList.workerStart(workerList.worker2, "worker.js");
     //워커 온메세지
-  	workerList.workerOnmessage(workerList.worker2, pageChange);
-  	   
-  	
+  	/*workerList.workerOnmessage(workerList.worker2, pageChange);*/
+      workerList.workerOnmessage(workerList.worker2, function(){console.log('onmessage')});
   	// 워커에게서 메세지를 받을때마다 페이지 전환
   	function pageChange(){
   		if($scope.currentPage >= $scope.totalPage-1 ){
   			$scope.currentPage = 0
-  			self.planttl =0;
-  	    	self.prodttl = 0;
-  	    	self.archivettl= 0;
-  	    	self.archivenum = 0;
-  	    	self.badttl = 0;
-  	    	self.ppmdttl = 0;
+  			self.goalttl =0;
+  	    	self.countttl = 0;
+  	    	self.ratettl= 0;
+  	    	self.defectttl = 0;
+  	    	self.ppmttl = 0;
   			
   		}else{
   			plusPage();
@@ -99,30 +72,53 @@ angular
   		$scope.$apply();
   	}
   	
-    function minPage(){
+    function minPage(){	//이전페이지 이동
     	$scope.currentPage=$scope.currentPage-1;
-    	 self.planttl =0;
-    	 self.prodttl = 0;
-    	 self.archivettl= 0;
-    	 self.archivenum = 0;
-    	 self.badttl = 0;
-    	 self.ppmdttl = 0;
+    		self.goalttl =0;
+	    	self.countttl = 0;
+	    	self.ratettl= 0;
+	    	self.defectttl = 0;
+	    	self.ppmttl = 0;
+			
          
     }
-    function plusPage(){
+    function plusPage(){	//다음페이지 이동
     	$scope.currentPage=$scope.currentPage+1;
-    	self.planttl =0;
-    	self.prodttl = 0;
-    	self.archivettl= 0;
-    	self.archivenum = 0;
-    	self.badttl = 0;
-    	self.ppmdttl = 0;
+    	self.goalttl =0;
+    	self.countttl = 0;
+    	self.ratettl= 0;
+    	self.defectttl = 0;
+    	self.ppmttl = 0;
+		
     	console.log("plusPage",$scope.currentPage)
     	
          
     }
-    
  
+    
+    function getLineList(){
+	    var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do", self.lineParamVo);
+	    promise.then(function(data){
+	    	self.lineList = data;
+	    
+	    	console.log(data)
+	     }
+	    ,function(data){
+	    	console.log('fail: '+ data)
+	    });
+    }
+    function getFactList(){
+	    var promise = CmmAjaxService.select("/mes/bas/selectFmbFact.do");
+	    promise.then(function(data){
+	    	self.factList = data;
+	    	console.log(data)
+	    	console.log(self.factList)
+	     }
+	    ,function(data){
+	    	console.log('fail: '+ data)
+	    });
+    }
+    
     getData();
     
 	// 모바일 체크 함수 정의
@@ -140,27 +136,10 @@ angular
       
       
       function getData(){
-    	  // DB 연동 후 주석부분 살리기
-    	  /*  var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do", self.lineParamVo);
-    	    promise.then(function(data){
-    	    	self.data = data;*/
-    	    	var length = self.data.length;
-    	    	var dangle = length % 7;
-    	    	if (dangle != 0) 
-    	    	{
-    	    		var blankCount = 7- dangle;
-    	    		for (var i = 0; i < blankCount; i++)
-    	    		{
-    	    			var data = {"lineName":'', "plan":'', "prod":'', "achive":'', "bad":'', "ppm":''}
-    	    			
-    	    			self.data.push(data);
-    	    		}
-    	    	}
-    	  /*  }
-    	    ,function(data){
-    	    	alert('fail: '+ data)
-    	    });*/
-    	       
+    	  getLineList();
+    	  getFactList();
+    	  console.log(self.factList);
+    	  console.log(self.lineList);
     	    }
 }]);
 

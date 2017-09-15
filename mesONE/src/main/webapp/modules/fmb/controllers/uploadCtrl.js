@@ -71,6 +71,7 @@ angular
 	    }
 	 };
 
+	 
      $scope.upload = function (file) {
         Upload.upload({
         	method: 'POST',

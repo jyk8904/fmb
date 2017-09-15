@@ -36,7 +36,7 @@ public class FmbPlcCtrl {
     @SuppressWarnings("unchecked")
     //4.매핑된 주소를 통해 요기로 이동
 	@RequestMapping(value = "/bas/selectFmbPlc.do", method = RequestMethod.POST)
-	public ResponseEntity<List<FmbPlcVO>> selectFmbPlc(@RequestBody FmbPlcParamVO vo)  {
+	public ResponseEntity<List<FmbPlcVO>> selectFmbPlc(@RequestBody  FmbPlcParamVO vo)  {
     	//RequestBody : JSON형태로 보낸 vo를 컬럼명이 똑같으면 FmbPlcParamVO형태로 알아서 매핑,변환
 		List<FmbPlcVO> fmbPlcVO = null;
 		System.out.println("FmbPlc.do로 이동");
@@ -45,10 +45,11 @@ public class FmbPlcCtrl {
 			//
 			//5. sql-bas-info.xml의  id가 selectFmbPlc인 select 실행
 		
-			fmbPlcVO = (List<FmbPlcVO>) mBcfBizService.select("sql-bas-info.selectFmbPlc", vo);
-			System.out.println("vo" +vo.getPlcId());
-			log.info(vo.getPlcId());
-			log.error(vo.getFactId());
+			fmbPlcVO = (List<FmbPlcVO>) mBcfBizService.select("sql-bas-info.selectFmbPlc",vo);
+			 
+			System.out.println("vo" +vo);
+	/*		log.info(vo.getEqptCd());
+			log.error(vo.getEqptCd());*/
 			
 			return new ResponseEntity<List<FmbPlcVO>>(fmbPlcVO, HttpStatus.OK);
 			//7.응답받은 result 리턴

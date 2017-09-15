@@ -268,10 +268,10 @@ div[class^=eqpt] {
 	position:fixed;
 	bottom:0px;
 }
-
+/* 
 #banner{
 	width:5000px;
-}
+} */
 
 
 /* sideNav */
@@ -313,10 +313,10 @@ md-tabs label {
 md-tabs input {
 	width:150px;
 }
-#banner{
+/* #banner{
 	width:5000px;
 }
-
+ */
 .listTitle {
 	float: left;
 	width: 210px;

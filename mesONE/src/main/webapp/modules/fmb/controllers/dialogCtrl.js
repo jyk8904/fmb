@@ -63,9 +63,11 @@ angular
 			dt:'',
 			plcId: CmmFactSrvc.getPlcData() 
   		  } 
-	
-	
+
     self.cancel = function() {
+    	$mdDialog.cancel();
+    };
+    self.hide = function() {
     	$mdDialog.hide();
     };
     
@@ -99,7 +101,8 @@ angular
     	});	
 		//timeProd();
 	}, function(data) {
-		alert('fail: ' + data)
+		/*alert('fail: '+ data)*/
+		console.log('fail'+data);
 	});
 
 	function makeDataRunInfoChart(){
@@ -226,6 +229,7 @@ angular
 	var eqptStsHisPromise = CmmAjaxService.select("/mes/bas/selectEqptStsHis.do", self.stsVo);
 	eqptStsHisPromise.then(function(data) {
 		self.eqptStsHisData = data
+		console.log(self.stsVo);
 		console.log(self.eqptStsHisData);
 		
 		$timeout(function(){}, 200)
@@ -238,7 +242,8 @@ angular
         	});
     	});
 	}, function(data) {
-		alert('fail: ' + data)
+		/*alert('fail: '+ data)*/
+		console.log('fail'+data);
 	});
 
 	//시간별 가동상태 변화 차트 만들기
@@ -252,7 +257,9 @@ angular
 				"mouseWheelZoomEnabled": true,
 				"startDuration" : 1,
 				"categoryAxis": {
-					"title": "시간(분)"
+					"title": "시간(분)",
+					"gridPosition": "start",
+					"titleRotation": 0
 				},
 				"panEventsEnabled": false,
 				"pan": true,
@@ -268,14 +275,14 @@ angular
 					"limitToGraph": "AmGraph-1"
 				},
 				"depth3D": 1,
-				"startDuration": 1,
+				//"startDuration": 1,
 				"fontFamily": "noteSans",
 				"fontSize": 12,
 				"color": "#FFFFFF",
-				"categoryAxis": {
+				/*"categoryAxis": {
 					"gridPosition": "start",
 					"titleRotation": 0
-				},
+				},*/
 				"theme": "dark",
 				"graphs": [
 					{
@@ -375,22 +382,42 @@ angular
 	function getSelectedPlc(){
 		var promise = CmmAjaxService.selectOne("/mes/bas/selectFmbPlc.do", self.plcSelectedVo);
         promise.then(function(data){
-        	
-        	//DB 연동 후 제거해야함, plc 상태 랜덤지정
-        	for(var i = 0; i< data.length; i++){
+        	/*for(var i = 0; i< data.length; i++){
            		var random = Math.floor(Math.random()*3);
            		if(random==0){
            			random = 4;
            		}
            		data[i].eqptSts = random;
-       		}
+       		}*/
         	
-        	self.plc = data;//fmbPlcVo가 담긴 리스트 형태리턴
+        	self.plc = data[0];//fmbPlcVo가 담긴 리스트 형태리턴
+            //eqptCd를 넘겨서 순간정지,uph,정지로스 데이터 가져오기
+                	
+        	console.log(self.plc);
+     	   var promise2 = CmmAjaxService.selectOne("/mes/bas/selectFmbPlc2.do",{eqptCd : self.plc.eqptCd});
+           promise2.then(function(data){
+           	self.plc2 = data[0];
+           	console.log(self.plc2)
+           	self.plc.alramcnt = self.plc2.alramcnt;
+           	self.plc.norunsum = self.plc2.norunsum;
+           	self.plc.uph = self.plc2.uph;
+           	console.log(self.plc)
+           	console.log(self.plc.norunsum)
+           }
+           ,function(data){
+           	consol.log('fail'+data);
+           });
+           
         }
         ,function(data){
         	alert('fail: '+ data)
+    		console.log('fail'+data);
         });
+  
+       
+ 
     };
     
+
 }]);
 

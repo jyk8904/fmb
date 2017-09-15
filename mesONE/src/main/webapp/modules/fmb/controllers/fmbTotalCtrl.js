@@ -130,6 +130,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			// 계획진도율 가져오기
 			var planProgressPromise = CmmAjaxService.select("/mes/bas/selectPlanProgress.do");
 				planProgressPromise.then(function(data) {
+				console.log(data)
 				$scope.planProgressList = data;
 				var count = 3;														// 다량의 데이터를 나눠 보여줄 횟수
 				var quotient = parseInt($scope.planProgressList.length /count); 	// 몫: 한번에 보여줄 데이터 갯수
@@ -169,6 +170,17 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			}, function(data) {
 				alert('fail: ' + data)
 			});	
+				
+				
+				/*자원해제*/
+				/*planProgressPromise = null;
+				count = null;
+				quotient = null;
+				remainder = null;
+				startRan = null;
+				endRan = null;		
+				filteredData = null;*/
+				
 		}
 		
 /*		function getPlanProgress() {
@@ -250,6 +262,9 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			}, function(data) {
 				alert('fail: ' + data)
 			});
+				/*자원해제*/
+				//gaugeRunRatePromise = null
+				
 		}	
 		
 		function getGaugeRunInfo() {	
@@ -262,6 +277,8 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			}, function(data) {
 				alert('fail: ' + data)
 			});
+				/*자원해제*/
+				//gaugeRunInfoPromise =null;
 		}
 		
 		function getDateRunInfo() {
@@ -295,6 +312,10 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			}, function(data) {
 				alert('fail: ' + data)
 			});
+				/*자원해제*/
+				//dateRunInfoPromise = null;
+				
+				
 		}	
 		
 		function getRankRunInfo() {
@@ -310,6 +331,8 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 			}, function(data) {
 				alert('fail: ' + data)
 			});
+				/*자원해제*/
+				rankRunInfoPromise = null;
 		}	
 
 			
@@ -348,6 +371,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 		/* Desktop Function */
 		// 데스크탑에서만 사용되는 함수 정의
 		function gauge() {
+			 console.log(self.gaugeRunRateList[0].lineGauge);
 		 gauge = AmCharts.makeChart("gauge",
 				{
 					"type": "gauge",
@@ -359,13 +383,13 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					"startDuration": 0,
 					"arrows": [
 						{
-							"value" : 60
+							"value" : self.gaugeRunRateList[0].lineGauge
 						}
 					],
 					"axes": [
-						{
+						{	
 							"axisThickness": 1,
-							"bottomText": "0 %",
+							"bottomText":  self.gaugeRunRateList[0].lineGauge+"%",
 							"bottomTextFontSize": 20,
 							"bottomTextYOffset": -20,
 							"endValue": 100,
@@ -399,7 +423,8 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 					"titles": []
 				}
 			);
-			/*gauge.arrows[0].setValue(self.gaugeRunRateList[0].lineGauge.toString());
+		
+			/*gauge.arrows[0].setValue(self.gaugeRunRateList[0].lineGauge);
 			gauge.axes[0].setBottomText(self.gaugeRunRateList[0].lineGauge.toString() + "%");*/
 		}
 		
@@ -922,6 +947,7 @@ angular.module('app').controller('FmbTotalCtrl',[	'CmmAjaxService',
 									"id": "GaugeBand-3",
 									"innerRadius": "95%",
 									"startValue": 70
+									
 								}
 							]
 						}

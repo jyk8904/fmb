@@ -28,11 +28,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dsinfo.fmb.service.*;
+import com.dsinfo.bcf.service.MBcfBizService;
+import com.dsinfo.bcf.service.impl.MBcfTransactionManager;
+import com.dsinfo.fmb.service.FmbBgImageVO;
+import com.dsinfo.fmb.service.FmbImageVO;
 import com.dsinfo.sys.service.MSysRtnMsgVO;
 import com.mysql.fabric.Response;
-import com.dsinfo.bcf.service.*;
-import com.dsinfo.bcf.service.impl.MBcfTransactionManager;
 
 @RestController
 public class FmbImageSaveCtrl {
@@ -60,7 +61,8 @@ public class FmbImageSaveCtrl {
         MBcfTransactionManager transaction = null;
         String sqlID = null;
         
-        String path = "D://git/fmb/mesONE/src/main/webapp/assets/img/system";
+        /*String path =  "C://Program Files/Apache Software Foundation/Tomcat 8.5/webapp/assets/img/system";*/
+        String path =  "D://git/fmb/mesONE/src/main/webapp/assets/img/system";
         String logicalPath = "assets/img/system/";
         
         Map returnObject = new HashMap();

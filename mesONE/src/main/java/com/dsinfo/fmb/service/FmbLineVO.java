@@ -4,29 +4,111 @@ package com.dsinfo.fmb.service;
 /*LINE별 생산실적 모니터링 VO*/
 
 public class FmbLineVO extends MBasAbsVO {
-
+	private String prod_mon;
 	private String fact_id;
 	private String line_cd;
 	private String line_nm;
-	private String d_goal;
-	private String n_goal;
+	private int d_goal;
+	private int n_goal;
 	private String eqpt_sts;
-	private String d_count;
-	private String n_count;
-	private String d_rate;
-	private String n_rate;
+	private int d_count;
+	private int n_count;
+	private int d_rate;
+	private int n_rate;
+	private int defect_count;
 	private String line_top_nm;
 	private String line_mid_nm;
 	private String line_bot_nm;
-	
+	private int d_goal_mon;
+	private int n_goal_mon;
+	private int d_count_mon;
+	private int n_count_mon;
+	private int d_rate_mon;
+	private int n_rate_mon;
+	private int defect_count_mon;
 	//생성자
 	public FmbLineVO() {
 	}
 
 	//메소드명 지정방식 :  Camel Case
 
+	
+	
+	
 	public String getFactId() {
 		return fact_id;
+	}
+
+	public String getProdMon() {
+		return prod_mon;
+	}
+
+	public void setProdMon(String prod_mon) {
+		this.prod_mon = prod_mon;
+	}
+
+	public int getDefectCount() {
+		return defect_count;
+	}
+
+	public void setDefectCount(int defect_count) {
+		this.defect_count = defect_count;
+	}
+
+	public int getDGoalMon() {
+		return d_goal_mon;
+	}
+
+	public void setDGoalMon(int d_goal_mon) {
+		this.d_goal_mon = d_goal_mon;
+	}
+
+	public int getNGoalMon() {
+		return n_goal_mon;
+	}
+
+	public void setNGoalMon(int n_goal_mon) {
+		this.n_goal_mon = n_goal_mon;
+	}
+
+	public int getDCountMon() {
+		return d_count_mon;
+	}
+
+	public void setDCountMon(int d_count_mon) {
+		this.d_count_mon = d_count_mon;
+	}
+
+	public int getNCountMon() {
+		return n_count_mon;
+	}
+
+	public void setNCountMon(int n_count_mon) {
+		this.n_count_mon = n_count_mon;
+	}
+
+	public int getDRateMon() {
+		return d_rate_mon;
+	}
+
+	public void setDRateMon(int d_rate_mon) {
+		this.d_rate_mon = d_rate_mon;
+	}
+
+	public int getNRateMon() {
+		return n_rate_mon;
+	}
+
+	public void setNRateMon(int n_rate_mon) {
+		this.n_rate_mon = n_rate_mon;
+	}
+
+	public int getDefectCountMon() {
+		return defect_count_mon;
+	}
+
+	public void setDefectCountMon(int defect_count_mon) {
+		this.defect_count_mon = defect_count_mon;
 	}
 
 	public void setFactId(String fact_id) {
@@ -49,19 +131,19 @@ public class FmbLineVO extends MBasAbsVO {
 		this.line_nm = line_nm;
 	}
 	
-	public String getDGoal() {
+	public int getDGoal() {
 		return d_goal;
 	}
 
-	public void setDGoal(String d_goal) {
+	public void setDGoal(int d_goal) {
 		this.d_goal = d_goal;
 	}
 
-	public String getNGoal() {
+	public int getNGoal() {
 		return n_goal;
 	}
 
-	public void setNGoal(String n_goal) {
+	public void setNGoal(int n_goal) {
 		this.n_goal = n_goal;
 	}
 
@@ -73,35 +155,35 @@ public class FmbLineVO extends MBasAbsVO {
 		this.eqpt_sts = eqpt_sts;
 	}
 
-	public String getDRate() {
+	public int getDRate() {
 		return d_rate;
 	}
-	public String getDCount() {
+	public int getDCount() {
 		return d_count;
 	}
 
-	public void setDCount(String d_count) {
+	public void setDCount(int d_count) {
 		this.d_count = d_count;
 	}
 
-	public String getNCount() {
+	public int getNCount() {
 		return n_count;
 	}
 
-	public void setNCount(String n_count) {
+	public void setNCount(int n_count) {
 		this.n_count = n_count;
 	}
 
 
-	public void setDRate(String d_rate) {
+	public void setDRate(int d_rate) {
 		this.d_rate = d_rate;
 	}
 
-	public String getNRate() {
+	public int getNRate() {
 		return n_rate;
 	}
 
-	public void setNRate(String n_rate) {
+	public void setNRate(int n_rate) {
 		this.n_rate = n_rate;
 	}
 

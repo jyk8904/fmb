@@ -66,13 +66,24 @@ angular
     self.eqptParamVo.id ='';
     self.eqptParamVo.eqptCnm ='';
     	
-	//plc parameter
+    //안돈설비 param
+    self.andonEqptParamVo = { factId : 'Comb'
+    						, eqptType: 'ANDON'
+    						, id 		: ''
+    						, eqptCnm : ''
+    		
+    }
+    		
+
+
+    //plc parameter
 	self.plcParamVo={};
 	self.plcParamVo.plcId ='';
 	self.plcParamVo.factId ='';
 	//self.plcParamVo.factId = CmmFactSrvc.getSelectedFactId() ;
 	
-	self.stsData = {};
+	self.stsData = [];
+	self.andonStsData = [];
 	self.BgList = {
 	    factId: 'B'
 	};
@@ -101,9 +112,17 @@ angular
     getBgImageList();      
    	getData();
    	dataChk();
-   
+   	
+   	
+    $scope.hover=[];
+    $scope.hoverIn = function(index){
+   	 $scope.hover[index] = true;
+    }
+    $scope.hoverOut = function(index){
+   	 $scope.hover[index] = false;
+    }
 	function dataChk(){ //function(getplcList, getEqptList, bindData) 순서제어
-	   	    if(self.preplcList==undefined || self.preeqptList==undefined){//모든 데이터를 읽지 못했을경우
+	   	    if(self.preplcList==undefined || self.preeqptList==undefined||self.preAndonEqptList==undefined){//모든 데이터를 읽지 못했을경우
 	   	    	$timeout(function(){
 /*		   	    	console.log(self.plcList==undefined, self.plcList)
 				   	console.log(self.eqptList==undefined, self.eqptList)*/
@@ -114,6 +133,7 @@ angular
 			 
 	   		}else{ 													//모든 데이터를 읽어들인 경우
 	   			bindData();
+	   			andonBindData();
 	   		}
 	   	}
     
@@ -137,7 +157,8 @@ angular
         	self.plc = data;//fmbPlcVo가 담긴 리스트 형태리턴
         }
         ,function(data){
-        	alert('fail: '+ data)
+        	/*alert('fail: '+ data)*/
+    		console.log('fail'+data);
         });
     	
     	 self.showModal = !self.showModal;
@@ -164,7 +185,8 @@ angular
 
             }
         }, function (data) {
-            alert('fail:' + data)
+        	/*alert('fail: '+ data)*/
+    		console.log('fail'+data);
         });
     }
 
@@ -179,15 +201,17 @@ angular
     var customFullscreen = false;
     
     $scope.cancel = function() {
+    	$mdDialog.cancel();
+    };
+    $scope.hide = function() {
     	$mdDialog.hide();
     };
-    
+     
     //팝업클릭
-    $scope.showAdvanced = function(plcId,ev) {
-    	
-    	CmmFactSrvc.setPlcData(plcId);
-    	console.log(CmmFactSrvc.getPlcData());
+    $scope.showAdvanced = function(id,ev) {
     	//PlC 데이터 저장 하는 부분.
+    	CmmFactSrvc.setPlcData(id);
+    	console.log(CmmFactSrvc.getPlcData());
     	//CmmFactSrvc.setPlcData(ev);
     	
         $mdDialog.show({
@@ -211,54 +235,99 @@ angular
     //설비 이미지리스트 가져오기 메소드
     function getEqptList(){
 	    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
-	    	console.log(self.eqptParamVo)
 	    	eqptPromise.then(function(data) {
 	    		self.preeqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
-	    		console.log("리턴 왜 널?"+data);
+	    		
 	    		self.eqptList = self.preeqptList; 
 	    		//bindData();
-	    		console.log(self.eqptList);
-	    		
 	    	}, function(data){
-	    		alert('fail: '+ data)
+	    		/*alert('fail: '+ data)*/
+	    		console.log('fail'+data);
 	    	});
     }
-    
     function bindData(){
+    	console.log("bindData")
 		for(var i =0; i < self.eqptList.length; i++){
-			var target = $filter('filter')(self.plcList, {plcId : self.eqptList[i].plcId});
-			self.stsData[i]= target[0].eqptSts;
+			var target = $filter('filter')(self.plcList, {plcId : self.eqptList[i].id});
+			self.stsData[i]= target[0];
 		}
 	};
+	
+    function getAndonList(){
+    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.andonEqptParamVo);
+    	eqptPromise.then(function(data) {
+    		self.preAndonEqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
+    		self.andonEqptList = self.preAndonEqptList; 
+    		//bindData();
+    	}, function(data){
+    		/*alert('fail: '+ data)*/
+    		console.log('fail'+data);
+    	});
+}
+
+    function andonBindData(){
+    	console.log("andonBindData")
+		for(var i =0; i < self.andonEqptList.length; i++){
+			var target = $filter('filter')(self.plcList, {plcId : self.andonEqptList[i].id});
+			self.andonStsData[i] = target[0];
+		}
+	};
+    
+
     
 	//설비 plc 데이터 가져오기
 	function getPlcList(){
    		var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
        	plcPromise.then(function(data) {
-       		
-       		//랜덤값 입력
+       		// 설비상태 카운트 변수
+       		self.count1=0;
+       		self.count2=0;
+       		self.count4=0;
+       		       		
+       		/* //랜덤값 입력
        		for(var i = 0; i< data.length; i++){
            		var random = Math.floor(Math.random()*3);
            		if(random==0){
+           			self.count0++;
            			random = 4;
+           		}else if(random==1){
+           			self.count1++;
+           		}else if(random==2){
+           			self.count2++;
            		}
            		data[i].eqptSts = random;
+       		}*/
+       		for(var i=0; i< data.length; i++){
+       			if(data[i].plcId.split('_')[0]=="MPLC"){
+       				if(data[i].eqptSts ==0 ||data[i].eqptSts ==4){		//알람 카운트
+           				self.count4++;
+           			}else if(data[i].eqptSts ==1){	//가동 카운트
+           				self.count1++;
+           			}else if(data[i].eqptSts ==2){	//대기 카운트
+           				self.count2++;
+           			}
+       			}
        		}
        		$scope.plcList = data;
-       		self.preplcList = data; //fmbplcVo가 담긴 리스트 형태리턴
+       		
+       		//데이터를 가져오는동안 깜빡임 방지
+       		self.preplcList = data; 
        		self.plcList = self.preplcList;
+       		
        	}, function(data){
-       		alert('fail: '+ data)
+       		/*alert('fail: '+ data)*/
+    		console.log('fail'+data);
        });
 	}
 	
 	function getData(){
 		self.preplcList = undefined;
 		self.preeqptList = undefined;
+		self.preAndonEqptList = undefined;
 		
 		getEqptList();
+		getAndonList();	
    		getPlcList();
-   			   		
 	} 	
     	
 }]);

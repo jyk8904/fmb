@@ -81,9 +81,9 @@ angular
 	self.btnFmbMonClick = btnFmbMonClickHandler;
 	self.btnFmbAndonClick = btnFmbAndonClickHandler;
 	self.btnFmbTbmClick = btnFmbTbmClickHandler;
-	self.btnFmbLineAClick = btnFmbLineAClickHandler;
+	/*self.btnFmbLineAClick = btnFmbLineAClickHandler;
 	self.btnFmbLineBClick = btnFmbLineBClickHandler;
-	self.btnFmbLineCClick = btnFmbLineCClickHandler;
+	self.btnFmbLineCClick = btnFmbLineCClickHandler;*/
 	self.btnFmbProdClick = btnFmbProdClickHandler;
 	self.btnFmbSpcClick = btnFmbSpcClickHandler;
 	self.btnFmbTotalClick = btnFmbTotalClickHandler;
@@ -92,6 +92,11 @@ angular
 	self.btnWorkerStop = function () { workerList.workerStop(workerList.worker2); self.switchPage = "off"}
    	self.LotationSetting = LotationSetting;
    	self.submit1 = submitLotationSetting;
+   	
+   	self.switchNumChk= switchNumChk;
+   	self.dataTimeChk= dataTimeChk;
+   	
+   	
 /*    self.onSwipeRight = function() {
     	alert("do it!!!");
         //$mdSidenav('left1').open();
@@ -106,8 +111,9 @@ angular
 		   	 }, 100);
    	   	}
 
-  
+   	 
 
+   	
    	$scope.onSwipeLeft = toggleLeft;
     	
     function toggleLeft() {
@@ -129,31 +135,53 @@ angular
 	});
    
     //전환될 페이지 리스트
-	var pageList = [{ "pageNm": "FmbAndon", 	"pageNmKr": "안돈 모니터링"		}
-				  , { "pageNm": "FmbMon", 		"pageNmKr": "설비 가동현황"		}
+	var pageList = [/*{ "pageNm": "FmbAndon", 	"pageNmKr": "안돈 모니터링"		}*/
+				   { "pageNm": "FmbMon", 		"pageNmKr": "설비 가동현황"		}
 			      , { "pageNm": "FmbTotal", 	"pageNmKr": "생산자원 종합현황"	}
-			      , { "pageNm": "FmbLineA", 	"pageNmKr": "라인별 생산실적(A)"}
+/*			      , { "pageNm": "FmbLineA", 	"pageNmKr": "라인별 생산실적(A)"}
 			      , { "pageNm": "FmbLineB",		"pageNmKr": "라인별 생산실적(B)"}
-			      , { "pageNm": "FmbLineC", 	"pageNmKr": "라인별 생산실적(C)"}
+			      , { "pageNm": "FmbLineC", 	"pageNmKr": "라인별 생산실적(C)"}*/
 			      , { "pageNm": "FmbTbm", 		"pageNmKr": "TBM"     		}
 			      , { "pageNm": "FmbProd", 		"pageNmKr": "생산실적 외 모니터링"}
 			       ]
-   self.Setting=[];
+	self.Setting=[];
+	$scope.alarmList=[];
+	getAlarmList();
 	
 	//설비 plc 알람정보 데이터 가져오기
-  	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
-    $scope.alarmList = {}
-  	plcPromise.then(function(data) {
-  		for (var i = 0; i < data.length; i++) {
-  			if(data[i].eqptSts=='0'){ //sts== 4일경우 하단바에 알람 발생 경고()
-  				$scope.alarmList[i]=data[i];
-  			}
-  		}
-  	}, function(data){
-  		alert('fail: '+ data)
-  	});
-  	
-  	
+	function getAlarmList(){
+		 if($location.url() == '/'+'FmbMode'){ // mode일 경우 알람정보 지우기
+	      	 $scope.alarmList = [];
+   		}else{
+   			var alarmList = [];
+   			
+   			var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
+   				var alarmListWdth = 0;
+				plcPromise.then(function(data) {
+					for (var i = 0; i < data.length; i++) {
+						if(data[i].eqptSts=='0'|| data[i].eqptSts=='4'){ //sts== 0이나 4일경우 하단바에 알람 발생 경고()
+							data[i].charLen = String(data[i].lineNm).length; // 라인명 글자수 
+							data[i].wdth= data[i].charLen * 14.5 + 311;//(li의 width값 = 글자수 *15px + 311px)
+							alarmListWdth = alarmListWdth + data[i].wdth + 10; //margin-right:10px
+							console.log(alarmListWdth)
+							alarmList.push(data[i]);
+						}
+					}
+					
+					$scope.alarmList = alarmList;
+					$scope.alarmListLen = $scope.alarmList.length;	// 알람리스트 갯수
+					$scope.alarmListWdth = alarmListWdth;
+					console.log($scope.alarmListWdth)
+					//alarmList = null;
+					plcPromise = null;
+				}, function(data){
+					/*alert('fail: '+ data)*/
+					console.log('fail'+data);
+				});
+   		}
+		
+	}
+		  	
    //알람정보워커
    //Worker3Start();
    defaultLotationSetting();
@@ -175,19 +203,19 @@ angular
 	   }else{
 
 		   for(var j =0; j<pageList.length; j++){ // 기본설정값 지정
-			   if (j == 2) {
-				   self.Setting[j] = {"pageSeq":j+1, "rotateTime": Number(30), "dataTime": Number(30), "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr, "switcher" : true}
+	/*		   if (j == 2) {
+				   	self.Setting[j] = {"pageSeq":j+1, "rotateTime": Number(30), "dataTime": Number(30), "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr, "switcher" : true}
 			   }else {
-			   	self.Setting[j] = {"pageSeq":j+1, "rotateTime": Number(10), "dataTime": Number(5), "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
-			   }
-			   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(5), "switchNum": Number(3),  "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
+			   		self.Setting[j] = {"pageSeq":j+1, "rotateTime": Number(10), "dataTime": Number(5), "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
+			   }*/
+			   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(5), "switchNum": Number(1),  "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
 		   }
 		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));		//로컬스토리지 저장
 	   }
 	   workerList.worker2.data =JSON.parse(localStorage.getItem('SettingTime'));    //worker2의 data로 저장
    }
 		 
-   //설비 plc 알람정보 데이터 가져오기
+/*   //설비 plc 알람정보 데이터 가져오기
    var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
    self.alarmList = {}
    plcPromise.then(function (data) {
@@ -196,18 +224,24 @@ angular
                self.alarmList[i] = data[i];
            }
        }
+       plcPromise = null;
    }, function (data) {
-       alert('fail: ' + data)
+	   alert('fail: '+ data)
+		console.log('fail'+data);
    });
-
-
+*/
+   //페이지 전환설정 submit
    function submitLotationSetting() {
+	   
 		  var SettingTime = [];
-		  var rotationChk= false;
+		  var rotationChk= false;	//모든페이지가 off인지 체크하는 변수
+
 		  for(var j =0; j<pageList.length; j++){
+			  
 			  if (self.Setting[j].switcher == true){
 				   rotationChk = true;
 			  }
+
 		  }
 		  if(rotationChk==false){
 			   window.alert("적어도 하나의 페이지는 선택되어야합니다.")
@@ -215,14 +249,11 @@ angular
 			   /* 모든 페이지를 off시키고 start 버튼을 클릭했을때 무한루프생기는 것을 
 			    * 방지하기 위해서 모두 off할수 없도록 해야함
 			    * */ 
-			   
+
 		  }else{
-			  
-			  
-		  for(var j =0; j<pageList.length; j++){
-			   SettingTime[j] = {"pageSeq":j+1,  "dataTime":  Number(self.Setting[j].dataTime), "switchNum":  Number(self.Setting[j].switchNum), "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr, "switcher" : self.Setting[j].switcher}
-			  
-		   }
+			  for(var j =0; j<pageList.length; j++){
+				   SettingTime[j] = {"pageSeq":j+1,  "dataTime":  Number(self.Setting[j].dataTime), "switchNum":  Number(self.Setting[j].switchNum), "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr, "switcher" : self.Setting[j].switcher}
+			   }
 		  		localStorage.setItem('SettingTime', JSON.stringify(SettingTime));
 			   for(var i=0; i<localStorage.length; i++){
 				   console.log(localStorage.getItem(localStorage.key(i)));
@@ -232,8 +263,32 @@ angular
 			   self.showModal = false;
 		   }
 		   
+		  SettingTime = null;
+		  rotationChk = null;
+		  
 	   }
+   
+ 	function dataTimeChk(index){
+	 		console.log(self.Setting[index].dataTime)
+	 		if(self.Setting[index].dataTime<5||self.Setting[index].dataTime==null){
+	 			alert("데이터 갱신 시간은 5초 이상이어야합니다.")
+	 			self.Setting[index].dataTime=5;
+	 		}
+	 	}
 
+	function switchNumChk(index){
+		if(self.Setting[index].switchNum<1||self.Setting[index].switchNum==null){
+			alert("데이터 갱신 횟수는 1회 이상이어야합니다.");
+			self.Setting[index].switchNum=2;
+		}
+		if(String(self.Setting[index].switchNum).lastIndexOf('.')!=-1){
+			alert("데이터 갱신 횟수는 정수만 입력가능합니다.")
+			self.Setting[index].switchNum=2;
+		}
+	}
+
+	
+	
    function btnFmbMonClickHandler() {
          //callParamSetting();
 	   	toggleLeft();
@@ -248,7 +303,7 @@ angular
     	toggleLeft();
          $location.url('/FmbTbm');
       }
-      function btnFmbLineAClickHandler() {
+    /*  function btnFmbLineAClickHandler() {
     	 toggleLeft();
           $location.url('/FmbLineA');
        }
@@ -259,7 +314,7 @@ angular
       function btnFmbLineCClickHandler() {
     	  toggleLeft();
           $location.url('/FmbLineC');
-       }
+       }*/
       function btnFmbSpcClickHandler() {
     	  toggleLeft();
           $location.url('/FmbSpc');
@@ -303,6 +358,7 @@ angular
     		
     		var nextPage = pageList[curPageSeq].pageNm
     		$location.url('/'+nextPage);
+    		nextPage = null;
     		
     	}else{						//다른페이지에서 시작할경우
     		curPageSeq = curPageSeq + 1;
@@ -317,8 +373,12 @@ angular
         	}
     		var nextPage=pageList[curPageSeq].pageNm
     		$location.url('/'+nextPage);
-    	 
+    		nextPage = null;
      	}
+    	
+    	curPageSeq = null;
+    	curPage = null;
+    	
     	
     }	
     
@@ -341,23 +401,9 @@ angular
            
            // 워커로부터 전달되는 메시지를 받는다.
            		workerList.worker3.worker.onmessage = function(evt){ 
-           	    //설비 plc 데이터 가져오기
-               	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
-               	plcPromise.then(function(data) {
-               	 if($location.url() == '/'+'FmbMode'){ // mode일 경우 알람정보 지우기
-                  	 $scope.alarmList = {};
-               	}else{  
-               		for (var i = 0; i < data.length; i++) {
-               			if(data[i].eqptSts=='0'){ //sts== 4일경우 하단바에 알람 발생 경고()
-               			$scope.alarmList[i]=data[i];
-               			}
-               		}
-                }
-               	}, function(data){
-               		alert('fail: '+ data)
-               });
-               	
-                self.alarmListLen = Object.keys($scope.alarmList).length;
+	           	    //설비 plc 데이터 가져오기
+	           		getAlarmList();
+	           		//self.alarmListLen = Object.keys($scope.alarmList).length;
              }  
         }
         else {
@@ -373,8 +419,6 @@ angular
         var objLogin = $scope.id 			//id 저장 변수	
         var objPasswd = $scope.pw;			//pw 저장 변수
         var objAutoLogin= $scope.autoLogin; //로그인 여부 저장 변수
-        console.log(objLogin);
-        console.log(objPasswd);
         if(objLogin == undefined || objLogin==""){
             alert("아이디를 입력하세요");
             self.focusId = true;
@@ -387,7 +431,7 @@ angular
         }
         // 서버로 전송
         // 아이디, 패스워드 체크
-        if(((objLogin =="aaa"|| objLogin =="developer") && objPasswd =="bbb") || (objLogin=="CTR" && objPasswd=="ctr")){
+        if(((objLogin =="aaa"|| objLogin =="admin") && objPasswd =="bbb") || (objLogin=="CTR" && objPasswd=="ctr")){
         	//console.log("로그인")
         	//console.log(objAutoLogin);
         	//console.log(localStorage.getItem("autoLogin"))
@@ -414,7 +458,9 @@ angular
         	alert("아이디와 비밀번호를 확인하세요");
         	return;
         }
-       
+        objLogin = null;
+        objPasswd = null;
+        objAutoLogin = null;
     }
     /* 로그 아웃 */
     function fnLogout(){
@@ -448,7 +494,9 @@ angular
            
             fnLogin();    
         }    // end if
+        evKeyup = null;
     } 
+    
 
     // 모바일 체크 함수 정의
 	function isMobileFunc(){
@@ -465,5 +513,4 @@ angular
 		console.log($scope.isMobile)
 		console.log( navigator.userAgent)
 	}
-	
 }]);

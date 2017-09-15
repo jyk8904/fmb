@@ -86,7 +86,6 @@ public class FmbEqptCtrl {
                  System.out.println(vo.getStatus());
                  
                 if (vo.getStatus().equals("update")) {
-                    System.out.println(vo.getEqptCnm());
                     sqlID = "sql-bas-info.updateFmbEqpt";
                     mBcfBizService.update("sql-bas-info.updateFmbEqpt", vo);
                 } else if (vo.getStatus().equals("delete")) {
