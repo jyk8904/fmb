@@ -17,7 +17,7 @@
 <!-- ngview 내부 페이지 -->
 <div test-ctrl class='bc-screen' style="margin:0">
 <!-- ngview 내부 header -->
-<bc-form-header logo='assets/img/system/logo.png' title="라인007 생산 실적" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
+<bc-form-header logo='assets/img/system/logo.png' title="LINE별 생산실적 7반" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
 </bc-form-header>	
 
 
@@ -57,19 +57,19 @@
 		    <div><p style="margin-bottom:0;">{{line.lineNm.split(' ')[0]}}</p><p>{{line.lineNm.split(' ')[1]}} {{line.lineNm.split(' ')[3]}}</p></div>
 		  </div>
 		  <div  style="color:white;">
-		   {{vm.parseInt(line.dgoal) + vm.parseInt(line.ngoal)}}
+		   {{vm.parseInt(line.dgoal) + vm.parseInt(line.ngoal)|number:0}}
 		  </div>
 		  <div style="color:white;">
-		    {{vm.parseInt(line.dcount)}}
+		    {{vm.parseInt(line.dcount)|number:0}}
 		  </div>
 		  <div style="color:white;"> 
-		   {{vm.parseInt(line.ncount)}}
+		   {{vm.parseInt(line.ncount)|number:0}}
 		  </div>
 		  <div style="color:white;">	
-		    {{vm.parseInt(line.dcount) + vm.parseInt(line.ncount)}}
+		    {{vm.parseInt(line.dcount) + vm.parseInt(line.ncount)|number:0}}
 		  </div>
 		  <div f style="color:white;">
-		    {{vm.parseInt(line.drate) + vm.parseInt(line.nrate)}}
+		     {{(vm.parseInt(line.dcount) + vm.parseInt(line.ncount))/(vm.parseInt(line.dgoal) + vm.parseInt(line.ngoal)) *100|number:1}}
 		  </div>
 		    <div ng-switch on="line.eqptSts" >
 				<img ng-switch-when="0" class="obj lineBtn" src="/mes/assets/img/button/Red25.png" align="center">

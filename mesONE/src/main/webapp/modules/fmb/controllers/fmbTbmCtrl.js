@@ -34,7 +34,8 @@ angular
     
     // 모바일 체크 함수 실행
 	isMobileFunc();
-    
+	//워커3(알람정보워커)가 없을경우 start
+    $scope.Worker3Start()
 	//데이터 가져오기
     getTbmList();
     
@@ -61,7 +62,6 @@ angular
     	var promise = CmmAjaxService.selectAll("/mes/bas/selectFmbTbm.do");
     	promise.then(function(data){
     		self.Tbm = data;
-    		console.log(self.Tbm);
     	}
     	,function(data){
     		alert('fail: '+ data)

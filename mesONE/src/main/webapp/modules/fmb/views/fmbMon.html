@@ -90,8 +90,12 @@
 				  		 z-index:{{eqpt.cssZindex}};"> -->
 				  <div class="{{andon.eqptCnm}}" type="{{andon.eqptType}}" plc="{{andon.id}}"
 				  ng-style="{'top':andon.cssTop, 'left': andon.cssLeft, 'width':andon.cssWidth, 'height':andon.cssHeight,'z-index':andon.cssZindex}">
-				  		
-	              <div ng-switch on="vm.andonStsData[$index].eqptSts">  
+				  <!-- test -->
+				  <img src="{{andon.stsImg0}}">
+			 	  <img src="{{andon.stsImg1}}">
+			  	  <img src="{{andon.stsImg2}}">
+			  	  <!-- test -->
+	              <!-- <div ng-switch on="vm.andonStsData[$index].eqptSts">  
 	               <img ng-switch-when="0" class="obj" src="{{andon.stsImg4}}" align="center" ng-style="{'width':andon.cssWidth, 'height':andon.cssHeight, 'position':'absolute'}">
 	               <img ng-switch-when="1" class="obj" src="{{andon.stsImg1}}" align="center" ng-style="{'width':andon.cssWidth, 'height':andon.cssHeight, 'position':'absolute'}">
 	               <img ng-switch-when="2" class="obj" src="{{andon.stsImg2}}" align="center" ng-style="{'width':andon.cssWidth, 'height':andon.cssHeight, 'position':'absolute'}">
@@ -99,7 +103,7 @@
 	               <img ng-switch-when="4" class="obj" src="{{andon.stsImg4}}" align="center" ng-style="{'width':andon.cssWidth, 'height':andon.cssHeight, 'position':'absolute'}">
 	               <img ng-switch-default  class="obj" src="{{andon.stsImg0}}" align="center" ng-style="{'width':andon.cssWidth, 'height':andon.cssHeight, 'position':'absolute'}">
 	             
-	              </div> 
+	              </div>  -->
 	               <!-- ng-show="hover[$index] -->
 				</div>
 			</li>

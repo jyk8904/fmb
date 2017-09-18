@@ -15,13 +15,13 @@
 
  onmessage = function(evt){
 	 console.log(evt.data[0])
-	var jsonData = evt.data[0];			//페이지 세팅데이터
-	var maxLength = jsonData.length;
-	var curPageSeq = evt.data[1];		//현재페이지
+	var jsonData = evt.data[0];			//페이지 세팅데이터(순환순서, 시간, 횟수, 이름, 순환되는페이지포함여부 )
+	var maxLength = jsonData.length;	//총 페이지 갯수
+	var curPageSeq = evt.data[1];		//현재페이지(workerStart postMessage를 보내는 페이지)
 	var switchPage = evt.data[2];		//페이지를 전환하는지 여부 on, off
 	var switchNum = jsonData[curPageSeq].switchNum; //현재페이지의 갱신횟수
     var interval = jsonData[curPageSeq].dataTime *1000;	//현재페이지의 갱신시간 
-    var postNum = 0;								//페이지 갱신 횟수
+    var postNum = 0;								//페이지가 갱신한 횟수
 	var dataChange = true;							//데이터 갱신을 계속 하는지 여부
 	
 	var nextPage =getNextPage();
@@ -32,25 +32,29 @@
     }else{				  //페이지 내에서 데이터만 갱신중, 계속 페이지 갱신 post
     	setInterval(post2, interval);	//계속 페이지 갱신
     }  
-
+    
+    //페이지 전환중 -> 페이지 갱신 횟수만큼 post, 후 페이지 전환
     function post(){
-    	postNum+=1;
+    	postNum+=1;// 갱신한횟수
     	if(postNum>=switchNum){
-    		dataChange=false;
+    		dataChange=false;	//데이터 갱신 여부
     	}
-    	postMessage([dataChange, nextPage]);
+    	console.log("post1 " + postNum + "/"+ switchNum);
+    	postMessage([dataChange, nextPage]); //데이터갱신여부, 전환할 페이지
     }
+    //페이지 내에서 데이터만 갱신중, 계속 페이지 갱신 post
     function post2(){
+    	console.log("post2(무한 데이터 갱신)")
        	postMessage([dataChange, nextPage]);
     }
     
-    function getNextPage(){
+    function getNextPage(){ //다음 페이지를 구하는 function(순환되는 페이지포함여부, 마지막페이지여부)
     		//다른 페이지에서 시작한경우 seq+1
         	curPageSeq = curPageSeq + 1;
         	if(curPageSeq>=maxLength){//현재 마지막페이지인경우 변경될 페이지를 첫페이지로 지정
         		curPageSeq = 0;
     	    }
-        	while(jsonData[curPageSeq].switcher == false){
+        	while(jsonData[curPageSeq].switcher == false){// 순환되는 페이지 포함여부가 true일때까지 반복.
         		curPageSeq = curPageSeq + 1;
         		if(curPageSeq>=maxLength){
         			curPageSeq = 0;

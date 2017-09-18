@@ -193,11 +193,11 @@ angular.module('app').factory('CmmAjaxService', ['CmmModalSrvc', '$http', '$q','
     
     function del(url, jsonObj) {
         var deferred = $q.defer();
-        console.log(jsonObj)
+       // console.log(jsonObj)
 		CmmModalSrvc.getYesNo('알림','삭제하시겠습니까?' ).then(
     		function (result) {
     			
-    			console.log(result)
+    			//console.log(result)
     			if (result == true) { // yes버튼 클릭
     			    
     				$http.post(url, jsonObj)

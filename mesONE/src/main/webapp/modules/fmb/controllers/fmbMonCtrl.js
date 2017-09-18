@@ -57,7 +57,8 @@ angular
     var self = this;
     var workerList = CmmWorkerSrvc;
     $scope.isMobile = false;
-    
+  //워커3(알람정보워커)가 없을경우 start
+    $scope.Worker3Start()
     //설비parameter
     self.eqptParamVo = {};
     //self.eqptParamVo.factId = CmmFactSrvc.getSelectedFactId() ;
@@ -73,7 +74,9 @@ angular
     						, eqptCnm : ''
     		
     }
-    		
+    
+   $scope.Worker3Start()
+   
 
 
     //plc parameter
@@ -147,8 +150,8 @@ angular
 		}else{
 			$scope.isMobile =  false;
 		}
-		console.log($scope.isMobile)
-		console.log( navigator.userAgent)
+		//console.log($scope.isMobile)
+		//console.log( navigator.userAgent)
 	}
 	
 	function getSelectedPlc(){
@@ -211,7 +214,7 @@ angular
     $scope.showAdvanced = function(id,ev) {
     	//PlC 데이터 저장 하는 부분.
     	CmmFactSrvc.setPlcData(id);
-    	console.log(CmmFactSrvc.getPlcData());
+    	//console.log(CmmFactSrvc.getPlcData());
     	//CmmFactSrvc.setPlcData(ev);
     	
         $mdDialog.show({
@@ -246,7 +249,7 @@ angular
 	    	});
     }
     function bindData(){
-    	console.log("bindData")
+    	//console.log("bindData")
 		for(var i =0; i < self.eqptList.length; i++){
 			var target = $filter('filter')(self.plcList, {plcId : self.eqptList[i].id});
 			self.stsData[i]= target[0];
@@ -266,7 +269,7 @@ angular
 }
 
     function andonBindData(){
-    	console.log("andonBindData")
+    	//console.log("andonBindData")
 		for(var i =0; i < self.andonEqptList.length; i++){
 			var target = $filter('filter')(self.plcList, {plcId : self.andonEqptList[i].id});
 			self.andonStsData[i] = target[0];

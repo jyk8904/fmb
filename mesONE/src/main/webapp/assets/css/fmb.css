@@ -55,8 +55,13 @@ img {
 }
 .mouse-over-bar > button{
 	width:135px	;
-	margin-top:5px;
+	margin-top:3px;
 	margin-bottom:5px;
+}
+
+
+.marginTop-11 .md-container{
+	margin-top:-11px;
 }
 /* 로그인 파트 */
 .loginId {
@@ -692,7 +697,7 @@ inputText {
 
 .prodTable >div:not(.row-1)	 .column:first-child{
 	font-size:22px;	
-	letter-spacing: -1px;
+	letter-spacing: -1.5px;
 }
 .prodTable .leftborder{
 	border-left:1px solid rgba(168, 167, 167, 0.47); 
@@ -701,11 +706,16 @@ inputText {
 	flex-basis:0px;
 }
 
-.prodTable .column{ 
+.prodTable .column{
+	word-break:keep-all;
 	display:flex; 
 	align-items:center; 
 	justify-content: center;
 	flex-grow:1;
+}
+
+.colorNested > div > div > p{
+	word-break: keep-all;
 }
 
 .prodRow p:nth-child(1){

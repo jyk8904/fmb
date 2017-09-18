@@ -38,6 +38,8 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 		var chartFlag = false;
 		
 		$scope.isMobile = false;
+		//워커3(알람정보워커)가 없을경우 start
+	    $scope.Worker3Start()
 		// 변수 선언 및 디폴트 값 세팅 
 		$scope.dateRunInfoList = {};
 		$scope.planProgressList = {};	
@@ -75,7 +77,7 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 		chartCall = function() {
 			if (chartFlag == true){
 				AmCharts.clear();
-				console.log(AmCharts)
+				//console.log(AmCharts)
 			}
 			chartBind();
 			$timeout.cancel(chartCall);

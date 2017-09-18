@@ -119,7 +119,7 @@ angular
 
 			// Bind mousedown event
 			      element.on('mousedown', function(e) {
-			    	  console.log(scope.rating)
+			    	 // console.log(scope.rating)
 			        e.preventDefault();
 			        startX = e.clientX - element[0].offsetLeft;
 			        startY = e.clientY - element[0].offsetTop;

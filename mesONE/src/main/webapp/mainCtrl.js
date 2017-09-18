@@ -42,7 +42,7 @@ angular
 
     var self = this;
 	var workerList = CmmWorkerSrvc;
-	workerList.worker2.sts = 'on';
+	workerList.worker2.sts = 'on'; //페이지 순환여부	
 	self.switchPage = workerList.worker2.sts;
 	var winwin;
 	$scope.isMobile = false;
@@ -109,7 +109,7 @@ angular
    	
    	self.switchNumChk= switchNumChk;
    	self.dataTimeChk= dataTimeChk;
-   	
+   	$scope.Worker3Start = Worker3Start;
    	
 /*    self.onSwipeRight = function() {
     	alert("do it!!!");
@@ -152,21 +152,21 @@ angular
 	var pageList = [/*{ "pageNm": "FmbAndon", 	"pageNmKr": "안돈 모니터링"		}*/
 				   { "pageNm": "FmbMon", 		"pageNmKr": "설비 가동현황"		}
 			      , { "pageNm": "FmbTotal", 	"pageNmKr": "생산자원 종합현황"	}
-			      , { "pageNm": "FmbLine001", 	"pageNmKr": "라인001 생산실적"}
-			      , { "pageNm": "FmbLine002",	"pageNmKr": "라인002 생산실적"}
-			      , { "pageNm": "FmbLine003", 	"pageNmKr": "라인003 생산실적"}
-			      , { "pageNm": "FmbLine004", 	"pageNmKr": "라인004 생산실적"}
-			      , { "pageNm": "FmbLine005", 	"pageNmKr": "라인005 생산실적"}
-			      , { "pageNm": "FmbLine006", 	"pageNmKr": "라인006 생산실적"}
-			      , { "pageNm": "FmbLine007", 	"pageNmKr": "라인007 생산실적"}
+			      , { "pageNm": "FmbLine001", 	"pageNmKr": "LINE별 생산실적 1반"}
+			      , { "pageNm": "FmbLine002",	"pageNmKr": "LINE별 생산실적 2반"}
+			      , { "pageNm": "FmbLine003", 	"pageNmKr": "LINE별 생산실적 3반"}
+			      , { "pageNm": "FmbLine004", 	"pageNmKr": "LINE별 생산실적 4반"}
+			      , { "pageNm": "FmbLine005", 	"pageNmKr": "LINE별 생산실적 5반"}
+			      , { "pageNm": "FmbLine006", 	"pageNmKr": "LINE별 생산실적 6반"}
+			      , { "pageNm": "FmbLine007", 	"pageNmKr": "LINE별 생산실적 7반"}
 			      , { "pageNm": "FmbFactAll", 	"pageNmKr": "반별 생산실적"}
-			      , { "pageNm": "FmbFact001", 	"pageNmKr": "반별 생산실적(001)"}
-			      , { "pageNm": "FmbFact002",	"pageNmKr": "반별 생산실적(002)"}
-			      , { "pageNm": "FmbFact003", 	"pageNmKr": "반별 생산실적(003)"}
-			      , { "pageNm": "FmbFact004", 	"pageNmKr": "반별 생산실적(004)"}
-			      , { "pageNm": "FmbFact005", 	"pageNmKr": "반별 생산실적(005)"}
-			      , { "pageNm": "FmbFact006", 	"pageNmKr": "반별 생산실적(006)"}
-			      , { "pageNm": "FmbFact007", 	"pageNmKr": "반별 생산실적(007)"}
+			      , { "pageNm": "FmbFact001", 	"pageNmKr": "1반 생산실적"}
+			      , { "pageNm": "FmbFact002",	"pageNmKr": "2반 생산실적"}
+			      , { "pageNm": "FmbFact003", 	"pageNmKr": "3반 생산실적"}
+			      , { "pageNm": "FmbFact004", 	"pageNmKr": "4반 생산실적"}
+			      , { "pageNm": "FmbFact005", 	"pageNmKr": "5반 생산실적"}
+			      , { "pageNm": "FmbFact006", 	"pageNmKr": "6반 생산실적"}
+			      , { "pageNm": "FmbFact007", 	"pageNmKr": "7반 생산실적"}
 			      , { "pageNm": "FmbTbm", 		"pageNmKr": "TBM"     		}
 			       ]
 	self.Setting=[];
@@ -230,7 +230,7 @@ angular
 			   }else {
 			   		self.Setting[j] = {"pageSeq":j+1, "rotateTime": Number(10), "dataTime": Number(5), "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
 			   }*/
-			   console.log(self.Setting[j])
+			   //console.log(self.Setting[j])
 			   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(5), "switchNum": Number(1),  "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
 		   }
 		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));		//로컬스토리지 저장
@@ -255,7 +255,6 @@ angular
 */
    //페이지 전환설정 submit
    function submitLotationSetting() {
-	   
 		  var SettingTime = [];
 		  var rotationChk= false;	//모든페이지가 off인지 체크하는 변수
 
@@ -279,7 +278,7 @@ angular
 			   }
 		  		localStorage.setItem('SettingTime', JSON.stringify(SettingTime));
 			   for(var i=0; i<localStorage.length; i++){
-				   console.log(localStorage.getItem(localStorage.key(i)));
+				   //console.log(localStorage.getItem(localStorage.key(i)));
 			   }
 			   workerList.worker2.data =JSON.parse(localStorage.getItem('SettingTime'));
 			   
@@ -289,6 +288,53 @@ angular
 		  SettingTime = null;
 		  rotationChk = null;
 		  
+		  //전환설정창을 나갈때 워커 시작.
+	    	//workerList.worker2.sts = '';	//페이지 전환 여부  상태(워커스타트)
+	    	self.switchPage = workerList.worker2.sts;
+	    	var curPageSeq;			
+	    	var curPage = $location.url();
+	    	for(var i = 0; i<pageList.length; i++){
+	    		if(curPage == '/'+pageList[i].pageNm){
+	    			curPageSeq = i; //현재 페이지 seq
+	    		}
+	    	}
+	    	
+	    	if(curPageSeq==undefined){ 	//메인페이지에서 시작할경우, 바로 첫페이지로 이동
+	    		curPageSeq = 0;
+	    		while(workerList.worker2.data[curPageSeq].switcher == false){
+	        		curPageSeq = curPageSeq + 1;
+	        		if(curPageSeq>=pageList.length){
+	        			curPageSeq = 0;
+	        	    }
+	        	}
+	    		
+	    		var nextPage = pageList[curPageSeq].pageNm
+	    		$location.url('/'+nextPage);
+	    		nextPage = null;
+	    		
+	    	}else{						//다른페이지에서 시작할경우
+	    		curPageSeq = curPageSeq + 1;
+	    		if(curPageSeq>=pageList.length){
+	    			curPageSeq = 0;
+	    	    }
+	    		while(workerList.worker2.data[curPageSeq].switcher == false){
+	        		curPageSeq = curPageSeq + 1;
+	        		if(curPageSeq>=pageList.length){
+	        			curPageSeq = 0;
+	        	    }
+	        	}
+	    		var nextPage=pageList[curPageSeq].pageNm
+	    		$location.url('/'+nextPage);
+	    		nextPage = null;
+	     	}
+	    	
+	    	curPageSeq = null;
+	    	curPage = null;
+		    	
+		    	
+		 
+		  
+		  //console.log(workerList.worker2)
 	   }
    
  	function dataTimeChk(index){
@@ -431,6 +477,12 @@ angular
        }
       
       function LotationSetting() {
+    	  //전환설정창을 켰을때 워커 stop
+          if(workerList.worker2.worker!=undefined){
+          	workerList.worker2.worker.terminate();
+          	workerList.worker2.worker=undefined; 
+          }
+  	        
          self.showModal = !self.showModal;
       }
       
@@ -485,27 +537,28 @@ angular
     
     //설비plc 데이터 불러오기 Web Worker시작 함수
     function Worker3Start(){
+    	console.log("worker3start")
        //브라우저가 웹 워커를 지원하는지 검사한다 .
         if(!!window.Worker){    
            
            //워커가 이미 존재하면 종료시킨다 .
            if(workerList.worker3.worker!=undefined){
-        	   workerList.worker3.worker.terminate();
-        	   workerList.worker3.worker=undefined;
-           }      
-           
-           //새로운 워커(객체)를 생성한다.
-           workerList.worker3.worker= new Worker("worker3.js");       
-         
-           //Setting 정보(화면전환 시간(초))를 Worker로 넘긴다.
-           workerList.worker3.worker.postMessage(6);
-           
-           // 워커로부터 전달되는 메시지를 받는다.
-           		workerList.worker3.worker.onmessage = function(evt){ 
-	           	    //설비 plc 데이터 가져오기
-	           		getAlarmList();
-	           		//self.alarmListLen = Object.keys($scope.alarmList).length;
-             }  
+        	   //workerList.worker3.worker.terminate();
+        	  // workerList.worker3.worker=undefined;
+           }else{
+        	   //새로운 워커(객체)를 생성한다.
+        	   workerList.worker3.worker= new Worker("worker3.js");       
+        	   
+        	   //Setting 정보(화면전환 시간(초))를 Worker로 넘긴다.
+        	   workerList.worker3.worker.postMessage(6);
+        	   
+        	   // 워커로부터 전달되는 메시지를 받는다.
+        	   workerList.worker3.worker.onmessage = function(evt){ 
+        		   //설비 plc 데이터 가져오기
+        		   getAlarmList();
+        		   //self.alarmListLen = Object.keys($scope.alarmList).length;
+        	   }  
+           }
         }
         else {
           alert("현재 브라우저는 웹 워커를 지원하지 않습니다");
@@ -565,7 +618,7 @@ angular
     }
     /* 로그 아웃 */
     function fnLogout(){
-    	console.log("로그아웃");
+    	//console.log("로그아웃");
     	
     	$scope.id = "";
     	$scope.pw = "";

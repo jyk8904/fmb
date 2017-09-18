@@ -35,11 +35,15 @@ angular
         	}
     // 모바일 체크 함수 실행
 	isMobileFunc();
-   
+    
+    //워커3(알람정보워커)가 없을경우 start
+    $scope.Worker3Start()
+    
   	//워커 스타트
   	workerList.workerStart(workerList.worker2, "worker.js");
     //워커 온메세지
-  	workerList.workerOnmessage(workerList.worker2, function(){console.log('onmessage')});
+	workerList.workerOnmessage(workerList.worker2, getData);
+  	//workerList.workerOnmessage(workerList.worker2, function(){console.log('onmessage')});
       /*workerList.workerOnmessage(workerList.worker2, function(){console.log('onmessage')});*/
   	// 워커에게서 메세지를 받을때마다 페이지 전환
 
@@ -47,8 +51,8 @@ angular
 	    var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do",  self.lineParamVo);
 	    promise.then(function(data){
 	    	self.lineList = data;
-	    	console.log(data)
-	    	console.log(self.lineList)
+	    	//console.log(data)
+	    	//console.log(self.lineList)
 	     }
 	    ,function(data){
 	    	console.log('fail: '+ data)

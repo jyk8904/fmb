@@ -49,7 +49,7 @@ angular
          }
       })
       /* marquee 태그 용 */
-/*      .directive('marqueeBanner', function($timeout){
+      /*.directive('marqueeBanner', function($timeout){
     	  return {
     		restrict: 'A',
     		scope: {
@@ -83,9 +83,9 @@ angular
     				  
     				  element[0].style.height = target_height * height_rate + 'px';
     				  element[0].children[0].style.height = chart_height * height_rate + 'px';
-    				  console.log("리사이즈");
-    				  console.log(default_height, chart_height, height_rate)
-    				  console.log(element);
+    				  //console.log("리사이즈");
+    				  //console.log(default_height, chart_height, height_rate)
+    				  //console.log(element);
     			  });
     		  }
     	  };
@@ -180,7 +180,7 @@ angular
 	    			  
 	    			  var target_left = (width - target_width) / 2;
 	    			  
-	    			  console.log(target_width, target_left)
+	    			  //onsole.log(target_width, target_left)
 	    			  element[0].style.width = target_width + 'px';
 	    			  element[0].style.left = target_left + 'px';
     			  });
@@ -278,11 +278,11 @@ angular
 	   				  	element[0].style.width = (element[0].offsetWidth * screenRate) - 1 + 'px';
 	   				  	element[0].style.height = (element[0].offsetHeight * screenRate) - 1 + 'px';
 	   				  	
-	   				  	console.log(element[0] + "의 값은 !! - " + element[0].style.width , element[0].style.height)
-	   				  	console.log(element[0])
+	   				  	//console.log(element[0] + "의 값은 !! - " + element[0].style.width , element[0].style.height)
+	   				  	//console.log(element[0])
 	   				  	if (element[0].style.padding != null)
 	   				  	{
-	   				  		console.log(element[0].style.padding)
+	   				  		//console.log(element[0].style.padding)
 	   				  	}
    				  	}
 				 });
@@ -355,8 +355,8 @@ angular
 					  
 					  var screenRate = height / default_height;
 					  
-					  console.log(default_height)
-					  console.log(element)
+					 // console.log(default_height)
+					  //console.log(element)
 					  element[0].style.height = element[0].style.height.replace("px","") * screenRate + 'px';
 				  });
 			  }
@@ -373,7 +373,7 @@ angular
 			  },
 			  link: function(scope, element, attrs) {
 				$timeout(function(){
-					console.log(element)
+					//console.log(element)
 					var width = $window.innerWidth;
 					var height = $window.innerHeight;
 					 
@@ -537,7 +537,7 @@ angular
 				  function panelCtrl(){
 
 				  $timeout(function(){
-						console.log(scope.data);
+						//console.log(scope.data);
 					  if(scope.data == undefined){
 						  panelCtrl()
 						  
@@ -617,7 +617,7 @@ angular
 				  panelCtrl();
 				  function panelCtrl(){
 					  var width = $window.innerWidth;
-					  console.log(width)
+					  //console.log(width)
 					  var default_width = 1920; 
 					  var screenRate = width / default_width;
 				  if (scope.isMobile) {
@@ -625,7 +625,7 @@ angular
 					  	var height = 950;
 					  	fontSize = fontSize * screenRate;
 					  	height = height * screenRate
-				  		console.log(screenRate)
+				  		//console.log(screenRate)
 						element[0].style.fontSize = fontSize+ "px";
 				  		element[0].style.height = height+ "px";
 				  }

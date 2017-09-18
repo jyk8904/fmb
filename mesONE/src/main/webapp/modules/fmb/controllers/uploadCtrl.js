@@ -81,9 +81,9 @@ angular
             url: 'bas/saveImage.do',
             data: {file: file}
         }).then(function (resp) { //done
-        	console.log('Success ' + resp.config.data.file.name + '  uploaded.  Response: ' + resp.data);
+        	//console.log('Success ' + resp.config.data.file.name + '  uploaded.  Response: ' + resp.data);
         }, function (resp) { 	  // fail
-            console.log('Error status: ' + resp.status);
+            //console.log('Error status: ' + resp.status);
         }, function (evt) { 	  //finally
         	if(evt.type=="load"){
         		var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);

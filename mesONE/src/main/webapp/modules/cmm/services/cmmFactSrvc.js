@@ -53,7 +53,7 @@ angular.module('app').factory('CmmFactSrvc',  function() {
     	}
     	
     	function getSelectedFactId(){
-    		console.log("서비스"+selectedFactId);
+    		//console.log("서비스"+selectedFactId);
     		return selectedFactId;
     	}
     

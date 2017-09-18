@@ -33,7 +33,8 @@ angular
 	
     // 모바일 체크 함수 실행
 	isMobileFunc();
-   
+    //워커3(알람정보워커)가 없을경우 start
+    $scope.Worker3Start()
   	//워커 스타트
   	workerList.workerStart(workerList.worker2, "worker.js");
     //워커 온메세지
@@ -42,10 +43,10 @@ angular
   	// 워커에게서 메세지를 받을때마다 페이지 전환
   	var SettingTime = workerList.worker2.data 
   	for(var i =0; i < SettingTime.length; i++){
-		console.log(SettingTime[i]);
+		//console.log(SettingTime[i]);
 		if('/'+ SettingTime[i].pageNm== $location.url()){
 			var thisDataTime= SettingTime[i].dataTime * 1000
-			console.log(thisDataTime)
+			//console.log(thisDataTime)
 			break;
 		}
 	}  
@@ -53,8 +54,8 @@ angular
 	    var promise = CmmAjaxService.select("/mes/bas/selectFmbFact.do");
 	    promise.then(function(data){
 	    	self.factList = data;
-	    	console.log(data)
-	    	console.log(self.factList)
+	    	//console.log(data)
+	    	//console.log(self.factList)
 	     }
 	    ,function(data){
 	    	console.log('fail: '+ data)

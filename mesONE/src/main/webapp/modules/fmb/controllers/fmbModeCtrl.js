@@ -142,10 +142,10 @@ angular
     self.changeFact = changeFact;
     self.changeType = changeType;
     self.deleteDiv = function (index) {
-    	console.log(index)
+    	//console.log(index)
     	self.eqptList[index].status = "delete";
-    	console.log(self.eqptList[index].status)
-       	console.log(self.eqptList)	
+    	//console.log(self.eqptList[index].status)
+       	//console.log(self.eqptList)	
     }
 
     self.toggleLeft = buildToggler('left');
@@ -198,9 +198,9 @@ angular
     		  for(var i=0;i<self.plcList.length;i++) tmp[self.plcList[i].plcId]=1;
     		  for(var i=0;i<self.eqptList.length;i++) { if(tmp[self.eqptList[i].id]) delete tmp[self.eqptList[i].id]; }
     		  for(var k in tmp) res.push(k);
-    		  console.log(res);
+    		 // console.log(res);
     		  self.plcLst = res;
-    		  console.log(self.plcLst);
+    		  //console.log(self.plcLst);
         	
         	
     	}else if(self.eqptParamVo.eqptType=="SPC"){
@@ -219,9 +219,9 @@ angular
     		  for(var i=0;i<self.spcList.length;i++) tmp[self.spcList[i].plcId]=1;
     		  for(var i=0;i<self.eqptList.length;i++) { if(tmp[self.eqptList[i].id]) delete tmp[self.eqptList[i].id]; }
     		  for(var k in tmp) res.push(k);
-    		  console.log(res);
+    		  //console.log(res);
     		  self.spcLst = res;
-    		  console.log(self.spcLst);
+    		  //console.log(self.spcLst);
     		
     	}else if(self.eqptParamVo.eqptType=="ANDON"){
     		var classList = $filter('orderBy')(self.eqptList,'eqptCnm');
@@ -239,9 +239,9 @@ angular
     		  for(var i=0;i<self.andonList.length;i++) tmp[self.andonList[i].plcId]=1;
     		  for(var i=0;i<self.eqptList.length;i++) { if(tmp[self.eqptList[i].id]) delete tmp[self.eqptList[i].id]; }
     		  for(var k in tmp) res.push(k);
-    		  console.log(res);
+    		 // console.log(res);
     		  self.andonLst = res;
-    		  console.log(self.andonLst);
+    		 // console.log(self.andonLst);
     		
     		
     	}else if(self.eqptParamVo.eqptType=="COUNT"){
@@ -262,9 +262,9 @@ angular
     	  		  for(var i=0;i<self.eqptList.length;i++) { if(tmp[self.eqptList[i].id]) delete tmp[self.eqptList[i].id]; }
     	  	  }
     		  for(var k in tmp) res.push(k);
-    		  console.log(res);
+    		 // console.log(res);
     		  self.countLst = res;
-    		  console.log(self.countLst);
+    		// console.log(self.countLst);
     	}
     	
     	self.showModal = !self.showModal;
@@ -288,6 +288,7 @@ angular
     	return zero + n;
     }
     
+    //설비버튼 생성
     $scope.submit = function(){	
     	var cnm = $scope.crtEqpt.cnm;
     	var type = $scope.crtEqpt.type;
@@ -295,28 +296,52 @@ angular
     	var factId = self.eqptParamVo.factId
 
     	
-    	console.log(cnm,type,id,factId)
+    	//console.log(cnm,type,id,factId)
     	if (cnm != null && cnm != "" && type != null && type != "" && id != null && id != "")
     	{
     		var detect = $filter('filter')(self.eqptList, {id : id , status : '!delete'});
-    		
-		    	var data = {  eqptCnm : cnm
-		    			    , id : id
-		    			    , eqptType : type
-		    			    , factId : factId
-		    			    , desc : null
-		    			    , cssZindex : 'auto'
-		    			    , cssWidth : '25px'
-		    				, cssHeight : '25px'
-		    				, cssTop : '230px'
-		    				, cssLeft : '550px'
-		    				, status : 'insert'
-		    				, stsImg0: 'assets/img/button/color25.png'
-		    				, stsImg1: 'assets/img/button/Green25.png'
-		    				, stsImg2: 'assets/img/button/White25.png'
-		    				, stsImg3: 'assets/img/button/Blue25.png'
-		    				, stsImg4: 'assets/img/button/Red25.png'
-		    			   };
+    			if(type=='PLC'){
+    				var data = {  eqptCnm : cnm
+    						, id : id
+    						, eqptType : type
+    						, factId : factId
+    						, desc : null
+    						, cssZindex : 'auto'
+							, cssWidth : '25px'
+							, cssHeight : '25px'
+							, cssTop : '230px'
+							, cssLeft : '550px'
+							, status : 'insert'
+							, stsImg0: 'assets/img/button/color25.png'
+							, stsImg1: 'assets/img/button/Green25.png'
+							, stsImg2: 'assets/img/button/White25.png'
+							, stsImg3: 'assets/img/button/Blue25.png'
+							, stsImg4: 'assets/img/button/Red25.png'
+    				};
+    				
+    				
+    			}else if(type='ANDON'){
+    				var data = {  eqptCnm : cnm
+    						, id : id
+    						, eqptType : type
+    						, factId : factId
+    						, desc : null
+    						, cssZindex : 'auto'
+							, cssWidth : '82px'
+							, cssHeight : '25px'
+							, cssTop : '230px'
+							, cssLeft : '550px'
+							, status : 'insert'
+							, singId : 'Q'	
+							, stsImg0: 'assets/img/button/colorQ.png'
+							, stsImg1: 'assets/img/button/colorS.png'
+							, stsImg2: 'assets/img/button/colorC.png'
+							, stsImg3: 'assets/img/button/BlueQ.png'
+							, stsImg4: 'assets/img/button/RedQ.png'
+    				};
+    			}
+		    	
+		    	
 		    	var check=true;
 		    	if(data.id=='None'){
 		    		check =false;
@@ -328,35 +353,46 @@ angular
 		    	}
 		    	if(check ==true ){
 		    	self.eqptList.push(data);
-		    	console.log(data);
+		    	//console.log(data);
 		    	}else{
 		    		alert("PLC ID를 확인하세요");
 		    	}
     	}
     	else {
-    		console.log(cnm,type,id)
+    		//console.log(cnm,type,id)
     		alert("모든 칸을 기입해야합니다.");
     	}
     };
     
+    
+    
+    
+    
+    
     self.saveEqptData = function(){
-
     	for(var i=0; i< self.eqptList.length; i++){
-    		var stsImg = self.eqptList[i].stsImg0
-    		self.eqptList[i].stsImg1 = stsImg.replace('color', 'Green');
-    		self.eqptList[i].stsImg2 = stsImg.replace('color', 'White');
-    		self.eqptList[i].stsImg3 = stsImg.replace('color', 'Blue');
-    		self.eqptList[i].stsImg4 = stsImg.replace('color', 'Red');
+    		if(self.eqptList[i].eqptType =="PLC"){
+    			var stsImg = self.eqptList[i].stsImg0
+    			self.eqptList[i].stsImg1 = stsImg.replace('color', 'Green');
+    			self.eqptList[i].stsImg2 = stsImg.replace('color', 'White');
+    			self.eqptList[i].stsImg3 = stsImg.replace('color', 'Blue');
+    			self.eqptList[i].stsImg4 = stsImg.replace('color', 'Red');
+    		}else if(self.eqptList[i].eqptType =="ANDON"){
+    			var stsImg = self.eqptList[i].stsImg0
+    			self.eqptList[i].stsImg1= stsImg.replace('Q','S')
+    			self.eqptList[i].stsImg2= stsImg.replace('Q','C')
+    			
+    		}
     	}	
-    	console.log(self.eqptList);
+    	//console.log(self.eqptList);
     	 var eqptPromise = CmmAjaxService.save("/mes/bas/saveFmbEqpt.do", self.eqptList);
     };
     
     //설비 이미지리스트 가져오기
     function getEqptList(){
     	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
-    	console.log("getEqptList")
     	eqptPromise.then(function(data) {
+    		console.log(data)
     		self.eqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
     		for(var i = 0; i < self.eqptList.length; i++){
     			self.eqptList[i]['status'] = "keep";
@@ -399,7 +435,7 @@ angular
     			}
     		}
     		self.andonList = dataList;
-    		console.log(self.andonList)
+    		//console.log(self.andonList)
     	}, function(data){
     		/*alert('fail: '+ data)*/
     		console.log('fail'+data);
@@ -411,7 +447,7 @@ angular
     	var spcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.spcParamVo);
     		spcPromise.then(function(data) {
     		self.spcList = data; 
-    		console.log(self.spcList)
+    		//console.log(self.spcList)
     	}, function(data){
     		/*alert('fail: '+ data)*/
     		console.log('fail'+data);
@@ -423,7 +459,7 @@ angular
     	var countPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.countParamVo);
     		countPromise.then(function(data) {
     		self.countList = data; 
-    		console.log(self.countList)
+    		//console.log(self.countList)
     	}, function(data){
     		/*alert('fail: '+ data)*/
     		console.log('fail'+data);
@@ -439,9 +475,9 @@ angular
         		var factId = self.bgImageList[i].factId;
         		
         		if (factId == "A") {
-        			console.log($scope.eachBg.A)
+        			//console.log($scope.eachBg.A)
         			$scope.eachBg.A = self.bgImageList[i].imgPath;
-        			console.log($scope.eachBg.A)
+        			//console.log($scope.eachBg.A)
         		} else if (factId == "B") {
         			$scope.eachBg.B = self.bgImageList[i].imgPath;
         		} else if (factId == "C") {
@@ -509,15 +545,15 @@ angular
     	}else if(self.eqptParamVo.eqptType=="ANDON"){
     		getEqptList();
          	getAndonList();
-    		console.log("ANDON")
+    		//console.log("ANDON")
     	}else if(self.eqptParamVo.eqptType=="SPC"){
     		getEqptList();
          	getSpcList();
-    		console.log("SPC")
+    		//console.log("SPC")
     	}else if(self.eqptParamVo.eqptType=="COUNT"){
     		getEqptList();
          	getCountList();
-         	console.log("COUNT")
+         	//console.log("COUNT")
     	}
     	
     	var eqptType = self.eqptParamVo.eqptType;
@@ -601,7 +637,7 @@ angular
      };
      
      self.FindImg = function(factId) {
-    	 console.log("보내는쪽 팩트아이디" + factId);
+    	 //console.log("보내는쪽 팩트아이디" + factId);
 	        $mdDialog.show({
 		          controller: 'ImageViewerCtrl',
 		          controllerAs: 'vm',

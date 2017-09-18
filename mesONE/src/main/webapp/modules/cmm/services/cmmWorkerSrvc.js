@@ -13,7 +13,7 @@
 'use strict';
 
 angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$location',
-					 function(CmmFactSrvc, $location) {
+										function( CmmFactSrvc, $location) {
 	
 	
 
@@ -85,19 +85,19 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$location',
 
 	    	if(dataChange){	//true:계속 데이터 갱신  false: worker stop 후 페이지 전환
 	        	return func();
-	        	//console.log("데이터 갱싱")
+	        	console.log("데이터만 갱싱")
 	        }else{
 	        	if(switchPage=="off"){
-	        		//console.log("데이터만")
+	        		console.log("데이터갱신 ")
 	        		return func();
 				}else{
-					//console.log("페이지 전환")
 					var pager = JSON.parse(localStorage.getItem('SettingTime'))[nextPage].pageNm;
 		        	if(workerName.worker!=undefined){
 		  	        	workerName.worker.terminate();
 		  	        	workerName.worker=undefined;
 			  	    }
 		        	
+		        	console.log(pager+"로 페이지 전환")
 		        	$location.url('/'+pager);
 		        	//$scope.$apply();
 				}
