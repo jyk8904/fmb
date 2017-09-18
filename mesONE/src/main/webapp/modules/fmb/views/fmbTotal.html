@@ -5,20 +5,20 @@
  * @Modification Information  
  * @
 
- * @ ----------  ---------  -------------------------------
- * @ 2017.05	 정유경
- *
+ * @ ---------- ---------  -------------------------------
+ * @ 2017.05	정유경
+ * @ 2017.06	조준연
 
  * css: assets/css/fmb.css
  * controller : fmbTotalCtrl.js
  *
  */
  -->
-<!-- ngview 내부 페이지 -->
+<!-- ngview  -->
 <div test-ctrl class='bc-screen' style="margin:0">
 
-	<!-- ngview 내부 header -->
-<bc-form-header logo='assets/img/system/logo.png' title="생산 자원 종합현황" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
+	<!-- ngview  header -->
+<bc-form-header logo='assets/img/system/logo.png' title="생산자원 종합현황" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
 		<!-- Controls -->
 		<a class="left carousel-control" ng-if="isMobile == true" href="#FmbTotal" role="button" data-slide="prev">
 			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -30,7 +30,7 @@
 		</a>
 </bc-form-header>
 
-	<!-- ngview 내부 body -->
+	<!-- ngview �궡遺� body -->
 	<bc-form-body class='col-xs-12'>
 	
 	<!-- For Mobile -->
@@ -38,7 +38,7 @@
 		<div class="carousel-inner" role="listbox" style="padding:0;">
 			<div class="col-xs-12 item active">
 				<div class="chartTitle col-xs-4" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; color:white;">
-					<p style="margin:5px 0 5px 0;">계획 진도율</p>
+					<p style="margin:5px 0 5px 0;">계확 진도율</p>
 				</div>
 				<div m-resize-ctrl class="col-xs-12 LargeBox" style="background-image:url(/mes/assets/img/dash/dash_panel_lg1.png); background-size: 100% 100%; background-repeat: no-repeat;">
 					<div id="MobilePlanProgress" style="width: 100%; height: 100%; background-color: transparent; position:relative;"></div>
@@ -64,39 +64,39 @@
 	       		 		<!-- Grid1 Area -->
 		       		 	<div class="gridArea1 col-xs-12" style="position:relative;">
 							<!-- Legend -->
-							<div class="titleRow col-xs-3 lGrey"><p>순위</p></div>
-							<div class="titleRow col-xs-6 lGrey"> <p>품목</p></div>
-							<div class="titleRow col-xs-3 lGrey"> <p>수량</p></div>
+							<div class="titleRow col-xs-3 lGrey"><p>�닚�쐞</p></div>
+							<div class="titleRow col-xs-6 lGrey"> <p>�뭹紐�</p></div>
+							<div class="titleRow col-xs-3 lGrey"> <p>�닔�웾</p></div>
 							<!-- First Row -->
 							<div class="contentRow col-xs-3 dBlue"><p>1</p></div>
-							<div class="contentRow col-xs-6 dBlue"><p>품목이 들어감.</p></div>
-							<div class="contentRow col-xs-3 dBlue"><p>수량</p></div>
+							<div class="contentRow col-xs-6 dBlue"><p>�뭹紐⑹씠 �뱾�뼱媛�.</p></div>
+							<div class="contentRow col-xs-3 dBlue"><p>�닔�웾</p></div>
 							<!-- Second Row -->
 							<div class="contentRow col-xs-3 lGrey"><p>2</p></div>
-							<div class="contentRow col-xs-6 lGrey"><p>품목이 들어감.</p></div>
-							<div class="contentRow col-xs-3 lGrey"><p>수량</p></div>
+							<div class="contentRow col-xs-6 lGrey"><p>�뭹紐⑹씠 �뱾�뼱媛�.</p></div>
+							<div class="contentRow col-xs-3 lGrey"><p>�닔�웾</p></div>
 							<!-- Third Row -->		
 							<div class="contentRow col-xs-3 dBlue"><p>3</p></div>
-							<div class="contentRow col-xs-6 dBlue"><p>품목이 들어감.</p></div>
-							<div class="contentRow col-xs-3 dBlue"><p>수량</p></div>
+							<div class="contentRow col-xs-6 dBlue"><p>�뭹紐⑹씠 �뱾�뼱媛�.</p></div>
+							<div class="contentRow col-xs-3 dBlue"><p>�닔�웾</p></div>
 							<!-- Forth Row -->
 							<div class="contentRow col-xs-3 lGrey"><p>4</p></div>
-							<div class="contentRow col-xs-6 lGrey"><p>품목이 들어감.</p></div>
-							<div class="contentRow col-xs-3 lGrey"><p>수량</p></div>
+							<div class="contentRow col-xs-6 lGrey"><p>�뭹紐⑹씠 �뱾�뼱媛�.</p></div>
+							<div class="contentRow col-xs-3 lGrey"><p>�닔�웾</p></div>
 							<!-- Fifth Row -->
 							<div class="contentRow col-xs-3 dBlue"><p>5</p></div>
-							<div class="contentRow col-xs-6 dBlue"><p>품목이 들어감.</p></div>
-							<div class="contentRow col-xs-3 dBlue"><p>수량</p></div>
+							<div class="contentRow col-xs-6 dBlue"><p>�뭹紐⑹씠 �뱾�뼱媛�.</p></div>
+							<div class="contentRow col-xs-3 dBlue"><p>�닔�웾</p></div>
 							<!-- Etc Row -->
-							<div class="contentRow col-xs-3 lGrey"><p>기타</p></div>
-							<div class="contentRow col-xs-6 lGrey"><p>품목이 들어감.</p></div>
-							<div class="contentRow col-xs-3 lGrey"><p>수량</p></div>	
+							<div class="contentRow col-xs-3 lGrey"><p>湲고�</p></div>
+							<div class="contentRow col-xs-6 lGrey"><p>�뭹紐⑹씠 �뱾�뼱媛�.</p></div>
+							<div class="contentRow col-xs-3 lGrey"><p>�닔�웾</p></div>	
 						</div>
 						
 						<!-- Grid2 Area -->
 						<div class="gridArea2 col-xs-12" style="padding-bottom:20px;">
 							<div class="col-xs-6 ppmTitle">
-								<p>전체 불량률</p>
+								<p>�쟾泥� 遺덈웾瑜�</p>
 							</div>
 							<div class="col-xs-5 col-xs-offset-1 ppmValue">
 								<p>45 PPM</p>
@@ -127,7 +127,7 @@
 								<p>{{vm.gauge.standby}}</p>
 							</div>
 							<div class="col-xs-6 gaugeTitleBox gaugeGreyBox"> 
-								<p>비&nbsp;&nbsp;가&nbsp;&nbsp;동</p>
+								<p>비�&nbsp;&nbsp;가&nbsp;&nbsp;동</p>
 							</div>
 							<div class="col-xs-6 gaugeValueBox gaugeGreyBox"> 
 								<p>{{vm.gauge.norun}}</p>
@@ -272,28 +272,28 @@
 					<div class="col-xs-3 lGrey"> <p>수량</p></div>
 					<!-- First Row -->
 					<div class="col-xs-2 dBlue"><p>1</p></div>
-					<div class="col-xs-7 dBlue"><p>품목이 들어감.</p></div>
-					<div class="col-xs-3 dBlue"><p>수량</p></div>
+					<div class="col-xs-7 dBlue"><p>{{vm.defect.firstNm}}</p></div>
+					<div class="col-xs-3 dBlue"><p>{{vm.defect.firstCount}}</p></div>
 					<!-- Second Row -->
 					<div class="col-xs-2 lGrey"><p>2</p></div>
-					<div class="col-xs-7 lGrey"><p>품목이 들어감.</p></div>
-					<div class="col-xs-3 lGrey"><p>수량</p></div>
+					<div class="col-xs-7 lGrey"><p>{{vm.defect.secondNm}}</p></div>
+					<div class="col-xs-3 lGrey"><p>{{vm.defect.secondCount}}</p></div>
 					<!-- Third Row -->		
 					<div class="col-xs-2 dBlue"><p>3</p></div>
-					<div class="col-xs-7 dBlue"><p>품목이 들어감.</p></div>
-					<div class="col-xs-3 dBlue"><p>수량</p></div>
+					<div class="col-xs-7 dBlue"><p>{{vm.defect.thirdNm}}</p></div>
+					<div class="col-xs-3 dBlue"><p>{{vm.defect.thirdCount}}</p></div>
 					<!-- Forth Row -->
 					<div class="col-xs-2 lGrey"><p>4</p></div>
-					<div class="col-xs-7 lGrey"><p>품목이 들어감.</p></div>
-					<div class="col-xs-3 lGrey"><p>수량</p></div>
+					<div class="col-xs-7 lGrey"><p>{{vm.defect.forthNm}}</p></div>
+					<div class="col-xs-3 lGrey"><p>{{vm.defect.forthCount}}</p></div>
 					<!-- Fifth Row -->
 					<div class="col-xs-2 dBlue"><p>5</p></div>
-					<div class="col-xs-7 dBlue"><p>품목이 들어감.</p></div>
-					<div class="col-xs-3 dBlue"><p>수량</p></div>
+					<div class="col-xs-7 dBlue"><p>{{vm.defect.fifthNm}}</p></div>
+					<div class="col-xs-3 dBlue"><p>{{vm.defect.fifthCount}}</p></div>
 					<!-- Etc Row -->
-					<div class="col-xs-2 lGrey"><p>기타</p></div>
-					<div class="col-xs-7 lGrey"><p>품목이 들어감.</p></div>
-					<div class="col-xs-3 lGrey"><p>수량</p></div>	
+					<div class="col-xs-2 lGrey"><p>ETC</p></div>
+					<div class="col-xs-7 lGrey"><p>{{vm.defect.etcNm}}</p></div>
+					<div class="col-xs-3 lGrey"><p>{{vm.defect.etcCount}}</p></div>	
 				</div>
 				
 				<!-- Grid2 Area -->
@@ -302,7 +302,7 @@
 						<p>전체 불량률</p>
 					</div>
 					<div class="col-xs-3 col-xs-offset-1 ppmValue">
-						<p>45 PPM</p>
+						<p>{{vm.defect.wholeRate}}</p>
 					</div>
 				</div>
 				
@@ -315,7 +315,7 @@
 	</div>
 	
  	<div class="col-sm-6 col-md-6 col-lg-6" ng-if="isMobile == false" style="padding:0;">
-		<!-- 라인 가동 현황 -->
+		<!-- �씪�씤 媛��룞 �쁽�솴 -->
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 			<div class="col-xs-6" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; font-size:24px; color:white;">
 				<p style="margin:5px 0 5px 0;">라인 가동현황</p>
@@ -351,7 +351,7 @@
 			</div>
 		</div>
 		
-		<!-- 알람 발생 추이 -->
+		<!-- �븣�엺 諛쒖깮 異붿씠 -->
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 			<div class="col-xs-6" style="background-image:url(/mes/assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; font-size:24px; color:white;">
 				<p style="margin:5px 0 5px 0;">알람 발생추이</p>

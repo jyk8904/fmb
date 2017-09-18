@@ -95,7 +95,22 @@
     <!-- Total- 설비상태별순위 그리드 정보조회 -->    
     <select id="selectFmbEqptStsHis"  parameterType="com.dsinfo.fmb.service.FmbEqptStsHisParamVO" resultType="com.dsinfo.fmb.service.FmbEqptStsHisVO">     	      
         {call USP_EQPT_STS_HIS_SELECT04(#{dt}, #{plc_id})}
-    </select> 
+    </select>
+    
+    <!-- Total- 불량정보 차트 조회-->    
+    <select id="selectFmbDefectChart"  resultType="com.dsinfo.fmb.service.FmbDefectVO">     	      
+        {call USP_DASH_DEFECT_CHART_SELECT01()}
+    </select>
+    
+    <!-- Total- 불량정보 그리드 조회 -->    
+    <select id="selectFmbDefectRank" resultType="com.dsinfo.fmb.service.FmbDefectVO">     	      
+        {call USP_DASH_DEFECT_RANK_SELECT01()}
+    </select>
+    
+    <!-- Total- 불량정보 전체불량률 조회 -->    
+    <select id="selectFmbDefectRate" resultType="com.dsinfo.fmb.service.FmbDefectVO">     	      
+        {call USP_DASH_DEFECT_WHOLERATE_SELECT01()}
+    </select>
     
     <!-- Fmb Image 저장  -->
     <insert id="insertFmbImageData" parameterType="com.dsinfo.fmb.service.FmbImageVO">     	      
