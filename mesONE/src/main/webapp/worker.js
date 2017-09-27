@@ -39,12 +39,12 @@
     	if(postNum>=switchNum){
     		dataChange=false;	//데이터 갱신 여부
     	}
-    	console.log("post1 " + postNum + "/"+ switchNum);
+    	//console.log("post1 " + postNum + "/"+ switchNum);
     	postMessage([dataChange, nextPage]); //데이터갱신여부, 전환할 페이지
     }
     //페이지 내에서 데이터만 갱신중, 계속 페이지 갱신 post
     function post2(){
-    	console.log("post2(무한 데이터 갱신)")
+    	//console.log("post2(무한 데이터 갱신)")
        	postMessage([dataChange, nextPage]);
     }
     

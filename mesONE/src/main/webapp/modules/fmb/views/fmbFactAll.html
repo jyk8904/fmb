@@ -65,11 +65,15 @@
 				<div class="column" ng-if="fact.dgoal+fact.ngoal=='0'">-</div><!-- 무한대기호제거 -->
 				<div class="column" ng-if="fact.dgoal+fact.ngoal!='0'">{{(fact.dcount+ fact.ncount)/(fact.dgoal+ fact.ngoal)*100|number:1}}</div>
 				<div class="column">{{fact.defectCount|number:0}}</div>
-				<div class="column"
+				<div class="column" ng-if="fact.dcount+fact.ncount=='0'"
+					 ng-init="vm.goalttl = vm.goalttl +fact.dgoal + fact.ngoal; 
+				 	          vm.countttl = vm.countttl + fact.dcount+ fact.ncount;
+				 	          vm.defectttl = vm.defectttl + fact.defectCount;">-</div>
+				<div class="column" ng-if="fact.dcount+fact.ncount!='0'"
 					 ng-init="vm.goalttl = vm.goalttl +fact.dgoal + fact.ngoal; 
 				 	          vm.countttl = vm.countttl + fact.dcount+ fact.ncount;
 				 	          vm.defectttl = vm.defectttl + fact.defectCount;">
-				 	          {{fact.defectCount/(fact.dcount+fact.ncount)*100000|number:0}}</div>		
+				 	          {{fact.defectCount/(fact.dcount+fact.ncount)*100000|number:0}}</div>			
 				<!-- 당월누적 -->
 				<div class="column leftborder">{{fact.dgoalMon + fact.ngoalMon |number:0}}</div>
 				<div class="column">{{fact.dcountMon+ fact.ncountMon|number:0}}</div>
@@ -78,12 +82,15 @@
 				<div class="column" ng-if ="fact.dgoalMon + fact.ngoalMon !='0'">{{(fact.dcountMon+ fact.ncountMon)/(fact.dgoalMon + fact.ngoalMon)*100|number:1}}</div>
 				
 				<div class="column">{{fact.defectCountMon}}</div>
-				<div class="column" 
+				<div class="column" ng-if="fact.dcountMon+fact.ncountMon==0"
+					 ng-init="vm.goalmonttl = vm.goalmonttl + fact.dgoalMon + fact.ngoalMon; 
+					 	      vm.countmonttl = vm.countmonttl + fact.dcountMon+ fact.ncountMon;
+					 	      vm.defectmonttl = vm.defectmonttl + fact.defectCountMon;">-</div>
+				<div class="column" ng-if="fact.dcountMon+fact.ncountMon!=0"
 					 ng-init="vm.goalmonttl = vm.goalmonttl + fact.dgoalMon + fact.ngoalMon; 
 					 	      vm.countmonttl = vm.countmonttl + fact.dcountMon+ fact.ncountMon;
 					 	      vm.defectmonttl = vm.defectmonttl + fact.defectCountMon;">
-					 	      {{fact.defectCountMon/(fact.dcountMon+fact.ncountMon)*100000|number:0}}</div>
-						
+					 	      {{fact.defectCountMon/(fact.dcountMon+fact.ncountMon)*100000|number:0}}</div>		
 			</div>
 			
 	 		<!-- 그리드 하단 합계라인 -->

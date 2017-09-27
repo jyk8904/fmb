@@ -111,7 +111,7 @@ angular
 	});
 
 	function makeDataRunInfoChart(){
-		console.log(timeProdData)
+		//console.log(timeProdData)
 		DataRunInfoChart = AmCharts.makeChart("DataRunInfoChart",{
 				"type": "serial",
 				"categoryField": "dt",
@@ -121,8 +121,43 @@ angular
 				"fontFamily": "noteSans",
 				"fontSize": 10,
 				"categoryAxis": {
-					"parseDates": true
+					"parseDates": true,
+					"dateFormats": [
+						{
+							"period": "fff",
+							"format": "JJ:NN:SS"
+						},
+						{
+							"period": "ss",
+							"format": "JJ:NN:SS"
+						},
+						{
+							"period": "mm",
+							"format": "JJ:NN"
+						},
+						{
+							"period": "hh",
+							"format": "JJ:NN"
+						},
+						{
+							"period": "DD",
+							"format": "MM월 DD"
+						},
+						{
+							"period": "WW",
+							"format": "MM월 DD"
+						},
+						{
+							"period": "MM",
+							"format": "MM월"
+						},
+						{
+							"period": "YYYY",
+							"format": "YYYY"
+						}
+					]
 				},
+
 				"theme": "dark",
 				"chartCursor": {
 					"enabled": true
@@ -235,12 +270,12 @@ angular
 	eqptStsHisPromise.then(function(data) {
 		self.eqptStsHisData = data
 		//console.log(self.stsVo);
-		console.log(self.eqptStsHisData);
+		//console.log(self.eqptStsHisData);
 		getCstData();
 		makeEqptStsHischart();
-		console.log(self.eqptStsHisData);
+		//console.log(self.eqptStsHisData);
 
-        		console.log(eqptStsCstData)
+        		//console.log(eqptStsCstData)
         		char.dataProvider = eqptStsCstData.reverse();
         		char.validateNow ();
         		
@@ -344,10 +379,10 @@ angular
 	
 	//시간별 가동상태 변화 데이터 커스터마이징
 	function getCstData(){
-		console.log(self.eqptStsHisData)
-		console.log(self.eqptStsHisData.length)
+		//console.log(self.eqptStsHisData)
+		//console.log(self.eqptStsHisData.length)
 		for(var i = 0; i< self.eqptStsHisData.length; i++){
-			console.log(i + "번째" + self.eqptStsHisData[i].plcSts)
+			//console.log(i + "번째" + self.eqptStsHisData[i].plcSts)
 			if(self.eqptStsHisData[i].plcSts == 0){ //비가동일경우
 				eqptStsCstData[i] = self.eqptStsHisData[i]
 				eqptStsCstData[i].color = "#FF0F00"
@@ -364,10 +399,10 @@ angular
 				eqptStsCstData[i] = self.eqptStsHisData[i]
 				eqptStsCstData[i].color = "#FF0F00"
 			}
-			console.log(self.eqptStsHisData[i])
-			console.log(eqptStsCstData[i])
+			//console.log(self.eqptStsHisData[i])
+			//console.log(eqptStsCstData[i])
 		}
-		console.log(eqptStsCstData);
+		//console.log(eqptStsCstData);
 		reqptStsCstData = eqptStsCstData.reverse();
 	} 
 	//선택된 plc 데이터 가져오기
@@ -376,11 +411,11 @@ angular
         promise.then(function(data){
     	
         	self.plc = data[0];//fmbPlcVo가 담긴 리스트 형태리턴
-        	console.log(self.plc);
+        	//console.log(self.plc);
         	//eqptCd를 넘겨서 순간정지,uph,정지로스 데이터 가져오기
      	   var promise2 = CmmAjaxService.selectOne("/fmb/bas/selectFmbPlc2.do",{eqptCd : self.plc.eqptCd});
            promise2.then(function(data){
-        	   console.log(data[0]);
+        	   //console.log(data[0]);
         	   
            	self.plc2 = data[0];
            	self.plc.alramcnt = self.plc2.alramcnt;

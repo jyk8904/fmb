@@ -68,7 +68,8 @@ angular
    		   sessionStorage.setItem("login", true);
    		   $scope.id= sessionStorage.getItem("id")//로그인
    		   $scope.loginChk= true;
-   		   
+   		   console.log("자동로그인")
+   		   $location.url('/FmbMon')
    	   }else{//세션정보없고, 자동로그인 아님
    		   //로그인페이지으로 이동
    		   console.log("로그인 실패")
@@ -79,6 +80,7 @@ angular
    	}else{//세션정보가 있는경우
    		$scope.id = sessionStorage.getItem("id");
    		$scope.loginChk=true;
+   		$location.url('/FmbMon')
    	}
 	   
   
@@ -191,30 +193,51 @@ angular
 	
 	$scope.init = setup
 	
+
+
 	function setup() {
 		console.log("setup")
 		  var e = document.getElementById("marquee");
 
-		  e.addEventListener("animationiteration", listener, false);
+		  e.addEventListener("animationiteration", iterationListener, false);
+		  e.addEventListener("webkitAnimationIteration", iterationListener, false);
+		  e.addEventListener("animationstart", startListener, false);
+		  e.addEventListener("webkitAnimationStart", startListener, false);
+
+		  e.addEventListener("animationend", endListener, false);
+		  e.addEventListener("webkitAnimationEnd", endListener, false);
 		  
 		  var e = document.getElementById("marquee");
 		  e.className = "slidein";
 		}
-		function listener(ev) {
-			console.log("type = "+ ev.type)
-		  if(ev.type=="animationiteration"){
+	
+		function addClass(element, className) {
+		    element.className += " " + className;
+		};
+		 
+		function removeClass(element, className) {
+		    var check = new RegExp("(\\s|^)" + className + "(\\s|$)");
+		    element.className = element.className.replace(check, " ").trim();
+		};
+	 
+		function iterationListener(ev) {
+			var e = document.getElementById("marquee");
 			  console.log("iteration");
 			  getAlarmList();
-		  }else if(ev.type=="animationend"){
-			  console.log("end")
-		  }else if(ev.type=="animationstart" ){
-			  console.log("start")
-		  }
-
+			  removeClass(e, 'slidein')
+			  addClass(e, 'slidein');
 		}
-	
-	
-		
+		function endListener(ev) {
+			console.log("end")
+/*			var e = document.getElementById("marquee");
+		   getAlarmList();
+			removeClass(e, 'slidein')
+			setup();
+			addClass(e, 'slidein')*/
+		}
+		function startListener(ev) {
+				console.log("start")
+		}		
 	//설비 plc 알람정보 데이터 가져오기
 	function getAlarmList(){
 		
@@ -231,15 +254,16 @@ angular
 						if(data[i].eqptSts3=='4'){ //sts== 0이나 4일경우 하단바에 알람 발생 경고()
 							data[i].charLen = String(data[i].lineNm).length; // 라인명 글자수 
 							data[i].wdth= data[i].charLen * 14.5 + 311;//(li의 width값 = 글자수 *15px + 311px)
-					
+							
 							alarmListWdth = alarmListWdth + data[i].wdth + 10; //margin-right:10px
 							alarmList.push(data[i]);
 						}
 					}
-					
-					$scope.alarmList = alarmList;
+					$scope.screenWdth = $window.innerWidth;
 					$scope.alarmListLen = $scope.alarmList.length;	// 알람리스트 갯수
-					$scope.alarmListWdth = alarmListWdth;
+					
+					$timeout($scope.alarmListWdth = alarmListWdth, 100)
+					$scope.alarmList = alarmList;
 					plcPromise = null;
 				}, function(data){
 					/*alert('fail: '+ data)*/

@@ -66,7 +66,7 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$rootScope', '$l
 	           for(var i = 0; i < obj_length; i++){
 	        	   if('/'+SettingTime[i].pageNm ==$location.url()){
 	        		   workerName.worker.postMessage([SettingTime, i, switchPage]);
-	        		   console.log("post메세지보내기"+i)
+	        		   //console.log("post메세지보내기"+i)
 	        	   }
 	           }
 
@@ -85,10 +85,10 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$rootScope', '$l
 
 	    	if(dataChange){	//true:계속 데이터 갱신  false: worker stop 후 페이지 전환
 	        	return func();
-	        	console.log("데이터만 갱싱")
+	        	//console.log("데이터만 갱싱")
 	        }else{
 	        	if(switchPage=="off"){
-	        		console.log("데이터갱신 ")
+	        		//console.log("데이터갱신 ")
 	        		return func();
 				}else{
 					var pager = JSON.parse(localStorage.getItem('SettingTime'))[nextPage].pageNm;
@@ -97,7 +97,7 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$rootScope', '$l
 		  	        	workerName.worker=undefined;
 			  	    }
 		        	
-		        	console.log(pager+"로 페이지 전환")
+		        	//console.log(pager+"로 페이지 전환")
 		        	$location.url('/'+pager);
 		        	$rootScope.$apply();
 				}

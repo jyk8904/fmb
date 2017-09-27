@@ -255,7 +255,7 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 					gaugeRunInfoPromise = null;
 					gaugeRunInfoList = data;
 					self.gaugeRunInfoList =  data;
-					console.log(gaugeRunInfoList)
+					//console.log(gaugeRunInfoList)
 				}, function(data) {
 					alert('fail: ' + data)
 				});

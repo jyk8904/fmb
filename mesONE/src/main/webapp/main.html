@@ -9,12 +9,14 @@
  * @see
  -->
 
+
 <!DOCTYPE html>
 <html data-ng-app="app" >
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
+<!-- 캐시 사용안함 -->
+<meta http-equiv="cache-control" content="no-cache">
 <!-- 모바일용웹 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -341,41 +343,17 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
 	<!--알람정보 하단 바 시작-->
 		
 		<div class="col-md-12 col-sm-12 col-xs-12" ng-if="isMobile == false" style="padding:0">
-		  <div class="alarm_data" style="border:1px solid black;background-color: rgb(255, 255, 255);height: 25px;">
+		  <div class="alarm_data" style="background-color: rgb(255, 255, 255);height: 25px;">
 		  
 			<img src="assets/img/system/img_top_ico.gif" style="margin: -11px 0px 0px -5px; width: 42px; position: absolute; z-index: 1000;">
 	  			<div ng-init="init()" id='marquee'  
-	  			ng-style="{'width':alarmListWdth}"
-	  			style="border:1px solid red;">
-		  			<ul id="banner" class="simply-scroll-list" style="background-color:#333; border:1px solid green;" ng-style="{'width':alarmListWdth}">
-		      			<li marquee-banner alarm-list="alarmList" style=" border:1px solid yellow;" ng-repeat="alarm in alarmList track by $index" ng-style="{'width':alarm.wdth}">
+	  			ng-style="{'margin-left':-alarmListWdth, 'animation-duration':(alarmListWdth+screenWdth)/110+'s'}">
+		  			<ul id="banner" class="simply-scroll-list" style="background-color:#333;" ng-style="{'width':alarmListWdth}">
+		      			<li marquee-banner alarm-list="alarmList" ng-repeat="alarm in alarmList track by $index" ng-style="{'width':alarm.wdth}">
 		       				<strong>{{alarm.lineNm}}라인 알람발생  {{alarm.stsDttm.substr(0,19)}}</strong>
 		      			</li>
 		    		</ul>
 	    		</div>
-	  	<!-- 	<angular-marquee class="marquee" animationend="change" scroll="scroll" duration="duration" style="height:28px; width:100%">
-	      		<ul id="banner" class="simply-scroll-list" style="background-color:#333;" ng-style="{'width':alarmListWdth}">
-	      			<li marquee-banner alarm-list="alarmList"  ng-repeat="alarm in alarmList track by $index" ng-style="{'width':alarm.wdth}">
-	       				<strong>{{alarm.lineNm}}라인 알람발생  {{alarm.stsDttm.substr(0,19)}}</strong>
-	      			</li>
-	    		</ul>
-	    	</angular-marquee> -->
-	  		<!-- <div class="marquee"  scroll="scroll" duration="duration" style="height:28px; width:100%">
-	      		<ul id="banner" class="simply-scroll-list" style="background-color:#333;" ng-style="{'width':alarmListWdth}">
-	      			<li marquee-banner alarm-list="alarmList"  ng-repeat="alarm in alarmList track by $index" ng-style="{'width':alarm.wdth}">
-	       				<strong>{{alarm.lineNm}}라인 알람발생  {{alarm.stsDttm.substr(0,19)}}</strong>
-	      			</li>
-	    		</ul>
-	    	</div> -->
-	    	
-	    	<!-- 	  		<marquee style="height:28px; ">
-	  		<marquee scrolldelay="1" scrollamount="5px" style="height:28px; ">
-	      		<ul id="banner" class="simply-scroll-list" style="background-color:#333;">
-	      			<li marquee-banner alarm-list="alarmList"  ng-repeat="alarm in alarmList track by $index">
-	       				<strong>{{alarm.plcId}} 알람발생  {{alarm.stsDttm}}</strong>
-	      			</li>
-	    		</ul>
-	    	</marquee> -->
 	   	</div>
 	   </div>
 	</bc-form-footer>

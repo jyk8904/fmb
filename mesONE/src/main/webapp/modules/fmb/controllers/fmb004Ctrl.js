@@ -28,7 +28,7 @@ angular
     var self = this;
     var gridId = null; //그리드 ID 선언
    
-    console.log("004ctrl");
+    //console.log("004ctrl");
     self.vo = {
         	plcId: '', 
         	factId: ''

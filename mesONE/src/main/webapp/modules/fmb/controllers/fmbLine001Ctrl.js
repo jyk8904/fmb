@@ -83,11 +83,11 @@ angular
 
 	//선택된 공장의 line별 데이터 가져오기
    function getLineList(){
-	   console.log(getLineList)
+	   //console.log(getLineList)
 	    var promise = CmmAjaxService.select("/fmb/bas/selectFmbLine.do",  self.lineParamVo);
 	    promise.then(function(data){
 	    	self.lineList = data;
-	    	console.log(data)
+	    	//console.log(data)
 	    	var length = self.lineList.length;
 	    	var dangle = length % 7;
 	    	if (dangle != 0) 

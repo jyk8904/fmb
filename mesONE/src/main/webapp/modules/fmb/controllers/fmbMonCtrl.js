@@ -48,7 +48,7 @@ angular
      *-----------------------------------------*/
 	$scope.$watch('loginChk', function(newVal, oldVal) {
 	if(newVal == false){//loginChk가 false인경우 로그아웃
-		console.log("loginChkWatch")
+		//console.log("loginChkWatch")
 		$location.url('');
 		}    	
 	}, true);

@@ -54,7 +54,7 @@ angular
 	    var promise = CmmAjaxService.select("/fmb/bas/selectFmbFactAll.do");
 	    promise.then(function(data){
 	    	self.factList = data;
-	    	console.log(self.factList)
+	    	//console.log(self.factList)
 	     }
 	    ,function(data){
 	    	console.log('fail: '+ data)
