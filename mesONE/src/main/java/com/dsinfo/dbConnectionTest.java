@@ -11,8 +11,8 @@ public class dbConnectionTest {
 * @throws SQLException 
 */
 public static void main(String[] args) throws ClassNotFoundException, SQLException {
-/*String connectionUrl = "jdbc:sqlserver://localhost:3306;" + "databaseName=OPCDB;";*/
-	String connectionUrl = "jdbc:sqlserver://10.10.50.107;" + "atabaseName=CTRCH;";
+String connectionUrl = "jdbc:sqlserver://localhost:3306;" + "databaseName=CTRCH;";
+	/*String connectionUrl = "jdbc:sqlserver://10.10.50.107;" + "atabaseName=CTRCH;";*/
 
 //(db서버가 따로 존재한다면 로컬호스트:포트번호 대신 서버아이피:포트번호 를 입력하면된다.
 
@@ -26,7 +26,7 @@ public static void main(String[] args) throws ClassNotFoundException, SQLExcepti
         // Establish the connection.
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         System.out.println("Driver okay");
-        con = DriverManager.getConnection(connectionUrl,"opcdb","opcctr#10");
+        con = DriverManager.getConnection(connectionUrl,"sa","dsinfo!12");
         System.out.println("Connection Made");
      }
      // Handle any errors that may have occurred.

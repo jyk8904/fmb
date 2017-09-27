@@ -10,14 +10,13 @@
  -->
 
 <!DOCTYPE html>
-<html data-ng-app="app">
+<html data-ng-app="app" >
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <!-- 모바일용웹 -->
-<meta name="viewport" content="w
-idth=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!-- 안드로이드 홈화면추가시 상단 주소창 제거 -->
 <meta name="mobile-web-app-capable" content="yes">
@@ -31,8 +30,10 @@ idth=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 
 	<!-- JQUERY -->
-    <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="assets/js/jquery/jquery-2.0.3.min.js"></script>
+    <script src="assets/js/jquery/jquery-ui.js"></script> 
+<!--     <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
 	
 	<script>
 		function hideAddressBar() {
@@ -45,68 +46,89 @@ idth=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	</script>
 
 	<!-- AngularJS -->
-	<script src="//code.angularjs.org/1.6.1/angular.js"></script>
+<!-- 	<script src="//code.angularjs.org/1.6.1/angular.js"></script>
 	<script src="//code.angularjs.org/1.6.1/angular-route.js"></script>
    	<script src="//code.angularjs.org/1.6.1/angular-cookies.js"></script>
    	<script src="//code.angularjs.org/1.6.1/angular-animate.js"></script>
    	<script src="//code.angularjs.org/1.6.1/angular-sanitize.js"></script>
-   	<script src="//code.angularjs.org/1.6.1/i18n/angular-locale_ko-kr.js"></script>
+   	<script src="//code.angularjs.org/1.6.1/i18n/angular-locale_ko-kr.js"></script> -->
+   	<script src="assets/js/angular/angular.js"></script>
+	<script src="assets/js/angular/angular-route.js"></script>
+   	<script src="assets/js/angular/angular-cookies.js"></script>
+   	<script src="assets/js/angular/angular-animate.js"></script>
+   	<script src="assets/js/angular/angular-sanitize.js"></script>
+   	<script src="assets/js/angular/angular-locale_ko-kr.js"></script>
 
     <script src="assets/js/ng-file-upload-shim.min.js"></script>
     <script src="assets/js/ng-file-upload.min.js"></script> 
     <script src="assets/js/ng-file-upload-all.min.js"></script> 
     
-   	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
-   	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
-   	<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+   	<script src="assets/js/angular/angular-aria.min.js"></script>
+   	<script src="assets/js/angular/angular-messages.min.js"></script>
+   	<script src="assets/js/angular/angular-material.min.js"></script>
+   	
    	
    	<script src="assets/js/angular.marquee.js"></script>
    	
 	<!-- amCharts javascript sources -->
-	<script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+	<script type="text/javascript" src="vendor/amcharts_3.21.3.free/amcharts/amcharts.js"></script>
+	<script type="text/javascript" src="vendor/amcharts_3.21.3.free/amcharts/serial.js"></script>
+	<script type="text/javascript" src="vendor/amcharts_3.21.3.free/amcharts/pie.js"></script>
+	<script type="text/javascript" src="vendor/amcharts_3.21.3.free/amcharts/gauge.js"></script>
+	<script type="text/javascript" src="vendor/amcharts_3.21.3.free/amcharts/themes/dark.js"></script>
+	<script src="vendor/amcharts_3.21.3.free/amcharts/plugins/dataloader/dataloader.min.js" type="text/javascript"></script>
+<!-- 	<script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
 	<script type="text/javascript" src="https://cdn.amcharts.com/lib/3/serial.js"></script>
 	<script type="text/javascript" src="https://www.amcharts.com/lib/3/pie.js"></script>
 	<script type="text/javascript" src="https://www.amcharts.com/lib/3/gauge.js"></script>
-	<script type="text/javascript" src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+	<script type="text/javascript" src="https://www.amcharts.com/lib/3/themes/dark.js"></script> -->
 	<script src="modules/cmm/directives/amChartsDirective.js"></script>
 		
    <!-- Bootstrap -->
-   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<!--    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+ -->	
+ 	<script src="assets/js/bootstrap/bootstrap.min.js"></script>
+   <script src="assets/js/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
 
 	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+<!-- 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 		  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"   crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"   
-		  integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"   crossorigin="anonymous">
+		  integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"   crossorigin="anonymous"> -->
+   	<link rel="stylesheet" href="assets/css/bootstrap/bootstrap.min.css"
+		>
+	<link rel="stylesheet" href="assets/css/bootstrap/bootstrap-theme.min.css"   
+		  >
    
 	<!-- AngularJS CSS -->
-	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
-
+	<link rel="stylesheet" href="assets/css/angular/angular-material.min.css">
+<!-- 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+ -->
 	<!-- custom CSS -->   
-	<link rel="stylesheet" href="/mes/assets/css/fmb.css" />
-	<link rel="stylesheet" href="/mes/assets/css/fmbDash.css" />
-	<link rel="stylesheet" href="/mes/assets/css/responsive.css" />
+	<link rel="stylesheet" href="/fmb/assets/css/fmb.css?version='1.0'" />
+	<link rel="stylesheet" href="/fmb/assets/css/fmbDash.css?version='1.0'" />
+	<link rel="stylesheet" href="/fmb/assets/css/responsive.css?version='1.0'" />
 	
 	
 	<!-- 안드로이드 icon -->
-<!-- 	<link rel="icon" href="/mes/assets/img/ico/DsFmb_logo.png">
-	<link rel="icon" sizes="76x76" href="/mes/assets/img/ico/DsFmb_logo76.png">  
-	<link rel="icon" sizes="120x120" href="/mes/assets/img/ico/DsFmb_logo.png">  
-	<link rel="icon" sizes="152x152" href="/mes/assets/img/ico/DsFmb_logo.png"> -->
+<!-- 	<link rel="icon" href="/fmb/assets/img/ico/DsFmb_logo.png">
+	<link rel="icon" sizes="76x76" href="/fmb/assets/img/ico/DsFmb_logo76.png">  
+	<link rel="icon" sizes="120x120" href="/fmb/assets/img/ico/DsFmb_logo.png">  
+	<link rel="icon" sizes="152x152" href="/fmb/assets/img/ico/DsFmb_logo.png"> -->
 	
-	<link rel="manifest" href="/mes/assets/js/manifest.json">
+	<link rel="manifest" href="/fmb/assets/js/manifest.json">
 		
 	<!-- IOS icon -->
-	<link rel="apple-touch-icon" href="/mes/assets/img/ico/DsFmb_logo.png">  
-	<link rel="apple-touch-icon" sizes="76x76" href="/mes/assets/img/ico/DsFmb_logo76.png">  
-	<link rel="apple-touch-icon" sizes="120x120" href="/mes/assets/img/ico/DsFmb_logo.png">  
-	<link rel="apple-touch-icon" sizes="152x152" href="/mes/assets/img/ico/DsFmb_logo.png">
-	<link rel="icon" sizes="192x192" href="/mes/assets/img/ico/DsFmb_logo.png">
+	<link rel="apple-touch-icon" href="/fmb/assets/img/ico/DsFmb_logo.png">  
+	<link rel="apple-touch-icon" sizes="76x76" href="/fmb/assets/img/ico/DsFmb_logo76.png">  
+	<link rel="apple-touch-icon" sizes="120x120" href="/fmb/assets/img/ico/DsFmb_logo.png">  
+	<link rel="apple-touch-icon" sizes="152x152" href="/fmb/assets/img/ico/DsFmb_logo.png">
+	<link rel="icon" sizes="192x192" href="/fmb/assets/img/ico/DsFmb_logo.png">
 	
 	<!-- startup Page -->
-	<link rel="touch-startup-image" href="/mes/assets/img/ico/startup.png">
-	<link rel="apple-touch-startup-image" href="/mes/assets/img/ico/startup.png">
+	<link rel="touch-startup-image" href="/fmb/assets/img/ico/startup.png">
+	<link rel="apple-touch-startup-image" href="/fmb/assets/img/ico/startup.png">
 </head>
 
 
@@ -133,6 +155,7 @@ idth=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		     
 	   	 	<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStop()' ng-show="vm.switchPage=='on'" title="STOP">■</md-button>
 		 	<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStart()' ng-hide="vm.switchPage=='on'" title="START">▶</md-button>
+	
 		 	<!-- <md-button class="md-raised md-default" ng-click='vm.btnFmbAndonClick()'>안돈현황</md-button> -->
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbMonClick()'>설비가동현황</md-button>
 		 	<md-button class="md-raised md-default" ng-click='vm.btnFmbTotalClick()'>생산자원종합현황</md-button>
@@ -155,7 +178,7 @@ idth=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 			<md-button class="md-raised md-default" ng-click='vm.btnFmbModeClick()' ng-show="id=='admin'" >개발모드</md-button>
 			
 			<md-button class="md-raised md-primary" ng-click='winClose()'>종료</md-button>
-			<md-button class="md-raised md-primary" ng-click='logOut()' ng-show="loginChk" >로그아웃</md-button>
+			<md-button class="md-raised md-primary" ng-click='logOut()'>로그아웃</md-button>
 		</div>
 		
 	</div>   
@@ -313,20 +336,37 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
 	<!-- <div p-ctrl data-ng-view style='width:100%; height:1016px'></div> -->
 	<div ng-clock data-ng-view class="col-md-12 col-sm-12 col-xs-12" style="padding:0" ></div>
 	
+	
 	<bc-form-footer>
 	<!--알람정보 하단 바 시작-->
 		
 		<div class="col-md-12 col-sm-12 col-xs-12" ng-if="isMobile == false" style="padding:0">
-		  <div class="alarm_data" style="background-color: rgb(255, 255, 255); width:110% !important; height: 25px;">
+		  <div class="alarm_data" style="border:1px solid black;background-color: rgb(255, 255, 255);height: 25px;">
 		  
 			<img src="assets/img/system/img_top_ico.gif" style="margin: -11px 0px 0px -5px; width: 42px; position: absolute; z-index: 1000;">
-	  		<div class="marquee" scroll="scroll" duration="duration" style="height:28px;">
-	      		<ul id="banner" class="simply-scroll-list" style="background-color:#333;" ng-style="{'width':alarmListWdth+5}">
+	  			<div ng-init="init()" id='marquee'  
+	  			ng-style="{'width':alarmListWdth}"
+	  			style="border:1px solid red;">
+		  			<ul id="banner" class="simply-scroll-list" style="background-color:#333; border:1px solid green;" ng-style="{'width':alarmListWdth}">
+		      			<li marquee-banner alarm-list="alarmList" style=" border:1px solid yellow;" ng-repeat="alarm in alarmList track by $index" ng-style="{'width':alarm.wdth}">
+		       				<strong>{{alarm.lineNm}}라인 알람발생  {{alarm.stsDttm.substr(0,19)}}</strong>
+		      			</li>
+		    		</ul>
+	    		</div>
+	  	<!-- 	<angular-marquee class="marquee" animationend="change" scroll="scroll" duration="duration" style="height:28px; width:100%">
+	      		<ul id="banner" class="simply-scroll-list" style="background-color:#333;" ng-style="{'width':alarmListWdth}">
 	      			<li marquee-banner alarm-list="alarmList"  ng-repeat="alarm in alarmList track by $index" ng-style="{'width':alarm.wdth}">
 	       				<strong>{{alarm.lineNm}}라인 알람발생  {{alarm.stsDttm.substr(0,19)}}</strong>
 	      			</li>
 	    		</ul>
-	    	</div>
+	    	</angular-marquee> -->
+	  		<!-- <div class="marquee"  scroll="scroll" duration="duration" style="height:28px; width:100%">
+	      		<ul id="banner" class="simply-scroll-list" style="background-color:#333;" ng-style="{'width':alarmListWdth}">
+	      			<li marquee-banner alarm-list="alarmList"  ng-repeat="alarm in alarmList track by $index" ng-style="{'width':alarm.wdth}">
+	       				<strong>{{alarm.lineNm}}라인 알람발생  {{alarm.stsDttm.substr(0,19)}}</strong>
+	      			</li>
+	    		</ul>
+	    	</div> -->
 	    	
 	    	<!-- 	  		<marquee style="height:28px; ">
 	  		<marquee scrolldelay="1" scrollamount="5px" style="height:28px; ">
@@ -354,13 +394,12 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
 	     			</td>
 	 
 	     			<td>
-	     			
 	    				<input name="dataTime" style="width:100px; margin-right:10px;" 
 	    				type="number" placeholder="데이터갱신" name ="name" 
 	    				ng-model=page.dataTime value={{page.dataTime}} ng-required="true"
 	    				ng-blur ="vm.dataTimeChk($index)"
 	    				>&nbsp;&nbsp;&nbsp;
-	    			</td>
+	    			</td>	
 	     			<td>
 	    				<input name="switchNum" style="width:100px; margin-right:10px;" 
 	    				type ="number" placeholder="갱신횟수" name ="name" 
@@ -384,54 +423,56 @@ background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-i
    	<script src="app.js"></script>
    	<script src="assets/js/angular-modal-service.js"></script>
     <script src="assets/js/angular-filter.js"></script>
+    <script src="assets/js/gibberish-aes.js"></script>
+    
    	<!-- 메인 화면 관리 -->
-	<script src="mainCtrl.js"></script>
-	<script src="modules/cmm/controllers/cmmCommonsCtrl.js"></script>
-	<script src="modules/cmm/controllers/cmmFilterCtrl.js"></script>
-	<script src="modules/cmm/controllers/cmmMatMstCtrl.js"></script>
-	<script src="modules/cmm/services/cmmAjaxSrvc.js"></script>
-	<script src="modules/cmm/services/cmmModalSrvc.js"></script>
-	<script src="modules/cmm/services/cmmWorkerSrvc.js"></script>
-	<script src="modules/cmm/services/cmmFactSrvc.js"></script>
-	<script src="modules/cmm/services/cmmUtilSrvc.js"></script>
-	<script src="modules/cmm/directives/cmmFormDrtv.js"></script>
+	<script src="mainCtrl.js?version='1.0'"></script>
+	<script src="modules/cmm/controllers/cmmCommonsCtrl.js?version='1.0'"></script>
+	<script src="modules/cmm/controllers/cmmFilterCtrl.js?version='1.0'"></script>
+	<script src="modules/cmm/controllers/cmmMatMstCtrl.js?version='1.0'"></script>
+	<script src="modules/cmm/services/cmmAjaxSrvc.js?version='1.0'"></script>
+	<script src="modules/cmm/services/cmmModalSrvc.js?version='1.0'"></script>
+	<script src="modules/cmm/services/cmmWorkerSrvc.js?version='1.0'"></script>
+	<script src="modules/cmm/services/cmmFactSrvc.js?version='1.0'"></script>
+	<script src="modules/cmm/services/cmmUtilSrvc.js?version='1.0'"></script>
+	<script src="modules/cmm/directives/cmmFormDrtv.js?version='1.0'"></script>
 	
    	<!-- FMB 관리 -->
-	<script src="modules/fmb/controllers/fmbMonCtrl.js"></script>
-	<script src="modules/fmb/controllers/fmbAndonCtrl.js"></script>
-	<script src="modules/fmb/controllers/fmbCwMonCtrl.js"></script>
-	<script src="modules/fmb/controllers/fmbMainMonCtrl.js"></script>
-	<script src="modules/fmb/controllers/fmbModeCtrl.js"></script>
-	<script src="modules/fmb/controllers/fmbPopupCtrl.js"></script>
-	<script src="modules/fmb/controllers/fmbTbmCtrl.js"></script>
-	<script src="modules/fmb/controllers/fmbLine001Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmbLine002Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmbLine003Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmbLine004Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmbLine005Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmbLine006Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmbLine007Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmbFactAllCtrl.js"></script>
-	<script src="modules/fmb/controllers/fmbFact001Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmbFact002Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmbFact003Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmbFact004Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmbFact005Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmbFact006Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmbFact007Ctrl.js"></script>
-	<script src="modules/fmb/controllers/fmbSpcCtrl.js"></script>
-	<script src="modules/fmb/controllers/fmbTotalCtrl.js"></script>
-	<script src="modules/fmb/controllers/dialogCtrl.js"></script>
-	<script src="modules/fmb/controllers/uploadCtrl.js"></script>
-	<script src="modules/fmb/controllers/imageViewerCtrl.js"></script>
+	<script src="modules/fmb/controllers/fmbMonCtrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbAndonCtrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbCwMonCtrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbMainMonCtrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbModeCtrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbPopupCtrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbTbmCtrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbLine001Ctrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbLine002Ctrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbLine003Ctrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbLine004Ctrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbLine005Ctrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbLine006Ctrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbLine007Ctrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbFactAllCtrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbFact001Ctrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbFact002Ctrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbFact003Ctrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbFact004Ctrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbFact005Ctrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbFact006Ctrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbFact007Ctrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbSpcCtrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/fmbTotalCtrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/dialogCtrl.js?version='2.0'"></script>
+	<script src="modules/fmb/controllers/uploadCtrl.js?version='1.0'"></script>
+	<script src="modules/fmb/controllers/imageViewerCtrl.js?version='1.0'"></script>
     	
 	<!--  Modify Page 관리 -->
-	<script src="modules/cmm/directives/mdDragDrtv.js"></script>
-	<script src="modules/cmm/directives/mdDrtv.js"></script>
-	<link rel="stylesheet" href="/mes/assets/css/fmbModify.css" />
+	<script src="modules/cmm/directives/mdDragDrtv.js?version='1.0'"></script>
+	<script src="modules/cmm/directives/mdDrtv.js?version='1.0'"></script>
+	<link rel="stylesheet" href="/fmb/assets/css/fmbModify.css?version='1.0'" />
     
    	<!-- 워커 관리 -->
-  <!--  	<script src="worker.js"></script> -->
+    <!-- <script src="worker.js"></script> -->
    	<!-- <script src="worker2.js"></script> -->
    	
 </html>

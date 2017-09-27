@@ -37,7 +37,7 @@ angular
     
     
 	//선택된 spc 데이터 가져오기
-    var promise = CmmAjaxService.select("/mes/bas/selectFmbSpc.do", self.spcVo);
+    var promise = CmmAjaxService.select("/fmb/bas/selectFmbSpc.do", self.spcVo);
     promise.then(function(data){
     	self.spcList= data;
     }
@@ -46,7 +46,7 @@ angular
     });
 	
 	//선택된 spc2 데이터 가져오기
-    var promise = CmmAjaxService.select("/mes/bas/selectFmbSpc2.do", self.spcVo);
+    var promise = CmmAjaxService.select("/fmb/bas/selectFmbSpc2.do", self.spcVo);
     promise.then(function(data){
     	self.spcList2= data;
     	console.log(self.spcList2);
@@ -57,7 +57,7 @@ angular
 	
    
     //설비 이미지리스트 가져오기
-    var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
+    var eqptPromise = CmmAjaxService.select("/fmb/bas/selectFmbEqpt.do", self.eqptParamVo);
     eqptPromise.then(function(data) {
     	self.eqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
     }, function(data){

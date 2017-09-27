@@ -1,3 +1,4 @@
+
 /**
  * @Class Name : fmbTotalCtrl.js
  * @Description : fmbTotal
@@ -42,8 +43,6 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 		var defectRate = null;
 		
 		$scope.isMobile = false;
-		//워커3(알람정보워커)가 없을경우 start
-	    $scope.Worker3Start()
 		// 변수 선언 및 디폴트 값 세팅 
 		$scope.dateRunInfoList = {};
 		$scope.planProgressList = {};
@@ -81,14 +80,13 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 			getGaugeRunInfo();	
 			getRankRunInfo();
 			getPlanProgress();
-			Amcharts.clear();
+			//Amcharts.clear();
 			$timeout.cancel(ajaxCall);
 		}
 		
 		chartCall = function() {
 			if (chartFlag == true){
 				AmCharts.clear();
-				//console.log(AmCharts)
 			}
 			chartBind();
 			$timeout.cancel(chartCall);
@@ -181,7 +179,7 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 		
 		function getPlanProgress() {
 			// 계획진도율 가져오기
-			var planProgressPromise = CmmAjaxService.select("/mes/bas/selectPlanProgress.do");
+			var planProgressPromise = CmmAjaxService.select("/fmb/bas/selectPlanProgress.do");
 				planProgressPromise.then(function(data) {
 					planProgressPromise = null;
 					$scope.planProgressList = data;
@@ -193,7 +191,7 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 		
 		function getDefectInfo() {
 			// 계획진도율 가져오기
-			var getDefectChart = CmmAjaxService.select("/mes/bas/selectFmbDefectChart.do");
+			var getDefectChart = CmmAjaxService.select("/fmb/bas/selectFmbDefectChart.do");
 					getDefectChart.then(function(data) {
 					getDefectChart = null;
 					$scope.defectChart = data;
@@ -208,7 +206,7 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 				alert('fail: ' + data)
 			});
 			
-			var getDefectRank = CmmAjaxService.select("/mes/bas/selectFmbDefectRank.do");
+			var getDefectRank = CmmAjaxService.select("/fmb/bas/selectFmbDefectRank.do");
 					getDefectRank.then(function(data) {
 					getDefectRank = null;
 					defectRankList = data;
@@ -223,7 +221,7 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 				alert('fail: ' + data)
 			});
 				
-			var getDefectRate = CmmAjaxService.select("/mes/bas/selectFmbDefectRate.do");
+			var getDefectRate = CmmAjaxService.select("/fmb/bas/selectFmbDefectRate.do");
 					getDefectRate.then(function(data) {
 					getDefectRate = null;
 					defectRate = data;
@@ -236,7 +234,7 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 		
 		function getGaugeRunRate() {
 			// 라인가동현황게이지 가져오기
-			var gaugeRunRatePromise = CmmAjaxService.select("/mes/bas/selectGaugeRunRate.do");
+			var gaugeRunRatePromise = CmmAjaxService.select("/fmb/bas/selectGaugeRunRate.do");
 				gaugeRunRatePromise.then(function(data) {
 					gaugeRunRatePromise = null;
 					self.gaugeRunRateList = data;
@@ -252,10 +250,12 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 		
 		function getGaugeRunInfo() {	
 			// 라인가동현황 그리드 가져오기
-			var gaugeRunInfoPromise = CmmAjaxService.select("/mes/bas/selectGaugeRunInfo.do");
+			var gaugeRunInfoPromise = CmmAjaxService.select("/fmb/bas/selectGaugeRunInfo.do");
 				gaugeRunInfoPromise.then(function(data) {
 					gaugeRunInfoPromise = null;
 					gaugeRunInfoList = data;
+					self.gaugeRunInfoList =  data;
+					console.log(gaugeRunInfoList)
 				}, function(data) {
 					alert('fail: ' + data)
 				});
@@ -263,7 +263,7 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 		
 		function getDateRunInfo() {
 			//설비상태 발생추이 가져오기
-			var dateRunInfoPromise = CmmAjaxService.select("/mes/bas/selectDateRunInfo.do");
+			var dateRunInfoPromise = CmmAjaxService.select("/fmb/bas/selectDateRunInfo.do");
 				dateRunInfoPromise.then(function(data) {
 					dateRunInfoPromise = null;
 					$scope.dateRunInfoList = data;
@@ -284,7 +284,7 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 		
 		function getRankRunInfo() {
 			//설비상태별 발생량 순위 가져오기
-			var rankRunInfoPromise = CmmAjaxService.select("/mes/bas/selectRankRunInfo.do");
+			var rankRunInfoPromise = CmmAjaxService.select("/fmb/bas/selectRankRunInfo.do");
 				rankRunInfoPromise.then(function(data) {
 					rankRunInfoPromise = null;
 					rankRunInfoList = data;
@@ -368,70 +368,8 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 		}
 
 		function barChart() {
-			AmCharts.makeChart("barChart",
-					{
-						"type": "serial",
-						"categoryField": "category",
-						"angle": 20,
-						"depth3D": 30,
-						"sequencedAnimation": false,
-						"startDuration": 0,
-						"startEffect": "easeOutSine",
-						"fontSize": 12,
-						"categoryAxis": {
-							"gridPosition": "start"
-						},
-						"trendLines": [],
-						"graphs": [
-							{
-								"balloonText": "[[title]] of [[category]]:[[value]]",
-								"fillAlphas": 1,
-								"fillColors": "#DD4635",
-								"id": "AmGraph-1",
-								"lineAlpha": 0,
-								"lineColor": "#FFFFFF",
-								"title": "graph 1",
-								"type": "column",
-								"valueField": "column-1"
-							}
-						],
-						"guides": [],
-						"valueAxes": [
-							{
-								"id": "ValueAxis-1",
-								"title": ""
-							}
-						],
-						"allLabels": [],
-						"balloon": {},
-						"legend": {
-							"enabled": false,
-							"useGraphSettings": true
-						},
-						"dataProvider": [
-							{
-								"category": "category 1",
-								"column-1": 8,
-								"column-2": 5
-							},
-							{
-								"category": "category 2",
-								"column-1": 6,
-								"column-2": 7
-							},
-							{
-								"category": "category 3",
-								"column-1": 4,
-								"column-2": 3
-							},
-							{
-								"category": "category 4",
-								"column-1": 2,
-								"column-2": 3
-							}
-						]
-					}
-				)
+			defectBar = AmCharts.makeChart("barChart",{"type": "serial","categoryField": "rankNum","angle": 20,"depth3D": 30,"sequencedAnimation": false,"startDuration": 0,"startEffect": "easeOutSine","fontSize": 12,"plotAreaBorderAlpha": 0,"plotAreaBorderColor": "#008000","plotAreaFillAlphas": 0,"backgroundColor": "#E7E7E7","borderColor": "#E7E7E7","categoryAxis": {"gridPosition": "start","gridColor": "#E5E5E5","color": "#E7E7E7","labelFunction": function(rankNum){return rankNum + "순위"}},"trendLines": [],"graphs": [{"balloonText": "[[category]] 순위:[[itemNm]] ([[value]] 개)","fillAlphas": 1,"fillColors": "#DD4635","id": "AmGraph-1","lineAlpha": 0,"lineColor": "#FFFFFF","title": "graph 1","type": "column","valueField": "rankCount"}],"guides": [],"valueAxes": [{"id": "rankCount","title": "","gridColor": "#E5E5E5","color": "#E7E7E7"}],"allLabels": [],"balloon": {},"legend": {"enabled": false,"useGraphSettings": true},"dataProvider": defectRankList})
+			defectBar.validateData();
 		}
 		
 		function pie() {
@@ -441,86 +379,7 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 		
 		function planProgress(filteredData){
 			//계획진도율 차트 
-			AmCharts.makeChart("chartdiv",
-					{
-						"type": "serial",
-						"rotate": true,
-						"categoryField": "lineNm",
-						"angle": 10,
-						"autoMarginOffset": 20,
-						"depth3D": 10,
-						"marginRight": 10,
-						"marginTop": 30,
-						"plotAreaBorderAlpha": 0,
-						"plotAreaBorderColor": "#008000",
-						"plotAreaFillAlphas": 0,
-						"sequencedAnimation": false,
-						"startDuration": 0,
-						"startEffect": "easeOutSine",
-						"backgroundColor": "#E7E7E7",
-						"borderColor": "#E7E7E7",
-						"fontSize": 13,
-						"theme": "default",
-						"categoryAxis": {
-							"gridPosition": "start",
-							"gridAlpha": 0.2,
-							"gridColor": "#E5E5E5",
-							"color": "#E7E7E7",
-							"axisAlpha": 0
-						},
-						"trendLines": [],
-						"graphs": [
-							{
-								"balloonText": "[[title]] of [[category]]:[[value]]",
-								"columnWidth": 0.61,
-								"fillAlphas": 1,
-								"fillColors": "#ecbd89",
-								"fixedColumnWidth": 20,
-								"fontSize": 4,
-								"id": "AmGraph-1",
-								"labelText": "",
-								"lineAlpha": 0,
-								"lineColor": "#FFFFFF",
-								"negativeLineAlpha": 0,
-								"title": "graph 1",
-								"type": "column",
-								"valueField": "curCountPer"
-							},
-							{
-								"balloonColor": "#FFFFFF",
-								"columnWidth": 0.45,
-								"fillAlphas": 1,
-								"fillColors": "#4F8298",
-								"fixedColumnWidth": 20,
-								"id": "AmGraph-5",
-								"lineAlpha": 0,
-								"lineColor": "#FFFFFF",
-								"lineThickness": 2,
-								"negativeLineAlpha": 0,
-								"negativeLineColor": "#E7E7E7",
-								"tabIndex": 1,
-								"title": "graph 5",
-								"type": "column",
-								"valueField": "goalCountPer"
-							}
-						],
-						"guides": [],
-						"valueAxes": [
-							{
-								"id": "ValueAxis-1",
-								"stackType": "100%",
-								"title": "",
-								"gridAlpha": 0.2,
-								"gridColor": "#E5E5E5",
-								"color": "#E7E7E7"
-							}
-						],
-						"allLabels": [],
-						"balloon": {},
-						"titles": [],
-						"dataProvider": filteredData
-					}
-				)
+			AmCharts.makeChart("chartdiv",{"type": "serial","rotate": true,"categoryField": "lineNm","angle": 10,"autoMarginOffset": 20,"depth3D": 10,"marginRight": 10,"marginTop": 30,"plotAreaBorderAlpha": 0,"plotAreaBorderColor": "#008000","plotAreaFillAlphas": 0,"sequencedAnimation": false,"startDuration": 0,"startEffect": "easeOutSine","backgroundColor": "#E7E7E7","borderColor": "#E7E7E7","fontSize": 13,"theme": "default","categoryAxis": {"gridPosition": "start","gridAlpha": 0.2,"gridColor": "#E5E5E5","color": "#E7E7E7","axisAlpha": 0},"trendLines": [],"graphs": [{"balloonText": "[[lineNm]] \n 진도율:[[curCountPer]] % 진행","columnWidth": 0.61,"fillAlphas": 1,"fillColors": "#ecbd89","fixedColumnWidth": 20,"fontSize": 4,"id": "AmGraph-1","labelText": "","lineAlpha": 0,"lineColor": "#FFFFFF","negativeLineAlpha": 0,"title": "graph 1","type": "column","valueField": "curCountPer"},{"balloonText": "[[lineNm]] \n 진도율:[[curCountPer]] % 진행","balloonColor": "#FFFFFF","columnWidth": 0.61,"fillAlphas": 1,"fillColors": "#4F8298","fixedColumnWidth": 20,"id": "AmGraph-5","lineAlpha": 0,"lineColor": "#FFFFFF","lineThickness": 2,"negativeLineAlpha": 0,"negativeLineColor": "#E7E7E7","tabIndex": 1,"title": "graph 5","type": "column","valueField": "goalCountPer"}],"guides": [],"valueAxes": [{"id": "ValueAxis-1","stackType": "100%","title": "","gridAlpha": 0.2,"gridColor": "#E5E5E5","color": "#E7E7E7"}],"allLabels": [],"balloon": {},"titles": [],"dataProvider": filteredData})
 		}
 		
 		
@@ -530,9 +389,9 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 		function MobileGaugeFunc() {
 			var MobileGauge = AmCharts.makeChart("MobileGauge",{"type": "gauge","marginBottom": 0,"marginLeft": 0,"marginRight": 0,"marginTop": 0,"theme": "dark","startDuration": 0,"arrows": [{}],"axes": [{	"axisThickness": 1,"bottomText":  "0%","bottomTextFontSize": 20,"bottomTextYOffset": -20,"endValue": 100,"id": "GaugeAxis-1","valueInterval": 10,"bands": [{"color": "#00CC00","endValue": 30,"id": "GaugeBand-1","startValue": 0},{"color": "#ffac29","endValue": 70,"id": "GaugeBand-2","startValue": 30},{"color": "#ea3838","endValue": 100,"id": "GaugeBand-3","innerRadius": "95%","startValue": 70}]}],"allLabels": [],"balloon": {},"titles": []});
 			
-			gauge.arrows[0].setValue(self.gaugeRunRateList[0].lineGauge.toString());
-			gauge.axes[0].setBottomText(self.gaugeRunRateList[0].lineGauge.toString() + "%");
-			gauge.validateData();
+			MobileGauge.arrows[0].setValue(self.gaugeRunRateList[0].lineGauge.toString());
+			MobileGauge.axes[0].setBottomText(self.gaugeRunRateList[0].lineGauge.toString() + "%");
+			MobileGauge.validateData();
 			
 			//라인가동현황 그리드
 			self.gauge.run = gaugeRunInfoList["0"].runCount + " 라 인";
@@ -543,227 +402,13 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 		
 		//알람발생추이
 		function MobileAlarmDateRunInfo() {
-			AmCharts.makeChart("MobileAlarmChart", {
-				  type: "serial",
-				  theme: "dark",
-				  dataDateFormat: "MM/DD",
-				  dataProvider: $scope.dateRunInfoList,
-				  addClassNames: true,
-				  startDuration: 0,
-				  color: "#FFFFFF",
-				  marginLeft: 0,
-
-				  categoryField: "dt",
-				  categoryAxis: {
-				    parseDates: true,
-				    minPeriod: "DD",
-				    autoGridCount: false,
-				    gridCount: 50,
-				    gridAlpha: 0.1,
-				    gridColor: "#FFFFFF",
-				    axisColor: "#555555",
-				    dateFormats: [{
-				        period: 'DD',
-				        format: 'DD'
-				    }, {
-				        period: 'WW',
-				        format: 'MMM DD'
-				    }, {
-				        period: 'MM',
-				        format: 'MMM'
-				    }, {
-				        period: 'YYYY',
-				        format: 'YYYY'
-				    }]
-				  },
-
-				  valueAxes: [{
-				    id: "a1",
-				    title: "",
-				    gridAlpha: 0,
-				    axisAlpha: 0
-				  },{
-				    id: "a2",
-				    position: "right",
-				    gridAlpha: 0,
-				    axisAlpha: 0,
-				    labelsEnabled: false
-				  }
-				  ],
-				  graphs: [{
-				    id: "g1",
-				    valueField:  "alarm_count",
-				    title:  "",
-				    type:  "column",
-				    fillAlphas:  0.9,
-				    valueAxis:  "a1",
-				    balloonText:  "[[value]] 번",
-				    legendValueText:  "[[value]] Count",
-				    legendPeriodValueText:  "total: [[value.sum]] Count",
-				    lineColor:  "#E74C3C",
-				    alphaField:  "alpha",
-				  },{
-				    id: "g2",
-				    valueField: "alarm_tm",
-				    classNameField: "bulletClass",
-				    title: "",
-				    type: "line",
-				    valueAxis: "a2",
-				    lineColor: "#786c56",
-				    lineThickness: 2,
-				    legendValueText: "[[description]]/[[value]]",
-				    descriptionField: "townName",
-				    bullet: "round",
-				    bulletSizeField: "alarm_dur",
-				    bulletBorderColor: "#786c56",
-				    bulletBorderAlpha: 1,
-				    bulletBorderThickness: 3,
-				    bulletColor: "#000000",
-				    labelText: "[[alarm_tm]]",
-				    labelPosition: "right",
-				    balloonText: "Time:[[value]]",
-				    showBalloon: true/*,
-				    animationPlayed: true,*/
-				  }],
-				  chartCursor: {
-				    zoomable: false,
-				    categoryBalloonDateFormat: "DD",
-				    cursorAlpha: 0,
-				    valueBalloonsEnabled: false
-				  }
-				})
-			}
-	
-			
+			AmCharts.makeChart("MobileAlarmChart", { type: "serial", theme: "dark", dataDateFormat: "YYYYMMDD", dataProvider: $scope.dateRunInfoList, addClassNames: true, color: "#FFFFFF", marginLeft: 0, categoryField: "dt", categoryAxis: { parseDates: true, minPeriod: "DD", autoGridCount: false, gridCount: 50, gridAlpha: 0.1, gridColor: "#FFFFFF", axisColor: "#555555", dateFormats: [{ period: 'DD', format: 'DD' }, { period: 'WW', format: 'MMM DD' }, { period: 'MM', format: 'MMM' }, { period: 'YYYY', format: 'YYYY'}] }, valueAxes: [{ id: "a1", title: "", gridAlpha: 0, axisAlpha: 0 }, { id: "a2", position: "right", gridAlpha: 0, axisAlpha: 0, labelsEnabled: false}], graphs: [{ id: "g1", valueField: "alarm_count", type: "column", fillAlphas: 0.9, valueAxis: "a1", balloonText: "[[value]] 번", legendValueText: "[[value]] Count", legendPeriodValueText: "total: [[value.sum]] Count", lineColor: "#E74C3C", alphaField: "alpha" },{ id: "g2", valueField: "alarm_tm", type: "line", valueAxis: "a2", lineColor: "#ea9170", bullet: "round", bulletSize: 11, lineThickness: 3, legendValueText: "[[description]]/[[value]]", labelText: "[[alarm_tm]]", labelPosition: "right", balloonText: "Time:[[value]]", showBalloon: true, animationPlayed: true}], chartCursor: { zoomable: false, categoryBalloonDateFormat: "DD", cursorAlpha: 0, valueBalloonsEnabled: false} });
+		}
+				
 			//대기발생추이
-		    function MobileStandbyDateRunInfo() {	    	
-		    	AmCharts.makeChart("MobileStandbyChart", {
-					  type: "serial",
-					  theme: "dark",
-					  dataDateFormat: "MM/DD",
-					  dataProvider: $scope.dateRunInfoList,
-
-					  addClassNames: true,
-					  startDuration: 0,
-					  color: "#FFFFFF",
-					  marginLeft: 0,
-
-					  categoryField: "dt",
-					  categoryAxis: {
-					    parseDates: true,
-					    minPeriod: "DD",
-					    autoGridCount: false,
-					    gridCount: 50,
-					    gridAlpha: 0.1,
-					    gridColor: "#FFFFFF",
-					    axisColor: "#555555",
-					    dateFormats: [{
-					        period: 'DD',
-					        format: 'DD'
-					    }, {
-					        period: 'WW',
-					        format: 'MMM DD'
-					    }, {
-					        period: 'MM',
-					        format: 'MMM'
-					    }, {
-					        period: 'YYYY',
-					        format: 'YYYY'
-					    }]
-					  },
-
-					  valueAxes: [{
-					    id: "a1",
-					    title: "",
-					    gridAlpha: 0,
-					    axisAlpha: 0
-					  },{
-					    id: "a2",
-					    position: "right",
-					    gridAlpha: 0,
-					    axisAlpha: 0,
-					    labelsEnabled: false
-					  }],
-					  graphs: [{
-					    id: "g1",
-					    valueField:  "standby_count",
-					    title:  "",
-					    type:  "column",
-					    fillAlphas:  0.9,
-					    valueAxis:  "a1",
-					    balloonText:  "[[value]] 번",
-					    legendValueText:  "[[value]] Count",
-					    legendPeriodValueText:  "total: [[value.sum]] Count",
-					    lineColor:  "#BDC3C7",
-					    alphaField:  "alpha",
-					  },{
-					    id: "g2",
-					    valueField: "standby_tm",
-					    classNameField: "bulletClass",
-					    title: "",
-					    type: "line",
-					    valueAxis: "a2",
-					    lineColor: "#786c56",
-					    lineThickness: 2,
-					    legendValueText: "[[description]]/[[value]]",
-					    descriptionField: "townName",
-					    bullet: "round",
-					    bulletSizeField: "alarm_dur",
-					    bulletBorderColor: "#786c56",
-					    bulletBorderAlpha: 1,
-					    bulletBorderThickness: 3,
-					    bulletColor: "#000000",
-					    labelText: "[[alarm_tm]]",
-					    labelPosition: "right",
-					    balloonText: "Time:[[value]]",
-					    showBalloon: true/*,
-					    animationPlayed: true,*/
-					  }],
-					  chartCursor: {
-					    zoomable: false,
-					    categoryBalloonDateFormat: "DD",
-					    cursorAlpha: 0,
-					    valueBalloonsEnabled: false
-					  }
-					})
-		    }
-
-			//비가동 발생추이
-		    function MobileNoRunDateRunInfo() {
-		    	AmCharts.makeChart("MobileNorunChart", {
-					  type: "serial",
-					  theme: "dark",
-					  dataDateFormat: "MM/DD",
-					  dataProvider: $scope.dateRunInfoList,
-
-					  addClassNames: true,
-					  startDuration:0,
-					  color: "#FFFFFF",
-					  marginLeft: 0,
-
-					  categoryField: "dt",
-					  categoryAxis: {
-					    parseDates: true,
-					    minPeriod: "DD",
-					    autoGridCount: false,
-					    gridCount: 50,
-					    gridAlpha: 0.1,
-					    gridColor: "#FFFFFF",
-					    axisColor: "#555555",
-					    dateFormats: [{
-					        period: 'DD',
-					        format: 'DD'
-					    }, {
-					        period: 'WW',
-					        format: 'MMM DD'
-					    }, {
-					        period: 'MM',
-					        format: 'MMM'
-					    }, {
-					        period: 'YYYY',
-					        format: 'YYYY'
-					    }]
-					  },
+		function MobileStandbyDateRunInfo() {	    	
+			AmCharts.makeChart("MobileStandbyChart", { type: "serial", theme: "dark", dataDateFormat: "YYYYMMDD", dataProvider: $scope.dateRunInfoList, addClassNames: true, color: "#FFFFFF", marginLeft: 0, categoryField: "dt", categoryAxis: { parseDates: true, minPeriod: "DD", autoGridCount: false, gridCount: 50, gridAlpha: 0.1, gridColor: "#FFFFFF", axisColor: "#555555", dateFormats: [{ period: 'DD', format: 'DD' }, { period: 'WW', format: 'MMM DD' }, { period: 'MM', format: 'MMM' }, { period: 'YYYY', format: 'YYYY'}] }, valueAxes: [{ id: "a1", title: "", gridAlpha: 0, axisAlpha: 0 }, { id: "a2", position: "right", gridAlpha: 0, axisAlpha: 0, labelsEnabled: false}], graphs: [{ id: "g1", valueField: "standby_count", type: "column", fillAlphas: 0.9, valueAxis: "a1", balloonText: "[[value]] 번", legendValueText: "[[value]] Count", legendPeriodValueText: "total: [[value.sum]] Count", lineColor: "#BDC3C7", alphaField: "alpha" },{ id: "g2", valueField: "standby_tm", type: "line", valueAxis: "a2", lineColor: "#f9fcfc", bullet: "round", bulletSize: 11, lineThickness: 3, legendValueText: "[[description]]/[[value]]", labelText: "[[alarm_tm]]", labelPosition: "right", balloonText: "Time:[[value]]", showBalloon: true, animationPlayed: true}], chartCursor: { zoomable: false, categoryBalloonDateFormat: "DD", cursorAlpha: 0, valueBalloonsEnabled: false} });
+		}
 
 		function MobilePie() {
 			defectPie = AmCharts.makeChart("MobilePieChart",{"type": "pie","angle": 46,"pullOutRadius": "5%","balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]회</b> ([[percents]]%)</span>","depth3D": 30,"labelRadius": -70,"marginBottom": 0,"marginTop": 0,"startRadius": "100%","startDuration": 0,"sequencedAnimation": false,"titleField": "defectNm","valueField": "defectCount","theme": "dark","allLabels": [],"balloon": {},"titles": [],"dataProvider": $scope.defectChart});

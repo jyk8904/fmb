@@ -10,6 +10,7 @@
             restrict: 'A',
             scope: true,
             compile: function (tElement, tAttrs) {
+            	console.log(tElement)
                 if (tElement.children().length === 0) {
                     tElement.append('<div>' + tElement.text() + '</div>');
                 }
@@ -145,6 +146,8 @@
                         scope.$watch(attrs.scroll, function (scrollAttrValue) {
                             scroll = scrollAttrValue;
                             recalculateMarquee();
+                            console.log("recalculate")
+                            
                         });
 
                         function recalculateMarquee() {

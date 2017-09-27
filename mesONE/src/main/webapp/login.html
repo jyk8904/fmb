@@ -1,0 +1,17 @@
+
+<div style="background-image: url('assets/img/bg/login-2.png'); 
+background-size:cover; background-repeat:no-repeat; width:100%; height:100%; z-index: 10000; position: fixed;">
+
+     <md-input-container class="md-warn loginId" flex-gt-sm>
+            <label style="color:white;">ID</label>
+            <input ng-model="id"  style="color:white;">
+          </md-input-container>
+     <md-input-container class="md-warn loginPwd" flex-gt-sm> 
+            <label style="color:white;">PASSWORD</label>
+            <input type="password" ng-model="pw" ng-keyup="keyUpLogin(ev)" style="color:white;">
+     </md-input-container>
+
+	<md-button class="md-raised loginBtn" ng-click="login()">Login</md-button>
+	<md-checkbox ng-model="autoLogin" aria-label="자동로그인" init="false" class="md-warn autoLogin">자동로그인</md-checkbox>
+	
+</div>

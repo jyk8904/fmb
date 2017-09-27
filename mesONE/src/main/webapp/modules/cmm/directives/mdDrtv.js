@@ -49,7 +49,7 @@ angular
          }
       })
       /* marquee 태그 용 */
-      /*.directive('marqueeBanner', function($timeout){
+/*      .directive('marqueeBanner', function($timeout){
     	  return {
     		restrict: 'A',
     		scope: {

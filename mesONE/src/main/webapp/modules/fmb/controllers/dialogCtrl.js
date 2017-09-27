@@ -49,8 +49,11 @@ angular
 
     var self = this;
 	var eqptStsCstData = [];
+	var reqptStsCstData = [];
     var plcData = {};
     var timeProdData= {};
+    var DataRunInfoChart;
+    var char;
     $scope.isMobile = false;
       
     self.plcData = CmmFactSrvc.getPlcData();
@@ -90,7 +93,7 @@ angular
 	}
 	
   	//설비상태 발생추이 가져오기
-	var dateRunInfoPromise = CmmAjaxService.select("/mes/bas/selectDateRunInfo.do");
+	var dateRunInfoPromise = CmmAjaxService.select("/fmb/bas/selectDateRunInfo.do");
 	
 	dateRunInfoPromise.then(function(data) {
 		self.timeProdData = data;
@@ -98,6 +101,8 @@ angular
     	.then(function(){
     		timeProdData = self.timeProdData;
     		makeDataRunInfoChart();
+    		DataRunInfoChart.dataProvider = timeProdData
+    		DataRunInfoChart.validateNow ();
     	});	
 		//timeProd();
 	}, function(data) {
@@ -106,11 +111,11 @@ angular
 	});
 
 	function makeDataRunInfoChart(){
-		
-		AmCharts.makeChart("DataRunInfoChart",{
+		console.log(timeProdData)
+		DataRunInfoChart = AmCharts.makeChart("DataRunInfoChart",{
 				"type": "serial",
 				"categoryField": "dt",
-				"dataDateFormat": "MM-DD",
+				"dataDateFormat": "YYYYMMDD",
 				"mouseWheelZoomEnabled": true,
 				"mouseWheelScrollEnabled": true,
 				"fontFamily": "noteSans",
@@ -169,7 +174,7 @@ angular
 	}
 		
 
-	function timeProd(){
+/*	function timeProd(){
 		//대기발생추이
 	    self.timeProd = {	    	
 	        dataSource: self.timeProdData,
@@ -223,24 +228,23 @@ angular
 	            zIndex: 101
 	        }
 	    };
-	}		
+	}		*/
 	
 	//시간별 가동상태 변화 데이터 가져오기
-	var eqptStsHisPromise = CmmAjaxService.select("/mes/bas/selectEqptStsHis.do", self.stsVo);
+	var eqptStsHisPromise = CmmAjaxService.select("/fmb/bas/selectEqptStsHis.do", self.stsVo);
 	eqptStsHisPromise.then(function(data) {
 		self.eqptStsHisData = data
 		//console.log(self.stsVo);
-		//console.log(self.eqptStsHisData);
-		
-		$timeout(function(){}, 200)
-    	.then(function(){
-    		
-    		$timeout(getCstData(),400)
-        	.then(function(){
-    		
-        		makeEqptStsHischart();
-        	});
-    	});
+		console.log(self.eqptStsHisData);
+		getCstData();
+		makeEqptStsHischart();
+		console.log(self.eqptStsHisData);
+
+        		console.log(eqptStsCstData)
+        		char.dataProvider = eqptStsCstData.reverse();
+        		char.validateNow ();
+        		
+
 	}, function(data) {
 		/*alert('fail: '+ data)*/
 		console.log('fail'+data);
@@ -248,18 +252,21 @@ angular
 
 	//시간별 가동상태 변화 차트 만들기
 	function makeEqptStsHischart(){
+	
+		
 		// this function returns our chart data as a promise
-	var char = AmCharts.makeChart("eqptStsHisChart1",
+	 char = AmCharts.makeChart("eqptStsHisChart1",
 			{
 				"type": "serial",
-				"categoryField": "timeMin",	
+				"categoryField": "timeSec",	
 				//"mouseWheelScrollEnabled": true,
 				"mouseWheelZoomEnabled": true,
 				"startDuration" : 1,
 				"categoryAxis": {
-					"title": "시간(분)",
+					"title": "시간(초)",
 					"gridPosition": "start",
-					"titleRotation": 0
+					"titleRotation": 0,
+					"reverse": true
 				},
 				"panEventsEnabled": false,
 				"pan": true,
@@ -317,7 +324,17 @@ angular
 				"dataProvider": eqptStsCstData
 			}
 		);
-	char.addListener("rendered", zoomChart);
+	 
+	/* AmCharts.addInitHandler(function(char) {
+		  
+			  if ( char.categoryAxis === undefined || char.categoryAxis.reverse !== true )
+			    return;
+			  
+			  char.dataProvider.reverse();
+			  
+			}, ["serial"]);
+	char.addListener("rendered", zoomChart);*/
+	
 	zoomChart();
 	
 	function zoomChart() {
@@ -327,77 +344,49 @@ angular
 	
 	//시간별 가동상태 변화 데이터 커스터마이징
 	function getCstData(){
+		console.log(self.eqptStsHisData)
+		console.log(self.eqptStsHisData.length)
 		for(var i = 0; i< self.eqptStsHisData.length; i++){
+			console.log(i + "번째" + self.eqptStsHisData[i].plcSts)
 			if(self.eqptStsHisData[i].plcSts == 0){ //비가동일경우
-				eqptStsCstData[i] = {
-							"timeMin": self.eqptStsHisData[i].timeMin,
-							"plcStsTxt": self.eqptStsHisData[i].plcStsTxt,
-							"strDttm": self.eqptStsHisData[i].strDttm,
-							"endDttm": self.eqptStsHisData[i].endDttm,
-							"plcSts": self.eqptStsHisData[i].plcSts,
-							"color": "#FF0F00"
-								}
-					}else if(self.eqptStsHisData[i].plcSts == 1){
-						eqptStsCstData[i] = {
-								"timeMin": self.eqptStsHisData[i].timeMin,
-								"plcStsTxt": self.eqptStsHisData[i].plcStsTxt,
-								"strDttm": self.eqptStsHisData[i].strDttm,
-								"endDttm": self.eqptStsHisData[i].endDttm,
-								"plcSts": self.eqptStsHisData[i].plcSts,
-								"color": "#60B764"
-								}
-					}else if(self.eqptStsHisData[i].plcSts ==2){
-
-						eqptStsCstData[i] = {
-								"timeMin": self.eqptStsHisData[i].timeMin,
-								"plcStsTxt": self.eqptStsHisData[i].plcStsTxt,
-								"strDttm": self.eqptStsHisData[i].strDttm,
-								"endDttm": self.eqptStsHisData[i].endDttm,
-								"plcSts": self.eqptStsHisData[i].plcSts,
-								"color": "#FFFFFF"
-								}
-						
-					}else if(self.eqptStsHisData[i].plcSts == 3){
-						eqptStsCstData[i] = {
-								"timeMin": self.eqptStsHisData[i].timeMin,
-								"plcStsTxt": self.eqptStsHisData[i].plcStsTxt,
-								"strDttm": self.eqptStsHisData[i].strDttm,
-								"endDttm": self.eqptStsHisData[i].endDttm,
-								"plcSts": self.eqptStsHisData[i].plcSts,
-								"color": "#FCD202"
-								}
-					}else{
-						eqptStsCstData[i] = {
-								"timeMin": self.eqptStsHisData[i].timeMin,
-								"plcStsTxt": self.eqptStsHisData[i].plcStsTxt,
-								"strDttm": self.eqptStsHisData[i].strDttm,
-								"endDttm": self.eqptStsHisData[i].endDttm,
-								"plcSts": self.eqptStsHisData[i].plcSts,
-								"color": "#FF0F00"
-								}
-					}
+				eqptStsCstData[i] = self.eqptStsHisData[i]
+				eqptStsCstData[i].color = "#FF0F00"
+			}else if(self.eqptStsHisData[i].plcSts == 1){
+				eqptStsCstData[i] = self.eqptStsHisData[i]
+				eqptStsCstData[i].color = "#60B764"
+			}else if(self.eqptStsHisData[i].plcSts ==2){
+				eqptStsCstData[i] = self.eqptStsHisData[i]
+				eqptStsCstData[i].color =  "#FFFFFF"
+			}else if(self.eqptStsHisData[i].plcSts == 3){
+				eqptStsCstData[i] = self.eqptStsHisData[i]
+				eqptStsCstData[i].color = "#FCD202"
+			}else if(self.eqptStsHisData[i].plcSts == 4){
+				eqptStsCstData[i] = self.eqptStsHisData[i]
+				eqptStsCstData[i].color = "#FF0F00"
+			}
+			console.log(self.eqptStsHisData[i])
+			console.log(eqptStsCstData[i])
 		}
-	}
+		console.log(eqptStsCstData);
+		reqptStsCstData = eqptStsCstData.reverse();
+	} 
 	//선택된 plc 데이터 가져오기
 	function getSelectedPlc(){
-		var promise = CmmAjaxService.selectOne("/mes/bas/selectFmbPlc.do", self.plcSelectedVo);
+		var promise = CmmAjaxService.selectOne("/fmb/bas/selectFmbPlc.do", self.plcSelectedVo);
         promise.then(function(data){
-        	/*for(var i = 0; i< data.length; i++){
-           		var random = Math.floor(Math.random()*3);
-           		if(random==0){
-           			random = 4;
-           		}
-           		data[i].eqptSts = random;
-       		}*/
-        	
+    	
         	self.plc = data[0];//fmbPlcVo가 담긴 리스트 형태리턴
-            //eqptCd를 넘겨서 순간정지,uph,정지로스 데이터 가져오기
-     	   var promise2 = CmmAjaxService.selectOne("/mes/bas/selectFmbPlc2.do",{eqptCd : self.plc.eqptCd});
+        	console.log(self.plc);
+        	//eqptCd를 넘겨서 순간정지,uph,정지로스 데이터 가져오기
+     	   var promise2 = CmmAjaxService.selectOne("/fmb/bas/selectFmbPlc2.do",{eqptCd : self.plc.eqptCd});
            promise2.then(function(data){
+        	   console.log(data[0]);
+        	   
            	self.plc2 = data[0];
            	self.plc.alramcnt = self.plc2.alramcnt;
            	self.plc.norunsum = self.plc2.norunsum;
            	self.plc.uph = self.plc2.uph;
+           	self.plc.mdate = self.plc2.mdate;
            }
            ,function(data){
            	consol.log('fail'+data);
@@ -415,4 +404,5 @@ angular
     
 
 }]);
+
 

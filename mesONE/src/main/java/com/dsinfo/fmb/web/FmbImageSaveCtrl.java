@@ -61,8 +61,8 @@ public class FmbImageSaveCtrl {
         MBcfTransactionManager transaction = null;
         String sqlID = null;
         
-        String path =  "C://Program Files/Apache Software Foundation/Tomcat 8.5/webapp/assets/img/system";
-        //String path =  "D://git/fmb/mesONE/src/main/webapp/assets/img/system";
+        //String path =  "C://Program Files/Apache Software Foundation/Tomcat 8.5/webapp/assets/img/system";
+        String path =  "D://git/fmb/mesONE/src/main/webapp/assets/img/system";
         String logicalPath = "assets/img/system/";
         
         Map returnObject = new HashMap();

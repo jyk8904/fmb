@@ -11,11 +11,12 @@ public class FmbLineVO extends MBasAbsVO {
 	private String line_nm;
 	private int d_goal;
 	private int n_goal;
+	private int goal_count;
 	private String eqpt_sts;
 	private int d_count;
 	private int n_count;
-	private int d_rate;
-	private int n_rate;
+	private float d_rate;
+	private float n_rate;
 	private int defect_count;
 	private String line_top_nm;
 	private String line_mid_nm;
@@ -24,9 +25,11 @@ public class FmbLineVO extends MBasAbsVO {
 	private int n_goal_mon;
 	private int d_count_mon;
 	private int n_count_mon;
-	private int d_rate_mon;
-	private int n_rate_mon;
+	private float d_rate_mon;
+	private float n_rate_mon;
 	private int defect_count_mon;
+	private float dt_rate;
+	
 	//생성자
 	public FmbLineVO() {
 	}
@@ -38,6 +41,25 @@ public class FmbLineVO extends MBasAbsVO {
 	
 	public String getFactId() {
 		return fact_id;
+	}
+
+	
+	
+	
+	public int getGoalCount() {
+		return goal_count;
+	}
+
+	public void setGoalCount(int goal_count) {
+		this.goal_count = goal_count;
+	}
+
+	public float getDtRate() {
+		return dt_rate;
+	}
+
+	public void setDtRate(float dt_rate) {
+		this.dt_rate = dt_rate;
 	}
 
 	public String getProdDt() {
@@ -96,19 +118,19 @@ public class FmbLineVO extends MBasAbsVO {
 		this.n_count_mon = n_count_mon;
 	}
 
-	public int getDRateMon() {
+	public float getDRateMon() {
 		return d_rate_mon;
 	}
 
-	public void setDRateMon(int d_rate_mon) {
+	public void setDRateMon(float d_rate_mon) {
 		this.d_rate_mon = d_rate_mon;
 	}
 
-	public int getNRateMon() {
+	public float getNRateMon() {
 		return n_rate_mon;
 	}
 
-	public void setNRateMon(int n_rate_mon) {
+	public void setNRateMon(float n_rate_mon) {
 		this.n_rate_mon = n_rate_mon;
 	}
 
@@ -164,9 +186,14 @@ public class FmbLineVO extends MBasAbsVO {
 		this.eqpt_sts = eqpt_sts;
 	}
 
-	public int getDRate() {
+	public float getDRate() {
 		return d_rate;
 	}
+	
+	public void setDRate(float d_rate) {
+		this.d_rate = d_rate;
+	}
+	
 	public int getDCount() {
 		return d_count;
 	}
@@ -184,15 +211,11 @@ public class FmbLineVO extends MBasAbsVO {
 	}
 
 
-	public void setDRate(int d_rate) {
-		this.d_rate = d_rate;
-	}
-
-	public int getNRate() {
+	public float getNRate() {
 		return n_rate;
 	}
 
-	public void setNRate(int n_rate) {
+	public void setNRate(float n_rate) {
 		this.n_rate = n_rate;
 	}
 

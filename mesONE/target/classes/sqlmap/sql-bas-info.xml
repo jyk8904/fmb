@@ -2,7 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sql-bas-info">
 
-    
+  <!-- 로그인 정보 조회 -->
+    <select id="fmbLogin" parameterType="com.dsinfo.fmb.service.FmbLoginVO" resultType="com.dsinfo.fmb.service.FmbLoginVO">     	      
+        {call  DSF_FMB_LOGIN01(#{user_id})}
+
+    </select>
 <!--  	PLCList 정보 조회 -->
     <select id="selectFmbPlc" parameterType="com.dsinfo.fmb.service.FmbPlcParamVO" resultType="com.dsinfo.fmb.service.FmbPlcVO">     	      
         {call USP_EQPT_FMB_SELEC01(#{fact_id},#{plc_id})}
@@ -34,17 +38,23 @@
     <delete id="deleteFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbModEqptVO" >     	      
         {call USP_EQPT_CSS_DEL01(#{fact_id},#{eqpt_type},#{id}, #{eqpt_cnm})}
     </delete>
-    
-	<!-- Line별 생산실적 정보조회 -->
+
+    <!-- Line별 생산실적 정보조회 -->
     <select id="selectFmbLine"  parameterType="com.dsinfo.fmb.service.FmbLineVO" resultType="com.dsinfo.fmb.service.FmbLineVO">     	      
         {call USP_DAILY_PROD_SELEC01(#{fact_id})}
 
     </select> 
-    
-    <!-- 반별(fact) 생산실적 정보조회 -->
-    <select id="selectFmbFact"  parameterType="com.dsinfo.fmb.service.FmbFactVO" resultType="com.dsinfo.fmb.service.FmbFactVO">     	      
-        {call USP_DAILY_PROD_SELEC03()}
-    </select> 
+     
+	<!-- 반별 생산실적 정보조회 -->
+    <select id="selectFmbFact"  parameterType="com.dsinfo.fmb.service.FmbLineVO" resultType="com.dsinfo.fmb.service.FmbLineVO">     	      
+        {call USP_DAILY_PROD_SELEC05(#{fact_id})}
+
+    </select>   
+     
+    <!-- 반별(fact)All 생산실적 정보조회 -->
+    <select id="selectFmbFactAll"  parameterType="com.dsinfo.fmb.service.FmbFactVO" resultType="com.dsinfo.fmb.service.FmbFactVO">     	      
+        {call USP_DAILY_PROD_SELEC04()}
+    </select>  
     
 <!--     SPC 정보조회
     <select id="selectFmbSpc"  parameterType="com.dsinfo.fmb.service.FmbSpcParamVO" resultType="com.dsinfo.fmb.service.FmbSpcVO">     	      

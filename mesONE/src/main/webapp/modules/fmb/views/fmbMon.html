@@ -36,11 +36,11 @@
 <bc-form-header logo='assets/img/system/logo.png' title="생산 자원 통합 모니터링" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 lineInfo">
 가동 : {{vm.count1}} &nbsp; &nbsp;
-알람 : {{vm.count4}} &nbsp; &nbsp;
+비가동 : {{vm.count4}} &nbsp; &nbsp;
 대기 : {{vm.count2}}
 </div>
 
-<img class="col-lg-6 col-md-6 col-sm-6 col-xs-6 legend" src="assets/img/system/legend2.png">
+<img class="col-lg-6 col-md-6 col-sm-6 col-xs-6 legend" src="assets/img/system/legend3.png">
 
 </bc-form-header>
 
@@ -91,8 +91,8 @@
 				  <div class="{{andon.eqptCnm}}" type="{{andon.eqptType}}" plc="{{andon.id}}"
 				  ng-style="{'top':andon.cssTop, 'left': andon.cssLeft, 'width':andon.cssWidth, 'height':andon.cssHeight,'z-index':andon.cssZindex}">
 				  <!-- test -->
-				  <img src="{{andon.stsImg0}}">
 			 	  <img src="{{andon.stsImg1}}">
+				  <img src="{{andon.stsImg0}}">
 			  	  <img src="{{andon.stsImg2}}">
 			  	  <!-- test -->
 	              <!-- <div ng-switch on="vm.andonStsData[$index].eqptSts">  

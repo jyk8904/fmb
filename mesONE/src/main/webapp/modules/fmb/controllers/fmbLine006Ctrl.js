@@ -33,7 +33,7 @@ angular
     var fact_id = "006";
     $scope.isMobile = false;
     //워커3(알람정보워커)가 없을경우 start
-    $scope.Worker3Start()
+    //$scope.Worker3Start()
     self.lineParamVo = {
     	factId : fact_id,
     	lineCd : '',
@@ -84,10 +84,10 @@ angular
 	//선택된 공장의 line별 데이터 가져오기
    function getLineList(){
 	   //console.log(getLineList)
-	    var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do", self.lineParamVo);
+	    var promise = CmmAjaxService.select("/fmb/bas/selectFmbLine.do", self.lineParamVo);
 	    promise.then(function(data){
 	    	self.lineList = data;
-	    	//console.log(data)
+	    	console.log(data)
 	    	var length = self.lineList.length;
 	    	var dangle = length % 7;
 	    	if (dangle != 0) 
@@ -95,19 +95,14 @@ angular
 	    		var blankCount = 7- dangle;
 	    		for (var i = 0; i < blankCount; i++)
 	    		{
-	    			var data = {  dcount : ''
-			    			    , dgoal : ''
-			    			    , drate : ''
-			    			    , eqptSts : ''
+	    			var data = {  eqptSts : ''
 			    			    , desc : null
 			    			    , lineBotNm : ''
 			    			    , lineCd : ''
 			    				, lineMidNm : ''
 			    				, lineNm : ''
 			    				, lineTopNm : ''
-			    				, ncount : ''
-			    				, ngoal : ''
-			    				, nrate : ''
+			    				
 			    			   };
 	    			self.lineList.push(data);
 	    		}

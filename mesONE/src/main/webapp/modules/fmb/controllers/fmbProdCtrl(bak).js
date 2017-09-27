@@ -109,7 +109,7 @@ angular
  
     
     function getLineList(){
-	    var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do", self.lineParamVo);
+	    var promise = CmmAjaxService.select("/fmb/bas/selectFmbLine.do", self.lineParamVo);
 	    promise.then(function(data){
 	    	self.lineList = data;
 	    
@@ -120,7 +120,7 @@ angular
 	    });
     }
     function getFactList(){
-	    var promise = CmmAjaxService.select("/mes/bas/selectFmbFact.do");
+	    var promise = CmmAjaxService.select("/fmb/bas/selectFmbFact.do");
 	    promise.then(function(data){
 	    	self.factList = data;
 	    	console.log(data)

@@ -65,7 +65,7 @@ angular
 	
 	// 이미지 가져오기
 	function getImages(){
-		var promise = CmmAjaxService.selectOne("/mes/bas/selectFmbImage.do");
+		var promise = CmmAjaxService.selectOne("/fmb/bas/selectFmbImage.do");
         promise.then(function(data){
         	self.images = data;//fmbPlcVo가 담긴 리스트 형태리턴
         }
@@ -93,7 +93,7 @@ angular
     				  factId : factId
     				, imgSeq : targetData
     		}
-    		var eqptPromise = CmmAjaxService.save("/mes/bas/saveBgImage.do", self.saveBgImageVo);
+    		var eqptPromise = CmmAjaxService.save("/fmb/bas/saveBgImage.do", self.saveBgImageVo);
     	}
     };
     
@@ -101,7 +101,7 @@ angular
     self.imgDel = function imgDel(target) {
     	self.delTarget.seq = self.images[target].seq;
     	self.delTarget.file_p_path = self.images[target].file_p_path;
-    	var promise = CmmAjaxService.del("/mes/bas/delFmbImage.do", self.delTarget);
+    	var promise = CmmAjaxService.del("/fmb/bas/delFmbImage.do", self.delTarget);
     	
         promise.then(function(data){
         	self.target.num = null;

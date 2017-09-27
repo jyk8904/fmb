@@ -38,7 +38,7 @@ angular.module('app').factory('CmmModalSrvc', ['ModalService', '$q', function(Mo
         var deferred = $q.defer();
         
 	    ModalService.showModal({
-	      templateUrl: "/mes/modules/cmm/views/cmmYesNoDlg.html",
+	      templateUrl: "/fmb/modules/cmm/views/cmmYesNoDlg.html",
 	      controller: "CmmConfirmCtrl",
 	      controllerAs: 'vm',
           inputs: {
@@ -61,7 +61,7 @@ angular.module('app').factory('CmmModalSrvc', ['ModalService', '$q', function(Mo
     function getSave() {
         var deferred = $q.defer();
 	    ModalService.showModal({
-	      templateUrl: "/mes/modules/cmm/views/cmmYesNoDlg.html",
+	      templateUrl: "/fmb/modules/cmm/views/cmmYesNoDlg.html",
 	      controller: "CmmConfirmCtrl",
 	      controllerAs: 'vm',
           inputs: {
@@ -107,7 +107,7 @@ angular.module('app').factory('CmmModalSrvc', ['ModalService', '$q', function(Mo
 	 */
     function getConfirm(title, message) {
 	   ModalService.showModal({
-	      templateUrl: "/mes/modules/cmm/views/cmmConfirmDlg.html",
+	      templateUrl: "/fmb/modules/cmm/views/cmmConfirmDlg.html",
 	      controller: "CmmConfirmCtrl",
 	      controllerAs: 'vm',
           inputs: {
@@ -130,7 +130,7 @@ angular.module('app').factory('CmmModalSrvc', ['ModalService', '$q', function(Mo
         var deferred = $q.defer();
         
 	    ModalService.showModal({
-	      templateUrl: "/mes/modules/fmb/views/fmbPopup.html",
+	      templateUrl: "/fmb/modules/fmb/views/fmbPopup.html",
 		  controller: "fmbPopupCtrl",
 	      controllerAs: 'vm',
           inputs: {

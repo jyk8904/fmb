@@ -90,7 +90,7 @@ angular
 
     function getEqptList(){
 	    	//설비 이미지리스트 가져오기 메소드
-	    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
+	    	var eqptPromise = CmmAjaxService.select("/fmb/bas/selectFmbEqpt.do", self.eqptParamVo);
 	    	eqptPromise.then(function(data) {
 	    		self.eqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
 	    		aaa();
@@ -110,7 +110,7 @@ angular
 	};
 	function getPlcList(){
    		//설비 plc 데이터 가져오기
-   	   		var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
+   	   		var plcPromise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.plcParamVo);
            	plcPromise.then(function(data) {
            		//랜덤값 입력
            		for(var i = 0; i< data.length; i++){

@@ -35,7 +35,7 @@ angular
     // 모바일 체크 함수 실행
 	isMobileFunc();
 	//워커3(알람정보워커)가 없을경우 start
-    $scope.Worker3Start()
+    //$scope.Worker3Start()
 	//데이터 가져오기
     getTbmList();
     
@@ -59,7 +59,7 @@ angular
 	
 	//TBM데이터 가져오기
     function getTbmList(){
-    	var promise = CmmAjaxService.selectAll("/mes/bas/selectFmbTbm.do");
+    	var promise = CmmAjaxService.selectAll("/fmb/bas/selectFmbTbm.do");
     	promise.then(function(data){
     		self.Tbm = data;
     	}

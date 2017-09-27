@@ -28,7 +28,7 @@ public class FmbPlcVO2 extends MBasAbsVO {
 	private String c_user;
 	private String c_date;
 	private String m_user;
-	private String m_datae;
+	private String m_date;
 	private String eqpt_sts_nm;
 	private String count_time;
 	private String norunsum;
@@ -247,13 +247,6 @@ public class FmbPlcVO2 extends MBasAbsVO {
 		this.m_user = m_user;
 	}
 
-	public String getMDatae() {
-		return m_datae;
-	}
-
-	public void setMDatae(String m_datae) {
-		this.m_datae = m_datae;
-	}
 
 	public String getEqptStsNm() {
 		return eqpt_sts_nm;
@@ -325,6 +318,14 @@ public class FmbPlcVO2 extends MBasAbsVO {
 
 	public void setAssetNo(String asset_no) {
 		this.asset_no = asset_no;
+	}
+
+	public String getMDate() {
+		return m_date;
+	}
+
+	public void setMDate(String m_date) {
+		this.m_date = m_date;
 	}
 
 	

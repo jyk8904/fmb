@@ -37,22 +37,19 @@ angular
 	isMobileFunc();
     
     //워커3(알람정보워커)가 없을경우 start
-    $scope.Worker3Start()
+   // $scope.Worker3Start()
     
   	//워커 스타트
   	workerList.workerStart(workerList.worker2, "worker.js");
     //워커 온메세지
 	workerList.workerOnmessage(workerList.worker2, getData);
-  	//workerList.workerOnmessage(workerList.worker2, function(){console.log('onmessage')});
-      /*workerList.workerOnmessage(workerList.worker2, function(){console.log('onmessage')});*/
-  	// 워커에게서 메세지를 받을때마다 페이지 전환
+  
 
-        function getLineList(){
-	    var promise = CmmAjaxService.select("/mes/bas/selectFmbLine.do",  self.lineParamVo);
+        function getFactList(){
+	    var promise = CmmAjaxService.select("/fmb/bas/selectFmbFact.do",  self.lineParamVo);
 	    promise.then(function(data){
 	    	self.lineList = data;
-	    	//console.log(data)
-	    	//console.log(self.lineList)
+	    	console.log(self.lineList)
 	     }
 	    ,function(data){
 	    	console.log('fail: '+ data)
@@ -77,10 +74,12 @@ angular
       function getData(){
     	  self.goalttl =0;
     	  self.countttl = 0;
-    	  self.ratettl= 0;
     	  self.defectttl = 0;
-    	  self.ppmttl = 0;
-    	  getLineList();
+    	  self.goalmonttl =0;
+    	  self.countmonttl = 0;
+    	  self.defectmonttl = 0;
+    	  
+    	  getFactList();
       }
 }]);
 

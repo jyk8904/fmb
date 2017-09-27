@@ -14,7 +14,7 @@
 
 
  onmessage = function(evt){
-	 console.log(evt.data[0])
+	 //console.log(evt.data[0])
 	var jsonData = evt.data[0];			//페이지 세팅데이터(순환순서, 시간, 횟수, 이름, 순환되는페이지포함여부 )
 	var maxLength = jsonData.length;	//총 페이지 갯수
 	var curPageSeq = evt.data[1];		//현재페이지(workerStart postMessage를 보내는 페이지)

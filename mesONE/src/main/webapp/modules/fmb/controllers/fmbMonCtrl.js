@@ -48,7 +48,7 @@ angular
      *-----------------------------------------*/
 	$scope.$watch('loginChk', function(newVal, oldVal) {
 	if(newVal == false){//loginChk가 false인경우 로그아웃
-		
+		console.log("loginChkWatch")
 		$location.url('');
 		}    	
 	}, true);
@@ -58,7 +58,7 @@ angular
     var workerList = CmmWorkerSrvc;
     $scope.isMobile = false;
   //워커3(알람정보워커)가 없을경우 start
-    $scope.Worker3Start()
+    //$scope.Worker3Start()
     //설비parameter
     self.eqptParamVo = {};
     //self.eqptParamVo.factId = CmmFactSrvc.getSelectedFactId() ;
@@ -75,7 +75,7 @@ angular
     		
     }
     
-   $scope.Worker3Start()
+  // $scope.Worker3Start()
    
 
 
@@ -155,7 +155,7 @@ angular
 	}
 	
 	function getSelectedPlc(){
-		var promise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcSelectedVo);
+		var promise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.plcSelectedVo);
         promise.then(function(data){
         	self.plc = data;//fmbPlcVo가 담긴 리스트 형태리턴
         }
@@ -169,7 +169,7 @@ angular
     
     function getBgImageList() {
 
-        var bgImagePromise = CmmAjaxService.select("/mes/bas/selectFmbBgImage.do", self.BgList);
+        var bgImagePromise = CmmAjaxService.select("/fmb/bas/selectFmbBgImage.do", self.BgList);
         bgImagePromise.then(function (data) {
             self.bgImageList = data;
 
@@ -220,7 +220,7 @@ angular
         $mdDialog.show({
           controller: 'DialogCtrl',
           controllerAs: 'vm',
-          templateUrl: '/mes/modules/fmb/views/dialog1.tmpl.html',
+          templateUrl: '/fmb/modules/fmb/views/dialog1.tmpl.html',
           parent: angular.element(document.body),
           isolateScope: false,
           targetEvent: ev,
@@ -237,7 +237,7 @@ angular
 	
     //설비 이미지리스트 가져오기 메소드
     function getEqptList(){
-	    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
+	    	var eqptPromise = CmmAjaxService.select("/fmb/bas/selectFmbEqpt.do", self.eqptParamVo);
 	    	eqptPromise.then(function(data) {
 	    		self.preeqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
 	    		
@@ -257,7 +257,7 @@ angular
 	};
 	
     function getAndonList(){
-    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.andonEqptParamVo);
+    	var eqptPromise = CmmAjaxService.select("/fmb/bas/selectFmbEqpt.do", self.andonEqptParamVo);
     	eqptPromise.then(function(data) {
     		self.preAndonEqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
     		self.andonEqptList = self.preAndonEqptList; 
@@ -278,9 +278,10 @@ angular
     
 
     
+	
 	//설비 plc 데이터 가져오기
 	function getPlcList(){
-   		var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
+   		var plcPromise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.plcParamVo);
        	plcPromise.then(function(data) {
        		// 설비상태 카운트 변수
        		self.count1=0;

@@ -45,6 +45,7 @@ angular
 	workerList.worker2.sts = 'on'; //페이지 순환여부	
 	self.switchPage = workerList.worker2.sts;
 	var winwin;
+	
 	$scope.isMobile = false;
    $scope.login = fnLogin;
    $scope.logOut = fnLogout;
@@ -55,19 +56,33 @@ angular
    $scope.scroll = true;
    $scope.duration = 60000;
    
-   if(localStorage.getItem("autoLogin")=="true"){ //자동로그인에 체크가 되어있던 경우, 로컬에서 가져와서 세션, 스코프에 저장
-	   $scope.id = localStorage.getItem('id');
-	   $scope.pw = localStorage.getItem('password');
-	   
-	   //로컬데이터->세션저장
-       sessionStorage.setItem("id", $scope.id);
-       sessionStorage.setItem("login", true);
-       $scope.loginChk = true;
-   }else{										 //세션정보 만료 전, 새로고침한 경우 세션에서 가져와서 스코프에 저장
-	   $scope.id = sessionStorage.getItem("id");
-	   $scope.loginChk = sessionStorage.getItem("login");
-   }
    
+   $scope.loginChk = sessionStorage.getItem("login")
+ 
+   
+   	//세션정보체크
+   	if($scope.loginChk==undefined || $scope.loginChk==false||$scope.loginChk=="false"){	//세션정보가 없음
+   		//로컬정보체크
+   	   if(localStorage.getItem("autoLogin")=="true"||localStorage.getItem("autoLogin")==true){ //자동로그인에 체크가 되어있던 경우, 로컬에서 가져와서 세션에 저장
+   		   sessionStorage.setItem("id", localStorage.getItem('id'));
+   		   sessionStorage.setItem("login", true);
+   		   $scope.id= sessionStorage.getItem("id")//로그인
+   		   $scope.loginChk= true;
+   		   
+   	   }else{//세션정보없고, 자동로그인 아님
+   		   //로그인페이지으로 이동
+   		   console.log("로그인 실패")
+   		   $scope.loginChk = false;
+   		   $location.url('/');
+   	   }
+   		
+   	}else{//세션정보가 있는경우
+   		$scope.id = sessionStorage.getItem("id");
+   		$scope.loginChk=true;
+   	}
+	   
+  
+   //btnFmbMonClickHandler();//main.html들어올경우 monitering 페이지로
 	// 모바일 체크 함수 실행
 	isMobileFunc();
     
@@ -169,24 +184,54 @@ angular
 			      , { "pageNm": "FmbFact007", 	"pageNmKr": "7반 생산실적"}
 			      , { "pageNm": "FmbTbm", 		"pageNmKr": "TBM"     		}
 			       ]
+	
 	self.Setting=[];
 	$scope.alarmList=[];
 	getAlarmList();
 	
+	$scope.init = setup
+	
+	function setup() {
+		console.log("setup")
+		  var e = document.getElementById("marquee");
+
+		  e.addEventListener("animationiteration", listener, false);
+		  
+		  var e = document.getElementById("marquee");
+		  e.className = "slidein";
+		}
+		function listener(ev) {
+			console.log("type = "+ ev.type)
+		  if(ev.type=="animationiteration"){
+			  console.log("iteration");
+			  getAlarmList();
+		  }else if(ev.type=="animationend"){
+			  console.log("end")
+		  }else if(ev.type=="animationstart" ){
+			  console.log("start")
+		  }
+
+		}
+	
+	
+		
 	//설비 plc 알람정보 데이터 가져오기
 	function getAlarmList(){
+		
 		 if($location.url() == '/'+'FmbMode'){ // mode일 경우 알람정보 지우기
 	      	 $scope.alarmList = [];
    		}else{
    			var alarmList = [];
    			
-   			var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
+   			var plcPromise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.plcParamVo);
    				var alarmListWdth = 0;
 				plcPromise.then(function(data) {
+					//console.log(data);
 					for (var i = 0; i < data.length; i++) {
-						if(data[i].eqptSts=='0'|| data[i].eqptSts=='4'){ //sts== 0이나 4일경우 하단바에 알람 발생 경고()
+						if(data[i].eqptSts3=='4'){ //sts== 0이나 4일경우 하단바에 알람 발생 경고()
 							data[i].charLen = String(data[i].lineNm).length; // 라인명 글자수 
 							data[i].wdth= data[i].charLen * 14.5 + 311;//(li의 width값 = 글자수 *15px + 311px)
+					
 							alarmListWdth = alarmListWdth + data[i].wdth + 10; //margin-right:10px
 							alarmList.push(data[i]);
 						}
@@ -208,51 +253,39 @@ angular
    //Worker3Start();
    defaultLotationSetting();
    
-   //페이지전환 데이터 기본값 설정
    function defaultLotationSetting(){
+	   for(var j =0; j<pageList.length; j++){ // 기본설정값 지정
+		   //console.log(pageList[j])
+		   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(10), "switchNum": Number(1),  "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
+		  //console.log(self.Setting[j])
+	   }
+	   
 	   if(localStorage.getItem('SettingTime')!=null){
-		   self.Setting = JSON.parse(localStorage.getItem('SettingTime'));
-		   for (var i =0; i<self.Setting.length; i++){
-				self.Setting[i] = {"pageSeq":self.Setting[i].pageSeq, 						//페이지 전환순서
-								   //"rotateTime": Number(self.Setting[i].rotateTime), 		//페이지 전환시간
-								   "dataTime": Number(self.Setting[i].dataTime),			//페이지 내 데이터 갱신 시간
-								   "switchNum": Number(self.Setting[i].switchNum),			//페이지 내 데이터 갱신 횟수
-								   "pageNm":self.Setting[i].pageNm, 						//페이지 url
-								   "pageNmKr":self.Setting[i].pageNmKr, 					//페이지명
-								   "switcher" : self.Setting[i].switcher					//페이지 표시 여부
-								   };
+		   var SettingLS = JSON.parse(localStorage.getItem('SettingTime'));
+		   //console.log(self.Setting);
+		   for (var i =0; i<pageList.length; i++){
+			   for(var k=0; k<SettingLS.length; k++){
+				   if(self.Setting[i].pageNm==SettingLS[k].pageNm){
+					   self.Setting[i] = {"pageSeq":self.Setting[i].pageSeq, 			//페이지 전환순서
+							   //"rotateTime": Number(self.Setting[i].rotateTime), 	//페이지 전환시간
+							   "dataTime": Number(SettingLS[k].dataTime),			//페이지 내 데이터 갱신 시간
+							   "switchNum": Number(SettingLS[k].switchNum),			//페이지 내 데이터 갱신 횟수
+							   "pageNm":SettingLS[k].pageNm, 						//페이지 url
+							   "pageNmKr":SettingLS[k].pageNmKr, 					//페이지명
+							   "switcher" : SettingLS[k].switcher					//페이지 표시 여부
+							   };
+				   }
+				  
+			   }
 		   }
+		  //console.log(self.Setting);
 	   }else{
-
-		   for(var j =0; j<pageList.length; j++){ // 기본설정값 지정
-	/*		   if (j == 2) {
-				   	self.Setting[j] = {"pageSeq":j+1, "rotateTime": Number(30), "dataTime": Number(30), "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr, "switcher" : true}
-			   }else {
-			   		self.Setting[j] = {"pageSeq":j+1, "rotateTime": Number(10), "dataTime": Number(5), "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
-			   }*/
-			   //console.log(self.Setting[j])
-			   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(5), "switchNum": Number(1),  "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
-		   }
 		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));		//로컬스토리지 저장
 	   }
 	   workerList.worker2.data =JSON.parse(localStorage.getItem('SettingTime'));    //worker2의 data로 저장
    }
-		 
-/*   //설비 plc 알람정보 데이터 가져오기
-   var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
-   self.alarmList = {}
-   plcPromise.then(function (data) {
-       for (var i = 0; i < data.length; i++) {
-           if (data[i].eqptSts == '0') { //sts== 4일경우 하단바에 알람 발생 경고()
-               self.alarmList[i] = data[i];
-           }
-       }
-       plcPromise = null;
-   }, function (data) {
-	   alert('fail: '+ data)
-		console.log('fail'+data);
-   });
-*/
+
+   
    //페이지 전환설정 submit
    function submitLotationSetting() {
 		  var SettingTime = [];
@@ -568,53 +601,81 @@ angular
     
     
     /*로그인*/
+	var key = "DsInfoFramework*DsInfoFramework*";
 
+    function AES_Encode(plain_text)
+	{
+		GibberishAES.size(256);	
+		return GibberishAES.aesEncrypt(plain_text, key);
+	}
+
+	function AES_Decode(base64_text)
+	{
+		GibberishAES.size(256);	
+		return GibberishAES.aesDecrypt(base64_text, key);
+	}
+	String.prototype.trim = function() {
+	    return this.replace(/(^\s*)|(\s*$)/gi, "");
+	}
+	
     function fnLogin(){
-        var objLogin = $scope.id 			//id 저장 변수	
-        var objPasswd = $scope.pw;			//pw 저장 변수
         var objAutoLogin= $scope.autoLogin; //로그인 여부 저장 변수
-        if(objLogin == undefined || objLogin==""){
+    	var objLogin = {userId : $scope.id , userPw: $scope.pw} //사용자 입력 로그인 정보
+    	var encodeLogin = {userId : null, userPw: AES_Encode(objLogin.userPw)}			//암호화 로그인 정보
+    	var dbLogin = {userId : null, userPw: null}				//db 로그인 정보
+    	
+    	if(objLogin.userId == undefined || objLogin.userId==""){
             alert("아이디를 입력하세요");
             self.focusId = true;
             return ;
         }
-        else if(objPasswd == undefined || objPasswd==""){
+        else if(objLogin.userPw == undefined || objLogin.userPw ==""){
             alert("비밀번호를 입력하세요");
             self.focusPw = true;
             return ;
         }
-        // 서버로 전송
-        // 아이디, 패스워드 체크
-        if(((objLogin =="aaa"|| objLogin =="admin") && objPasswd =="bbb") || (objLogin=="CTR" && objPasswd=="ctr")){
-        	//console.log("로그인")
-        	//console.log(objAutoLogin);
-        	//console.log(localStorage.getItem("autoLogin"))
-        	//자동로그인시 로컬스토리지 저장
-        	if(objAutoLogin ==true 
-        		&& (localStorage.getItem("autoLogin")==null 
-        				|| localStorage.getItem("autoLogin")=="false")){ //자동로그인 체크
-            	localStorage.setItem("autoLogin", true);
-            	localStorage.setItem("id", objLogin);
-            	localStorage.setItem("password", objPasswd);
-            	//console.log(localStorage.getItem("autoLogin"));
-        	}
-        	 //세션저장
-            sessionStorage.setItem("id", objLogin);
-            sessionStorage.setItem("login", true);
-            
-            btnFmbMonClickHandler();
-            
-            if(sessionStorage.getItem("login")=="true"){
-                $scope.loginChk = true
-            }
+    	
+        var plcPromise = CmmAjaxService.select("/fmb/bas/fmbLogin.do", {userId:objLogin.userId});
+			
+		plcPromise.then(function(data) {
+			dbLogin.userPw = data[0].userPw;
+			dbLogin.userId = data[0].userId;
 
-        }else{
-        	alert("아이디와 비밀번호를 확인하세요");
+		      // 아이디, 패스워드 체크
+	        if(encodeLogin.userPw.toString().trim() == dbLogin.userPw.toString().trim()){
+	        	//자동로그인시 로컬스토리지 저장
+	        	if(objAutoLogin ==true 
+	        		&& (localStorage.getItem("autoLogin")==null 
+	        				|| localStorage.getItem("autoLogin")=="false")){ //자동로그인 체크
+	            	localStorage.setItem("autoLogin", true);
+	            	localStorage.setItem("id", objLogin);
+	        	}
+	        	 //세션저장
+	            sessionStorage.setItem("id", dbLogin.userId);
+	            sessionStorage.setItem("login", true);
+	            console.log("모니터링 화면으로1")
+	            btnFmbMonClickHandler();
+	            
+	            if(sessionStorage.getItem("login")=="true"){
+	                $scope.loginChk = true;
+	            }
+
+	        }else{
+	        	alert("아이디와 비밀번호를 확인하세요");
+	        	return;
+	        }
+			
+			
+			
+			plcPromise = null;
+		
+		}, function(data){
+			alert("아이디와 비밀번호를 확인하세요");
         	return;
-        }
-        objLogin = null;
-        objPasswd = null;
-        objAutoLogin = null;
+		});
+	
+  
+
     }
     /* 로그 아웃 */
     function fnLogout(){
@@ -627,7 +688,7 @@ angular
     	if(localStorage.getItem("autoLogin")=="true"){
     		localStorage.removeItem("autoLogin");
     		localStorage.removeItem("id");
-        	localStorage.removeItem("password");
+        	//localStorage.removeItem("password");
         	$scope.autoLogin = false;
         	}       
     	//세션지움
@@ -662,7 +723,7 @@ angular
 		}else{
 			$scope.isMobile =  false;
 		   //알람정보워커 start
-		   Worker3Start();
+		 //  Worker3Start();
 		}
 	}
 }]);

@@ -385,12 +385,12 @@ angular
     		}
     	}	
     	//console.log(self.eqptList);
-    	 var eqptPromise = CmmAjaxService.save("/mes/bas/saveFmbEqpt.do", self.eqptList);
+    	 var eqptPromise = CmmAjaxService.save("/fmb/bas/saveFmbEqpt.do", self.eqptList);
     };
     
     //설비 이미지리스트 가져오기
     function getEqptList(){
-    	var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
+    	var eqptPromise = CmmAjaxService.select("/fmb/bas/selectFmbEqpt.do", self.eqptParamVo);
     	eqptPromise.then(function(data) {
     		console.log(data)
     		self.eqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
@@ -407,7 +407,7 @@ angular
     function getPlcList(){
     	
     	//설비 plc 데이터 가져오기
-    	var plcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.plcParamVo);
+    	var plcPromise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.plcParamVo);
     	plcPromise.then(function(data) {
     		var dataList= [];
     		for(var i=0; i<data.length; i++){
@@ -426,7 +426,7 @@ angular
     function getAndonList(){
     	
     	//설비 Andon 데이터 가져오기   andon프로시저 생성후 수정해야함 
-    	var andonPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.andonParamVo);
+    	var andonPromise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.andonParamVo);
     		andonPromise.then(function(data) {
 			var dataList= [];
     		for(var i=0; i<data.length; i++){
@@ -444,7 +444,7 @@ angular
     function getSpcList(){
     	
     	//설비 Spc 데이터 가져오기   프로시저 생성후 수정해야함 
-    	var spcPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.spcParamVo);
+    	var spcPromise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.spcParamVo);
     		spcPromise.then(function(data) {
     		self.spcList = data; 
     		//console.log(self.spcList)
@@ -456,7 +456,7 @@ angular
     function getCountList(){
     	
     	//설비 count 데이터 가져오기    프로시저 생성후 수정해야함 
-    	var countPromise = CmmAjaxService.select("/mes/bas/selectFmbPlc.do", self.countParamVo);
+    	var countPromise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.countParamVo);
     		countPromise.then(function(data) {
     		self.countList = data; 
     		//console.log(self.countList)
@@ -467,7 +467,7 @@ angular
     }
     function getBgImageList() {
         
-    	var bgImagePromise = CmmAjaxService.select("/mes/bas/selectFmbBgImage.do", self.BgList);
+    	var bgImagePromise = CmmAjaxService.select("/fmb/bas/selectFmbBgImage.do", self.BgList);
     	bgImagePromise.then(function(data) {
     		self.bgImageList = data;
     		
@@ -624,7 +624,7 @@ angular
 	        $mdDialog.show({
 		          controller: 'UploadCtrl',
 		          controllerAs: 'vm',
-		          templateUrl: '/mes/modules/fmb/views/upload.tmpl.html',
+		          templateUrl: '/fmb/modules/fmb/views/upload.tmpl.html',
 		          parent: angular.element(document.body),
 		          clickOutsideToClose:true,
 		          fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
@@ -641,7 +641,7 @@ angular
 	        $mdDialog.show({
 		          controller: 'ImageViewerCtrl',
 		          controllerAs: 'vm',
-		          templateUrl: '/mes/modules/fmb/views/imageViewer.tmpl.html',
+		          templateUrl: '/fmb/modules/fmb/views/imageViewer.tmpl.html',
 		          parent: angular.element(document.body),
 		          clickOutsideToClose:true,
 		          locals : {

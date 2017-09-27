@@ -11,8 +11,8 @@ public class FmbFactVO extends MBasAbsVO {
 	private int goal_count;
 	private int d_count;
 	private int n_count;
-	private int d_rate;
-	private int n_rate;
+	private float d_rate;
+	private float n_rate;
 	private int defect_count;
 	
 	private int d_goal_mon;
@@ -20,8 +20,8 @@ public class FmbFactVO extends MBasAbsVO {
 	private int goal_count_mon;
 	private int d_count_mon;
 	private int n_count_mon;
-	private int d_rate_mon;
-	private int n_rate_mon;
+	private float d_rate_mon;
+	private float n_rate_mon;
 	private int defect_count_mon;
 	
 	
@@ -73,8 +73,11 @@ public class FmbFactVO extends MBasAbsVO {
 		this.goal_count = goal_count;
 	}
 
-	public int getDRate() {
+	public float getDRate() {
 		return d_rate;
+	}
+	public void setDRate(float d_rate) {
+		this.d_rate = d_rate;
 	}
 	public int getDCount() {
 		return d_count;
@@ -92,15 +95,12 @@ public class FmbFactVO extends MBasAbsVO {
 		this.n_count = n_count;
 	}
 
-	public void setDRate(int d_rate) {
-		this.d_rate = d_rate;
-	}
 
-	public int getNRate() {
+	public float getNRate() {
 		return n_rate;
 	}
 
-	public void setNRate(int n_rate) {
+	public void setNRate(float n_rate) {
 		this.n_rate = n_rate;
 	}
 	public int getDefectCount() {
@@ -152,19 +152,19 @@ public class FmbFactVO extends MBasAbsVO {
 		this.n_count_mon = n_count_mon;
 	}
 
-	public int getDRateMon() {
+	public float getDRateMon() {
 		return d_rate_mon;
 	}
 
-	public void setDRateMon(int d_rate_mon) {
+	public void setDRateMon(float d_rate_mon) {
 		this.d_rate_mon = d_rate_mon;
 	}
 
-	public int getNRateMon() {
+	public float getNRateMon() {
 		return n_rate_mon;
 	}
 
-	public void setNRateMon(int n_rate_mon) {
+	public void setNRateMon(float n_rate_mon) {
 		this.n_rate_mon = n_rate_mon;
 	}
 

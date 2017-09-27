@@ -34,7 +34,7 @@ angular
     // 모바일 체크 함수 실행
 	isMobileFunc();
     //워커3(알람정보워커)가 없을경우 start
-    $scope.Worker3Start()
+    //$scope.Worker3Start()
   	//워커 스타트
   	workerList.workerStart(workerList.worker2, "worker.js");
     //워커 온메세지
@@ -51,11 +51,10 @@ angular
 		}
 	}  
         function getFactList(){
-	    var promise = CmmAjaxService.select("/mes/bas/selectFmbFact.do");
+	    var promise = CmmAjaxService.select("/fmb/bas/selectFmbFactAll.do");
 	    promise.then(function(data){
 	    	self.factList = data;
-	    	//console.log(data)
-	    	//console.log(self.factList)
+	    	console.log(self.factList)
 	     }
 	    ,function(data){
 	    	console.log('fail: '+ data)
@@ -80,9 +79,10 @@ angular
       function getData(){
     	  self.goalttl =0;
     	  self.countttl = 0;
-    	  self.ratettl= 0;
     	  self.defectttl = 0;
-    	  self.ppmttl = 0;
+    	  self.goalmonttl =0;
+    	  self.countmonttl = 0;
+    	  self.defectmonttl = 0;
     	  getFactList();
       }
 }]);

@@ -32,16 +32,46 @@ public class FmbFactCtrl {
 	 * @exception : Exception 
 	 * @return: FmbLineVO
 	 */
-    @SuppressWarnings("unchecked")
+	
+	
+	 @SuppressWarnings("unchecked")
+	    //4.매핑된 주소를 통해 요기로 이동
+	    
+	    @RequestMapping(value = "/bas/selectFmbFact.do", method = RequestMethod.POST)
+		public ResponseEntity<List<FmbLineVO>> selectFmbFact(@RequestBody FmbLineVO vo)  {
+	    	//RequestBody : JSON형태로 보낸 vo를 컬럼명이 똑같으면 FmbLineParamVO형태로 알아서 매핑,변환
+			List<FmbLineVO> fmbLineVO = null;
+			System.out.println("FmbFact.do로 이동");
+			try {
+				//mBcfBizService : select, insert, delete, update 구문과 vo를 정형화 해놓음
+				//
+				//5. sql-bas-info.xml의  id가 selectFmbLine인 select 실행
+			
+				fmbLineVO = (List<FmbLineVO>) mBcfBizService.select("sql-bas-info.selectFmbFact", vo);
+				System.out.println("vo" +vo.getLineCd());
+				log.info(vo.getLineCd());
+				log.error(vo.getFactId());
+				
+				return new ResponseEntity<List<FmbLineVO>>(fmbLineVO, HttpStatus.OK);
+				//7.응답받은 result 리턴
+			} catch (Exception ie) {
+				log.error("FmbLineController:selectFmbFacte=>" +  ie.toString());
+				return new ResponseEntity<List<FmbLineVO>>(fmbLineVO, HttpStatus.OK);
+			}
+		}
+	    
+	    
+	 
+	@SuppressWarnings("unchecked")
     //4.매핑된 주소를 통해 요기로 이동
     
-    @RequestMapping(value = "/bas/selectFmbFact.do", method = RequestMethod.POST)
-	public ResponseEntity<List<FmbFactVO>> selectFmbFact()  {
+    @RequestMapping(value = "/bas/selectFmbFactAll.do", method = RequestMethod.POST)
+	public ResponseEntity<List<FmbFactVO>> selectFmbFactAll()  {
     	//RequestBody : JSON형태로 보낸 vo를 컬럼명이 똑같으면 FmbLineParamVO형태로 알아서 매핑,변환
 		List<FmbFactVO> fmbFactVO = null;
-		System.out.println("FmbFact.do로 이동");
+		System.out.println("FmbFactAll.do로 이동");
 		try {
-			fmbFactVO = (List<FmbFactVO>) mBcfBizService.selectAll("sql-bas-info.selectFmbFact");
+			fmbFactVO = (List<FmbFactVO>) mBcfBizService.selectAll("sql-bas-info.selectFmbFactAll");
 			log.info("success");
 			log.error("error");
 			

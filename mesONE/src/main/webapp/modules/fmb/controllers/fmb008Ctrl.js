@@ -37,7 +37,7 @@ angular
 
      self.toggleLeft = buildToggler('left');
      self.saveEqptData = function(){
-    	 var eqptPromise = CmmAjaxService.select("/mes/bas/saveFmbEqpt.do", self.eqptList);
+    	 var eqptPromise = CmmAjaxService.select("/fmb/bas/saveFmbEqpt.do", self.eqptList);
      	eqptPromise.then(function(d) {
 			//AUIGrid.setGridData(myGridID, d);
 			if (d.msgId == 'OK') {
@@ -205,7 +205,7 @@ angular
     };
 
     //설비 이미지리스트 가져오기
-    var eqptPromise = CmmAjaxService.select("/mes/bas/selectFmbEqpt.do", self.eqptParamVo);
+    var eqptPromise = CmmAjaxService.select("/fmb/bas/selectFmbEqpt.do", self.eqptParamVo);
     	eqptPromise.then(function(data) {
     		self.eqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
     		for(var i = 0; i < self.eqptList.length; i++){

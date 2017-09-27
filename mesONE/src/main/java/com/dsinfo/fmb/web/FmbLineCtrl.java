@@ -33,9 +33,8 @@ public class FmbLineCtrl {
 	 * @exception : Exception 
 	 * @return: FmbLineVO
 	 */
+   
     @SuppressWarnings("unchecked")
-    //4.매핑된 주소를 통해 요기로 이동
-    
     @RequestMapping(value = "/bas/selectFmbLine.do", method = RequestMethod.POST)
 	public ResponseEntity<List<FmbLineVO>> selectFmbLine(@RequestBody FmbLineVO vo)  {
     	//RequestBody : JSON형태로 보낸 vo를 컬럼명이 똑같으면 FmbLineParamVO형태로 알아서 매핑,변환

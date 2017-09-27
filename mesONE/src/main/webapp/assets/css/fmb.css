@@ -34,25 +34,44 @@ img {
 	max-width:100%;
 }
 
-/* Make it a marquee */
-.marquee {
+#marquee{
+  animation : slidein 30s linear infinite;
+  animation-delay:3s;
+  /* animation-iteration-count : 1; */
+  /* animation-fill-mode: backwards; */
+/* width:100%; */
+/* infinite */
+}
+
+@keyframes slidein {
+  from {
+    margin-left: 100%;
+  }
+
+  to {
+    margin-left: -100%;
+  }
+}
+/* /* Make it a marquee */
+/* .marquee {
     width: 1920px;
     margin: 0 auto;
     overflow: hidden;
     white-space: nowrap;
     box-sizing: border-box;
-    animation: marquee 50s linear infinite;
+    animation: marquee 3s linear;
+     infinite;
 }
 
 .marquee:hover {
     animation-play-state: paused
 }
 
-/* Make it move */
+Make it move
 @keyframes marquee{
     0%   { text-indent: 1920px }
     100% { text-indent: -1920px }
-}
+} */
 
 .mouse-over-bar {
 	padding:20px 20px; 
@@ -154,6 +173,10 @@ form input.ng-ivnalid{
 }
 .colorNested{
 	text-align:center;
+	border-right:2px solid rgba(168, 167, 167, 0.47);
+}
+.colorNested:last-child{
+	border-right:none;
 }
 .colorNested > div:nth-child(1){
 	background-color: #0a1b2f;
@@ -733,6 +756,15 @@ inputText {
 	flex-grow:1;
 }
 
+.prodTable > div > .column{
+	border-right:1px solid  rgba(168, 167, 167, 0.47); 
+}
+.prodTable .column:LAST-CHILD{
+	border-right:none;
+}
+.prodTable .leftborder >.column:FIRST-CHILD{
+	border-bottom:1px solid rgba(168, 167, 167, 0.47); 
+}
 .colorNested > div > div > p{
 	word-break: keep-all;
 }
@@ -980,7 +1012,7 @@ background-color: #272727;
 	top:25px;
 	white-space:nowrap;
 	display: inline-block;
-	
+	z-index:1;
 	/* opacity:0.7; */
 }
 

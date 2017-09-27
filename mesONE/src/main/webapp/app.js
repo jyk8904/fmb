@@ -55,6 +55,11 @@
 	            templateUrl: 'main.html',
 	            controllerAs: 'vm'
 	        })
+	        .when('/login', {
+	            controller: 'LoginCtrl',
+	            templateUrl: 'login.html',
+	            controllerAs: 'vm'
+	        })
 	        /*------------------------------------------
 	         * FMB 화면
 	         *-----------------------------------------*/

@@ -17,6 +17,7 @@ public class FmbPlcVO extends MBasAbsVO {
 	private String jisino_count;
 	private String plc_id;
 	private String eqpt_sts;
+	private String eqpt_sts3;
 	private String sts_dttm;
 	private String prod_dt;
 	private String d_count;
@@ -123,6 +124,13 @@ public class FmbPlcVO extends MBasAbsVO {
 
 	public void setEqptSts(String eqpt_sts) {
 		this.eqpt_sts = eqpt_sts;
+	}
+	public String getEqptSts3() {
+		return eqpt_sts3;
+	}
+
+	public void setEqptSts3(String eqpt_sts3) {
+		this.eqpt_sts3 = eqpt_sts3;
 	}
 
 	public String getStsDttm() {

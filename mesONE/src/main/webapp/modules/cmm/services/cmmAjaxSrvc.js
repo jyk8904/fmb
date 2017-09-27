@@ -62,7 +62,7 @@ angular.module('app').factory('CmmAjaxService', ['CmmModalSrvc', '$http', '$q','
      *      실패 : NG 
      */
     function select(url, jsonObj) {
-    //2. 1.CmmAjaxService.select("/mes//bas/selectFmbPlc.do", self.vo); 구문을 통해 요기로 이동
+    //2. 1.CmmAjaxService.select("/fmb//bas/selectFmbPlc.do", self.vo); 구문을 통해 요기로 이동
     	
         var deferred = $q.defer();
         

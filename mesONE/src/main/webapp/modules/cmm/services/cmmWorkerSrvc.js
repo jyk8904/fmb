@@ -12,8 +12,8 @@
 
 'use strict';
 
-angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$location',
-										function( CmmFactSrvc, $location) {
+angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$rootScope', '$location',
+										function( CmmFactSrvc,$rootScope, $location) {
 	
 	
 
@@ -66,7 +66,7 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$location',
 	           for(var i = 0; i < obj_length; i++){
 	        	   if('/'+SettingTime[i].pageNm ==$location.url()){
 	        		   workerName.worker.postMessage([SettingTime, i, switchPage]);
-	        		   
+	        		   console.log("post메세지보내기"+i)
 	        	   }
 	           }
 
@@ -99,7 +99,7 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$location',
 		        	
 		        	console.log(pager+"로 페이지 전환")
 		        	$location.url('/'+pager);
-		        	//$scope.$apply();
+		        	$rootScope.$apply();
 				}
 	        }
 	     }  

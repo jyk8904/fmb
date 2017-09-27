@@ -69,7 +69,7 @@
 							<tr><td>설비코드</td><td>{{vm.plc.eqptCd}}</td></tr>
 							<tr><td>설비명</td><td>{{vm.plc.eqptNm}}</td></tr>
 							<tr><td>주간실적 / 야간실적</td><td>{{vm.plc.dcount}} / {{vm.plc.ncount}}</td></tr>
-							<tr><td>생산시간</td><td>{{vm.plc.prodDt}}</td></tr>
+							<tr><td>생산시간</td><td>{{vm.plc.mdate}}</td></tr>
 							<tr><td>정지 LOSS</td><td>{{vm.plc.norunsum}}</td></tr>
 							<tr ng-switch on="vm.plc.eqptSts">
 								<td>설비상태</td>
@@ -124,7 +124,7 @@
 						<tr><td>설비명</td><td>{{vm.plc.eqptNm}}</td></tr>
 						<tr><td>주간실적</td><td>{{vm.plc.dcount}}</td></tr>
 						<tr><td>야간실적</td><td>{{vm.plc.ncount}}</td></tr>
-						<tr><td>생산시간</td><td>{{vm.plc.prodDt}}</td></tr>
+						<tr><td>생산시간</td><td>{{vm.plc.mdate}}</td></tr>
 						<tr><td>정지 LOSS</td><td>{{vm.plc.norunsum}}</td></tr>
 						<tr ng-switch on="vm.plc.eqptSts">
 							<td>설비상태</td>
