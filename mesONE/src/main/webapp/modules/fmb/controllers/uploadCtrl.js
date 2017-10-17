@@ -87,10 +87,12 @@ angular
         }, function (evt) { 	  //finally
         	if(evt.type=="load"){
         		var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-        		   $scope.imageInfo.percentage = progressPercentage;
-	            $timeout(function(){// 업로드가 끝나기전에 알림창이 떠버려서 timeout을 지정해주었으나, 검토해봐야함.
+        		$scope.imageInfo.percentage = progressPercentage;
+	            var  progressTimeout= $timeout(function(){// 업로드가 끝나기전에 알림창이 떠버려서 timeout을 지정해주었으나, 검토해봐야함.
 	            	 if ($scope.imageInfo.percentage == 100) {
 			            	alert("업로드가 완료되었습니다.");
+			            	progressTimeout.$cancel();
+			            	progressTimeout=null;
 			            }
 	            }, 500);
 	        }

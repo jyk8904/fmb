@@ -46,44 +46,45 @@ angular
 	/*------------------------------------------
      * 변수 선언
      *-----------------------------------------*/
-	$scope.$watch('loginChk', function(newVal, oldVal) {
-	if(newVal == false){//loginChk가 false인경우 로그아웃
-		//console.log("loginChkWatch")
-		$location.url('');
-		}    	
-	}, true);
+
 
     							    
     var self = this;
+
     var workerList = CmmWorkerSrvc;
+    var promise = null;
+    var bgImagePromise = null;
+    var eqptPromise = null;
+    var plcPromise = null;
+    var andonEqptPromise = null;
+    var andonPromise =null;
     $scope.isMobile = false;
-  //워커3(알람정보워커)가 없을경우 start
-    //$scope.Worker3Start()
-    //설비parameter
-    self.eqptParamVo = {};
-    //self.eqptParamVo.factId = CmmFactSrvc.getSelectedFactId() ;
-    self.eqptParamVo.factId = 'Comb';
-    self.eqptParamVo.eqptType= 'PLC';
-    self.eqptParamVo.id ='';
-    self.eqptParamVo.eqptCnm ='';
-    	
-    //안돈설비 param
-    self.andonEqptParamVo = { factId : 'Comb'
-    						, eqptType: 'ANDON'
-    						, id 		: ''
-    						, eqptCnm : ''
-    		
-    }
+    $scope.showBar1 = true;
+    $rootScope.showBar = $location.url();
     
-  // $scope.Worker3Start()
-   
+    //PLC설비parameter
+    self.eqptParamVo = { factId   :'Comb'
+    				   , eqptType :'PLC'
+    				   , id  	  :''
+    				   , eqptCnm  :''
+    				} ;
+    //안돈설비 param
+    self.andonEqptParamVo = { factId    : 'Comb'
+    						, eqptType  : 'ANDON'
+    						, id 		: ''
+    						, eqptCnm   : ''
+			    			}
 
 
     //plc parameter
 	self.plcParamVo={};
 	self.plcParamVo.plcId ='';
 	self.plcParamVo.factId ='';
-	//self.plcParamVo.factId = CmmFactSrvc.getSelectedFactId() ;
+    
+/*	//andon parameter
+	self.andonParamVo={};
+	self.andonParamVo.plcId ='';
+	self.andonParamVo.factId ='';*/
 	
 	self.stsData = [];
 	self.andonStsData = [];
@@ -98,24 +99,20 @@ angular
 	};
 	
     self.showModal = false;
-	    
     self.toggleModal = function(pid){
     	self.plcSelectedVo = {plcId: pid,
 					    		  factId: ''
 					    		  } 
     	//선택된 plc 데이터 가져오기
     	getSelectedPlc();
-    
     	}
     
 	// 모바일 체크 함수 실행
 	isMobileFunc();
 
-
     getBgImageList();      
    	getData();
    	dataChk();
-   	
    	
     $scope.hover=[];
     $scope.hoverIn = function(index){
@@ -125,18 +122,17 @@ angular
    	 $scope.hover[index] = false;
     }
 	function dataChk(){ //function(getplcList, getEqptList, bindData) 순서제어
-	   	    if(self.preplcList==undefined || self.preeqptList==undefined||self.preAndonEqptList==undefined){//모든 데이터를 읽지 못했을경우
-	   	    	$timeout(function(){
-/*		   	    	console.log(self.plcList==undefined, self.plcList)
-				   	console.log(self.eqptList==undefined, self.eqptList)*/
+	   	    if(self.preplcList==undefined ||self.preandonList==undefined
+	   	    || self.preeqptList==undefined ||self.preAndonEqptList==undefined){//모든 데이터를 읽지 못했을경우
+	   	    	 var dataChkTimeout= $timeout(function(){
 	   	    	}, 100)
 	   	    	.then(function(){
 	   	    		dataChk();
 	   	    	});
-			 
 	   		}else{ 													//모든 데이터를 읽어들인 경우
 	   			bindData();
 	   			andonBindData();
+	   			dataChkTimeout.cancel();
 	   		}
 	   	}
     
@@ -155,21 +151,22 @@ angular
 	}
 	
 	function getSelectedPlc(){
-		var promise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.plcSelectedVo);
+		console.log("GetPlc")
+		promise = CmmAjaxService.select("bas/selectFmbPlc.do", self.plcSelectedVo);
         promise.then(function(data){
         	self.plc = data;//fmbPlcVo가 담긴 리스트 형태리턴
+        	promise = null;
         }
         ,function(data){
         	/*alert('fail: '+ data)*/
     		console.log('fail'+data);
         });
-    	
     	 self.showModal = !self.showModal;
     };
     
     function getBgImageList() {
 
-        var bgImagePromise = CmmAjaxService.select("/fmb/bas/selectFmbBgImage.do", self.BgList);
+        bgImagePromise = CmmAjaxService.select("bas/selectFmbBgImage.do", self.BgList);
         bgImagePromise.then(function (data) {
             self.bgImageList = data;
 
@@ -187,6 +184,7 @@ angular
                 }
 
             }
+            bgImagePromise = null;
         }, function (data) {
         	/*alert('fail: '+ data)*/
     		console.log('fail'+data);
@@ -194,9 +192,9 @@ angular
     }
 
 	//워커 스타트
-	workerList.workerStart(workerList.worker2, "worker.js");
+	workerList.workerStart(workerList.worker, "worker.js");
 	//워커 온메세진
-	workerList.workerOnmessage(workerList.worker2, function(){getData(); dataChk();} );
+	workerList.workerOnmessage(workerList.worker, function(){getData(); dataChk();} );
 	  
 	
     // 팝업 테스트용 코드입니다....
@@ -237,17 +235,31 @@ angular
 	
     //설비 이미지리스트 가져오기 메소드
     function getEqptList(){
-	    	var eqptPromise = CmmAjaxService.select("/fmb/bas/selectFmbEqpt.do", self.eqptParamVo);
+    	console.log("Getdata")
+	    	eqptPromise = CmmAjaxService.select("bas/selectFmbEqpt.do", self.eqptParamVo);
 	    	eqptPromise.then(function(data) {
 	    		self.preeqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
-	    		
 	    		self.eqptList = self.preeqptList; 
-	    		//bindData();
+	    		eqptPromise = null;
 	    	}, function(data){
 	    		/*alert('fail: '+ data)*/
 	    		console.log('fail'+data);
 	    	});
     }
+
+	
+    function getAndonEqptList(){
+    	andonEqptPromise = CmmAjaxService.select("bas/selectFmbEqpt.do", self.andonEqptParamVo);
+    	andonEqptPromise.then(function(data) {
+    		self.preAndonEqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
+    		self.andonEqptList = self.preAndonEqptList; 
+    		andonEqptPromise = null;
+    		
+    	}, function(data){
+    		/*alert('fail: '+ data)*/
+    		console.log('fail'+data);
+    	});
+}
     function bindData(){
     	//console.log("bindData")
 		for(var i =0; i < self.eqptList.length; i++){
@@ -255,23 +267,15 @@ angular
 			self.stsData[i]= target[0];
 		}
 	};
-	
-    function getAndonList(){
-    	var eqptPromise = CmmAjaxService.select("/fmb/bas/selectFmbEqpt.do", self.andonEqptParamVo);
-    	eqptPromise.then(function(data) {
-    		self.preAndonEqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
-    		self.andonEqptList = self.preAndonEqptList; 
-    		//bindData();
-    	}, function(data){
-    		/*alert('fail: '+ data)*/
-    		console.log('fail'+data);
-    	});
-}
-
-    function andonBindData(){
-    	//console.log("andonBindData")
+    function andonBindData(){//안돈신호 올라오면 수정해야함
+    	//console.log(self.andonList)
+    	//console.log(self.andonEqptList)
+    	//console.log(self.eqptList)
 		for(var i =0; i < self.andonEqptList.length; i++){
-			var target = $filter('filter')(self.plcList, {plcId : self.andonEqptList[i].id});
+			//original
+			//var target = $filter('filter')(self.andonList, {plcId : self.andonEqptList[i].id});
+			//데이터 입력전 test용
+			var target = $filter('filter')(self.andonList, {plcId : self.eqptList[i].id});
 			self.andonStsData[i] = target[0];
 		}
 	};
@@ -281,7 +285,7 @@ angular
 	
 	//설비 plc 데이터 가져오기
 	function getPlcList(){
-   		var plcPromise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.plcParamVo);
+   		plcPromise = CmmAjaxService.select("bas/selectFmbPlc.do", self.plcParamVo);
        	plcPromise.then(function(data) {
        		// 설비상태 카운트 변수
        		self.count1=0;
@@ -317,21 +321,45 @@ angular
        		//데이터를 가져오는동안 깜빡임 방지
        		self.preplcList = data; 
        		self.plcList = self.preplcList;
-       		
+       		plcPromise = null;
        	}, function(data){
        		/*alert('fail: '+ data)*/
     		console.log('fail'+data);
        });
 	}
 	
+	//설비 andon 상태 데이터 가져오기
+	function getAndonList(){
+   		andonPromise = CmmAjaxService.select("bas/selectFmbAndon.do", self.plcParamVo); //plc와 파라미터넘기는게 똑같아서같이쓰겟음
+   		
+       	andonPromise.then(function(data) {
+       		
+       		 //랜덤값 입력
+     /*  		for(var i = 0; i< data.length; i++){
+           		var random = Math.floor(Math.random()*2);
+           		data[i].eqptSts = random;
+       		}*/
+       		//데이터를 가져오는동안 깜빡임 방지
+       		self.preandonList = data; 
+       		self.andonList = self.preandonList;
+       		andonPromise = null;
+       	}, function(data){
+       		/*alert('fail: '+ data)*/
+    		console.log('fail'+data);
+       });
+	}
+	
+	
 	function getData(){
 		self.preplcList = undefined;
 		self.preeqptList = undefined;
 		self.preAndonEqptList = undefined;
+		self.preandonList = undefined;
 		
 		getEqptList();
-		getAndonList();	
+		getAndonEqptList();	
    		getPlcList();
+   		getAndonList();
 	} 	
     	
 }]);

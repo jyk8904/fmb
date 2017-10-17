@@ -42,8 +42,8 @@ angular
 
     var self = this;
 	var workerList = CmmWorkerSrvc;
-	//workerList.worker2.sts = 'off'; //페이지 순환여부	
-	//self.switchPage = workerList.worker2.sts;
+	//workerList.worker.sts = 'off'; //페이지 순환여부	
+	//self.switchPage = workerList.worker.sts;
 	
 	
 	$scope.isMobile = false;

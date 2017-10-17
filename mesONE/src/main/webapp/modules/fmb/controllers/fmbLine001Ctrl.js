@@ -15,25 +15,24 @@
 angular
     .module('app')
     .controller('FmbLine001Ctrl'
-    		, [	'CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc','$http','$scope','$window','$q','$location'
-     , function (CmmAjaxService , CmmModalSrvc , CmmWorkerSrvc , $http , $scope , $window , $q , $location) 
+    		, [	'CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc','$http','$scope','$window','$q','$location','$rootScope'
+     , function (CmmAjaxService , CmmModalSrvc , CmmWorkerSrvc , $http , $scope , $window , $q , $location, $rootScope) 
 {
 	/*------------------------------------------
      * 변수 선언
      *-----------------------------------------*/
-	$scope.$watch('loginChk', function(newVal, oldVal) {
-		if(newVal == false){
-			$location.url('');
-		}    	
-	}, true);
-	
 	    
     var self = this;
     var workerList = CmmWorkerSrvc;
     var fact_id = "001";
+    var promise = null;
+    var length = null;
+    var dangle = null;
+    var blankCount = null;
+    var data = null;
     $scope.isMobile = false;
-    //워커3(알람정보워커)가 없을경우 start
-    //$scope.Worker3Start()
+    $rootScope.showBar = $location.url();
+
     self.lineParamVo = {
     	factId : fact_id,
     	lineCd : '',
@@ -67,35 +66,34 @@ angular
     // 모바일 체크 함수 정의
 	function isMobileFunc(){
 		var UserAgent = navigator.userAgent;
-
 		if (UserAgent.match(/iPhone|iPod|iPad|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null)
 		{
 			$scope.isMobile = true;
 		}else{
 			$scope.isMobile =  false;
 		}
+		UserAgent = null;
 	}
 	
     //워커 스타트
-	workerList.workerStart(workerList.worker2, "worker.js");
+	workerList.workerStart(workerList.worker, "worker.js");
 	//워커 온메세지
-	workerList.workerOnmessage(workerList.worker2, getLineList);
+	workerList.workerOnmessage(workerList.worker, getLineList);
 
 	//선택된 공장의 line별 데이터 가져오기
    function getLineList(){
-	   //console.log(getLineList)
-	    var promise = CmmAjaxService.select("/fmb/bas/selectFmbLine.do",  self.lineParamVo);
+	   console.log("getLineList")
+	    promise = CmmAjaxService.select("bas/selectFmbLine.do",  self.lineParamVo);
 	    promise.then(function(data){
 	    	self.lineList = data;
-	    	//console.log(data)
-	    	var length = self.lineList.length;
-	    	var dangle = length % 7;
+	    	length = self.lineList.length;
+	    	dangle = length % 7;
 	    	if (dangle != 0) 
 	    	{
-	    		var blankCount = 7- dangle;
+	    		blankCount = 7- dangle;
 	    		for (var i = 0; i < blankCount; i++)
 	    		{
-	    			var data = {
+	    			data = {
 			    			    eqptSts : ''
 			    			    , desc : null
 			    			    , lineBotNm : ''
@@ -103,14 +101,22 @@ angular
 			    				, lineMidNm : ''
 			    				, lineNm : ''
 			    				, lineTopNm : ''
+			    				, dn: 'D'
 			    			   };
 	    			self.lineList.push(data);
+	    			
 	    		}
 	    	}
+	    	promise = null;
+	        length = null;
+	        dangle = null;
+	        blankCount = null;
+	        data = null;
 	    }
 	    ,function(data){
 	    	//alert('fail: '+ data)
 	    	console.log('fail'+ data)
 	    });
+	   
   }
 }]);

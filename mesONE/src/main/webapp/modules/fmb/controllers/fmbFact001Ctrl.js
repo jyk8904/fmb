@@ -15,24 +15,21 @@
 angular
     .module('app')
     .controller('FmbFact001Ctrl'
-    		 , ['CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc','$http','$scope','$window','$q','$location', '$filter', '$interval'
-     , function (CmmAjaxService , CmmModalSrvc , CmmWorkerSrvc , $http , $scope , $window , $q , $location, $filter, $interval)
+    		 , ['CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc','$http','$scope','$window','$q','$location', '$filter', '$interval','$rootScope'
+     , function (CmmAjaxService , CmmModalSrvc , CmmWorkerSrvc , $http , $scope , $window , $q , $location, $filter, $interval, $rootScope)
 {
 	/*------------------------------------------
      * 변수 선언
      *-----------------------------------------*/
-	 $scope.$watch('loginChk', function(newVal, oldVal) {
-			if(newVal == false){
-				$location.url('');
-			}    	
-		}, true);
-
     var self = this;
     var workerList = CmmWorkerSrvc;
+    var promise = null;
+
     $scope.isMobile = false;
     self.lineParamVo = {	
         	factId:'001'
         	}
+    $rootScope.showBar = $location.url();
     // 모바일 체크 함수 실행
 	isMobileFunc();
     
@@ -40,16 +37,17 @@ angular
    // $scope.Worker3Start()
     
   	//워커 스타트
-  	workerList.workerStart(workerList.worker2, "worker.js");
+  	workerList.workerStart(workerList.worker, "worker.js");
     //워커 온메세지
-	workerList.workerOnmessage(workerList.worker2, getData);
+	workerList.workerOnmessage(workerList.worker, getData);
   
 
         function getFactList(){
-	    var promise = CmmAjaxService.select("/fmb/bas/selectFmbFact.do",  self.lineParamVo);
+	    var promise = CmmAjaxService.select("bas/selectFmbFact.do",  self.lineParamVo);
 	    promise.then(function(data){
 	    	self.lineList = data;
-	    	console.log(self.lineList)
+	    	//console.log(self.lineList)
+	    	promise = null;
 	     }
 	    ,function(data){
 	    	console.log('fail: '+ data)

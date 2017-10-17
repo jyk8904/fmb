@@ -31,15 +31,15 @@
 	<bc-form-body> 
 	<div layout="row" style="width:90%; margin:auto;">
 		<div layout="column" layout-wrap style="width:18%;">
-			<div layout="row" ng-repeat="line in vm.lineList track by $index" ng-if="$index%7==0" style="width:100%; border-radius:20px 20px 0 0;">
+			<div layout="row" ng-repeat="line in vm.lineList track by $index" ng-if="$index%7==0" style="width:100%;">
 				<div grid-header-ctrl flex layout="column" layout-fill layout-wrap class="headerColorNested" data ="vm.lineList" is-mobile="isMobile"  ng-if="$parent.$index%7==0" >
 				 <div style="color:white;">구분</div>
 				 <div style="color:white;">현재목표</div>
 				 <div layout="row" flex style="color:white;">
 					 <div flex style="color:white;">실적</div>
 					 <div layout="column" flex style="color:white; height:375px; ">
-						 <div flex style="color:white;">주간</div>
-						 <div flex style="color:white;">야간</div>
+						 <div flex ng-class="{dn:vm.lineList[$index].dn=='D'}" style="color:white;">주간</div>
+						 <div flex ng-class="{dn:vm.lineList[$index].dn=='N'}" style="color:white;">야간</div>
 						 <div flex style="color:white;">합계</div>
 					 </div>
 				 </div>
@@ -50,7 +50,7 @@
 			</div>
 		</div>
 		
-		<div layout="cloumn" layout-wrap style="width:82%;">
+		<div layout="column" layout-wrap style="width:82%;">
 		<div ng-repeat="line in vm.lineList track by $index" layout="row" ng-if ="$index%7==0" style="width:100%;">
 		<div grid-panel-ctrl data = "vm.lineList" flex ng-repeat="line in vm.lineList track by $index" ng-if="$index>=$parent.$index &&$index<($parent.$index+7)" is-mobile="isMobile" layout="column" layout-fill layout-wrap class="colorNested" style="text-align:center;">
 		  <div style="color:white;display:flex; align-items:center; justify-content: center;">

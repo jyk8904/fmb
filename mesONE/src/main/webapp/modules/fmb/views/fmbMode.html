@@ -57,6 +57,8 @@
       
 </md-form-header>
 
+
+<!-- 좌측설비설정 슬라이드메뉴 -->
 <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4" ng-style="{'opacity' : vm.opacityData / 100, 'z-index' : 910}">
 
       <md-toolbar class="md-theme-indigo">
@@ -135,7 +137,7 @@
 		   	<md-tab id="tab2">
 				<md-tab-label>Detail</md-tab-label>
 		        <md-tab-body>
-		        <div class="cssData" ng-show="vm.configSetting.index != null">
+		        <div class="cssData" ng-if="vm.configSetting.index != null">
 		        	<md-input-container>
           				<label>Top</label>
           				<input ng-model = "vm.eqptList[vm.configSetting.index].cssTop">
@@ -180,6 +182,10 @@
   </md-content>
 
 </md-sidenav>
+
+<!-- 좌측설비설정 슬라이드메뉴 -->
+
+
 <bc-form-body class='col-md-12 col-sm-12 col-xs-12' style="padding:0;">
    <!--설비클래스 삽입 시작-->
    <bc-back-panel2>
@@ -205,15 +211,15 @@
 					   	<div ng-switch-when="COUNT" ng-mouseover='hoverIn($index)' ng-mouseleave='hoverOut($index)'  class="obj" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};background-color:#656464; color:white;">111</div>
 					   	<div ng-switch-when="ANDON" ng-mouseover='hoverIn($index)' ng-mouseleave='hoverOut($index)'  class="obj"  align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
 						   	<img src="{{eqpt.stsImg0}}">
-						   	<img src="{{eqpt.stsImg1}}">
 						   	<img src="{{eqpt.stsImg2}}">
+						   	<img src="{{eqpt.stsImg4}}">
 					   	</div>
-           				<span class="hint" ng-show="hover[$index]" >{{eqpt.id}}</span>
+           				<span class="hint" ng-if="hover[$index]" >{{eqpt.id}}</span>
 				    </div>      
             </div>
          </li>
       </ul>
-      <div class="pointer" ng-show=vm.pointer.display  ng-hide=!vm.pointer.display ng-class=" {'show_animate' : vm.pointer.animateTrigger === 'on'}" style="position:absolute; width:25px; height:25px; z-index:900;" ng-style="{'top':vm.pointer.top, 'left':vm.pointer.left}"><img src="assets/img/system/arrow.png"/></div>
+      <div class="pointer" ng-if=vm.pointer.display  ng-hide=!vm.pointer.display ng-class=" {'show_animate' : vm.pointer.animateTrigger === 'on'}" style="position:absolute; width:25px; height:25px; z-index:900;" ng-style="{'top':vm.pointer.top, 'left':vm.pointer.left}"><img src="assets/img/system/arrow.png"/></div>
 		 <!-- display: {{vm.pointer.display}}; -->  
    </div>
    

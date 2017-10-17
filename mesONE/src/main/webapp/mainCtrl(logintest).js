@@ -42,8 +42,8 @@ angular
 
     var self = this;
 	var workerList = CmmWorkerSrvc;
-	workerList.worker2.sts = 'on'; //페이지 순환여부	
-	self.switchPage = workerList.worker2.sts;
+	workerList.worker.sts = 'on'; //페이지 순환여부	
+	self.switchPage = workerList.worker.sts;
 	var winwin;
 	$scope.loginChk = sessionStorage.getItem("login");//로그인여부
 	console.log($scope.loginChk )
@@ -89,7 +89,7 @@ angular
 	self.btnFmbTotalClick = btnFmbTotalClickHandler;
 	self.btnFmbModeClick = btnFmbModeClickHandler;
 	self.btnWorkerStart = WorkerStart;
-	self.btnWorkerStop = function () { workerList.workerStop(workerList.worker2); self.switchPage = "off"}
+	self.btnWorkerStop = function () { workerList.workerStop(workerList.worker); self.switchPage = "off"}
    	self.LotationSetting = LotationSetting;
    	self.submit1 = submitLotationSetting;
    	
@@ -151,7 +151,7 @@ angular
    		}else{
    			var alarmList = [];
    			
-   			var plcPromise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.plcParamVo);
+   			var plcPromise = CmmAjaxService.select("bas/selectFmbPlc.do", self.plcParamVo);
    				var alarmListWdth = 0;
 				plcPromise.then(function(data) {
 					//console.log(data);
@@ -210,7 +210,7 @@ angular
 	   }else{
 		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));		//로컬스토리지 저장
 	   }
-	   workerList.worker2.data =JSON.parse(localStorage.getItem('SettingTime'));    //worker2의 data로 저장
+	   workerList.worker.data =JSON.parse(localStorage.getItem('SettingTime'));    //worker의 data로 저장
    }
 /*  function defaultLotationSetting(){
 	   if(localStorage.getItem('SettingTime')!=null){
@@ -238,12 +238,12 @@ angular
 		   }
 		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));		//로컬스토리지 저장
 	   }
-	   workerList.worker2.data =JSON.parse(localStorage.getItem('SettingTime'));    //worker2의 data로 저장
+	   workerList.worker.data =JSON.parse(localStorage.getItem('SettingTime'));    //worker의 data로 저장
    }*/
    
 
 /*   //설비 plc 알람정보 데이터 가져오기
-   var plcPromise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.plcParamVo);
+   var plcPromise = CmmAjaxService.select("bas/selectFmbPlc.do", self.plcParamVo);
    self.alarmList = {}
    plcPromise.then(function (data) {
        for (var i = 0; i < data.length; i++) {
@@ -284,7 +284,7 @@ angular
 			   for(var i=0; i<localStorage.length; i++){
 				   //console.log(localStorage.getItem(localStorage.key(i)));
 			   }
-			   workerList.worker2.data =JSON.parse(localStorage.getItem('SettingTime'));
+			   workerList.worker.data =JSON.parse(localStorage.getItem('SettingTime'));
 			   
 			   self.showModal = false;
 		   }
@@ -293,8 +293,8 @@ angular
 		  rotationChk = null;
 		  
 		  //전환설정창을 나갈때 워커 시작.
-	    	//workerList.worker2.sts = '';	//페이지 전환 여부  상태(워커스타트)
-	    	self.switchPage = workerList.worker2.sts;
+	    	//workerList.worker.sts = '';	//페이지 전환 여부  상태(워커스타트)
+	    	self.switchPage = workerList.worker.sts;
 	    	var curPageSeq;			
 	    	var curPage = $location.url();
 	    	for(var i = 0; i<pageList.length; i++){
@@ -305,7 +305,7 @@ angular
 	    	
 	    	if(curPageSeq==undefined){ 	//메인페이지에서 시작할경우, 바로 첫페이지로 이동
 	    		curPageSeq = 0;
-	    		while(workerList.worker2.data[curPageSeq].switcher == false){
+	    		while(workerList.worker.data[curPageSeq].switcher == false){
 	        		curPageSeq = curPageSeq + 1;
 	        		if(curPageSeq>=pageList.length){
 	        			curPageSeq = 0;
@@ -321,7 +321,7 @@ angular
 	    		if(curPageSeq>=pageList.length){
 	    			curPageSeq = 0;
 	    	    }
-	    		while(workerList.worker2.data[curPageSeq].switcher == false){
+	    		while(workerList.worker.data[curPageSeq].switcher == false){
 	        		curPageSeq = curPageSeq + 1;
 	        		if(curPageSeq>=pageList.length){
 	        			curPageSeq = 0;
@@ -338,7 +338,7 @@ angular
 		    	
 		 
 		  
-		  //console.log(workerList.worker2)
+		  //console.log(workerList.worker)
 	   }
    
  	function dataTimeChk(index){
@@ -451,9 +451,9 @@ angular
       
       function LotationSetting() {
     	  //전환설정창을 켰을때 워커 stop
-          if(workerList.worker2.worker!=undefined){
-          	workerList.worker2.worker.terminate();
-          	workerList.worker2.worker=undefined; 
+          if(workerList.worker.worker!=undefined){
+          	workerList.worker.worker.terminate();
+          	workerList.worker.worker=undefined; 
           }
   	        
          self.showModal = !self.showModal;
@@ -467,8 +467,8 @@ angular
     	if($scope.loginChk=='true'){
     		
     
-    	workerList.worker2.sts = 'on';	//페이지 전환 여부  상태(워커스타트)
-    	self.switchPage = workerList.worker2.sts;
+    	workerList.worker.sts = 'on';	//페이지 전환 여부  상태(워커스타트)
+    	self.switchPage = workerList.worker.sts;
     	var curPageSeq;			
     	var curPage = $location.url();
     	for(var i = 0; i<pageList.length; i++){
@@ -478,7 +478,7 @@ angular
     	}
     	if(curPageSeq==undefined){ 	//메인페이지에서 시작할경우, 바로 첫페이지로 이동
     		curPageSeq = 0;
-    		while(workerList.worker2.data[curPageSeq].switcher == false){
+    		while(workerList.worker.data[curPageSeq].switcher == false){
         		curPageSeq = curPageSeq + 1;
         		if(curPageSeq>=pageList.length){
         			curPageSeq = 0;
@@ -494,7 +494,7 @@ angular
     		if(curPageSeq>=pageList.length){
     			curPageSeq = 0;
     	    }
-    		while(workerList.worker2.data[curPageSeq].switcher == false){
+    		while(workerList.worker.data[curPageSeq].switcher == false){
         		curPageSeq = curPageSeq + 1;
         		if(curPageSeq>=pageList.length){
         			curPageSeq = 0;
@@ -562,9 +562,9 @@ angular
         sessionStorage.removeItem("id");
         $scope.loginChk = false;
         //워커 종료
-        if(workerList.worker2.worker!=undefined){
-     	   workerList.worker2.worker.terminate();
-     	   workerList.worker2.worker=undefined;
+        if(workerList.worker.worker!=undefined){
+     	   workerList.worker.worker.terminate();
+     	   workerList.worker.worker=undefined;
         }
         //self.switchPage = "off";
         $location.url('/login');

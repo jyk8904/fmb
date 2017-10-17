@@ -17,7 +17,7 @@
  
 <!-- ngview 내부 페이지 -->
 <div test-ctrl class='bc-screen' style="margin:0">
-	<bc-form-header logo='assets/img/system/logo.png' title="{{vm.lineParamVo.factId.split('00')[1]}}반 생산실적" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
+	<bc-form-header logo='assets/img/system/logo.png' title="{{::vm.lineParamVo.factId.split('00')[1]}}반 생산실적" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
 	</bc-form-header>	
 	
 <!-- ngview 내부 body -->
@@ -106,7 +106,7 @@
 		  		<!-- 당월누적 -->
 		  		<div class="column  leftborder">{{vm.goalmonttl|number:0}}</div>
 		  		<div class="column">{{vm.countmonttl|number:0}}</div>
-		  		<div class="column">{{vm.countmonttl/vm.goalttl*100|number:1}}</div>
+		  		<div class="column">{{vm.countmonttl/vm.goalmonttl*100|number:1}}</div>
 		  		<div class="column">{{vm.defectmonttl|number:0}}</div>
 		  		<div class="column">{{vm.defectmonttl/vm.countmonttl * 100000|number:0}}</div>
 		  	

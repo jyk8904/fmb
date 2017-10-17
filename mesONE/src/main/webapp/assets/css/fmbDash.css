@@ -37,7 +37,7 @@
 	z-index: 99;
 	opacity:0.8;
 	margin: -5px 0 0 0;
-	/*background-image: url('/mes/assets/img/dash/dash_panel_lg.png');
+	/*background-image: url('../img/dash/dash_panel_lg.png');
 	-webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -51,7 +51,7 @@
 	z-index: 99;
 	opacity: 0.8;
 	margin: -5px 0 0 0;
-	/*background-image: url('/mes/assets/img/dash/dash_panel_sm.png');
+	/*background-image: url('../img/dash/dash_panel_sm.png');
 	-webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -65,7 +65,7 @@
 	clear: both;*/
 	width: 240px;
 	height: 48px;
-	background-image: url('/mes/assets/img/dash/dash_panel_title.png');
+	background-image: url('../img/dash/dash_panel_title.png');
 	-webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -95,7 +95,7 @@
 }
 .gridArea1 .dBlue {
 	display: table;
-	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
+	background-image: url(../img/dash/dash_grid_bl.png);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	color: ghostWhite;
@@ -107,7 +107,7 @@
 }
 .gridArea1 .lGrey {
 	display: table;
-	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-image: url(../img/dash/dash_grid_bk.png);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	color: ghostWhite;
@@ -121,25 +121,33 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+	height:19px;
 }
 .dGridArea1 .dBlue {
-	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
+	background-image: url(../img/dash/dash_grid_bl.png);
 	color: ghostWhite;
 	text-align:center;
 }
 
 .dGridArea1 .lGrey {
-	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-image: url(../img/dash/dash_grid_bk.png);
 	color: ghostWhite;
 	text-align:center;
 }
+.dGridArea1 p {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	height:19px;
+}
 .gridArea2 .ppmTitle {
 	display: table;
-	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-image: url(../img/dash/dash_grid_bk.png);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	color: ghostWhite;
 	text-align:center;
+	
 }
 .gridArea2 .ppmTitle p {
 	display: table-cell;
@@ -147,25 +155,28 @@
 }
 .gridArea2 .ppmValue {
 	display: table;
-	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-image: url(../img/dash/dash_grid_bk.png);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	color: ghostWhite;
 	text-align:center;
+	padding:0;
 }
 .gridArea2 .ppmValue p {
 	display: table-cell;
 	vertical-align: middle;
+	padding:0;
 }
 .dGridArea2 .ppmTitle {
-	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-image: url(../img/dash/dash_grid_bk.png);
 	color: ghostWhite;
 	text-align:center;
 }
 .dGridArea2 .ppmValue {
-	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-image: url(../img/dash/dash_grid_bk.png);
 	color: ghostWhite;
 	text-align:center;
+	padding:0;
 }
 .gaugeInfo p {
 	margin: 0;
@@ -196,13 +207,13 @@
 }
 .gridArea3 .gaugeGreyBox {
 	display: table;
-	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-image: url(../img/dash/dash_grid_bk.png);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 }
 .gridArea3 .gaugeBlueBox {
 	display: table;
-	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
+	background-image: url(../img/dash/dash_grid_bl.png);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 }
@@ -227,10 +238,10 @@
 	text-align:center;
 }
 .dGridArea3 .gaugeGreyBox p {
-	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-image: url(../img/dash/dash_grid_bk.png);
 }
 .dGridArea3 .gaugeBlueBox p {
-	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
+	background-image: url(../img/dash/dash_grid_bl.png);
 }
 .bottomInfo {
 	position: absolute;
@@ -285,12 +296,12 @@
 	vertical-align: middle;
 }
 .gridArea4 .dBlue {
-	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
+	background-image: url(../img/dash/dash_grid_bl.png);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 }
 .gridArea4 .lGrey {
-	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-image: url(../img/dash/dash_grid_bk.png);
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 }
@@ -307,41 +318,41 @@
 	padding-left: 10px;
 }
 .dGridArea4 .firstTitleBox {
-	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-image: url(../img/dash/dash_grid_bk.png);
 	margin-bottom: 5px;
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
 .dGridArea4 .firstValueBox {
-	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-image: url(../img/dash/dash_grid_bk.png);
 	margin-bottom: 5px;
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
 .dGridArea4 .secondTitleBox {
-	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
+	background-image: url(../img/dash/dash_grid_bl.png);
 	margin-bottom: 5px;
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
 .dGridArea4 .secondValueBox {
-	background-image: url(/mes/assets/img/dash/dash_grid_bl.png);
+	background-image: url(../img/dash/dash_grid_bl.png);
 	margin-bottom: 5px;
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
 .dGridArea4 .thirdTitleBox {
-	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-image: url(../img/dash/dash_grid_bk.png);
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;
 }
 .dGridArea4 .thirdValueBox {
-	background-image: url(/mes/assets/img/dash/dash_grid_bk.png);
+	background-image: url(../img/dash/dash_grid_bk.png);
 	line-height: 30px;
 	padding-left: 5px;
 	color: white;

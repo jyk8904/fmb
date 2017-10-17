@@ -172,7 +172,7 @@ angular
 		AUIGrid.showAjaxLoader(gridId);
 
 		btnSelectClickHandler();
-		/*CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.vo)
+		/*CmmAjaxService.select("bas/selectFmbPlc.do", self.vo)
     	.then(
     			function(response) {
     				AUIGrid.removeAjaxLoader(gridId);
@@ -204,7 +204,7 @@ angular
     // Master(메시지) 그리드 조회/새로고침 기능
 	function btnSelectClickHandler()	{
 		console.log(self.vo);
-		CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.vo)
+		CmmAjaxService.select("bas/selectFmbPlc.do", self.vo)
 		.then(
     			function(response) {
     				

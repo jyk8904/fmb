@@ -15,23 +15,18 @@
 angular
     .module('app')
     .controller('FmbTbmCtrl'
-    		 , ['CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc','$http','$scope','$window','$q','$location'
-     , function (CmmAjaxService , CmmModalSrvc , CmmWorkerSrvc , $http , $scope , $window , $q , $location) 
+    		 , ['CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc','$http','$scope','$window','$q','$location' ,'$rootScope'
+     , function (CmmAjaxService , CmmModalSrvc , CmmWorkerSrvc , $http , $scope , $window , $q , $location, $rootScope) 
 {
 	/*------------------------------------------
      * 변수 선언
      *-----------------------------------------*/
-	 $scope.$watch('loginChk', function(newVal, oldVal) {
-			if(newVal == false){
-				$location.url('');
-			}    	
-		}, true);
-
-    
+   
     var self = this;
     var workerList = CmmWorkerSrvc;
     $scope.isMobile = false;   
-    
+    var promise = null;
+    $rootScope.showBar = $location.url();
     // 모바일 체크 함수 실행
 	isMobileFunc();
 	//워커3(알람정보워커)가 없을경우 start
@@ -40,9 +35,9 @@ angular
     getTbmList();
     
 	//워커 스타트
-	workerList.workerStart(workerList.worker2, "worker.js");
+	workerList.workerStart(workerList.worker, "worker.js");
 	//워커 온메세지
-	workerList.workerOnmessage(workerList.worker2, getTbmList);
+	workerList.workerOnmessage(workerList.worker, getTbmList);
 	   
 	
 	// 모바일 체크 함수 정의
@@ -59,9 +54,10 @@ angular
 	
 	//TBM데이터 가져오기
     function getTbmList(){
-    	var promise = CmmAjaxService.selectAll("/fmb/bas/selectFmbTbm.do");
+    	promise = CmmAjaxService.selectAll("bas/selectFmbTbm.do");
     	promise.then(function(data){
     		self.Tbm = data;
+    		promise = null;
     	}
     	,function(data){
     		alert('fail: '+ data)

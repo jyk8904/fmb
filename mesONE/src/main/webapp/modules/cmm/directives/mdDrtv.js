@@ -22,7 +22,7 @@ angular
     .directive('mdFormHeader', function() {   /* 폼 상단의 타이틀 및 버튼 부분 */
        return {
           restrict: 'E',
-          transclude: true,  
+          transclude: true,   
           template: "<div bg-ctrl class='row md-form-header' ng-transclude></div>"
        }
     })
@@ -87,6 +87,13 @@ angular
     				  //console.log(default_height, chart_height, height_rate)
     				  //console.log(element);
     			  });
+    			  
+    			  //추가
+				  scope.$on('$destroy', function() {
+				      element.off(); // deregister all event handlers
+				  })
+				  
+				  
     		  }
     	  };
       })
@@ -131,8 +138,14 @@ angular
     				  element[0].style.height = body_hieght * height_rate + 'px';
     				  //element[0].style.height = height + 'px';
     			  });
+    			  
+    			//추가
+				  scope.$on('$destroy', function() {
+				      element.off(); // deregister all event handlers
+				  })
     		  }
     	  };
+    	  
       })
       /* bcFormHeader 용 */
       .directive('testCtrl2', function($timeout, $window){
@@ -153,6 +166,10 @@ angular
     				  element[0].style.height = apply_height + 'px';
     				  //element[0].style.height = height + 'px';
     			  });
+    			//추가
+				  scope.$on('$destroy', function() {
+				      element.off(); // deregister all event handlers
+				  })
     		  }
     	  };
       })
@@ -184,6 +201,10 @@ angular
 	    			  element[0].style.width = target_width + 'px';
 	    			  element[0].style.left = target_left + 'px';
     			  });
+    			//추가
+				  scope.$on('$destroy', function() {
+				      element.off(); // deregister all event handlers
+				  })
     		  }
     	  }
       })
@@ -215,7 +236,7 @@ angular
 	    				{
 		    				var screenRate = height / 1080;
 		    				
-		    				console.log(screenRate)
+		    				//console.log(screenRate)
 		    				var bg_size = 1920;
 		    				
 		    				var bg_width = bg_size * screenRate;
@@ -235,6 +256,65 @@ angular
 	    					scope.data.cssLeft = (parseInt(scope.data.cssLeft.replace("px","")) * screenRate) + 'px';
 	    				}
     			  });
+    			//추가
+				  scope.$on('$destroy', function() {
+				      element.off(); // deregister all event handlers
+				  })
+    		  }
+    	  };
+      })
+       /* 설비 버튼 이미지 용 */
+      .directive('andonUCtrl', function($window){
+    	  return {
+    		  restrict: 'A',
+    		  scope : {
+    			data : '=data'  
+    		  },
+    		  link: function(scope, element, attrs) {
+    			  scope.$watch('data',function(newVal, oldVal){
+ 						var width = $window.innerWidth;
+		  				var height = $window.innerHeight;
+		  				  
+		  				var default_width = 1920;
+		  				var default_height = 900;
+		  				
+		  				var wScreenRate = width * 9;
+		    			var hScreenRate = height * 16;
+	    				if (width >= default_width) {
+	    					var screenRate = 1; 
+	    				}
+	    				else {
+	    					var screenRate = width / default_width;
+	    				}
+	    				
+	    				if (wScreenRate > hScreenRate) 
+	    				{
+		    				var screenRate = height / 1080;
+		    				
+		    				//console.log(screenRate)
+		    				var bg_size = 1920;
+		    				
+		    				var bg_width = bg_size * screenRate;
+		    				
+		    				var target_left = (width - bg_width) / 2;
+		    				
+		    				scope.data.cssHeight = (parseInt(scope.data.cssHeight.replace("px","")) * screenRate) + 'px';
+	    					scope.data.cssWidth = (parseInt(scope.data.cssWidth.replace("px","")) * screenRate) + 'px';
+	    					scope.data.cssTop = (parseInt(scope.data.cssTop.replace("px","")) * screenRate) + 'px';
+	    					scope.data.cssLeft = ((parseInt(scope.data.cssLeft.replace("px","")) * screenRate) + target_left) + 'px';
+	    				}
+	    				else 
+	    				{
+	    					scope.data.cssHeight = (parseInt(scope.data.cssHeight.replace("px","")) * screenRate) + 'px';
+	    					scope.data.cssWidth = (parseInt(scope.data.cssWidth.replace("px","")) * screenRate) + 'px';
+	    					scope.data.cssTop = (parseInt(scope.data.cssTop.replace("px","")) * screenRate) + 'px';
+	    					scope.data.cssLeft = (parseInt(scope.data.cssLeft.replace("px","")) * screenRate) + 'px';
+	    				}
+    			  });
+    			//추가
+				  scope.$on('$destroy', function() {
+				      element.off(); // deregister all event handlers
+				  })
     		  }
     	  };
       })
@@ -256,6 +336,10 @@ angular
 		   				 element[0].style.height = (element[0].offsetHeight * screenRate) - 1 + 'px';
 					 } 
 				 });
+				//추가
+				  scope.$on('$destroy', function() {
+				      element.off(); // deregister all event handlers
+				  })
 			 }
 		 } 
 	  })
@@ -286,6 +370,10 @@ angular
 	   				  	}
    				  	}
 				 });
+				//추가
+				  scope.$on('$destroy', function() {
+				      element.off(); // deregister all event handlers
+				  })
 			 }
 		 } 
 	  })
@@ -359,6 +447,10 @@ angular
 					  //console.log(element)
 					  element[0].style.height = element[0].style.height.replace("px","") * screenRate + 'px';
 				  });
+				//추가
+				  scope.$on('$destroy', function() {
+				      element.off(); // deregister all event handlers
+				  })
 			  }
 		  }
 	  })
@@ -450,6 +542,10 @@ angular
 						  element[0].children[4].style.lineHeight = subData + "px";
 						  element[0].children[4].style.fontSize = fontSize + "px";
 				  });
+				//추가
+				  scope.$on('$destroy', function() {
+				      element.off(); // deregister all event handlers
+				  })
 			  } 
 		  }
 	  })
@@ -521,6 +617,10 @@ angular
 							  element[0].children[i].style.fontSize = fontSize + "px";
 						  }
 				  });
+				//추가
+				  scope.$on('$destroy', function() {
+				      element.off(); // deregister all event handlers
+				  })
 			  } 
 		  }
 	  })
@@ -603,6 +703,10 @@ angular
 					
 				  });
 				  }
+				//추가
+				  scope.$on('$destroy', function() {
+				      element.off(); // deregister all event handlers
+				  })
 			  }
 		} 
 	  }) 
@@ -630,6 +734,41 @@ angular
 				  		element[0].style.height = height+ "px";
 				  }
 				 }
+				//추가
+				  scope.$on('$destroy', function() {
+				      element.off(); // deregister all event handlers
+				  })
 			  }
 		} 
-	  }) ;
+	  })
+	  .directive("slide", function( $animateCss ) {
+	    return function(scope, element, attrs) {
+	        scope.$watch(attrs.data, function(newVal) {
+	        	if(newVal!=undefined){
+	        	//console.log("너비+화면너비: "+(scope.alarmListWdth+scope.screenWdth)+" 시간: "+(scope.alarmListWdth+scope.screenWdth)/180)
+							$animateCss(element,{
+	              // BUG - If I set `from` I expect it to assign those values immediately and 
+	              //       then animate to the `to` values. This does NOT happen!
+	              
+	              from    : {'margin-left': scope.screenWdth},
+	              to      : {'margin-left': -scope.alarmListWdth},
+	              duration: (scope.alarmListWdth+scope.screenWdth)/180,
+	            })
+	            .start()
+	            .done(onComplete);                  
+	
+				
+	        	}
+	       });
+	        function onComplete(){ 
+				//console.log('Done slide = '+ newVal ); 
+				scope.getAlarmList();
+	        };      
+	      //추가
+			  scope.$on('$destroy', function() {
+			      element.off(); // deregister all event handlers
+			  })
+	    }
+	    
+	  
+	  });

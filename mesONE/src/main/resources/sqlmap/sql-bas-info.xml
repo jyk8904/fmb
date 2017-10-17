@@ -7,14 +7,18 @@
         {call  DSF_FMB_LOGIN01(#{user_id})}
 
     </select>
-<!--  	PLCList 정보 조회 -->
+	<!--PLCList 정보 조회 -->
     <select id="selectFmbPlc" parameterType="com.dsinfo.fmb.service.FmbPlcParamVO" resultType="com.dsinfo.fmb.service.FmbPlcVO">     	      
         {call USP_EQPT_FMB_SELEC01(#{fact_id},#{plc_id})}
-
     </select>
+    
      <select id="selectFmbPlc2" parameterType="com.dsinfo.fmb.service.FmbPlcParamVO2" resultType="com.dsinfo.fmb.service.FmbPlcVO2">     	      
         {call USP_EQPT_MON_SELEC03(#{eqpt_cd})}
-
+    </select>
+    
+    <!-- andonList 정보 조회 -->
+    <select id="selectFmbAndon" parameterType="com.dsinfo.fmb.service.FmbAndonParamVO" resultType="com.dsinfo.fmb.service.FmbAndonVO">     	      
+        {call USP_EQPT_ANDON_SELEC01(#{fact_id},#{plc_id})}
     </select>
     
  	<!-- EqptCSSList 정보 조회 -->

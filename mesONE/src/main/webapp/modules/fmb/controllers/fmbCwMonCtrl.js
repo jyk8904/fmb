@@ -121,7 +121,7 @@ angular
 	
     function getPlcList(){
    		//설비 plc 데이터 가져오기
-   	   		var plcPromise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.plcParamVo);
+   	   		var plcPromise = CmmAjaxService.select("bas/selectFmbPlc.do", self.plcParamVo);
            	plcPromise.then(function(data) {
            		//랜덤값 입력
            			for(var i = 0; i< data.length; i++){
@@ -141,7 +141,7 @@ angular
 
     function getEqptList(){
 	    	//설비 이미지리스트 가져오기 메소드
-	    	var eqptPromise = CmmAjaxService.select("/fmb/bas/selectFmbEqpt.do", self.eqptParamVo);
+	    	var eqptPromise = CmmAjaxService.select("bas/selectFmbEqpt.do", self.eqptParamVo);
 	    	eqptPromise.then(function(data) {
 	    		$timeout(self.eqptList = data, 200)
 	    		.then(function(){
@@ -162,7 +162,7 @@ angular
 	 
     function getBgImageList() {
         
-    	var bgImagePromise = CmmAjaxService.select("/fmb/bas/selectFmbBgImage.do", self.BgList);
+    	var bgImagePromise = CmmAjaxService.select("bas/selectFmbBgImage.do", self.BgList);
     	bgImagePromise.then(function(data) {
     		self.bgImageList = data;
     		
@@ -188,7 +188,7 @@ angular
     }
     
 	function getSelectedPlc(){
-		var promise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.plcSelectedVo);
+		var promise = CmmAjaxService.select("bas/selectFmbPlc.do", self.plcSelectedVo);
         promise.then(function(data){
         	self.plc = data;//fmbPlcVo가 담긴 리스트 형태리턴
         }

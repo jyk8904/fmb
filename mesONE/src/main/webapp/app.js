@@ -18,10 +18,10 @@
 
 (function () {
     'use strict';
-    angular
-        .module('app', ['angularModalService', 'ngRoute', 'ngCookies', 'ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.tpls', 'ngFileUpload', 'angular.filter', 'angular-marquee'])
-        .config(config);
-//        .run(run);
+    angular				//  --(미사용 모듈)
+        .module('app', [ 'angularModalService', 'ngSanitize','ngCookies', 'ngRoute',  'ngAnimate',  'ngMaterial', 'ngMessages', 'ngFileUpload', 'ui.bootstrap', 'ui.bootstrap.modal', 'ui.bootstrap.tpls', 'angular.filter', 'angular-marquee'])
+        .config(config)
+        .run(run);
 
     config.$inject = ['$httpProvider', '$routeProvider', '$locationProvider', '$qProvider', '$provide', '$mdDateLocaleProvider'];
     function config($httpProvider, $routeProvider, $locationProvider, $qProvider, $provide, $mdDateLocaleProvider) {
@@ -186,7 +186,24 @@
 
 	        /*.otherwise({ redirectTo: '/FmbLogin' })*/;
     }
-    run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
+    run.$inject = ['$rootScope', '$interval' , '$timeout'];
+    function run($rootScope, $interval, $timeout) {
+        // add the register task to the rootScope. This will allow for autoUnregister when the  
+        // scope is destroyed to prevent tasks from leaking.  
+        var ScopeProt = Object.getPrototypeOf($rootScope);  
+        ScopeProt.$interval = function(func, time){  
+             var timer = $interval(func,time);  
+             this.on('$destroy', function(){$timeout.cancel(timer); });  
+             return timer;  
+        };  
+        ScopeProt.$timeout = function(func, time){  
+            this.on('$destroy', function(){$timeout.cancel(timer); });  
+       };  
+        
+    }
+    
+    
+/*    run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
     function run($rootScope, $location, $cookieStore, $http) {
         // keep user logged in after page refresh
         $rootScope.globals = $cookieStore.get('globals') || {};
@@ -202,6 +219,6 @@
                 $location.path('/Main');
             }
         });
-    }
+    }*/
 
 })();

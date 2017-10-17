@@ -93,11 +93,11 @@ angular
 	}
 	
   	//설비상태 발생추이 가져오기
-	var dateRunInfoPromise = CmmAjaxService.select("/fmb/bas/selectDateRunInfo.do");
+	var dateRunInfoPromise = CmmAjaxService.select("bas/selectDateRunInfo.do");
 	
 	dateRunInfoPromise.then(function(data) {
 		self.timeProdData = data;
-		$timeout(function(){}, 200)
+		var dateRunInfoTimeout =$timeout(function(){}, 200)
     	.then(function(){
     		timeProdData = self.timeProdData;
     		makeDataRunInfoChart();
@@ -266,7 +266,7 @@ angular
 	}		*/
 	
 	//시간별 가동상태 변화 데이터 가져오기
-	var eqptStsHisPromise = CmmAjaxService.select("/fmb/bas/selectEqptStsHis.do", self.stsVo);
+	var eqptStsHisPromise = CmmAjaxService.select("bas/selectEqptStsHis.do", self.stsVo);
 	eqptStsHisPromise.then(function(data) {
 		self.eqptStsHisData = data
 		//console.log(self.stsVo);
@@ -293,11 +293,13 @@ angular
 	 char = AmCharts.makeChart("eqptStsHisChart1",
 			{
 				"type": "serial",
+				//"categoryField": "endDttm",	
 				"categoryField": "timeSec",	
-				//"mouseWheelScrollEnabled": true,
+				"mouseWheelScrollEnabled": true,
 				"mouseWheelZoomEnabled": true,
-				"startDuration" : 1,
+				//"startDuration" : 1,
 				"categoryAxis": {
+					//"position": "top",
 					"title": "시간(초)",
 					"gridPosition": "start",
 					"titleRotation": 0,
@@ -309,8 +311,8 @@ angular
 				"minSelectedTime": 4,
 				"rotate": true,
 				"chartScrollbar": {
-					"autoGridCount": true,
-					"graph": "AmGraph-1",
+					//"autoGridCount": true,
+					//"graph": "AmGraph-1",
 					"scrollHeight": 40
 				},
 				"chartCursor": {
@@ -407,15 +409,15 @@ angular
 	} 
 	//선택된 plc 데이터 가져오기
 	function getSelectedPlc(){
-		var promise = CmmAjaxService.selectOne("/fmb/bas/selectFmbPlc.do", self.plcSelectedVo);
+		var promise = CmmAjaxService.selectOne("bas/selectFmbPlc.do", self.plcSelectedVo);
         promise.then(function(data){
     	
         	self.plc = data[0];//fmbPlcVo가 담긴 리스트 형태리턴
         	//console.log(self.plc);
         	//eqptCd를 넘겨서 순간정지,uph,정지로스 데이터 가져오기
-     	   var promise2 = CmmAjaxService.selectOne("/fmb/bas/selectFmbPlc2.do",{eqptCd : self.plc.eqptCd});
+     	   var promise2 = CmmAjaxService.selectOne("bas/selectFmbPlc2.do",{eqptCd : self.plc.eqptCd});
            promise2.then(function(data){
-        	   //console.log(data[0]);
+        	  //console.log(data[0]);
         	   
            	self.plc2 = data[0];
            	self.plc.alramcnt = self.plc2.alramcnt;

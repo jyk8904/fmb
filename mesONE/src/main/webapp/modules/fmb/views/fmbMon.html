@@ -1,4 +1,4 @@
-<!-- 
+0.0.0.0..0<!-- 
 /**  
  * @Class Name : fmbMon.html
  * @Description : fmbMon
@@ -33,15 +33,16 @@
 
 <!-- ngview 내부 header -->
 
-<bc-form-header logo='assets/img/system/logo.png' title="생산 자원 통합 모니터링" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
-<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 lineInfo">
-가동 : {{vm.count1}} &nbsp; &nbsp;
+<bc-form-header title="생산 자원 통합 모니터링" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
+
+<bc-legend>
+<div class="col-lg-6 col-md-6 col-sm-10 col-xs-10 lineInfo">가동 : {{vm.count1}} &nbsp; &nbsp;
 비가동 : {{vm.count4}} &nbsp; &nbsp;
-대기 : {{vm.count2}}
-</div>
+대기 : {{vm.count2}}</div>
+<img class="col-lg-6 col-md-6 col-sm-10 col-xs-10 legend" src="assets/img/system/legend3.png">
 
-<img class="col-lg-6 col-md-6 col-sm-6 col-xs-6 legend" src="assets/img/system/legend3.png">
 
+</bc-legend>
 </bc-form-header>
 
 <!-- ngview 내부 body -->
@@ -49,10 +50,10 @@
 	<bc-back-panel2>
 	<!--설비클래스 삽입 시작-->
   	<div back-panel-ctrl ng-switch on="vm.eqptParamVo.factId" style="position:absolute;">
-	   	<img ng-switch-when="A" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.A}}' style="padding:0"/>
-	   	<img ng-switch-when="B" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.B}}' style="padding:0"/>
-	   	<img ng-switch-when="C" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.C}}' style="padding:0"/>
-	   	<img ng-switch-when="Comb" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.Comb}}' style="padding:0"/>
+	   	<img ng-switch-when="A" class='col-md-12 col-sm-12 col-xs-12' ng-src={{eachBg.A}} style="padding:0"/>
+	   	<img ng-switch-when="B" class='col-md-12 col-sm-12 col-xs-12' ng-src={{eachBg.B}} style="padding:0"/>
+	   	<img ng-switch-when="C" class='col-md-12 col-sm-12 col-xs-12' ng-src={{eachBg.C}} style="padding:0"/>
+	   	<img ng-switch-when="Comb" class='col-md-12 col-sm-12 col-xs-12' ng-src={{eachBg.Comb}} style="padding:0"/>
     </div> 
     <!-- plc -->
 	<div class="EQPT col-md-12 col-sm-12 col-xs-12" style="padding:0">	
@@ -62,17 +63,17 @@
 			 <!-- <div class="{{eqpt.eqptCnm}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
 				  style="top:{{eqpt.cssTop}}; left: {{eqpt.cssLeft}}; 
 				  		 width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}}; 
-				  		 z-index:{{eqpt.cssZindex}};"> -->
+				  		 z-index:{{eqpt.cssZindex}};"> -->		
 				  <div class="{{eqpt.eqptCnm}}" type="{{eqpt.eqptType}}" plc="{{eqpt.id}}"
 				  ng-style="{'top':eqpt.cssTop, 'left': eqpt.cssLeft, 'width':eqpt.cssWidth, 'height':eqpt.cssHeight,'z-index':eqpt.cssZindex}">
 				  		
 	              <div ng-switch on="vm.stsData[$index].eqptSts">  
-	               <img ng-switch-when="0" ng-mouseover='hoverIn($index)' ng-mouseleave='hoverOut($index)' class="obj" src="{{eqpt.stsImg4}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.id, $event)">
-	               <img ng-switch-when="1" ng-mouseover='hoverIn($index)' ng-mouseleave='hoverOut($index)' class="obj" src="{{eqpt.stsImg1}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.id, $event)">
-	               <img ng-switch-when="2" ng-mouseover='hoverIn($index)' ng-mouseleave='hoverOut($index)' class="obj" src="{{eqpt.stsImg2}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.id, $event)">
-	               <img ng-switch-when="3" ng-mouseover='hoverIn($index)' ng-mouseleave='hoverOut($index)' class="obj" src="{{eqpt.stsImg3}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.id, $event)">
-	               <img ng-switch-when="4" ng-mouseover='hoverIn($index)' ng-mouseleave='hoverOut($index)' class="obj" src="{{eqpt.stsImg4}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.id, $event)">
-	               <p class="hintInfo" ng-show="hover[$index]"><b>{{eqpt.id}}</b><br>LINE : {{vm.stsData[$index].lineCd}}<br>COUNT : {{vm.stsData[$index].tcount}}</p>
+	               <img ng-switch-when="0" ng-mouseover='hoverIn($index)' ng-mouseleave='hoverOut($index)' class="obj" ng-src="{{eqpt.stsImg4}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.id, $event)">
+	               <img ng-switch-when="1" ng-mouseover='hoverIn($index)' ng-mouseleave='hoverOut($index)' class="obj" ng-src="{{eqpt.stsImg1}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.id, $event)">
+	               <img ng-switch-when="2" ng-mouseover='hoverIn($index)' ng-mouseleave='hoverOut($index)' class="obj" ng-src="{{eqpt.stsImg2}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.id, $event)">
+	               <img ng-switch-when="3" ng-mouseover='hoverIn($index)' ng-mouseleave='hoverOut($index)' class="obj" ng-src="{{eqpt.stsImg3}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.id, $event)">
+	               <img ng-switch-when="4" ng-mouseover='hoverIn($index)' ng-mouseleave='hoverOut($index)' class="obj" ng-src="{{eqpt.stsImg4}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.id, $event)">
+	               <p class="hintInfo" ng-if="hover[$index]"><b>{{eqpt.id}}</b><br>LINE : {{vm.stsData[$index].lineCd}}<br>COUNT : {{vm.stsData[$index].tcount}}</p>
 	              </div> 
 	               <!-- ng-show="hover[$index] -->
 				</div>
@@ -91,9 +92,25 @@
 				  <div class="{{andon.eqptCnm}}" type="{{andon.eqptType}}" plc="{{andon.id}}"
 				  ng-style="{'top':andon.cssTop, 'left': andon.cssLeft, 'width':andon.cssWidth, 'height':andon.cssHeight,'z-index':andon.cssZindex}">
 				  <!-- test -->
-			 	  <img src="{{andon.stsImg1}}">
-				  <img src="{{andon.stsImg0}}">
-			  	  <img src="{{andon.stsImg2}}">
+				  <!-- 자재결품 --><!-- Q -->
+				  <span ng-switch on="vm.andonStsData[$index].qcmBadSts">
+			 	  <img ng-switch-when="0" class="andonbtn" ng-src="{{andon.stsImg0}}">
+			 	  <img ng-switch-when="1" class="andonbtn" ng-src="{{andon.stsImg1}}">
+			 	  <img ng-switch-default class="andonbtn" src="assets/img/button/colorQ.png">
+			 	  </span>
+			 	  <!-- 품질이상 --><!-- S -->
+			 	  <span ng-switch on="vm.andonStsData[$index].matMissStsqcmBadSts">  
+			 	  <img ng-switch-when="0" class="andonbtn" ng-src="{{andon.stsImg2}}">
+			 	  <img ng-switch-when="1" class="andonbtn" ng-src="{{andon.stsImg3}}">
+			 	  <img ng-switch-default class="andonbtn" src="assets/img/button/colorS.png">
+			 	  </span>
+			 	  <!-- 품목교체 --><!-- C -->
+			 	  <span ng-switch on="vm.andonStsData[$index].itemChaSts">  
+			 	  <img ng-switch-when="0" class="andonbtn" ng-src="{{andon.stsImg4}}">
+			 	  <img ng-switch-when="1" class="andonbtn" ng-src="{{andon.stsImg5}}">
+			 	  <img ng-switch-default class="andonbtn" src="assets/img/button/colorC.png">
+			 	  </span>
+
 			  	  <!-- test -->
 	              <!-- <div ng-switch on="vm.andonStsData[$index].eqptSts">  
 	               <img ng-switch-when="0" class="obj" src="{{andon.stsImg4}}" align="center" ng-style="{'width':andon.cssWidth, 'height':andon.cssHeight, 'position':'absolute'}">

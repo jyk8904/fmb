@@ -29,6 +29,7 @@ public class FmbLineVO extends MBasAbsVO {
 	private float n_rate_mon;
 	private int defect_count_mon;
 	private float dt_rate;
+	private String dn;
 	
 	//생성자
 	public FmbLineVO() {
@@ -37,15 +38,18 @@ public class FmbLineVO extends MBasAbsVO {
 	//메소드명 지정방식 :  Camel Case
 
 	
-	
-	
 	public String getFactId() {
 		return fact_id;
 	}
 
-	
-	
-	
+	public String getDn() {
+		return dn;
+	}
+
+	public void setDn(String dn) {
+		this.dn = dn;
+	}
+
 	public int getGoalCount() {
 		return goal_count;
 	}

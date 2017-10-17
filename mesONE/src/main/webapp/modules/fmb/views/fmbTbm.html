@@ -27,20 +27,19 @@
 
 	<!-- ngview 내부 body -->
 	<bc-form-body>
-	<div layout="row" style="width:90%; margin:auto;">
-	 	<div grid-tbm-panel-ctrl data= "vm.Tbm" is-mobile="isMobile" layout="column" layout-fill layout-wrap style="width:18%;" class="colorNested">
+	<div class="tbmTable" layout="row" style="width:90%; margin:auto;">
+	 	<div grid-tbm-panel-ctrl data= "vm.Tbm" is-mobile="isMobile" layout="column" layout-fill layout-wrap style="width:18%;" class="colorNestedTbm">
 			<div style="color:white; border-radius:20px 0 0 0;">구분</div>
 			<div style="color:white;">금일 점검예정</div>
 			<div style="color:white;">점검 진행중</div>
-			<div style="color:white;">금일 점검완료</div>
+			<div style="color:white; background-color: #2f485b;" >금일 점검완료</div>
 			<div style="color:white;">금주 점검예정</div>
 			<div style="color:white;  border-radius:0 0 0 20px;">금주 점검완료</div>
 		</div>
 		
 		
 		<div class="colList" style="width:82%;">
-		<div grid-tbm-panel-ctrl  data= "vm.Tbm" is-mobile="isMobile" flex  layout="column" layout-fill layout-wrap  class="colorNested"
-		>
+		<div grid-tbm-panel-ctrl  data= "vm.Tbm" is-mobile="isMobile" flex  layout="column" layout-fill layout-wrap  class="colorNestedTbm">
  			<div layout="row" style="border-radius:0 20px 0 0;">
 				<div flex style="color:white;">A동</div>
 				<div flex style="color:white;">B동</div>
@@ -50,7 +49,7 @@
 			</div>
 			
 
-			<div layout="row" flex  ng-repeat="tbm in vm.Tbm track by $index" style="">
+			<div layout="row" flex  ng-repeat="tbm in vm.Tbm track by $index">
 				<div flex style="color:white;">{{tbm.factA}}</div>
 				<div flex style="color:white;">{{tbm.factB}}</div>
 				<div flex style="color:white;">{{tbm.factC}}</div>

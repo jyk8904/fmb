@@ -15,33 +15,30 @@
 angular
     .module('app')
     .controller('FmbFactAllCtrl'
-    		 , ['CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc','$http','$scope','$window','$q','$location', '$filter', '$interval'
-     , function (CmmAjaxService , CmmModalSrvc , CmmWorkerSrvc , $http , $scope , $window , $q , $location, $filter, $interval)
+    		 , ['CmmAjaxService','CmmModalSrvc','CmmWorkerSrvc','$http','$scope','$window','$q','$location', '$filter', '$interval', '$rootScope'
+     , function (CmmAjaxService , CmmModalSrvc , CmmWorkerSrvc , $http , $scope , $window , $q , $location, $filter, $interval, $rootScope)
 {
 	/*------------------------------------------
      * 변수 선언
      *-----------------------------------------*/
-	 $scope.$watch('loginChk', function(newVal, oldVal) {
-			if(newVal == false){
-				$location.url('');
-			}    	
-		}, true);
+
 
     var self = this;
     var workerList = CmmWorkerSrvc;
     $scope.isMobile = false;
-	
+    var promise = null;
+    $rootScope.showBar = $location.url();
     // 모바일 체크 함수 실행
 	isMobileFunc();
     //워커3(알람정보워커)가 없을경우 start
     //$scope.Worker3Start()
   	//워커 스타트
-  	workerList.workerStart(workerList.worker2, "worker.js");
+  	workerList.workerStart(workerList.worker, "worker.js");
     //워커 온메세지
-  	workerList.workerOnmessage(workerList.worker2, getData);
-      /*workerList.workerOnmessage(workerList.worker2, function(){console.log('onmessage')});*/
+  	workerList.workerOnmessage(workerList.worker, getData);
+      /*workerList.workerOnmessage(workerList.worker, function(){console.log('onmessage')});*/
   	// 워커에게서 메세지를 받을때마다 페이지 전환
-  	var SettingTime = workerList.worker2.data 
+  	var SettingTime = workerList.worker.data 
   	for(var i =0; i < SettingTime.length; i++){
 		//console.log(SettingTime[i]);
 		if('/'+ SettingTime[i].pageNm== $location.url()){
@@ -51,10 +48,11 @@ angular
 		}
 	}  
         function getFactList(){
-	    var promise = CmmAjaxService.select("/fmb/bas/selectFmbFactAll.do");
+	    promise = CmmAjaxService.select("bas/selectFmbFactAll.do");
 	    promise.then(function(data){
 	    	self.factList = data;
 	    	//console.log(self.factList)
+	    	promise = null;
 	     }
 	    ,function(data){
 	    	console.log('fail: '+ data)

@@ -11,9 +11,10 @@ public class dbConnectionTest {
 * @throws SQLException 
 */
 public static void main(String[] args) throws ClassNotFoundException, SQLException {
-String connectionUrl = "jdbc:sqlserver://localhost:3306;" + "databaseName=CTRCH;";
+//String connectionUrl = "jdbc:sqlserver://localhost:3306;" + "databaseName=CTRCH;";
 	/*String connectionUrl = "jdbc:sqlserver://10.10.50.107;" + "atabaseName=CTRCH;";*/
-
+	String connectionUrl = "jdbc:sqlserver://192.168.1.201:1444;databaseName=CTRCH";
+	//String connectionUrl = "jdbc:sqlserver://106.247.231.186:1444;databaseName=CTRCH";
 //(db서버가 따로 존재한다면 로컬호스트:포트번호 대신 서버아이피:포트번호 를 입력하면된다.
 
 

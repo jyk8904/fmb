@@ -23,20 +23,15 @@ angular
 *  
 *---------------------------------------------------------------*/
     
-    $scope.$watch('loginChk', function(newVal, oldVal) {
-		if(newVal == false){
-			$location.url('');
-		}    	
-    }, true);
      var self = this;
-     
      $scope.buttons = [
     	 {'name':'Yellow25', 'value':'assets/img/button/Yellow25.png'},
     	 {'name':'Blue25', 'value': 'assets/img/button/Blue25.png'},
     	 {'name':'Red25', 'value' : 'assets/img/button/Red25.png'},
     	 {'name':'직접입력', 'value': ''}
     	 ]
-    $scope.hover=[];
+     $rootScope.showBar = $location.url();
+     $scope.hover=[];
      $scope.hoverIn = function(index){
     	 $scope.hover[index] = true;
     	 
@@ -47,15 +42,15 @@ angular
      $scope.sensRating = 1;
      $scope.sensRating1 = 1;
      var workerList = CmmWorkerSrvc;
-     if(workerList.worker2.worker!=undefined){
-    	 	workerList.worker2.worker.terminate();
-    	 	workerList.worker2.worker=undefined; 
-    	 	workerList.worker2.sts = "off";
+     if(workerList.worker.worker!=undefined){
+    	 	workerList.worker.worker.terminate();
+    	 	workerList.worker.worker=undefined; 
+    	 	workerList.worker.sts = "off";
 	   }
-     if(workerList.worker3.worker!=undefined){
+/*     if(workerList.worker3.worker!=undefined){
  	 	workerList.worker3.worker.terminate();
  	 	workerList.worker3.worker=undefined; 
-	   }
+	   }*/
      self.showModal = false;
      self.selected = {};
      self.pointer = {
@@ -100,8 +95,8 @@ angular
  	self.countParamVo = {
 			 plcId: ''
 		   , factId: 'Comb'	
-			   
  	}
+ 	
  	$scope.crtEqtp = {
 		 	  cnm  : ''
 			, type : ''
@@ -118,7 +113,7 @@ angular
     	, Comd : ''
     };
  	self.opacityData = 100;
- 
+ 	
 /*----------------------------------------------------------------
 *  함수 실행
 * ---------------------------------------------------------------- 
@@ -150,7 +145,7 @@ angular
 
     self.toggleLeft = buildToggler('left');
 
-    $scope.$watch('vm.eqptList', function(newVal, oldVal) {
+    var eqptListWatch =  $scope.$watch('vm.eqptList', function(newVal, oldVal) {
     	
     	if (newVal != null && oldVal != null && newVal.length == oldVal.length)
     	{
@@ -179,6 +174,7 @@ angular
 		    	});
 	    	}
     	}
+    	eqptListWatch();
     }, true);
 
     self.crtEqptModal = function(){
@@ -225,6 +221,7 @@ angular
     		
     	}else if(self.eqptParamVo.eqptType=="ANDON"){
     		var classList = $filter('orderBy')(self.eqptList,'eqptCnm');
+    		console.log(self.eqptList)
         	if (classList.length == 0) {
         		$scope.crtEqpt.cnm = 'andon001';
         	}
@@ -239,10 +236,10 @@ angular
     		  for(var i=0;i<self.andonList.length;i++) tmp[self.andonList[i].plcId]=1;
     		  for(var i=0;i<self.eqptList.length;i++) { if(tmp[self.eqptList[i].id]) delete tmp[self.eqptList[i].id]; }
     		  for(var k in tmp) res.push(k);
-    		 // console.log(res);
+    		  console.log(res);
     		  self.andonLst = res;
-    		 // console.log(self.andonLst);
-    		
+    		  console.log(self.eqptList);
+ 
     		
     	}else if(self.eqptParamVo.eqptType=="COUNT"){
     		var classList = $filter('orderBy')(self.eqptList,'eqptCnm');
@@ -327,17 +324,17 @@ angular
     						, factId : factId
     						, desc : null
     						, cssZindex : 'auto'
-							, cssWidth : '82px'
+							, cssWidth : '90px'
 							, cssHeight : '25px'
 							, cssTop : '230px'
 							, cssLeft : '550px'
 							, status : 'insert'
-							, singId : 'Q'	
-							, stsImg0: 'assets/img/button/colorQ.png'
-							, stsImg1: 'assets/img/button/colorS.png'
-							, stsImg2: 'assets/img/button/colorC.png'
-							, stsImg3: 'assets/img/button/BlueQ.png'
-							, stsImg4: 'assets/img/button/RedQ.png'
+							, stsImg0: 'assets/img/button/GreenQ.png'
+							, stsImg1: 'assets/img/button/RedQ.png'
+							, stsImg2: 'assets/img/button/GreenS.png'
+							, stsImg3: 'assets/img/button/RedS.png'
+							, stsImg4: 'assets/img/button/GreenC.png'
+							, stsImg5: 'assets/img/button/RedC.png'
     				};
     			}
 		    	
@@ -378,27 +375,25 @@ angular
     			self.eqptList[i].stsImg3 = stsImg.replace('color', 'Blue');
     			self.eqptList[i].stsImg4 = stsImg.replace('color', 'Red');
     		}else if(self.eqptList[i].eqptType =="ANDON"){
-    			var stsImg = self.eqptList[i].stsImg0
-    			self.eqptList[i].stsImg1= stsImg.replace('Q','S')
-    			self.eqptList[i].stsImg2= stsImg.replace('Q','C')
+    			//
     			
     		}
     	}	
     	//console.log(self.eqptList);
-    	 var eqptPromise = CmmAjaxService.save("/fmb/bas/saveFmbEqpt.do", self.eqptList);
+    	 var eqptPromise = CmmAjaxService.save("bas/saveFmbEqpt.do", self.eqptList);
     };
     
     //설비 이미지리스트 가져오기
     function getEqptList(){
-    	var eqptPromise = CmmAjaxService.select("/fmb/bas/selectFmbEqpt.do", self.eqptParamVo);
+    	var eqptPromise = CmmAjaxService.select("bas/selectFmbEqpt.do", self.eqptParamVo);
     	eqptPromise.then(function(data) {
-    		console.log(data)
+    		//console.log(data)
     		self.eqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
     		for(var i = 0; i < self.eqptList.length; i++){
     			self.eqptList[i]['status'] = "keep";
     		}
     	}, function(data){
-    		console.log(data);
+    		//console.log(data);
     	//alert('fail: '+ data)
     });    	
     
@@ -407,7 +402,7 @@ angular
     function getPlcList(){
     	
     	//설비 plc 데이터 가져오기
-    	var plcPromise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.plcParamVo);
+    	var plcPromise = CmmAjaxService.select("bas/selectFmbPlc.do", self.plcParamVo);
     	plcPromise.then(function(data) {
     		var dataList= [];
     		for(var i=0; i<data.length; i++){
@@ -426,15 +421,9 @@ angular
     function getAndonList(){
     	
     	//설비 Andon 데이터 가져오기   andon프로시저 생성후 수정해야함 
-    	var andonPromise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.andonParamVo);
+    	var andonPromise = CmmAjaxService.select("bas/selectFmbAndon.do", self.andonParamVo);
     		andonPromise.then(function(data) {
-			var dataList= [];
-    		for(var i=0; i<data.length; i++){
-    			if(data[i].plcId.split('_')[0]=="APLC"){
-    				dataList.push(data[i]);
-    			}
-    		}
-    		self.andonList = dataList;
+    		self.andonList = data;
     		//console.log(self.andonList)
     	}, function(data){
     		/*alert('fail: '+ data)*/
@@ -444,7 +433,7 @@ angular
     function getSpcList(){
     	
     	//설비 Spc 데이터 가져오기   프로시저 생성후 수정해야함 
-    	var spcPromise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.spcParamVo);
+    	var spcPromise = CmmAjaxService.select("bas/selectFmbPlc.do", self.spcParamVo);
     		spcPromise.then(function(data) {
     		self.spcList = data; 
     		//console.log(self.spcList)
@@ -456,7 +445,7 @@ angular
     function getCountList(){
     	
     	//설비 count 데이터 가져오기    프로시저 생성후 수정해야함 
-    	var countPromise = CmmAjaxService.select("/fmb/bas/selectFmbPlc.do", self.countParamVo);
+    	var countPromise = CmmAjaxService.select("bas/selectFmbPlc.do", self.countParamVo);
     		countPromise.then(function(data) {
     		self.countList = data; 
     		//console.log(self.countList)
@@ -467,7 +456,7 @@ angular
     }
     function getBgImageList() {
         
-    	var bgImagePromise = CmmAjaxService.select("/fmb/bas/selectFmbBgImage.do", self.BgList);
+    	var bgImagePromise = CmmAjaxService.select("bas/selectFmbBgImage.do", self.BgList);
     	bgImagePromise.then(function(data) {
     		self.bgImageList = data;
     		
