@@ -20,7 +20,6 @@
     <select id="selectFmbAndon" parameterType="com.dsinfo.fmb.service.FmbAndonParamVO" resultType="com.dsinfo.fmb.service.FmbAndonVO">     	      
         {call USP_EQPT_ANDON_SELEC01(#{fact_id},#{plc_id})}
     </select>
-    
  	<!-- EqptCSSList 정보 조회 -->
     <select id="selectFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbEqptParamVO" resultType="com.dsinfo.fmb.service.FmbEqptVO">     	      
         {call USP_EQPT_CSS_SEL01(#{fact_id},#{eqpt_type},#{id},#{eqpt_cnm})}
@@ -29,13 +28,13 @@
 	<!-- EqptCSSList 정보 생성  -->
     <insert id="insertFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbModEqptVO">     	      
         {call USP_EQPT_CSS_INS01(#{eqpt_cnm}, #{eqpt_type}, #{fact_id}, #{id}, #{css_top}
-        , #{css_left}, #{css_width}, #{css_height}, #{css_zindex}, #{sts_img0}, #{sts_img1}, #{sts_img2}, #{sts_img3}, #{sts_img4})}
+        , #{css_left}, #{css_width}, #{css_height}, #{css_zindex}, #{sts_img0}, #{sts_img1}, #{sts_img2}, #{sts_img3}, #{sts_img4}, #{sts_img5})}
     </insert>
     
  	<!-- EqptCSSList 정보 갱신 -->
     <update id="updateFmbEqpt" parameterType="com.dsinfo.fmb.service.FmbModEqptVO">     	      
         {call USP_EQPT_CSS_UPD01(#{eqpt_cnm}, #{eqpt_type}, #{fact_id}, #{id}, #{css_top}
-        , #{css_left}, #{css_width}, #{css_height}, #{css_zindex}, #{sts_img0}, #{sts_img1}, #{sts_img2}, #{sts_img3}, #{sts_img4})}
+        , #{css_left}, #{css_width}, #{css_height}, #{css_zindex}, #{sts_img0}, #{sts_img1}, #{sts_img2}, #{sts_img3}, #{sts_img4}, #{sts_img5})}
     </update>
     
     <!-- EqptCSSList 정보 삭제 -->
@@ -96,14 +95,18 @@
         {call USP_DASH_GAUGE_RUNINFO_SELECT01()}
     </select>     
     
-    <!-- Total- DateRunInfo(알람발생추이차트) 정보조회 -->
+    <!-- Total- DateAndonInfo(설비 안돈신호 발생추이차트) 정보조회 -->
+    <select id="selectDateAndonInfo" resultType="com.dsinfo.fmb.service.FmbDateAndonInfoVO">     	      
+        {call USP_DASH_DATE_ANDONINFO_SELECT01()}
+    </select> 
+           <!--팝업발생추이정보조회 -->
     <select id="selectDateRunInfo" resultType="com.dsinfo.fmb.service.FmbDateRunInfoVO">     	      
         {call USP_DASH_DATE_RUNINFO_SELECT01()}
     </select> 
     
-    <!-- Total- 설비상태별순위 그리드 정보조회 -->    
-    <select id="selectRankRunInfo" resultType="com.dsinfo.fmb.service.FmbRankRunInfoVO">     	      
-        {call USP_DASH_RANK_RUNINFO_SELECT01()}
+    <!-- Total- 설비 안돈신호별순위 그리드 정보조회 -->    
+    <select id="selectRankAndonInfo" resultType="com.dsinfo.fmb.service.FmbRankAndonInfoVO">     	      
+        {call USP_DASH_RANK_ANDONINFO_SELECT01()}
     </select> 
     
     <!-- Total- 설비상태별순위 그리드 정보조회 -->    
@@ -126,6 +129,7 @@
         {call USP_DASH_DEFECT_WHOLERATE_SELECT01()}
     </select>
     
+
     <!-- Fmb Image 저장  -->
     <insert id="insertFmbImageData" parameterType="com.dsinfo.fmb.service.FmbImageVO">     	      
         {call USP_FMB_IMAGE_DATA_INSERT01(#{file_name}, #{file_p_path}, #{file_l_path}, #{file_origin_name}, #{file_size})}

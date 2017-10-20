@@ -1,0 +1,54 @@
+<!-- 
+/**  
+ * @Class Name : imageViewer.tmp.html
+ * @Description : fmbTotals
+ * @Modification Information  
+ * @
+
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.05	 정유경
+ *
+
+ * css: assets/css/fmb.css
+ * controller : imageViewerCtrl.js
+ *
+ */
+ -->
+<md-dialog aria-label="eqpt info" class="infoPopup" style="width:1500px; height:900px;">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>이미지 선택</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="vm.saveBgImg(vm.target)">
+        	<img src="assets/img/system/check.png" >
+        </md-button>
+        <md-button class="md-icon-button" ng-click="vm.cancel()">
+          <img src="assets/img/system/x.png" aria-label="Close dialog" >
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content class="infoPopupContent">
+		<div flex ng-cloak>
+  		<md-grid-list
+        	md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="6"
+        	md-row-height-gt-md="1:1" md-row-height="16:9"
+        	md-gutter="8px" md-gutter-gt-sm="4px" >
+    <md-grid-tile ng-repeat="image in vm.images"
+                  md-rowspan="1"
+                  md-colspan="1"
+                  md-colspan-sm="1"
+                  md-colspan-xs="1"
+                  ng-click=vm.imagePick($index)
+                  ng-class="{'with-mask' : vm.target.num === $index}">
+      <img class="target-trashcan" ng-click="vm.imgDel($index)" ng-if="vm.target.num == $index" src="assets/img/system/trashcan.png">            
+      <img class="img-view" src="{{image.file_l_path}}"/>
+      <img class="target-img" ng-show="vm.target.num == $index" src="assets/img/system/checked.png"/>
+      <md-grid-tile-footer>{{image.file_origin_name}} </md-grid-tile-footer>
+    </md-grid-tile>
+  </md-grid-list>
+</div>
+    </md-dialog-content>
+  </form>
+</md-dialog>

@@ -1,0 +1,145 @@
+<!-- 
+/**  
+ * @Class Name : fmb007.html
+ * @Description : fmb007
+ * @Modification Information  
+ * @
+
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.05   
+ * 
+
+ * css: assets/css/fmb.css
+ * controller : fmb007Ctrl.js
+ * 사용x
+ */
+ -->
+ 
+<!-- js -->
+<!--
+-->
+
+<!-- <script type="text/javascript" src="assets/js/draggable.js"></script> -->
+
+
+<div p-ctrl class='md-screen'>
+    
+<md-form-header bg-ctrl>
+
+	<md-config-btn></md-config-btn>
+
+</md-form-header>
+   	<md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4">
+
+      <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">123</h1>
+        <md-button ng-click="vm.crtEqptModal()" class="md-accent">1</md-button>
+        <md-button ng-click="vm.saveConfig(configSetting)" class="md-accent">2</md-button>
+        <md-button ng-click="vm.toggleLeft()" class="md-accent">3</md-button>
+      </md-toolbar>
+
+      <md-content class="md-padding">
+     	<div layout="row">
+	       <div flex>
+		      <ul>
+		      	<li ng-repeat="eqpts in vm.eqptList" ng-click="vm.setSelectedData(eqpts)">
+					<label style='margin-right:30px;'>{{eqpts.status}}</label><label>{{eqpts.plcId}}</label>
+					<md-checkbox ng-model="checkData.cb" ng-init="checkData.cb = false; checkData.preVal = eqpts.status" aria-label="1"
+						ng-change="vm.exists(eqpts, checkData.cb, $index, checkData.preVal)" class="md-warn md-align-top-left" flex>
+          			</md-checkbox>
+		      	</li>
+		      </ul>
+	      </div>
+	      <div flex>
+		    <md-tabs class="md-accent" md-selected="0">
+		      <md-tab id="tab1">
+		      	<md-tab-label>Basic</md-tab-label>
+		        <md-tab-body>
+		      		<label>Class�� </label>
+	   				<input type="text" placeholder="Class" name='name' ng-model="configSetting.cnm" readonly/>
+	   				<label>Type</label>
+	   				<input type="text" placeholder="Type" name='name' ng-model="configSetting.type"/>
+	   				<label>PLC ID</label>
+	   				<input type="text" placeholder="PLC ID" name='name' ng-model="configSetting.plcId" />
+	   				<label>Fact ID</label>
+	   				<input type="text" placeholder="PLC ID" name='name' ng-model="configSetting.factId" />
+		        </md-tab-body>
+		      </md-tab>
+		      <md-tab id="tab2">
+		        <md-tab-label>Detail</md-tab-label>
+		        <md-tab-body>
+		          	<label>Top</label>
+	   				<input type="text" placeholder="Top" name='name' ng-model="configSetting.top" />
+	   				<label>Left</label>
+	   				<input type="text" placeholder="Left" name='name' ng-model="configSetting.left" />
+	   				<label>Width</label>
+	   				<input type="text" placeholder="Width" name='name' ng-model="configSetting.width" />
+	   				<label>Height</label>
+	   				<input type="text" placeholder="Height" name='name' ng-model="configSetting.height" />
+	   				<label>zIndex</label>
+	   				<input type="text" placeholder="zIndex" name='name' ng-model="configSetting.zIndex" />
+	   				<label>Image</label>
+	   				<input type="text" placeholder="Img url" name='name' ng-model="configSetting.imgUrl" />
+	   				<div class="prev" style='margin:10px 0 0 0'>
+	   					<img class='prevImg' src="{{configSetting.imgUrl}}" />
+	   				</div>
+		        </md-tab-body>
+		      </md-tab>
+		    </md-tabs>
+	    </div> 
+    </div>
+  </md-content>
+
+    </md-sidenav>
+<bc-form-body>
+
+   <bc-back-panel>
+   	<div class='bg-panel'></div>
+   <div class="EQPT">   
+
+       <ul>
+         <li ng-repeat="eqpt in vm.eqptList">
+          <div task-data="vm.eqptList" target-data="$index" ng-draggable='dragOptions' class="{{eqpt.eqptCnm}}" status="{{eqpt.status}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
+              style="top:{{eqpt.cssTop}}; left: {{eqpt.cssLeft}}; 
+                     width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}}; 
+                     z-index:{{eqpt.cssZindex}};">
+               <img class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
+            </div>
+         </li>
+      </ul>
+    </div>
+   </bc-back-panel>
+
+</bc-form-body>
+
+</div>
+<!------------------------------------------ modal body start------------------------------------------------------->
+<modal title="Ÿ��Ʋ" visible="vm.showModal">
+<form role="form" ng-submit="submit()">
+   <ul>
+      <li>
+         <div class="form-group">
+            <label for="cnm">Class ��</label>
+            <input type="text" placeholder="Class Nm" name='name' ng-model="crtEqpt.cnm" />
+         </div>
+         <div class="form-group">
+            <label for="type">Type</label>
+            <input type="text" placeholder="Type" name='name' ng-model="crtEqpt.type" />
+         </div>
+         <div class="form-group">
+            <label for="plcId">PLC ID</label>
+            <input type="text" placeholder="PLC ID" name='name' ng-model="crtEqpt.plcId" />
+         </div>
+         <div class="form-group">
+            <label for="plcId">test</label>
+            <input type="text" placeholder="FACT ID" name='name' ng-model="crtEqpt.factId" />
+         </div>
+      </li>
+   </ul>
+   <input type="submit" value="Save" />
+<button type="submit" class="btn btn-default" data-dismiss="modal"
+      aria-hidden="true">���</button>
+</form>
+</modal>
+
+<!-------------------------------------------modal body end------------------------------------------------------->

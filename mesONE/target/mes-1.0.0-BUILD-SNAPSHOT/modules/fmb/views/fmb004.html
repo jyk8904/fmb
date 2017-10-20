@@ -1,0 +1,58 @@
+<!-- 
+/**  
+ * @Class Name : fmb002.html
+ * @Description : fmb001 
+ * @Modification Information  
+ * @
+ * @ ������       ���깆��      �댁��
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.05.26  kb.shin    理�珥�����
+ * @ 
+ * 
+ * @author kb.shin
+ * @since 2017.01.01
+ * @version 1.0
+ * @see
+ * 사용 x
+ */
+ -->
+ 
+<h1>fmb004 AUIGrid Test</h1> 
+<div class='bc-screen'>
+ 
+   <!-- 타이틀 및 버튼 -->
+   	<div class='bc-form'>
+	<bc-form-header>
+	   <bc-header-label title="AUI 그리드 test"></bc-header-label>
+	   <bc-header-buttons>
+	   
+	   	<bc-button ng-click="vm.exportClick()" title="엑셀(xlsx)로 저장"></bc-button>
+		<bc-button ng-click="vm.exportPdfClick()" title="PDF로 저장"></bc-button>
+		<p style="clear:both;">프로젝트 일정 관리 테이블을 출력한 모습입니다. ( 계층구조 데이터 표현 )</p>
+			<bc-button ng-click='vm.expand()' title ='모두 열기/ 닫기'>
+			<select ng-model="vm.selected" id="depthSelect" ngChange="vm.showItemsOnDepth()">
+				<option value="default" selected="selected" disabled="disabled">-- 특정 계층까지만 보이기 -- </option>
+				<option value="1">계층 1 Depth 만 보이기</option>
+				<option value="2">계층 2 Depth 까지 보이기</option>
+				<option value="3">계층 3 Depth 까지 보이기</option>
+			</select>
+		   <bc-button ng-click='vm.btnSelectClick()' icon='fa fa-search fa-fw'	title='조회'></bc-button>
+		</bc-header-buttons>   
+	</bc-form-header>
+	
+	<!--
+	     검색조건  =>  1줄: 34px, 2줄: 68px 
+	 --> 
+ 	 
+	<bc-form-search  height='1'>
+			<bc-input class='col-sm-6' labeltext='PLC ID' ng-model='vm.vo.plcId'></bc-input>
+			<bc-input class='col-sm-6' labeltext='공장 ID' ng-model='vm.vo.factId'></bc-input> 
+			
+	</bc-form-search>
+
+	<!-- 그리드 -->
+	<div id="grid" class="auiGrid"></div>
+	
+	
+
+</div>

@@ -1,0 +1,63 @@
+<!-- 
+/**  
+ * @Class Name : fmbCwMon.html
+ * @Description : fmbCwMon
+ * @Modification Information  
+ * @
+
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.05	 정유경
+ * 
+
+ * css: assets/css/fmb.css
+ * controller : fmbCwMonCtrl.js
+ * 사용x
+ */
+ -->
+<!-- ngview 내부 페이지 -->
+<div test-ctrl class='bc-screen' style="margin:0">
+<script src="modules/cmm/services/cmmFactSrvc.js"></script>
+<!-- ngview 내부 header -->
+<bc-form-header logo='assets/img/system/logo.png' title="생산 자원 통합 모니터링" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
+<img src="assets/img/system/legend.png" style="margin-top: 30px;">
+</bc-form-header>
+
+<!-- ngview 내부 body -->
+<bc-form-body class='col-md-12 col-sm-12 col-xs-12' style="padding:0;">
+	<bc-back-panel2>
+	<!--설비클래스 삽입 시작-->
+  	<div back-panel-ctrl ng-switch on="vm.eqptParamVo.factId" style="position:absolute;">
+	   	<img ng-switch-when="A" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.A}}' style="padding:0"/>
+	   	<img ng-switch-when="B" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.B}}' style="padding:0"/>
+	   	<img ng-switch-when="C" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.C}}' style="padding:0"/>
+	   	<img ng-switch-when="Comb" class='col-md-12 col-sm-12 col-xs-12' src='{{eachBg.Comb}}' style="padding:0"/>
+    </div> 
+	<div class="EQPT col-md-12 col-sm-12 col-xs-12" style="padding:0">	
+		 <ul>
+			<!-- 설비이미지 repeat -->
+			<li u-ctrl data="eqpt" ng-repeat="eqpt in vm.eqptList track by $index">
+			 <!-- <div class="{{eqpt.eqptCnm}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
+				  style="top:{{eqpt.cssTop}}; left: {{eqpt.cssLeft}}; 
+				  		 width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}}; 
+				  		 z-index:{{eqpt.cssZindex}};"> -->
+				  <div class="{{eqpt.eqptCnm}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
+				  ng-style="{'top':eqpt.cssTop, 'left': eqpt.cssLeft, 'width':eqpt.cssWidth, 'height':eqpt.cssHeight,'z-index':eqpt.cssZindex}">
+				  		
+	              <div ng-switch on="vm.stsData[$index]">  
+	               <img ng-switch-when="0" class="obj" src="{{eqpt.stsImg0}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.plcId)">
+	               <img ng-switch-when="1" class="obj" src="{{eqpt.stsImg1}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.plcId)">
+	               <img ng-switch-when="2" class="obj" src="{{eqpt.stsImg2}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.plcId)">
+	               <img ng-switch-when="3" class="obj" src="{{eqpt.stsImg3}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.plcId)">
+	               <img ng-switch-when="4" class="obj" src="{{eqpt.stsImg4}}" align="center" ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}" ng-click="showAdvanced(eqpt.plcId)">
+	               </div> 
+				</div>
+			</li>
+		</ul>
+ 	</div>
+	</bc-back-panel2>
+		<!--설비클래스 삽입 끝-->
+</bc-form-body>
+</div>
+
+
+ 

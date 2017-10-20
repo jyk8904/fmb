@@ -1,0 +1,306 @@
+/*responsive write by jjy - 170807*/
+
+
+/* smart Phone (portrait and landscape) */
+@media screen and (max-width: 768px) {
+	
+	/* 메인 타이틀 */
+	.titleHeader {
+		height: 45px;
+		margin-bottom: 1%;
+	}
+	
+	/* 로그인 */
+	.loginId {
+		top: 50%;
+		left: 61%;
+	}
+	.loginPwd {
+		top: 66%;
+		left: 61%;
+	}
+	.loginBtn {
+		width: 128px;
+		height: 21px;
+		top: 80%;
+		left: 76%;
+	}
+	.autoLogin {
+		display: none;
+	}
+	
+	/* 사이드메뉴바 */
+	
+	.md-sidenav{
+		width:32%;
+	}
+	.sideNavCtnt{
+		overflow : hidden;
+	    height: 84% ;
+	}
+	.sideNavLst{
+		height:93%;
+	}
+	
+	.md-2-line, .md-2-line>.md-no-style{
+		height:12% !important;
+		min-height: 20px !important;
+		max-height: 70px !important;
+	}
+	
+	.md-2-line>.md-no-style{
+		height:100% !important;
+	}
+	.md-button{
+		overflow: visible;		
+	}
+	/* 설비정보 팝업 */
+	.eqptPopupTitle {
+		min-height:25px;
+		height: 25px;
+	}
+	.subTitle {
+		margin-top: 10px;
+	}
+	.subTitle p {
+		margin: 5px 0 0 5px;
+	}
+	
+	/* 대쉬보드 */
+	.chartTitle {
+		font-size: 12px;
+	}
+	.gridArea3 .gaugeTitleBox p {
+		font-size: 16px;
+	}
+	.gridArea3 .gaugeValueBox p {
+		font-size: 16px;
+	}
+	.gridArea4 .titleBox {
+		padding:0;
+	} 
+	.gridArea4 .valueBox {
+		padding:0;
+	}
+	.smallBox {
+		min-height: 0;
+	}
+	.largeBox {
+		min-height: 0;
+	}
+	.gridArea {
+		height:100%;		
+	}
+	.gridArea p {
+		margin: 0;
+	}
+	.gridArea1 {
+		height: 72%;
+		margin-top: 5%;
+		margin-bottom: 4%;
+	}
+	.gridArea1 .titleRow {
+		height: 16%;
+		padding:0;
+	}
+	.gridArea1 > .contentRow {
+		height: 14%;
+		padding:0;
+	}
+	.gridArea2 {
+		height: 15%;
+		margin-bottom: 4%;
+	}
+	.gridArea2 .ppmTitle {
+		height: 100%;
+		padding:0 5px;
+	}
+	.gridArea2 .ppmValue {
+		height: 100%;
+	}
+	#MobileGauge {
+		height: 150px;
+		margin: 10px 0 -20px 0;s
+	}
+	#MobileNorunChart, #MobileStandbyChart, #MobileAlarmChart{
+		height: 150px;
+		margin: 10px 0 0 0;
+	}
+	.gridArea3 {
+		height: 45%;
+	}
+	.gridArea3 .gaugeT{
+		width: 48%;
+		height: 21%;
+		margin-right: 2%;/* 
+		margin-bottom: 2%; */
+		padding:0;
+	}
+	.gridArea3 .gaugeValueBox {
+		width: 48%;
+		height: 21%;
+		margin-right: 2%;
+		/* margin-bottom: 2%; */
+		padding:0;
+	}
+	.gridArea4 {
+		height: 45%;
+	}
+	.gridArea4 p {
+		font-size: 10px;
+	}
+	/* 라인별 생산실적 */
+	.lineBtn {
+		width: 20px;
+		height: 20px;
+	}
+	.lineBtnMd {
+		width: 15px;
+		height: 15px;
+	}
+	.lineBtnSm {
+		width: 10px;
+		height: 10px;
+	}
+	/* 생산실적 외 모니터링  */
+	.buttonArea {
+    margin: -5% 6% 1.5% 6%;
+	}
+	.buttonArea> .md-button{
+	min-height:20px; 
+	min-width:55px;
+	line-height:25px;
+	font-size:10%;
+	}
+	.prodTable {
+	/* height:240px; */
+	/* 
+    min-height: 240px;
+    max-height: 500px; */
+	}
+}
+
+
+
+
+/* iPads (portrait and landscape) */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+    /* Styles */
+    
+    /* 대쉬보드 */
+    /* 메인 타이틀 */
+	.titleHeader {
+		margin-bottom: 1%;
+	}
+    .chartTitle{
+    	font-size: 16px;
+    }
+	.smallBox {
+		min-height: 305px;
+	}
+	.largeBox {
+		min-height: 305px;
+	}
+	.gridArea {
+		padding:0 !important;
+		height:100%;		
+	}
+	.gridArea p {
+		margin: 0;
+		font-size: 20px;
+	}
+	.gridArea1 {
+		padding:0 !important;
+		height: 72%;
+		margin-top: 5%;
+		margin-bottom: 4%;
+	}
+	.gridArea1 .titleRow {
+		height: 16%;
+		padding:0 !importants;
+	}
+	.gridArea1 > .contentRow {
+		height: 14%;
+		padding:0;
+	}
+	.gridArea2 {
+		height: 15%;
+		margin-bottom: 4%;
+		padding:0;
+	}
+	.gridArea2 .ppmTitle {
+		height: 100%;
+		padding: 0 5px;
+	}
+	.gridArea2 .ppmValue {
+		height: 100%;
+	}
+	#MobileGauge {
+	    height: 323px;
+    	margin: 20px 0 -30px 0;
+	}
+	
+	#MobileNorunChart, #MobileStandbyChart, #MobileAlarmChart{
+	    height: 300px;
+    	margin: 0px 0 0px 0;
+	}
+	
+	.gridArea3 {
+		height: 45%;
+	}
+	.gridArea3 .gaugeTitleBox {
+		width: 48%;
+		height: 21%;
+		margin-right: 2%;
+		margin-bottom: 2%;
+		padding:0;
+	}
+	.gridArea3 .gaugeValueBox {
+		width: 48%;
+		height: 21%;
+		margin-right: 2%;
+		margin-bottom: 2%;
+		padding:0;
+	}
+	
+	.gridArea4 {
+		height: 45%;
+	}
+	.gridArea4 .titleBox {
+		padding:0;
+	} 
+	.gridArea4 .valueBox {
+		padding:0;
+	}
+	.gridArea4 p {
+		font-size: 20px;
+	}
+	/* 로그인 */
+	.loginId {
+		top: 50%;
+		left: 61%;
+	}
+	.loginPwd {
+		top: 66%;
+		left: 61%;
+	}
+	.loginBtn {
+		width: 128px;
+		height: 21px;
+		top: 80%;
+		left: 76%;
+	}
+	/* 라인별 생산실적 */
+	.lineBtn {
+		width: 20px;
+		height: 20px;
+	}
+	.lineBtnMd {
+		width: 15px;
+		height: 15px;
+	}
+	.lineBtnSm {
+		width: 10px;
+		height: 10px;
+	}
+}

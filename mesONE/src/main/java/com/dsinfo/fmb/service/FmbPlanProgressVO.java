@@ -7,6 +7,7 @@ public class FmbPlanProgressVO extends MBasAbsVO {
 
 	private String line_cd;
 	private String line_nm;
+	private String line_mid_nm;
 	private int tot_count;
 	private int avg_count;
 	private int goal_count;
@@ -35,6 +36,17 @@ public class FmbPlanProgressVO extends MBasAbsVO {
 	public void setLineNm(String line_nm) {
 		this.line_nm = line_nm;
 	}
+
+	
+	public String getLineMidNm() {
+		return line_mid_nm;
+	}
+
+
+	public void setLineMidNm(String line_mid_nm) {
+		this.line_mid_nm = line_mid_nm;
+	}
+
 
 	public int getTotCount() {
 		return tot_count;

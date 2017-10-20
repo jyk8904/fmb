@@ -74,7 +74,7 @@ public class FmbEqptCtrl {
     public ResponseEntity<MSysRtnMsgVO> saveMBasLneMst(@RequestBody List<FmbModEqptVO> pVO)  {
         MBcfTransactionManager transaction = null;
         String sqlID = null;
-        
+        System.out.println("saveFmbEqpt.do로 이동");
         try {
             transaction = mBcfBizService.getTransactionManager();
             transaction.start();
@@ -82,8 +82,7 @@ public class FmbEqptCtrl {
             System.out.print("vo는!!!! " + pVO.size());
             for (int i=0; i < pVO.size(); i++) {
                 FmbModEqptVO vo = pVO.get(i);
-                System.out.println("컨트롤러에서 데이터 : "+ vo);
-                 System.out.println(vo.getStatus());
+                System.out.println("컨트롤러에서 데이터 : "+vo.getId()+vo.getCssTop()+vo.getStatus());
                  
                 if (vo.getStatus().equals("update")) {
                     sqlID = "sql-bas-info.updateFmbEqpt";

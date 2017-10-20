@@ -1,0 +1,131 @@
+<!-- 
+/**  
+ * @Class Name : fmb006.html
+ * @Description : fmb006
+ * @Modification Information  
+ * @
+
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.05	 정유경
+ * 사용x
+
+ * css: assets/css/fmb.css
+ * controller : fmb006Ctrl.js
+ *
+ */
+ -->
+<!-- ngview 내부 페이지 -->
+<div class='bc-screen'>
+	<script src="modules/cmm/services/cmmFactSrvc.js"></script>
+<!-- ngview 내부 header -->
+<bc-form-header logo='assets/img/system/logo.png' title="센트랄모텍 효문공장 C동 설비 가동현황">
+		<!-- 설비상태구분 시작-->
+		<bc-color-division>
+			<bc-color color="g" txt="가동"></bc-color>
+			<bc-color color="r" txt="알람"></bc-color>
+			<bc-color color="w" txt="대기"></bc-color>
+			<bc-color color="y" txt="비가동"></bc-color>
+			<bc-color color="b" txt="수리"></bc-color>
+		</bc-color-division>
+		<!-- 설비상태구분 끝-->
+		<!-- 공장구분 시작-->
+		<bc-line-view>
+			<bc-line line="A" selected=""></bc-line>
+			<bc-line line="B" selected=""></bc-line>
+			<bc-line line="C" selected="selected"></bc-line>
+		</bc-line-view>
+		<!--  공장구분 끝-->
+</bc-form-header>
+	
+
+<!-- ngview 내부 body -->
+<bc-form-body>
+	<bc-bg-img-panel>
+	<!--설비클래스 삽입 시작-->
+	<!--<div bg-inner-ctrl class='bg-panel'></div> -->
+  	<div ng-switch on="vm.eqptParamVo.factId">
+    <div ng-switch-when="A" bg-inner-ctrl class='bg-panel eqpt_plc_a'></div>
+   	<div ng-switch-when="B" bg-inner-ctrl class='bg-panel eqpt_plc_b'></div>
+   	<div ng-switch-when="C" bg-inner-ctrl class='bg-panel eqpt_plc_c'></div>
+   	<div ng-switch-when="comb" bg-inner-ctrl class='bg-panel eqpt_plc_comb'></div>
+   	<div ng-switch-default bg-inner-ctrl class='bg-panel eqpt_plc_comb'></div>
+    </div> 
+	<div class="EQPT">	
+		 <ul>
+			<!-- 설비이미지 repeat -->
+			<li ng-repeat="eqpt in vm.eqptList">
+			 <div class="{{eqpt.eqptCnm}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
+				  style="top:{{eqpt.cssTop}}; left: {{eqpt.cssLeft}}; 
+				  		 width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}}; 
+				  		 z-index:{{eqpt.cssZindex}};">
+				  		 
+	               <div ng-switch on="vm.stsData[$index]">  
+	               <img ng-switch-when="0" class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
+	               <img ng-switch-when="1" class="obj" src="{{eqpt.stsImg1}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
+	               <img ng-switch-when="2" class="obj" src="{{eqpt.stsImg2}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
+	               <img ng-switch-when="3" class="obj" src="{{eqpt.stsImg3}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
+	               <img ng-switch-when="4" class="obj" src="{{eqpt.stsImg4}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
+	               </div> 
+				</div>
+			</li>
+		</ul>
+ 	</div>
+	</div>
+	</bc-bg-img-panel>
+		<!--설비클래스 삽입 끝-->
+</bc-form-body>
+</div>
+
+
+<!------------------------------------------ modal body start------------------------------------------------------->
+<modal title="설비 정보" visible="vm.showModal">
+<form role="form">
+
+	<ul class="eqpt-info-modal">
+		<li ng-repeat="plc in vm.plc">
+			<div class="form-group">
+				<label for="stsImg0"></label>
+			</div>
+			<div class="form-group">
+				<label for="plcId">PlcID </label>
+				<h5>{{plc.plcId}}</h5>
+			</div>
+			<div class="form-group">
+
+				<label for="eqptCd">설비코드 </label>
+				<h5>{{plc.eqptCd}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="eqptNm">설비명</label>
+				<h5>{{plc.eqptNm}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="factId">공장ID</label>
+				<h5>{{plc.factId}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="lineNm">라인명 </label>
+				<h5>{{plc.lineNm}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="item_Cd">제품코드 </label>
+				<h5>{{plc.item_Cd}}</h5>
+				
+			</div>
+			<div class="form-group">
+				<label for="eqptSts">설비상태 </label>
+				<h5>{{plc.eqptSts}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="stsDttm">설비 </label>
+				<h5>{{plc.stsDttm}}</h5>
+			</div>
+
+		</li>
+	</ul>
+<button type="button" class="btn btn-default" data-dismiss="modal"
+		aria-hidden="true">close</button>
+</form>
+</modal>
+
+<!-------------------------------------------modal body end------------------------------------------------------->

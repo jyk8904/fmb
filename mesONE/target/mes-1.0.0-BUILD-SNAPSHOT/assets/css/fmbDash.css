@@ -1,0 +1,444 @@
+@CHARSET "UTF-8";
+
+/**
+ * @ File Name   : fmbDash.css
+ * @ Description : DashBoard CSS
+ * @ Modification Information @ 
+ * @ 작업일                  작성자                내용 @ 
+ * @-----------   ---------   ------------------------------- 
+ * @ 2017.05.29     조준연              최초생성 @
+ */
+
+
+/*임시 코드*/
+.workBar {
+	top: 670px;
+}
+.workPie {
+	margin: 20px 0 0 80px;
+}
+.runGauge {
+	margin-left: 105px;
+}
+/*설정 코드*/
+.largeBox {
+	min-height: 880px;
+}
+.smallBox {
+	min-height: 408px;
+}
+.firstRow{
+	margin-bottom: 20px;
+}
+.stsbackLg {
+	position: absolute;
+	width: 455px;
+	height: 844px;
+	z-index: 99;
+	opacity:0.8;
+	margin: -5px 0 0 0;
+	/*background-image: url('../img/dash/dash_panel_lg.png');
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    bacground-position: center;*/
+}
+.stsbackSm {
+	position: absolute;
+	width: 455px;
+	height: 392px;
+	z-index: 99;
+	opacity: 0.8;
+	margin: -5px 0 0 0;
+	/*background-image: url('../img/dash/dash_panel_sm.png');
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;*/
+}
+.stsTitle {
+	/*color:white;
+	width:120px;
+	background-color: #12253D;
+	border:1px solid white;
+	clear: both;*/
+	width: 240px;
+	height: 48px;
+	background-image: url('../img/dash/dash_panel_title.png');
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.stsTitle p {
+	font-size: 28px;
+	color: ghostWhite;
+	padding: 6px 0 0 12px;
+}
+.stsBoard {
+	/*border: 1px solid white;*/
+	width: 455px;
+	float: left;
+	margin: 10px;
+	/*background-color: white;*/
+}
+.stsBody {
+	position: absolute;
+	z-index: 100;
+}
+.dashLg {
+	height: 900px;
+}
+.dashSm {
+	height: 434px;
+}
+.gridArea1 .dBlue {
+	display: table;
+	background-image: url(../img/dash/dash_grid_bl.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	color: ghostWhite;
+	text-align:center;
+}
+.gridArea1 .dBlue p {
+	display: table-cell;
+	vertical-align: middle;
+}
+.gridArea1 .lGrey {
+	display: table;
+	background-image: url(../img/dash/dash_grid_bk.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	color: ghostWhite;
+	text-align:center;
+}
+.gridArea1 .lGrey p {
+	display: table-cell;
+	vertical-align: middle;
+}
+.dGridArea1 p {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	height:19px;
+}
+.dGridArea1 .dBlue {
+	background-image: url(../img/dash/dash_grid_bl.png);
+	color: ghostWhite;
+	text-align:center;
+}
+
+.dGridArea1 .lGrey {
+	background-image: url(../img/dash/dash_grid_bk.png);
+	color: ghostWhite;
+	text-align:center;
+}
+.dGridArea1 p {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	height:19px;
+}
+.gridArea2 .ppmTitle {
+	display: table;
+	background-image: url(../img/dash/dash_grid_bk.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	color: ghostWhite;
+	text-align:center;
+	
+}
+.gridArea2 .ppmTitle p {
+	display: table-cell;
+	vertical-align: middle;
+}
+.gridArea2 .ppmValue {
+	display: table;
+	background-image: url(../img/dash/dash_grid_bk.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	color: ghostWhite;
+	text-align:center;
+	padding:0;
+}
+.gridArea2 .ppmValue p {
+	display: table-cell;
+	vertical-align: middle;
+	padding:0;
+}
+.dGridArea2 .ppmTitle {
+	background-image: url(../img/dash/dash_grid_bk.png);
+	color: ghostWhite;
+	text-align:center;
+}
+.dGridArea2 .ppmValue {
+	background-image: url(../img/dash/dash_grid_bk.png);
+	color: ghostWhite;
+	text-align:center;
+	padding:0;
+}
+.gaugeInfo p {
+	margin: 0;
+}
+.gridArea3 .gaugeTitleBox {
+	padding-left: 0;
+	padding-right:8px;
+	margin-bottom: 5px;
+}
+.gridArea3 .gaugeValueBox {
+	padding-left: 8px;
+	padding-right:0;
+	margin-bottom: 5px;
+}
+.gridArea3 .gaugeTitleBox p {
+	display: table-cell;
+	vertical-align: middle;
+	font-size: 24px;
+	color: ghostWhite;
+	text-align:center;
+}
+.gridArea3 .gaugeValueBox p {
+	display: table-cell;
+	vertical-align: middle;
+	font-size: 24px;
+	color: ghostWhite;
+	text-align:center;
+}
+.gridArea3 .gaugeGreyBox {
+	display: table;
+	background-image: url(../img/dash/dash_grid_bk.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.gridArea3 .gaugeBlueBox {
+	display: table;
+	background-image: url(../img/dash/dash_grid_bl.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.dGridArea3 .gaugeTitleBox {
+	padding-left: 0;
+	padding-right:8px;
+	margin-bottom: 5px;
+}
+.dGridArea3 .gaugeValueBox {
+	padding-left: 8px;
+	padding-right:0;
+	margin-bottom: 5px;
+}
+.dGridArea3 .gaugeTitleBox p {
+	font-size: 24px;
+	color: ghostWhite;
+	text-align:center;
+}
+.dGridArea3 .gaugeValueBox p {
+	font-size: 24px;
+	color: ghostWhite;
+	text-align:center;
+}
+.dGridArea3 .gaugeGreyBox p {
+	background-image: url(../img/dash/dash_grid_bk.png);
+}
+.dGridArea3 .gaugeBlueBox p {
+	background-image: url(../img/dash/dash_grid_bl.png);
+}
+.bottomInfo {
+	position: absolute;
+	width: 455px;
+	height: 165px;
+	top: 734px;
+	z-index: 100;
+	padding: 0 20px 5px 20px;
+}
+.gridArea4 p {
+	margin: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.gridArea4 .infoTitle {
+	display:table;
+	width: 100%;
+	background-color: white;
+	border: 1.5px solid black;
+	margin-bottom: 2%;
+	padding-left: 2%;
+	height: 16%;
+}
+.gridArea4 .infoTitle p {
+	display: table-cell;
+	vertical-align: middle;
+}
+.gridArea4 .titleBox {
+	display: table;
+	width: 48%;
+	height: 23%;
+	margin-bottom: 2%;
+	padding-left: 5px;
+	margin-right: 2%;
+	color: white;
+}
+.gridArea4 .titleBox p {
+	display: table-cell;
+	vertical-align: middle;
+}
+.gridArea4 .valueBox {
+	display: table;
+	width: 48%;
+	height: 23%;
+	margin-bottom: 2%;
+	padding-left: 5px;
+	margin-left: 2%;
+	color: white;
+}
+.gridArea4 .valueBox p {
+	display: table-cell;
+	vertical-align: middle;
+}
+.gridArea4 .dBlue {
+	background-image: url(../img/dash/dash_grid_bl.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.gridArea4 .lGrey {
+	background-image: url(../img/dash/dash_grid_bk.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.dGridArea4 p {
+	margin: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.dGridArea4 .infoTitle {
+	background-color: white;
+	margin-bottom: 5px;
+	border: 1.5px solid black;
+	padding-left: 10px;
+}
+.dGridArea4 .firstTitleBox {
+	background-image: url(../img/dash/dash_grid_bk.png);
+	margin-bottom: 5px;
+	line-height: 30px;
+	padding-left: 5px;
+	color: white;
+}
+.dGridArea4 .firstValueBox {
+	background-image: url(../img/dash/dash_grid_bk.png);
+	margin-bottom: 5px;
+	line-height: 30px;
+	padding-left: 5px;
+	color: white;
+}
+.dGridArea4 .secondTitleBox {
+	background-image: url(../img/dash/dash_grid_bl.png);
+	margin-bottom: 5px;
+	line-height: 30px;
+	padding-left: 5px;
+	color: white;
+}
+.dGridArea4 .secondValueBox {
+	background-image: url(../img/dash/dash_grid_bl.png);
+	margin-bottom: 5px;
+	line-height: 30px;
+	padding-left: 5px;
+	color: white;
+}
+.dGridArea4 .thirdTitleBox {
+	background-image: url(../img/dash/dash_grid_bk.png);
+	line-height: 30px;
+	padding-left: 5px;
+	color: white;
+}
+.dGridArea4 .thirdValueBox {
+	background-image: url(../img/dash/dash_grid_bk.png);
+	line-height: 30px;
+	padding-left: 5px;
+	color: white;
+}
+
+
+
+/* .amcharts-graph-g2 .amcharts-graph-stroke {
+  stroke-dasharray: 3px 3px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  -webkit-animation: am-moving-dashes 1s linear infinite;
+  animation: am-moving-dashes 1s linear infinite;
+}
+
+@-webkit-keyframes am-moving-dashes {
+  100% {
+    stroke-dashoffset: -31px;
+  }
+}
+@keyframes am-moving-dashes {
+  100% {
+    stroke-dashoffset: -31px;
+  }
+}
+
+
+.lastBullet {
+  -webkit-animation: am-pulsating 1s ease-out infinite;
+  animation: am-pulsating 1s ease-out infinite;
+}
+@-webkit-keyframes am-pulsating {
+  0% {
+    stroke-opacity: 1;
+    stroke-width: 0px;
+  }
+  100% {
+    stroke-opacity: 0;
+    stroke-width: 50px;
+  }
+}
+@keyframes am-pulsating {
+  0% {
+    stroke-opacity: 1;
+    stroke-width: 0px;
+  }
+  100% {
+    stroke-opacity: 0;
+    stroke-width: 50px;
+  }
+}
+
+.amcharts-graph-column-front {
+  -webkit-transition: all .3s .3s ease-out;
+  transition: all .3s .3s ease-out;
+}
+.amcharts-graph-column-front:hover {
+  fill: #496375;
+  stroke: #496375;
+  -webkit-transition: all .3s ease-out;
+  transition: all .3s ease-out;
+}
+
+.amcharts-graph-g3 {
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-dasharray: 500%;
+  stroke-dasharray: 0 \0/;    fixes IE prob
+  stroke-dashoffset: 0 \0/;   fixes IE prob
+  -webkit-animation: am-draw 40s;
+  animation: am-draw 40s;
+}
+@-webkit-keyframes am-draw {
+    0% {
+        stroke-dashoffset: 500%;
+    }
+    100% {
+        stroke-dashoffset: 0%;
+    }
+}
+@keyframes am-draw {
+    0% {
+        stroke-dashoffset: 500%;
+    }
+    100% {
+        stroke-dashoffset: 0%;
+    }
+} */
+       

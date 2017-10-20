@@ -1,0 +1,43 @@
+<!-- 
+/**  
+ * @Class Name : fmb001.html
+ * @Description : fmb001 
+ * @Modification Information  
+ * @
+ * @ 작업일       작성자      내용
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.05.26  kb.shin    최초생성
+ * @ 
+ * 
+ * @author kb.shin
+ * @since 2017.01.01
+ * @version 1.0
+ * @see
+ * 사용x
+ */
+ -->
+ 
+<h1>AUI TEST</h1>
+
+<div id="main">
+	<div class="desc">
+		<span class="btn" style="float:right;" ng-click="vm.exportClick()">엑셀(xlsx)로 저장</span>
+		<span class="btn" style="float:right;" ng-click="vm.exportPdfClick()">PDF로 저장</span>
+		<p style="clear:both;">프로젝트 일정 관리 테이블을 출력한 모습입니다. ( 계층구조 데이터 표현 )</p>
+		<ul class="nav_u">
+			<li><span ng-click="expand()" class="btn">모두 열기/ 닫기</span></li>
+			<li><select id="depthSelect" ngChange="vm.showItemsOnDepth()">
+				<option value="default" selected="selected" disabled="disabled">-- 특정 계층까지만 보이기 -- </option>
+				<option value="1">계층 1 Depth 만 보이기</option>
+				<option value="2">계층 2 Depth 까지 보이기</option>
+				<option value="3">계층 3 Depth 까지 보이기</option>
+			</select></li>
+		</ul>
+	</div>
+	<div>
+		<!-- 에이유아이 그리드가 이곳에 생성됩니다. -->
+		<div ng-model="grid_wrap" style="width:800px; height:480px; margin:0 auto;"></div>
+	</div>
+	<div class="desc_bottom">
+	</div>
+</div>

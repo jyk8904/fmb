@@ -1,0 +1,129 @@
+<!-- 
+/**  
+ * @Class Name : fmbSpc.html
+ * @Description : fmbSpc
+ * @Modification Information  
+ * @
+
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.06.16	 정유경
+ * 사용ㄴ x
+
+ * css: assets/css/fmb.css
+ * controller : fmbSpcCtrl.js
+ *
+ */
+ -->
+<!-- ngview 내부 페이지 -->
+<div class='bc-screen'>
+
+	<!-- ngview 내부 header -->
+	<bc-form-header title="SPC 통합 모니터링">
+		<table class="bc-table spc-table">
+			<tr ng-repeat="spc in vm.spcList">
+				<td>이상패턴 발생</td>
+				<td>{{spc.patCnt}} 건</td>
+				<td>대책등록</td>
+				<td>{{spc.actCnt}} 건</td>
+				<td>대책등록 율</td>
+				<td>{{spc.actRate}} 건</td>
+			</tr>
+		</table>
+		
+	 </bc-form-header>
+
+
+	<!-- ngview 내부 body -->
+	<bc-form-body>
+		<!--설비클래스 삽입 시작-->
+	<bc-bg-img-panel>
+		<bc-back-panel-line panelline="line1" txt="침탄로 동우"></bc-back-panel-line>
+		<bc-back-panel-line panelline="line2" txt="침탄로 오리엔탈"></bc-back-panel-line>
+		<bc-back-panel-line panelline="line3" txt="쇼트 블라스트"></bc-back-panel-line>
+		<bc-back-panel-line panelline="line4" txt="쇼트 블라스트"></bc-back-panel-line>
+		<bc-back-panel-line panelline="line5" txt="고주파"></bc-back-panel-line>
+		<bc-back-panel-line panelline="line6" txt="S/GEAR 연삭"></bc-back-panel-line>
+
+	<div class="EQPT">	
+		 <ul>
+			<!-- 설비이미지 repeat -->
+			<li ng-repeat="eqpt in vm.eqptList">
+			 <div class="{{eqpt.eqptCnm}}" type="{{eqpt.eqptType}}" plc="{{eqpt.plcId}}"
+				  style="top:{{eqpt.cssTop}}; left: {{eqpt.cssLeft}}; 
+				  		 width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}}; 
+				  		 z-index:{{eqpt.cssZindex}};">
+					<img class="obj" src="{{eqpt.stsImg0}}" align="center" style="width:{{eqpt.cssWidth}}; height:{{eqpt.cssHeight}};">
+				</div>
+			</li>
+		</ul>
+ 	</div>
+	</bc-bg-img-panel>
+		<!--설비클래스 삽입 끝-->
+	</bc-form-body>
+
+
+	<!-- ngview 내부 footer -->
+	<bc-form-footer> <!--알람정보 하단 바 시작-->
+	<div class="alarm_data">
+		<marquee>
+			<ul id="banner" class="simply-scroll-list">
+				<li ng-repeat="alarm in vm.alarmList">{{alarm.plcId}} 알람발생
+					{{alarm.stsDttm}}</li>
+			</ul>
+		</marquee>
+	</div>
+	</bc-form-footer>
+</div>
+
+
+<!------------------------------------------ modal body start------------------------------------------------------->
+<modal title="설비 정보" visible="vm.showModal">
+<form role="form">
+
+	<ul>
+		<li ng-repeat="plc in vm.plc">
+			<div class="form-group">
+				<label for="stsImg0"></label>
+			</div>
+			<div class="form-group">
+				<label for="plcId">PlcID </label>
+				<h5>{{plc.plcId}}</h5>
+			</div>
+			<div class="form-group">
+
+				<label for="eqptCd">설비코드 </label>
+				<h5>{{plc.eqptCd}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="eqptNm">설비명</label>
+				<h5>{{plc.eqptNm}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="factId">공장ID</label>
+				<h5>{{plc.factId}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="lineNm">라인명 </label>
+				<h5>{{plc.lineNm}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="item_Cd">제품코드 </label>
+				<h5>{{plc.item_Cd}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="eqptSts">설비상태 </label>
+				<h5>{{plc.eqptSts}}</h5>
+			</div>
+			<div class="form-group">
+				<label for="stsDttm">설비 </label>
+				<h5>{{plc.stsDttm}}</h5>
+			</div>
+
+		</li>
+	</ul>
+	<button type="button" class="btn btn-default" data-dismiss="modal"
+		aria-hidden="true">close</button>
+</form>
+</modal>
+
+<!-------------------------------------------modal body end------------------------------------------------------->

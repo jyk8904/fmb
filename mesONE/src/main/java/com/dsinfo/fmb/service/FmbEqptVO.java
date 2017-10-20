@@ -20,7 +20,7 @@ public class FmbEqptVO extends MBasAbsVO {
 	private String sts_img2;	// 대기 이미지
 	private String sts_img3;	// 수리 이미지
 	private String sts_img4;	// 알람 이미지
-	
+	private String sts_img5;	// 
 	//생성자
 	public FmbEqptVO() {
 	}
@@ -139,6 +139,13 @@ public class FmbEqptVO extends MBasAbsVO {
 		this.sts_img4 = sts_img4;
 	}
 
+	public String getStsImg5() {
+		return sts_img5;
+	}
+
+	public void setStsImg5(String sts_img5) {
+		this.sts_img5 = sts_img5;
+	}
 
 	
 }

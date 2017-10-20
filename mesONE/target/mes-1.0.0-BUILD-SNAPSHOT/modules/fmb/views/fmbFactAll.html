@@ -1,0 +1,117 @@
+<!-- 
+/**  
+ * @Class Name : fmbProd.html
+ * @Description : fmbProd
+ * @Modification Information  
+ * @
+
+ * @ ----------  ---------  -------------------------------
+ * @ 2017.08.14	 조준연 정유경
+ * 
+
+ * css: assets/css/fmb.css
+ * controller : fmbProdCtrl.js
+ *
+ */
+ -->
+ 
+<!-- ngview 내부 페이지 -->
+<div test-ctrl class='bc-screen' style="margin:0">
+	<bc-form-header logo='assets/img/system/logo.png' title="반별 생산실적" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
+	</bc-form-header>	
+	<!-- ngview 내부 body -->
+	<bc-form-body style="color:white;"> 
+
+		<!-- grid -->			
+		<div prod-panel-ctrl  is-mobile="isMobile" class="prodTable colorNested" style="display:flex;  flex-direction:column">
+			<!-- 그리드 상단 -->
+			<div class="row-1" style="display:flex;  flex-direction:row; flex-grow:1.5; text-align:center;">
+			  <!-- 반명 -->
+			  <div class="column" style="display:flex; flex-direction:column; flex-grow:1.5;" >반명</div>
+			 
+			  <!-- 당일 -->
+			  <div class="row-1 leftborder" style="display:flex; flex-direction:column; flex-grow:5;">
+			  	<div class="column" style="flex-grow:1" >{{vm.factList[0].prodDt.substr(6,2)}}일</div>
+			  	<div style="display:flex;  flex-direction:row; flex-grow:1;" >
+			  		<div class="column">계획수량</div>
+			  		<div class="column">실적수량</div>
+			  		<div class="column">달성률(%)</div>
+			  		<div class="column">불량수량</div>
+			  		<div class="column">공정PPM</div>
+			  	</div>
+			  </div>
+			  <!-- 당월 -->
+			  <div class="leftborder" style="display:flex;  flex-direction:column; flex-grow:5;">
+			  	<div class="column" style="flex-grow:1" >{{vm.factList[0].prodDt.substr(4,2)}}월 누적</div>
+			  	<div style="display:flex; flex-direction:row; flex-grow:1;" >
+			  		<div class="column">계획수량</div>
+			  		<div class="column">실적수량</div>
+			  		<div class="column">달성률(%)</div>
+			  		<div class="column">불량수량</div>
+			  		<div class="column">공정PPM</div>
+			  	</div>
+			  </div>
+			</div>	
+			
+			<!-- 그리드 하단 data -->
+			<div  ng-repeat="fact in vm.factList" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
+				
+				<!-- 반명 -->
+				<div class="column " style="display:flex; flex-direction:column; flex-grow:1.5;">{{fact.factId.split('00')[1]}}반</div>
+				
+				<!-- 당일 -->	
+				<div class="column leftborder">{{fact.dgoal+ fact.ngoal|number:0}}</div>
+				<div class="column">{{fact.dcount+ fact.ncount|number:0}}</div>
+				<div class="column" ng-if="fact.dgoal+fact.ngoal=='0'">-</div><!-- 무한대기호제거 -->
+				<div class="column" ng-if="fact.dgoal+fact.ngoal!='0'">{{(fact.dcount+ fact.ncount)/(fact.dgoal+ fact.ngoal)*100|number:1}}</div>
+				<div class="column">{{fact.defectCount|number:0}}</div>
+				<div class="column" ng-if="fact.dcount+fact.ncount=='0'"
+					 ng-init="vm.goalttl = vm.goalttl +fact.dgoal + fact.ngoal; 
+				 	          vm.countttl = vm.countttl + fact.dcount+ fact.ncount;
+				 	          vm.defectttl = vm.defectttl + fact.defectCount;">-</div>
+				<div class="column" ng-if="fact.dcount+fact.ncount!='0'"
+					 ng-init="vm.goalttl = vm.goalttl +fact.dgoal + fact.ngoal; 
+				 	          vm.countttl = vm.countttl + fact.dcount+ fact.ncount;
+				 	          vm.defectttl = vm.defectttl + fact.defectCount;">
+				 	          {{fact.defectCount/(fact.dcount+fact.ncount)*100000|number:0}}</div>			
+				<!-- 당월누적 -->
+				<div class="column leftborder">{{fact.dgoalMon + fact.ngoalMon |number:0}}</div>
+				<div class="column">{{fact.dcountMon+ fact.ncountMon|number:0}}</div>
+				
+				<div class="column" ng-if ="fact.dgoalMon + fact.ngoalMon =='0'">-</div><!-- 무한대기호제거 -->
+				<div class="column" ng-if ="fact.dgoalMon + fact.ngoalMon !='0'">{{(fact.dcountMon+ fact.ncountMon)/(fact.dgoalMon + fact.ngoalMon)*100|number:1}}</div>
+				
+				<div class="column">{{fact.defectCountMon}}</div>
+				<div class="column" ng-if="fact.dcountMon+fact.ncountMon==0"
+					 ng-init="vm.goalmonttl = vm.goalmonttl + fact.dgoalMon + fact.ngoalMon; 
+					 	      vm.countmonttl = vm.countmonttl + fact.dcountMon+ fact.ncountMon;
+					 	      vm.defectmonttl = vm.defectmonttl + fact.defectCountMon;">-</div>
+				<div class="column" ng-if="fact.dcountMon+fact.ncountMon!=0"
+					 ng-init="vm.goalmonttl = vm.goalmonttl + fact.dgoalMon + fact.ngoalMon; 
+					 	      vm.countmonttl = vm.countmonttl + fact.dcountMon+ fact.ncountMon;
+					 	      vm.defectmonttl = vm.defectmonttl + fact.defectCountMon;">
+					 	      {{fact.defectCountMon/(fact.dcountMon+fact.ncountMon)*100000|number:0}}</div>		
+			</div>
+			
+	 		<!-- 그리드 하단 합계라인 -->
+	 		<div class="row-1" style="display:flex;  flex-direction:row; flex-grow:1; text-align:center;">
+		  		<div class="column" style="display:flex; flex-direction:column; flex-grow:1.5;">합계</div>
+		  		
+		  		<!-- 당일 -->		
+		  		<div class="column leftborder">{{vm.goalttl|number:0}}</div>
+		  		<div class="column">{{vm.countttl|number:0}}</div>
+		  		<div class="column">{{vm.countttl/ vm.goalttl * 100 | number:1}}</div>
+		  		<div class="column">{{vm.defectttl|number:0}}</div>
+		  		<div class="column">{{vm.defectttl/vm.countttl *10000|number:0}}</div>
+		  		
+				<!-- 당월누적 -->
+		  		<div class="column  leftborder">{{vm.goalmonttl|number:0}}</div>
+		  		<div class="column">{{vm.countmonttl|number:0}}</div>
+		  		<div class="column">{{vm.countmonttl/vm.goalmonttl*100|number:1}}</div>
+		  		<div class="column">{{vm.defectmonttl|number:0}}</div>
+		  		<div class="column">{{vm.defectmonttl/vm.countmonttl * 100000|number:0}}</div>
+			</div>  
+		</div>
+	
+	</bc-form-body>
+</div>
