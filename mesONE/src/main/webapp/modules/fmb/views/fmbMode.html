@@ -49,7 +49,7 @@
 	<md-radio-group ng-model="vm.eqptParamVo.eqptType" ng-change="vm.changeType()">
  		<md-radio-button class="md-radio-button" value="ANDON">안돈현황</md-radio-button>
 		<md-radio-button class="md-radio-button" value="PLC" >설비가동현황</md-radio-button>
-		<md-radio-button class="md-radio-button" value="COUNT" >생산현황</md-radio-button>
+		<md-radio-button class="md-radio-button" value="COUNT" >달성률현황</md-radio-button>
 	</md-radio-group>	
 	
       <md-slider flex md-discrete ng-model="vm.sensRating" step="1" min="1" max="10" aria-label="rating" ng-change="vm.sensChange(vm.sensRating)" style="width: 400px; left: 1400px; margin-top: 40px;">
@@ -107,8 +107,8 @@
             				<md-option><em>None</em></md-option>
             				<md-option value="PLC"> PLC </md-option>
             				<md-option value="SPC"> SPC </md-option>
-            				<md-option value="ANDON"> ANDON </md-option>
-            				<md-option value="COUNT"> COUNT </md-option>
+            				<md-option value="ANDON"> 안돈 </md-option>
+            				<md-option value="COUNT"> 달성률 </md-option>
           				</md-select>
           			</md-input-container>
         			<div ng-switch on="vm.eqptParamVo.eqptType">
@@ -256,8 +256,8 @@
     				<md-option><em>None</em></md-option>
     				<md-option value="PLC"> PLC </md-option>
     				<!-- <md-option value="SPC"> SPC </md-option> -->
-    				<md-option value="ANDON"> ANDON </md-option>
-    				<md-option value="COUNT"> COUNT </md-option>
+    				<md-option value="ANDON"> 안돈 </md-option>
+    				<md-option value="COUNT"> 달성률 </md-option>
   				</md-select>
   			</md-input-container>
          </div>
