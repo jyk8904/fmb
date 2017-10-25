@@ -94,8 +94,19 @@ angular
  	}
  	//count parameter
  	self.countParamVo = {
-			 plcId: ''
-		   , factId: 'Comb'	
+ 			factId : '',
+        	lineCd : '',
+        	lineNm : '',
+        	dGoal: '',
+        	nGoal : '',
+        	eqptStst : '',
+        	dCount: '',
+        	nCount: '',
+        	dRate : '',
+        	nRate : '',
+        	lineTopNm: '',
+        	lineMidNm: '',
+        	lineBotNm: ''
  	}
  	
  	$scope.crtEqtp = {
@@ -234,7 +245,7 @@ angular
         	   
     	  	  var tmp={}, res=[];
     		  for(var i=0;i<self.andonList.length;i++) tmp[self.andonList[i].plcId]=1;
-    		  for(var i=0;i<self.eqptList.length;i++) { if(tmp[self.eqptList[i].id]) delete tmp[self.eqptList[i].id]; }
+    		  for(var i=0;i<self.eqptList.length;i++) { if(tmp[self.eqptList[i].id]) delete tmp[self.eqptList[i].id];}
     		  for(var k in tmp) res.push(k);
     		  //console.log(res);
     		  self.andonLst = res;
@@ -254,14 +265,14 @@ angular
         	}
         	   
     	  	  var tmp={}, res=[];
-    	  		  for(var i=0;i<self.countList.length;i++) tmp[self.countList[i].plcId]=1;
+    	  		  for(var i=0;i<self.countList.length;i++) tmp[self.countList[i].lineCd]=1;
     	  	  if(self.eqptList!=null){
     	  		  for(var i=0;i<self.eqptList.length;i++) { if(tmp[self.eqptList[i].id]) delete tmp[self.eqptList[i].id]; }
     	  	  }
     		  for(var k in tmp) res.push(k);
     		 // console.log(res);
     		  self.countLst = res;
-    		// console.log(self.countLst);
+    		 console.log(self.countLst);
     	}
     	
     	self.showModal = !self.showModal;
@@ -292,8 +303,8 @@ angular
     	var id = $scope.crtEqpt.id;
     	var factId = self.eqptParamVo.factId
 
-    	
-    	//console.log(cnm,type,id,factId)
+    	console.log(self.eqptList)
+    	console.log(cnm,type,id,factId)
     	if (cnm != null && cnm != "" && type != null && type != "" && id != null && id != "")
     	{
     		var detect = $filter('filter')(self.eqptList, {id : id , status : '!delete'});
@@ -317,7 +328,8 @@ angular
     				};
     				
     				
-    			}else if(type='ANDON'){
+    			}else if(type=='ANDON'){
+    				console.log('andon')
     				var data = {  eqptCnm : cnm
     						, id : id
     						, eqptType : type
@@ -336,8 +348,21 @@ angular
 							, stsImg4: 'assets/img/button/GreenC.png'
 							, stsImg5: 'assets/img/button/RedC.png'
     				};
+    			}else if(type=='COUNT'){
+    				console.log("count")
+    				var data = {  eqptCnm : cnm
+    						, id : id
+    						, eqptType : type
+    						, factId : factId
+    						, desc : null
+    						, cssZindex : 'auto'
+							, cssWidth : '60px'
+							, cssHeight : '25px'
+							, cssTop : '230px'
+							, cssLeft : '550px'
+							, status : 'insert'
+    				};
     			}
-		    	
 		    	
 		    	var check=true;
 		    	if(data.id=='None'){
@@ -447,9 +472,8 @@ angular
     	});
     }
     function getCountList(){
-    	
     	//설비 count 데이터 가져오기    프로시저 생성후 수정해야함 
-    	var countPromise = CmmAjaxService.select("bas/selectFmbPlc.do", self.countParamVo);
+    	var countPromise = CmmAjaxService.select("bas/selectFmbLine.do",self.countParamVo);
     		countPromise.then(function(data) {
     		self.countList = data; 
     		//console.log(self.countList)
@@ -552,6 +576,7 @@ angular
     	var eqptType = self.eqptParamVo.eqptType;
     	self.plcParamVo.eqptType= eqptType;
      	$scope.crtEqtp.type = eqptType;
+     	console.log($scope.crtEqtp.type )
      	
     }
     
@@ -573,7 +598,7 @@ angular
      // 선택한 요소에 대한 css 및 기본정보(클래스명, 정의된 타입, Id)값을 불러온다.
      // 탭칸에 요소들을 추가시킴.
      self.setSelectedData = function setSelectedData(index){
-    	 //console.log(index)
+    	 console.log(self.eqptList[index])
     	 self.configSetting.index = index;
     	 self.selected = index;
     	 self.pointer.top = self.eqptList[index].cssTop;

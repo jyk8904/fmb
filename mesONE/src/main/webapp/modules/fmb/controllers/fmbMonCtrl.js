@@ -56,18 +56,25 @@ angular
     var bgImagePromise = null;
     var eqptPromise = null;
     var plcPromise = null;
+    var countEqptPromise = null;
+    var countPromise =null;
     var andonEqptPromise = null;
     var andonPromise =null;
     $scope.isMobile = false;
     $scope.showBar1 = true;
     $rootScope.showBar = $location.url();
-    
     //PLC설비parameter
     self.eqptParamVo = { factId   :'Comb'
     				   , eqptType :'PLC'
     				   , id  	  :''
     				   , eqptCnm  :''
     				} ;
+    //count 설비 param
+    self.countEqptParamVo = { factId    : 'Comb'
+    						, eqptType  : 'COUNT'
+    						, id 		: ''
+    						, eqptCnm   : ''
+			    			}
     //안돈설비 param
     self.andonEqptParamVo = { factId    : 'Comb'
     						, eqptType  : 'ANDON'
@@ -81,6 +88,21 @@ angular
 	self.plcParamVo.plcId ='';
 	self.plcParamVo.factId ='';
     
+    self.countParamVo = {
+        	factId : '',
+        	lineCd : '',
+        	lineNm : '',
+        	dGoal: '',
+        	nGoal : '',
+        	eqptStst : '',
+        	dCount: '',
+        	nCount: '',
+        	dRate : '',
+        	nRate : '',
+        	lineTopNm: '',
+        	lineMidNm: '',
+        	lineBotNm: ''
+        }
 /*	//andon parameter
 	self.andonParamVo={};
 	self.andonParamVo.plcId ='';
@@ -88,6 +110,7 @@ angular
 	
 	self.stsData = [];
 	self.andonStsData = [];
+	self.countStsData = [];
 	self.BgList = {
 	    factId: 'B'
 	};
@@ -123,16 +146,19 @@ angular
     }
 	function dataChk(){ //function(getplcList, getEqptList, bindData) 순서제어
 	   	    if(self.preplcList==undefined ||self.preandonList==undefined
-	   	    || self.preeqptList==undefined ||self.preAndonEqptList==undefined){//모든 데이터를 읽지 못했을경우
-	   	    	 var dataChkTimeout= $timeout(function(){
+	   	    || self.preeqptList==undefined ||self.preAndonEqptList==undefined
+	   	    || self.precountList==undefined || self.preCountEqptList==undefined){//모든 데이터를 읽지 못했을경우
+	   	    	var dataChkTimeout= $timeout(function(){
 	   	    	}, 100)
 	   	    	.then(function(){
 	   	    		dataChk();
 	   	    	});
 	   		}else{ 													//모든 데이터를 읽어들인 경우
 	   			bindData();
+	   			countBindData();
 	   			andonBindData();
 	   			dataChkTimeout.cancel();
+	   			dataChkTimeout = null;
 	   		}
 	   	}
     
@@ -244,8 +270,19 @@ angular
 	    		console.log('fail'+data);
 	    	});
     }
-
-	
+    //count 이미지리스트 가져오기 메소드
+    function getCountEqptList(){
+	    	countEqptPromise = CmmAjaxService.select("bas/selectFmbEqpt.do", self.countEqptParamVo);
+	    	countEqptPromise.then(function(data) {
+	    		self.preCountEqptList = data; //fmbEqptVo가 담긴 리스트 형태리턴
+	    		self.countEqptList = self.preCountEqptList; 
+	    		countEqptPromise = null;
+	    	}, function(data){
+	    		/*alert('fail: '+ data)*/
+	    		console.log('fail'+data);
+	    	});
+    }
+	//andon 이미지리스트 가져오기
     function getAndonEqptList(){
     	andonEqptPromise = CmmAjaxService.select("bas/selectFmbEqpt.do", self.andonEqptParamVo);
     	andonEqptPromise.then(function(data) {
@@ -257,13 +294,27 @@ angular
     		/*alert('fail: '+ data)*/
     		console.log('fail'+data);
     	});
-}
+    }
     function bindData(){
     	//console.log("bindData")
 		for(var i =0; i < self.eqptList.length; i++){
 			var target = $filter('filter')(self.plcList, {plcId : self.eqptList[i].id});
 			self.stsData[i]= target[0];
 		}
+	};
+	function countBindData(){
+    	console.log("bindData")
+    	console.log(self.countEqptList)
+    	console.log(self.countList)
+		for(var i =0; i < self.countEqptList.length; i++){
+			console.log(self.countEqptList[i].id)
+			console.log(i)
+			var target = $filter('filter')(self.countList, {lineCd : self.countEqptList[i].id});
+			console.log(target)
+			self.countStsData[i]= target[0];
+			console.log(target)
+		}
+		console.log(self.countStsData)
 	};
     function andonBindData(){//안돈신호 올라오면 수정해야함
     	//console.log(self.andonList)
@@ -331,7 +382,19 @@ angular
     		console.log('fail'+data);
        });
 	}
-	
+	//count 데이터 가져오기
+	function getCountList(){
+		countPromise = CmmAjaxService.select("bas/selectFmbLine.do",  self.countParamVo);
+		countPromise.then(function(data) {
+       		//데이터를 가져오는동안 깜빡임 방지
+       		self.precountList = data; 
+       		self.countList = self.precountList;
+       		countPromise = null;
+       	}, function(data){
+       		/*alert('fail: '+ data)*/
+    		console.log('fail'+data);
+       });
+	}
 	//설비 andon 상태 데이터 가져오기
 	function getAndonList(){
    		andonPromise = CmmAjaxService.select("bas/selectFmbAndon.do", self.plcParamVo); //plc와 파라미터넘기는게 똑같아서같이쓰겟음
@@ -355,15 +418,22 @@ angular
 	
 	
 	function getData(){
+		console.log("mon: getData")
 		self.preplcList = undefined;
 		self.preeqptList = undefined;
+		self.preCountEqptList = undefined;
+		self.precountList = undefined;
 		self.preAndonEqptList = undefined;
 		self.preandonList = undefined;
 		
 		getEqptList();
+		getCountEqptList();
 		getAndonEqptList();	
+		
    		getPlcList();
+   		getCountList();
    		getAndonList();
+   		
 	} 	
     	
 }]);

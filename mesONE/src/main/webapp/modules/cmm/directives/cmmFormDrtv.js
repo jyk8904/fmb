@@ -185,21 +185,20 @@ angular
     		transclude: true,  
     		template: "<div test-ctrl2 class='titleHeader col-md-12 col-sm-12 col-xs-12'>" +
 	    				'<img ng-if="!isMobile" class ="col-lg-1 col-md-2 col-sm-2 col-xs-2" style="padding:1.8%;"src="assets/img/system/logo.png" />' +
-    					'<img ng-if="isMobile" class ="col-lg-1 col-md-1 col-sm-1 col-xs-2" ng-click="vm.onSwipeRight()" src="assets/img/system/logo.png" />' +
+    					'<img ng-if="isMobile" class ="col-lg-1 col-md-1 col-sm-1 col-xs-2" ng-click="onSwipeRight()" src="assets/img/system/logo.png" />' +
     					
     					'<div  ng-if="!isMobile" class="col-md-4 col-sm-5 col-xs-5 col-lg-offset-1"><h1 class="title" style="color: white; font-family:noteSansBlack; font-size:40px;;">{{title}}</h1></div>'+
-    					'<div ng-if="isMobile" class="col-md-4 col-sm-4 col-xs-5s col-lg-offset-2"><h4 class="title" style="color: white;">{{title}}</h4></div>'+
+    					'<div ng-if="isMobile" class="col-md-4 col-sm-4 col-xs-5 col-lg-offset-2"><h4 class="title" style="color: white;">{{title}}</h4></div>'+
 
-    					"<div class='col-lg-6 col-md-6 col-sm-5 col-xs-5' style='font-size:18px;' ng-transclude></div>"	+
+    					"<div class='col-lg-6 col-md-6 col-sm-7 col-xs-7' style='font-size:18px; padding:10px' ng-transclude></div>"	+
     				  
     					"</div>",
     				 /* col-lg-offset-1*/
-    	/*	controller: function($scope, $attrs, $log, $mdSidenav) {
+    		controller: function($scope, $attrs, $log, $mdSidenav) {
     			$scope.onSwipeRight = function() {    
     			    $mdSidenav('left1').open();
-
     			}
-    		}*/
+    		}
     	}
     })
     

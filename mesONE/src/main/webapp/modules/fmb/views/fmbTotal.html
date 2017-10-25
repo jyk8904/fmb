@@ -38,7 +38,7 @@
 		<div class="carousel-inner" role="listbox" style="padding:0;">
 			<div class="col-xs-12 item active">
 				<div class="chartTitle col-xs-4" style="background-image:url(assets/img/dash/dash_panel_title1.png); background-size: 100% 100%; background-repeat: no-repeat; color:white;">
-					<p style="margin:5px 0 5px 0;">계확 진도율</p>
+					<p style="margin:5px 0 5px 0;">계획 진도율</p>
 				</div>
 				<div m-resize-ctrl class="col-xs-12 LargeBox" style="background-image:url(assets/img/dash/dash_panel_lg1.png); background-size: 100% 100%; background-repeat: no-repeat;">
 					<div id="MobilePlanProgress" style="width: 100%; height: 100%; background-color: transparent; position:relative;"></div>
@@ -50,7 +50,7 @@
 					<p style="margin:5px 0 5px 0;">공정 불량현황</p>
 				</div>
 				<div m-resize-ctrl class="col-xs-12 largeBox" style="background-image:url(assets/img/dash/dash_panel_lg1.png); background-size: 100% 100%; background-repeat: no-repeat;">
-					<div class="col-xs-6" style="height:100%;">
+					<div class="col-xs-5" style="height:100%;">
 						<!-- Pie Chat Area -->
 						<div class="col-xs-12" style="position:relative; padding:0; height:45%; margin-top:15px; maring-bottom:-10px;">
 	       		 			<div m-resize-ctrl2 id="MobilePieChart" style="width: 100%; height: 100%; background-color: transparent;" ></div>
@@ -60,38 +60,38 @@
 		       				<div m-resize-ctrl2 id="MobileBarChart" style="width: 100%; height: 100%; background-color: transparent;" ></div>
 						</div>
 	       		 	</div>
-	       		 	<div class="gridArea col-xs-6">
+	       		 	<div class="gridArea col-xs-7">
 	       		 		<!-- Grid1 Area -->
 					
 		       		 	<div class="gridArea1 col-xs-12" style="position:relative;">
 							<!-- Legend -->
-							<div class="titleRow col-xs-3 lGrey"><p>순위</p></div>
-							<div class="titleRow col-xs-6 lGrey"> <p>품목</p></div>
-							<div class="titleRow col-xs-3 lGrey"> <p>수량</p></div>
+							<div class="titleRow col-xs-2 lGrey"><p>순위</p></div>
+							<div class="titleRow col-xs-8 lGrey"> <p>품목</p></div>
+							<div class="titleRow col-xs-2 lGrey"> <p>수량</p></div>
 							<!-- First Row -->
-							<div class="contentRow col-xs-3 dBlue"><p>1</p></div>
-							<div class="contentRow col-xs-6 dBlue"><p>{{vm.defect.firstNm}}</p></div>
-							<div class="contentRow col-xs-3 dBlue"><p>{{vm.defect.firstCount}}</p></div>
+							<div class="contentRow col-xs-2 dBlue"><p>1</p></div>
+							<div class="contentRow col-xs-8 dBlue"><p>{{vm.defect.firstNm}}</p></div>
+							<div class="contentRow col-xs-2 dBlue"><p>{{vm.defect.firstCount}}</p></div>
 							<!-- Second Row -->
-							<div class="contentRow col-xs-3 lGrey"><p>2</p></div>
-							<div class="contentRow col-xs-6 lGrey"><p>{{vm.defect.secondNm}}</p></div>
-							<div class="contentRow col-xs-3 lGrey"><p>{{vm.defect.secondCount}}</p></div>
+							<div class="contentRow col-xs-2 lGrey"><p>2</p></div>
+							<div class="contentRow col-xs-8 lGrey"><p>{{vm.defect.secondNm}}</p></div>
+							<div class="contentRow col-xs-2 lGrey"><p>{{vm.defect.secondCount}}</p></div>
 							<!-- Third Row -->		
-							<div class="contentRow col-xs-3 dBlue"><p>3</p></div>
-							<div class="contentRow col-xs-6 dBlue"><p>{{vm.defect.thirdNm}}</p></div>
-							<div class="contentRow col-xs-3 dBlue"><p>{{vm.defect.thirdCount}}</p></div>
+							<div class="contentRow col-xs-2 dBlue"><p>3</p></div>
+							<div class="contentRow col-xs-8 dBlue"><p>{{vm.defect.thirdNm}}</p></div>
+							<div class="contentRow col-xs-2 dBlue"><p>{{vm.defect.thirdCount}}</p></div>
 							<!-- Forth Row -->
-							<div class="contentRow col-xs-3 lGrey"><p>4</p></div>
-							<div class="contentRow col-xs-6 lGrey"><p>{{vm.defect.forthNm}}</p></div>
-							<div class="contentRow col-xs-3 lGrey"><p>{{vm.defect.forthCount}}</p></div>
+							<div class="contentRow col-xs-2 lGrey"><p>4</p></div>
+							<div class="contentRow col-xs-8 lGrey"><p>{{vm.defect.forthNm}}</p></div>
+							<div class="contentRow col-xs-2 lGrey"><p>{{vm.defect.forthCount}}</p></div>
 							<!-- Fifth Row -->
-							<div class="contentRow col-xs-3 dBlue"><p>5</p></div>
-							<div class="contentRow col-xs-6 dBlue"><p>{{vm.defect.fifthNm}}</p></div>
-							<div class="contentRow col-xs-3 dBlue"><p>{{vm.defect.fifthCount}}</p></div>
+							<div class="contentRow col-xs-2 dBlue"><p>5</p></div>
+							<div class="contentRow col-xs-8 dBlue"><p>{{vm.defect.fifthNm}}</p></div>
+							<div class="contentRow col-xs-2 dBlue"><p>{{vm.defect.fifthCount}}</p></div>
 							<!-- Etc Row -->
-							<div class="contentRow col-xs-3 lGrey"><p>ETC</p></div>
-							<div class="contentRow col-xs-6 lGrey"><p>{{vm.defect.etcNm}}</p></div>
-							<div class="contentRow col-xs-3 lGrey"><p>{{vm.defect.etcCount}}</p></div>	
+							<div class="contentRow col-xs-2 lGrey"><p>ETC</p></div>
+							<div class="contentRow col-xs-8 lGrey"><p>{{vm.defect.etcNm}}</p></div>
+							<div class="contentRow col-xs-2 lGrey"><p>{{vm.defect.etcCount}}</p></div>	
 						</div>
 						
 						<!-- Grid2 Area -->

@@ -8,6 +8,7 @@
  
  
  
+ 
  * @see
  -->
 <!DOCTYPE html>
@@ -245,8 +246,8 @@
 		hide-gt-md style="z-index:1002; overflow:hidden;"> <md-toolbar
 		class="md-theme-indigo">
 
-	<h1 class="md-toolbar-tools" ng-click="onSwipeLeft()">
-		≡
+	<h1 class="md-toolbar-tools">
+		<span ng-click="onSwipeLeft()">≡</span>
 		<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStop()'
 			ng-if="vm.switchPage=='on'" title="STOP">■</md-button>
 		<md-button class="md-raised md-primary" ng-click='vm.btnWorkerStart()'
@@ -382,12 +383,14 @@
 	<bc-form-footer> <!--알람정보 하단 바 시작-->
 	<div class="col-md-12 col-sm-12 col-xs-12" ng-if="isMobile == false"
 		style="padding: 0">
-		<div class="alarm_data"
-			style="background-color: rgb(255, 255, 255); height: 25px;">
+		<div class="alarm_data"	style="background-color: rgb(255, 255, 255); height: 25px;">
 			<img src="assets/img/system/img_top_ico.gif"
 				style="margin: -11px 0px 0px -5px; width: 42px; position: absolute; z-index: 1000;">
-			<div slide data="alarmListWdth" id='marquee'
-				ng-style="{'width':alarmListWdth}" ng-if="showBar1==true">
+			<!-- mdDrtv slide -->
+			<div slide 
+			data="alarmList" 
+			id='marquee'
+				 ng-if="showBar1==true">
 				<ul id='banner' class="simply-scroll-list"
 					style="background-color: #333;" ng-style="{'width':alarmListWdth}">
 					<li marquee-banner alarm-list="alarmList"
@@ -406,9 +409,9 @@
 	    		</div> -->
 		</div>
 	</div>
-	</bc-form-foo
-	ter> <!-- 모달 body --> <modal id="pageSetting" title="페이지 전환 설정"
-		visible="vm.showModal">
+	</bc-form-footer> 
+	<!-- 모달 body --> 
+	<modal id="pageSetting" title="페이지 전환 설정"	 visible="vm.showModal">
 	<form name="settingForm">
 		<table style="margin-left: 35px;">
 			<tr>

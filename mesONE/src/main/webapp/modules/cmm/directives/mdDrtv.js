@@ -743,16 +743,16 @@ angular
 	  })
 	  .directive("slide", function( $animateCss ) {
 	    return function(scope, element, attrs) {
-	        scope.$watch(attrs.data, function(newVal) {
-	        	if(newVal!=undefined){
-	        	//console.log("너비+화면너비: "+(scope.alarmListWdth+scope.screenWdth)+" 시간: "+(scope.alarmListWdth+scope.screenWdth)/180)
-							$animateCss(element,{
-	              // BUG - If I set `from` I expect it to assign those values immediately and 
-	              //       then animate to the `to` values. This does NOT happen!
-	              
+	        scope.$watch(attrs.data, function(newVal, oldVal) {
+	        	//console.log("와치"+oldVal + " "+newVal)
+	        	if(newVal!=undefined|| newVal!=0){
+	        	//onsole.log("너비+화면너비: "+(scope.alarmListWdth+scope.screenWdth)+" 시간: "+(scope.alarmListWdth+scope.screenWdth)/180)
+	        		console.log(-scope.alarmListWdth);
+	        		$animateCss(element,{
+	            	              
 	              from    : {'margin-left': scope.screenWdth},
 	              to      : {'margin-left': -scope.alarmListWdth},
-	              duration: (scope.alarmListWdth+scope.screenWdth)/180,
+	              duration: (scope.alarmListWdth+scope.screenWdth)/180 ,
 	            })
 	            .start()
 	            .done(onComplete);                  
@@ -761,7 +761,7 @@ angular
 	        	}
 	       });
 	        function onComplete(){ 
-				//console.log('Done slide = '+ newVal ); 
+				//console.log('Done slide = '); 
 				scope.getAlarmList();
 	        };      
 	      //추가

@@ -33,13 +33,13 @@
 
 <!-- ngview 내부 header -->
 
-<bc-form-header title="생산 자원 통합 모니터링" is-mobile="isMobile" style="display:flex; align-items:center; flex-wrap: wrap;">
+<bc-form-header title="생산 자원 통합 모니터링" is-mobile="isMobile" on-swipe-right="onSwipeRight()"  style="display:flex; align-items:center; flex-wrap: wrap;">
 
 <bc-legend>
-<div class="col-lg-6 col-md-6 col-sm-10 col-xs-10 lineInfo">가동 : {{vm.count1}} &nbsp; &nbsp;
+<div class="col-lg-6 col-md-6 col-sm-5 col-xs-10 lineInfo">가동 : {{vm.count1}} &nbsp; &nbsp;
 비가동 : {{vm.count4}} &nbsp; &nbsp;
 대기 : {{vm.count2}}</div>
-<img class="col-lg-6 col-md-6 col-sm-10 col-xs-10 legend" src="assets/img/system/legend3.png">
+<img class="col-lg-6 col-md-6 col-sm-7 col-xs-10 legend" src="assets/img/system/legend3.png">
 
 
 </bc-legend>
@@ -76,6 +76,22 @@
 	               <p class="hintInfo" ng-if="hover[$index]"><b>{{eqpt.id}}</b><br>LINE : {{vm.stsData[$index].lineCd}}<br>COUNT : {{vm.stsData[$index].tcount}}</p>
 	              </div> 
 	               <!-- ng-show="hover[$index] -->
+				</div>
+			</li>
+		</ul>
+ 	</div>
+    <!-- 달성률 -->
+	<div class="EQPT col-md-12 col-sm-12 col-xs-12" style="padding:0">	
+		 <ul>
+			<!-- 설비이미지 repeat -->
+			<li u-ctrl data="count" ng-repeat="count in vm.countEqptList track by $index">
+				  <div class="{{count.eqptCnm}}" type="{{count.eqptType}}" plc="{{count.id}}"
+				  ng-style="{'top':count.cssTop, 'left': count.cssLeft, 'width':count.cssWidth, 'height':count.cssHeight,'z-index':count.cssZindex}">
+	              <div ng-switch on="vm.stsData[$index].eqptSts">  
+	               <div ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}">
+	           	     <p style="color:#FFC000; font-size:18px; font-weight:bold;">{{vm.countStsData[$index].dtRate}}%</p>
+	           	     </div>
+	              </div> 
 				</div>
 			</li>
 		</ul>

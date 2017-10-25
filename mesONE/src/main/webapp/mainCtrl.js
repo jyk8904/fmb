@@ -52,7 +52,7 @@ angular
 	$scope.isMobile = false;
    $scope.login = fnLogin;
    $scope.logOut = fnLogout;
-   $scope.winClose = fnWinClose;
+   $rootScope.winClose = fnWinClose;
    $scope.loginChk = false;
    $scope.keyUpLogin = onKeyupPasswd;
    $scope.scroll = true;
@@ -61,6 +61,7 @@ angular
    $scope.loginChk = sessionStorage.getItem("login")
    $scope.showBar1 = true;
    $rootScope.showBar = $location.url();
+   $scope.alarmListWdth= null;
    	//세션정보체크
    	if($scope.loginChk==undefined || $scope.loginChk==false||$scope.loginChk=="false"){	//세션정보가 없음
    		//로컬정보체크
@@ -123,32 +124,25 @@ angular
 	self.btnFmbTotalClick = btnFmbTotalClickHandler;
 	self.btnFmbModeClick = btnFmbModeClickHandler;
 	self.btnWorkerStart = WorkerStart;
-	self.btnWorkerStop = function () { workerList.workerStop(workerList.worker); self.switchPage = "off"}
+	self.btnWorkerStop = WorkerStop;
+	
    	self.LotationSetting = LotationSetting;
    	self.submit1 = submitLotationSetting;
    	
    	self.switchNumChk= switchNumChk;
    	self.dataTimeChk= dataTimeChk;
-   	
-    self.onSwipeRight = function() {
-        $mdSidenav('left1').open();
-    };
- 
-   	 	function fnWinClose() {
-		$window.close();
-		   	 //setTimeout(function(){
-		   	    var win = window.open(location, '_self', '');
-		   	    win.close();
-		   	    return false;
-		   	    // }, 100);
-   	   	}
-
-  /* 	$scope.onSwipeLeft = toggleLeft;*/
-    	
+   	$scope.onSwipeLeft = toggleLeft;
     function toggleLeft() {
-    	
           $mdSidenav('left1').close();
     };
+    function fnWinClose() {
+	 		$window.close();
+	 	window.close(); 
+	 //self.close(); 
+	 window.opener = window.location.href; 
+	 //self.close(); 
+	 window.open('about:blank','_self').close();
+	   	}
     //전환될 페이지 리스트
 	var pageList = [/*{ "pageNm": "FmbAndon", 	"pageNmKr": "안돈 모니터링"		}*/
 				   { "pageNm": "FmbMon", 		"pageNmKr": "설비 가동현황"		}
@@ -176,6 +170,7 @@ angular
 	getAlarmList();
 	//설비 plc 알람정보 데이터 가져오기
 	function getAlarmList(){
+		//console.log("getalarmList!!!")
    			var alarmList = [];
    			var plcPromise = CmmAjaxService.select("bas/selectFmbPlc.do", self.plcParamVo);
    				var alarmListWdth = 0;
@@ -419,12 +414,17 @@ angular
          self.showModal = !self.showModal;
       }
       
+      
+    function WorkerStop() { 
+    	workerList.worker.sts= "off";	//페이지 전환 여부  상태(페이지 전환안함)
+    	self.switchPage = workerList.worker.sts;
+    	}
   
     //Web Worker1 시작버튼 클릭 이벤트
      /* 워커 시작시 다음페이지로 이동.
       	각페이지에서 워커를 시작함  	*/
     function WorkerStart(){
-    	workerList.worker.sts = 'on';	//페이지 전환 여부  상태(워커스타트)
+    	workerList.worker.sts = 'on';	//페이지 전환 여부  상태(페이지 전환함)
     	self.switchPage = workerList.worker.sts;
     	var curPageSeq;			
     	var curPage = $location.url();

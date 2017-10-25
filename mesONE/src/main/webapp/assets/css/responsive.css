@@ -93,11 +93,14 @@
 	}
 	.gridArea p {
 		margin: 0;
+		font-size:11px;
+		letter-spacing:-1px;
 	}
 	.gridArea1 {
 		height: 72%;
 		margin-top: 5%;
 		margin-bottom: 4%;
+		
 	}
 	.gridArea1 .titleRow {
 		height: 16%;
@@ -178,6 +181,20 @@
     min-height: 240px;
     max-height: 500px; */
 	}
+	
+	.lineInfoMobile > .lineInfo{
+	margin-top:63px;
+	color:white;
+	font-size: 12px;
+	letter-spacing:-1px;
+	} 
+	
+	.andonbtn {
+	width: 27%
+	}
+	div[class^=andon] {
+		line-height:0px;
+	}
 }
 
 
@@ -207,7 +224,8 @@
 	}
 	.gridArea p {
 		margin: 0;
-		font-size: 20px;
+		font-size: 14px;
+		letter-spacing:-1px;
 	}
 	.gridArea1 {
 		padding:0 !important;
