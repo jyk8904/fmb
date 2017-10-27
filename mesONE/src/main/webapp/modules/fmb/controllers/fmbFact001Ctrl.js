@@ -70,7 +70,7 @@ angular
 	      
       
       function getData(){
-    	  console.log("fact001:getData")
+    	  //console.log("fact001:getData")
     	  self.goalttl =0;
     	  self.countttl = 0;
     	  self.defectttl = 0;

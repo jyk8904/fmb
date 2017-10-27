@@ -77,7 +77,7 @@
     
     <!-- TBM 정보조회 -->
     <select id="selectFmbTbm" resultType="com.dsinfo.fmb.service.FmbTbmVO">     	      
-        {call USP_TBM_MON_SELECT01()}
+        {call USP_TBM_MON_SELECT02()}
     </select> 
     
     <!-- Total- planProgress(계획진도율) 정보조회 -->

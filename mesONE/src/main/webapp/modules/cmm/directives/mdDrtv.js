@@ -746,8 +746,7 @@ angular
 	        scope.$watch(attrs.data, function(newVal, oldVal) {
 	        	//console.log("와치"+oldVal + " "+newVal)
 	        	if(newVal!=undefined|| newVal!=0){
-	        	//onsole.log("너비+화면너비: "+(scope.alarmListWdth+scope.screenWdth)+" 시간: "+(scope.alarmListWdth+scope.screenWdth)/180)
-	        		console.log(-scope.alarmListWdth);
+	        	//console.log("너비+화면너비: "+(scope.alarmListWdth+scope.screenWdth)+" 시간: "+(scope.alarmListWdth+scope.screenWdth)/180)
 	        		$animateCss(element,{
 	            	              
 	              from    : {'margin-left': scope.screenWdth},

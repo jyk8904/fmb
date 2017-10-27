@@ -172,8 +172,6 @@ angular
 		}else{
 			$scope.isMobile =  false;
 		}
-		//console.log($scope.isMobile)
-		//console.log( navigator.userAgent)
 	}
 	
 	function getSelectedPlc(){
@@ -296,30 +294,18 @@ angular
     	});
     }
     function bindData(){
-    	//console.log("bindData")
 		for(var i =0; i < self.eqptList.length; i++){
 			var target = $filter('filter')(self.plcList, {plcId : self.eqptList[i].id});
 			self.stsData[i]= target[0];
 		}
 	};
 	function countBindData(){
-    	console.log("bindData")
-    	console.log(self.countEqptList)
-    	console.log(self.countList)
 		for(var i =0; i < self.countEqptList.length; i++){
-			console.log(self.countEqptList[i].id)
-			console.log(i)
 			var target = $filter('filter')(self.countList, {lineCd : self.countEqptList[i].id});
-			console.log(target)
 			self.countStsData[i]= target[0];
-			console.log(target)
 		}
-		console.log(self.countStsData)
 	};
     function andonBindData(){//안돈신호 올라오면 수정해야함
-    	//console.log(self.andonList)
-    	//console.log(self.andonEqptList)
-    	//console.log(self.eqptList)
 		for(var i =0; i < self.andonEqptList.length; i++){
 			//original
 			var target = $filter('filter')(self.andonList, {plcId : self.andonEqptList[i].id});
@@ -418,7 +404,6 @@ angular
 	
 	
 	function getData(){
-		console.log("mon: getData")
 		self.preplcList = undefined;
 		self.preeqptList = undefined;
 		self.preCountEqptList = undefined;

@@ -82,7 +82,7 @@ angular
 
 	//선택된 공장의 line별 데이터 가져오기
    function getLineList(){
-	   console.log("getLineList")
+	   //console.log("getLineList")
 	    promise = CmmAjaxService.select("bas/selectFmbLine.do",  self.lineParamVo);
 	    promise.then(function(data){
 	    	self.lineList = data;
