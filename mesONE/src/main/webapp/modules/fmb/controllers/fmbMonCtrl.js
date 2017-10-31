@@ -302,6 +302,10 @@ angular
 	function countBindData(){
 		for(var i =0; i < self.countEqptList.length; i++){
 			var target = $filter('filter')(self.countList, {lineCd : self.countEqptList[i].id});
+			/*var random = Math.floor(Math.random()*199);
+			 * target[0].dtRate = random;
+			 * */
+			
 			self.countStsData[i]= target[0];
 		}
 	};

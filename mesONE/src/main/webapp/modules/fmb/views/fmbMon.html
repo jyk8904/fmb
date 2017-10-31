@@ -88,7 +88,7 @@
 				  <div class="{{count.eqptCnm}}" type="{{count.eqptType}}" plc="{{count.id}}"
 				  ng-style="{'top':count.cssTop, 'left': count.cssLeft, 'width':count.cssWidth, 'height':count.cssHeight,'z-index':count.cssZindex}">
 	              <div ng-switch on="vm.stsData[$index].eqptSts" style="display:flex; justify-content:center;">  
-	               <div ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight, 'position':'absolute'}">
+	               <div ng-style="{'width':eqpt.cssWidth, 'height':eqpt.cssHeight}">
 	           	     <p style="color:#FFC000; font-size:19px; font-weight:bold;" ng-if="vm.countStsData[$index].dtRate ==0"> </p>
 	           	     <p style="color:#FFC000; font-size:19px; font-weight:bold;" ng-if="vm.countStsData[$index].dtRate !=0">{{vm.countStsData[$index].dtRate|number:1}}%</p>
 	           	     </div>
