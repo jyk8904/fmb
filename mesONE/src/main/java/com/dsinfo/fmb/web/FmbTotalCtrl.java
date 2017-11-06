@@ -2,6 +2,8 @@ package com.dsinfo.fmb.web;
 
 import java.util.List;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,20 +128,6 @@ public class FmbTotalCtrl {
 		} catch (Exception ie) {
 			log.error("FmbTotalController:selectDateAndonInfol=>" +  ie.toString());
 			return new ResponseEntity<List<FmbDateAndonInfoVO>>(fmbDateAndonInfoVO, HttpStatus.OK);
-		}
-	}
-    @SuppressWarnings("unchecked")
-    @RequestMapping(value = "/bas/selectDateRunInfo.do", method = RequestMethod.POST)
-	public ResponseEntity<List<FmbDateRunInfoVO>> selectDateRunInfo()  {
-		List<FmbDateRunInfoVO> fmbDateRunInfoVO = null;
-		try {
-			fmbDateRunInfoVO = (List<FmbDateRunInfoVO>) mBcfBizService.selectAll("sql-bas-info.selectDateRunInfo");
-			log.info("success");
-			log.error("fail");
-			return new ResponseEntity<List<FmbDateRunInfoVO>>(fmbDateRunInfoVO, HttpStatus.OK);
-		} catch (Exception ie) {
-			log.error("FmbTotalController:selectFmbRunInfo=>" +  ie.toString());
-			return new ResponseEntity<List<FmbDateRunInfoVO>>(fmbDateRunInfoVO, HttpStatus.OK);
 		}
 	}
     

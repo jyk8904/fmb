@@ -100,8 +100,9 @@
         {call USP_DASH_DATE_ANDONINFO_SELECT01()}
     </select> 
            <!--팝업발생추이정보조회 -->
-    <select id="selectDateRunInfo" resultType="com.dsinfo.fmb.service.FmbDateRunInfoVO">     	      
-        {call USP_DASH_DATE_RUNINFO_SELECT01()}
+    <select id="selectDateRunInfo" parameterType="com.dsinfo.fmb.service.FmbEqptStsHisParamVO" resultType="com.dsinfo.fmb.service.FmbDateRunInfoVO">     	
+          {call USP_DASH_DATE_RUNINFO_SELECT03(#{plc_id})}
+        <!-- {call USP_DASH_DATE_RUNINFO_SELECT01()} -->
     </select> 
     
     <!-- Total- 설비 안돈신호별순위 그리드 정보조회 -->    

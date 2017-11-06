@@ -93,7 +93,8 @@ angular
 	}
 	
   	//설비상태 발생추이 가져오기
-	var dateRunInfoPromise = CmmAjaxService.select("bas/selectDateRunInfo.do");
+	var dateRunInfoPromise = CmmAjaxService.select("bas/selectDateRunInfo.do",self.stsVo);
+	console.log(self.stsVo)
 	dateRunInfoPromise.then(function(data) {
 		console.log(self.timeProdData)
 		self.timeProdData = data;

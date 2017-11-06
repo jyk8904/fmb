@@ -23,9 +23,10 @@
 	font-family:noteSans;
 }
 html, body {
-	height: 100%;
+	height: 99.9%;
 	margin: 0;
 	padding: 0;
+	overflow: hidden;
 }
 li{
 	list-style: none;
@@ -1126,7 +1127,7 @@ background-color: #272727;
 
 
 .andonbtn{
-	width:30%;
+	width:29%;
 }
 
 div[class^=andon] img {
