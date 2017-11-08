@@ -93,10 +93,10 @@ angular
 	}
 	
   	//설비상태 발생추이 가져오기
-	var dateRunInfoPromise = CmmAjaxService.select("bas/selectDateRunInfo.do",self.stsVo);
+	var dateRunInfoPromise = CmmAjaxService.select("bas/selectDateRunInfo.do", self.stsVo);
 	console.log(self.stsVo)
 	dateRunInfoPromise.then(function(data) {
-		console.log(self.timeProdData)
+		console.log(data)
 		self.timeProdData = data;
 		var dateRunInfoTimeout =$timeout(function(){}, 200)
     	.then(function(){
@@ -111,8 +111,9 @@ angular
 		console.log('fail'+data);
 	});
 
+
 	function makeDataRunInfoChart(){
-		//console.log(timeProdData)
+		console.log(timeProdData)
 		DataRunInfoChart = AmCharts.makeChart("DataRunInfoChart",{
 				"type": "serial",
 				"categoryField": "dt",
@@ -208,8 +209,6 @@ angular
 			}
 		);
 	}
-		
-
 /*	function timeProd(){
 		//대기발생추이
 	    self.timeProd = {	    	

@@ -73,7 +73,7 @@
 					 ng-init="vm.goalttl = vm.goalttl +fact.dgoal + fact.ngoal; 
 				 	          vm.countttl = vm.countttl + fact.dcount+ fact.ncount;
 				 	          vm.defectttl = vm.defectttl + fact.defectCount;">
-				 	          {{fact.defectCount/(fact.dcount+fact.ncount)*100000|number:0}}</div>			
+				 	          {{fact.defectCount/(fact.dcount+fact.ncount)*1000000|number:0}}</div>			
 				<!-- 당월누적 -->
 				<div class="column leftborder">{{fact.dgoalMon + fact.ngoalMon |number:0}}</div>
 				<div class="column">{{fact.dcountMon+ fact.ncountMon|number:0}}</div>
@@ -90,7 +90,7 @@
 					 ng-init="vm.goalmonttl = vm.goalmonttl + fact.dgoalMon + fact.ngoalMon; 
 					 	      vm.countmonttl = vm.countmonttl + fact.dcountMon+ fact.ncountMon;
 					 	      vm.defectmonttl = vm.defectmonttl + fact.defectCountMon;">
-					 	      {{fact.defectCountMon/(fact.dcountMon+fact.ncountMon)*100000|number:0}}</div>		
+					 	      {{fact.defectCountMon/(fact.dcountMon+fact.ncountMon)*1000000|number:0}}</div>		
 			</div>
 			
 	 		<!-- 그리드 하단 합계라인 -->
@@ -102,14 +102,14 @@
 		  		<div class="column">{{vm.countttl|number:0}}</div>
 		  		<div class="column">{{vm.countttl/ vm.goalttl * 100 | number:1}}</div>
 		  		<div class="column">{{vm.defectttl|number:0}}</div>
-		  		<div class="column">{{vm.defectttl/vm.countttl *10000|number:0}}</div>
+		  		<div class="column">{{vm.defectttl/vm.countttl *1000000|number:0}}</div>
 		  		
 				<!-- 당월누적 -->
 		  		<div class="column  leftborder">{{vm.goalmonttl|number:0}}</div>
 		  		<div class="column">{{vm.countmonttl|number:0}}</div>
 		  		<div class="column">{{vm.countmonttl/vm.goalmonttl*100|number:1}}</div>
 		  		<div class="column">{{vm.defectmonttl|number:0}}</div>
-		  		<div class="column">{{vm.defectmonttl/vm.countmonttl * 100000|number:0}}</div>
+		  		<div class="column">{{vm.defectmonttl/vm.countmonttl * 1000000|number:0}}</div>
 			</div>  
 		</div>
 	

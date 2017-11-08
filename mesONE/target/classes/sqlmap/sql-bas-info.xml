@@ -9,7 +9,7 @@
     </select>
 	<!--PLCList 정보 조회 -->
     <select id="selectFmbPlc" parameterType="com.dsinfo.fmb.service.FmbPlcParamVO" resultType="com.dsinfo.fmb.service.FmbPlcVO">     	      
-        {call USP_EQPT_FMB_SELEC01(#{fact_id},#{plc_id})}
+        {call USP_EQPT_FMB_SELEC02(#{fact_id},#{plc_id})}
     </select>
     
      <select id="selectFmbPlc2" parameterType="com.dsinfo.fmb.service.FmbPlcParamVO2" resultType="com.dsinfo.fmb.service.FmbPlcVO2">     	      
