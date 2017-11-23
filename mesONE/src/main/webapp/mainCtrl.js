@@ -104,7 +104,7 @@ angular
 	self.vo = { PLC_ID: 'PLC-001' }
 	self.btnFmbMonClick = btnFmbMonClickHandler;
 	self.btnFmbAndonClick = btnFmbAndonClickHandler;
-	self.btnFmbTbmClick = btnFmbTbmClickHandler;
+/*	self.btnFmbTbmClick = btnFmbTbmClickHandler;*/
 	self.btnFmbLine001Click = btnFmbLine001ClickHandler;
 	self.btnFmbLine002Click = btnFmbLine002ClickHandler;
 	self.btnFmbLine003Click = btnFmbLine003ClickHandler;
@@ -162,7 +162,7 @@ angular
 			      , { "pageNm": "FmbFact005", 	"pageNmKr": "5반 생산실적"}
 			      , { "pageNm": "FmbFact006", 	"pageNmKr": "6반 생산실적"}
 			      , { "pageNm": "FmbFact007", 	"pageNmKr": "7반 생산실적"}
-			      , { "pageNm": "FmbTbm", 		"pageNmKr": "TBM"     		}
+/*			      , { "pageNm": "FmbTbm", 		"pageNmKr": "TBM"     		}*/
 			       ]
 	
 	self.Setting=[];
@@ -172,24 +172,27 @@ angular
 	function getAlarmList(){
 		//console.log("getalarmList!!!")
    			var alarmList = [];
-   			var plcPromise = CmmAjaxService.select("bas/selectFmbPlc.do", self.plcParamVo);
-   				var alarmListWdth = 0;
+   			var plcPromise = CmmAjaxService.select("bas/selectFmbPlcAlarm.do", self.plcParamVo);
+   			var alarmListWdth = 0;
 				plcPromise.then(function(data) {
-					//test용 random값 지정
-					/*for(var i = 0; i< data.length; i++){
-	               		var random = Math.floor(Math.random()*5);
-	               		data[i].eqptSts3 = random;
-	           		}*/
 					for (var i = 0; i < data.length; i++) {
-						if(data[i].eqptSts3=='4'){ //sts== 0이나 4일경우 하단바에 알람 발생 경고()
+						if(data[i].tagId=='' && data[i].eqptSts3=='4'){ //sts== 0이나 4일경우 하단바에 알람 발생 경고()
 							data[i].charLen = String(data[i].lineNm).length; // 라인명 글자수 
 							data[i].wdth= data[i].charLen * 14.5 + 311;//(li의 width값 = 글자수 *15px + 311px)
 							alarmListWdth = alarmListWdth + data[i].wdth + 10; //margin-right:10px
 							alarmList.push(data[i]);
+											
+						}if(data[i].tagId!=''){ //tagId가 있는 경우 데이터 추가
+							data[i].charLen = String(data[i].lineNm).length + String(data[i].alamNm).length; // 라인명 글자수 
+							data[i].wdth= data[i].charLen * 14.5 + 311;//(li의 width값 = 글자수 *15px + 311px)
+							alarmListWdth = alarmListWdth + data[i].wdth + 10; //margin-right:10px
+							alarmList.push(data[i]);
+											
 						}
+						
 					}
 					$scope.screenWdth = $window.innerWidth;
-					$scope.alarmListLen = $scope.alarmList.length;	// 알람리스트 갯수
+					$scope.alarmListLen = alarmList.length;	// 알람리스트 갯수
 					$scope.alarmListWdth = alarmListWdth;
 					$scope.alarmList = alarmList;
 					plcPromise = null;
@@ -204,7 +207,8 @@ angular
 		   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(10), "switchNum": Number(1),  "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
 		  //console.log(self.Setting[j])
 	   }
-	   
+	 	self.Setting[0].dataTime= Number(30);//0번째 페이지의 default시간 30초로 지정
+	 	self.Setting[1].dataTime= Number(30);//0번째 페이지의 default시간 30초로 지정
 	   if(localStorage.getItem('SettingTime')!=null){
 		   var SettingLS = JSON.parse(localStorage.getItem('SettingTime'));
 		   //console.log(self.Setting);
@@ -323,9 +327,9 @@ angular
    function btnFmbAndonClickHandler() {
        $location.url('/FmbAndon');
     }
-      function btnFmbTbmClickHandler() {
+/*      function btnFmbTbmClickHandler() {
          $location.url('/FmbTbm');
-      }
+      }*/
       function btnFmbLine001ClickHandler() {
           $location.url('/FmbLine001');
        }
@@ -410,6 +414,7 @@ angular
           if(workerList.worker.worker!=undefined){
           	workerList.worker.worker.terminate();
           	workerList.worker.worker=undefined; 
+          	self.switchPage='off';
           }
          self.showModal = !self.showModal;
       }
@@ -506,7 +511,6 @@ angular
         var loginPromise = CmmAjaxService.select("bas/fmbLogin.do", {userId:objLogin.userId});
 			
 		loginPromise.then(function(data) {
-			console.log(data)
 			if(data[0]==undefined){
 				alert("아이디와 비밀번호를 확인하세요");
 	        	return;

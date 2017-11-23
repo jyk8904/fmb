@@ -19,7 +19,6 @@
 
 
 <!-- 캐시 사용안함 -->
-<meta http-equiv="cache-control" content="no-cache">
 <!-- 모바일용웹 -->
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -229,8 +228,8 @@
 				ng-click='vm.btnFmbFact006Click()'>6반 생산실적</md-button>
 			<md-button class="md-raised md-default"
 				ng-click='vm.btnFmbFact007Click()'>7반 생산실적</md-button>
-			<md-button class="md-raised md-default"
-				ng-click='vm.btnFmbTbmClick()'>Tbm</md-button>
+<!-- 			<md-button class="md-raised md-default"
+				ng-click='vm.btnFmbTbmClick()'>Tbm</md-button> -->
 			<md-button class="md-raised md-default"
 				ng-click='vm.btnFmbModeClick()' ng-if="vm.id=='admin'||vm.id=='ADMIN'">개발모드</md-button>
 
@@ -350,12 +349,14 @@
 		<h3>7반 생산실적</h3>
 		<p></p>
 	</div>
-	</md-list-item> <md-list-item class="md-2-line" ng-click="vm.btnFmbTbmClick()">
+	</md-list-item> 
+	<!-- <md-list-item class="md-2-line" ng-click="vm.btnFmbTbmClick()">
 	<div class="md-list-item-text">
 		<h3>Tbm</h3>
 		<p></p>
 	</div>
-	</md-list-item> </md-list> </md-content> </md-sidenav>
+	</md-list-item> -->
+	</md-list> </md-content> </md-sidenav>
 
 
 	<div
@@ -391,12 +392,16 @@
 			data="alarmList" 
 			id='marquee'
 				 ng-if="showBar1==true">
-				<ul id='banner' class="simply-scroll-list"
+				<ul ng-repeat="alarm in alarmList track by $index" id='banner' class="simply-scroll-list"
 					style="background-color: #333;" ng-style="{'width':alarmListWdth}">
-					<li marquee-banner alarm-list="alarmList"
-						ng-repeat="alarm in alarmList track by $index"
-						ng-style="{'width':alarm.wdth}"><strong>{{alarm.lineNm}}라인
-							알람발생 {{alarm.stsDttm.substr(0,19)}}</strong></li>
+					<li ng-if="alarmList[$index].tagId==''" marquee-banner alarm-list="alarmList"
+						ng-style="{'width':alarm.wdth}">
+						<strong>{{alarm.lineNm}}라인 알람발생 {{alarm.stsDttm.substr(0,19)}}</strong>
+					</li>
+					<li ng-if="alarmList[$index].tagId!=''" marquee-banner alarm-list="alarmList"
+						ng-style="{'width':alarm.wdth}">
+						<strong>{{alarm.lineNm}}라인 상세알람 {{alarm.alamNm}}{{alarm.strDttm.substr(0,19)}}</strong>
+					</li>
 				</ul>
 			</div>
 			<!-- 	    		<div ng-init="init()" id='marquee'  
@@ -474,7 +479,7 @@
 <!-- <script src="modules/fmb/controllers/fmbMainMonCtrl.js"></script> -->
 <script src="modules/fmb/controllers/fmbModeCtrl.js"></script>
 <!-- <script src="modules/fmb/controllers/fmbPopupCtrl.js"></script> -->
-<script src="modules/fmb/controllers/fmbTbmCtrl.js"></script>
+<!--<script src="modules/fmb/controllers/fmbTbmCtrl.js"></script> -->
 <script src="modules/fmb/controllers/fmbLine001Ctrl.js"></script>
 <script src="modules/fmb/controllers/fmbLine002Ctrl.js"></script>
 <script src="modules/fmb/controllers/fmbLine003Ctrl.js"></script>

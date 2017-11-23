@@ -332,7 +332,6 @@ angular
 	function getPlcList(){
    		plcPromise = CmmAjaxService.select("bas/selectFmbPlc.do", self.plcParamVo);
        	plcPromise.then(function(data) {
-       		console.log(data)
        		// 설비상태 카운트 변수
        		self.count1=0; //가동
        		self.count2=0; //대기

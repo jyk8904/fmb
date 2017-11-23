@@ -201,7 +201,8 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 					
 					}
 			}, function(data) {
-				alert('fail: ' + data)
+				console.log('fail: ' + data);
+				//alert('fail: ' + data)
 			});
 			promise1 = CmmAjaxService.select("bas/selectFmbDefectRank.do");
 			promise1.then(function(data) {
@@ -221,7 +222,8 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 					defectInfo();
 				}
 			}, function(data) {
-				alert('fail: ' + data)
+				console.log('fail: ' + data);
+				//alert('fail: ' + data)
 			});
 			promise2 = CmmAjaxService.select("bas/selectFmbDefectRate.do");
 			promise2.then(function(data) {
@@ -236,7 +238,8 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 					defectInfo2();
 				}
 			}, function(data) {
-				alert('fail: ' + data)
+				console.log('fail: ' + data);
+				//alert('fail: ' + data)
 			});	
 		}	
 		finally {	
@@ -260,7 +263,8 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 					{
 					}
 				}, function(data) {
-					alert('fail: ' + data)
+					console.log('fail: ' + data);
+					//alert('fail: ' + data)
 				});
 				promise5 = CmmAjaxService.select("bas/selectDateAndonInfo.do");
 				promise5.then(function(data) {
@@ -296,7 +300,8 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 						}
 					}		
 				}, function(data) {
-					alert('fail: ' + data)
+					console.log('fail: ' + data);
+					//alert('fail: ' + data)
 				});
 
 				promise7 = CmmAjaxService.select("bas/selectPlanProgress.do");
@@ -312,7 +317,8 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 						splitPlanProgress();
 					}
 				}, function(data) {
-					alert('fail: ' + data)
+					console.log('fail: ' + data);
+					//alert('fail: ' + data)
 				});
 			}
 			finally
@@ -342,7 +348,8 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 					}
 				}	
 			}, function(data) {
-				alert('fail: ' + data)
+				console.log('fail: ' + data);
+				//alert('fail: ' + data)
 			});	
 			
 			promise6 = CmmAjaxService.select("bas/selectRankAndonInfo.do");
@@ -358,7 +365,8 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 					rankAndonInfo();
 				}
 			}, function(data) {
-				alert('fail: ' + data)
+				console.log('fail: ' + data);
+				//alert('fail: ' + data)
 			});
 		}
 
@@ -445,7 +453,7 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 			{
 				if (test1 == null)
 				{
-					test1 = AmCharts.makeChart("gauge",{"type": "gauge","marginBottom": 0,"marginLeft": 0,"marginRight": 0,"marginTop": 0,"theme": "dark","startDuration": 0,"arrows": [{}],"axes": [{	"axisThickness": 1,"bottomText":  "0%","bottomTextFontSize": 20,"bottomTextYOffset": -20,"endValue": 100,"id": "GaugeAxis-1","valueInterval": 10,"bands": [{"color": "#00CC00","endValue": 30,"id": "GaugeBand-1","startValue": 0},{"color": "#ffac29","endValue": 70,"id": "GaugeBand-2","startValue": 30},{"color": "#ea3838","endValue": 100,"id": "GaugeBand-3","innerRadius": "95%","startValue": 70}]}],"allLabels": [],"balloon": {},"titles": []});
+					test1 = AmCharts.makeChart("gauge",{"type": "gauge","marginBottom": 0,"marginLeft": 0,"marginRight": 0,"marginTop": 0,"theme": "dark","startDuration": 0,"arrows": [{}],"axes": [{	"axisThickness": 1,"bottomText":  "0%","bottomTextFontSize": 20,"bottomTextYOffset": -20,"endValue": 100,"id": "GaugeAxis-1","valueInterval": 10,"bands": [{"color": "#ea3838","endValue": 30,"id": "GaugeBand-1","startValue": 0},{"color": "#ffac29","endValue": 70,"id": "GaugeBand-2","startValue": 30},{"color": "#00CC00","endValue": 100,"id": "GaugeBand-3","innerRadius": "95%","startValue": 70}]}],"allLabels": [],"balloon": {},"titles": []});
 					if (self.gaugeRunRateList != null ||angular.isUndefined(self.gaugeRunRateList) == false)
 			 		{
 						test1.arrows[0].setValue(self.gaugeRunRateList["0"].lineGauge);
@@ -486,15 +494,15 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 		
 		}
 		
-		//알람발생추이 -> 품질불량 추이 
+		// 품질불량 추이 
 		function qcmBadDateAndonInfo() {
 			try
 			{
 				if (test2 ==  null)
 				{
 					test2 = AmCharts.makeChart("qcmBadChart",{ type: "serial", theme: "dark", dataDateFormat: "YYYYMMDD", dataProvider: dateAndonInfoList, addClassNames: true, color: "#FFFFFF", marginLeft: 0, categoryField: "dt", categoryAxis: { parseDates: true, minPeriod: "DD", autoGridCount: false, gridCount: 50,gridAlpha: 0.1, gridColor: "#FFFFFF", axisColor: "#555555", dateFormats: [{ period: 'DD', format: 'DD' }, { period: 'WW', format: 'MMM DD' }, { period: 'MM', format: 'MMM' }, { period: 'YYYY', format: 'YYYY'}] },
-						valueAxes: [{ id: "a1", title: "", gridAlpha: 0, axisAlpha: 0 }, 
-									{ id: "a2", position: "right", gridAlpha: 0, axisAlpha: 0, labelsEnabled: false}],
+						valueAxes: [{ id: "a1", integersOnly: true, title: "", gridAlpha: 0, axisAlpha: 0 }, 
+									{ id: "a2", integersOnly: true, position: "right", gridAlpha: 0, axisAlpha: 0, labelsEnabled: false}],
 						graphs: [{ id: "g1", valueField: "qcmBadCount", type: "column", fillAlphas: 0.9, valueAxis: "a1", labelOffset: -18, /*labelText: "[[value]] 회",*/ /*balloonText: "[[value]] 번",*/ legendValueText: "[[value]] Count", legendPeriodValueText: "total: [[value.sum]] Count", lineColor: "#E74C3C", alphaField: "alpha" },
 								{ id: "g2", valueField: "qcmBadTm", type: "line", valueAxis: "a2",lineColor: "#ea9170", bullet: "round", bulletSize: 11, lineThickness: 3, legendValueText: "[[description]]/[[value]]분", labelText: "[[qcmBadTm]] 분", labelPosition: "right", balloonText: "Time:[[value]]", showBalloon: true, animationPlayed: true}], chartCursor: { zoomable: false, categoryBalloonDateFormat: "DD", cursorAlpha: 0, valueBalloonsEnabled: false} });				
 				}
@@ -514,8 +522,8 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 				if (test3 == null)
 				{
 					test3 = AmCharts.makeChart("matMissChart", { type: "serial", theme: "dark", dataDateFormat: "YYYYMMDD", dataProvider:dateAndonInfoList, addClassNames: true, color: "#FFFFFF", marginLeft: 0, categoryField: "dt", categoryAxis: { parseDates: true, minPeriod: "DD", autoGridCount: false, gridCount: 50, gridAlpha: 0.1, gridColor: "#FFFFFF", axisColor: "#555555", dateFormats: [{ period: 'DD', format: 'DD' }, { period: 'WW', format: 'MMM DD' }, { period: 'MM', format: 'MMM' }, { period: 'YYYY', format: 'YYYY'}] }, 
-						valueAxes: [{ id: "a1", title: "", gridAlpha: 0, axisAlpha: 0 },
-									{ id: "a2", position: "right", gridAlpha: 0, axisAlpha: 0, labelsEnabled: false}], 
+						valueAxes: [{ id: "a1", integersOnly: true, title: "", gridAlpha: 0, axisAlpha: 0 },
+									{ id: "a2", integersOnly: true, position: "right", gridAlpha: 0, axisAlpha: 0, labelsEnabled: false}], 
 						graphs: [{ id: "g1", valueField: "matMissCount", type: "column", fillAlphas: 0.9, valueAxis: "a1", labelOffset: -18, /*labelText: "[[value]] 회",*/ /*balloonText: "[[value]] 번",*/ legendValueText: "[[value]] Count", legendPeriodValueText: "total: [[value.sum]] Count", lineColor: "#BDC3C7", alphaField: "alpha" }, 
 								 { id: "g2", valueField: "matMissTm", type: "line", valueAxis: "a2", lineColor: "#f9fcfc", bullet: "round", bulletSize: 11, lineThickness: 3, legendValueText: "[[description]]/[[value]]분", labelText: "[[matMissTm]] 분", labelPosition: "right", balloonText: "Time:[[value]]", showBalloon: true, animationPlayed: true}], chartCursor: { zoomable: false, categoryBalloonDateFormat: "DD", cursorAlpha: 0, valueBalloonsEnabled: false} });
 				}
@@ -535,8 +543,8 @@ angular.module('app').controller('FmbTotalCtrl',['CmmAjaxService','CmmWorkerSrvc
 				if (test9 == null)
 				{
 					test9 = AmCharts.makeChart("itemChaChart", { type: "serial", theme: "dark", dataDateFormat: "YYYYMMDD", dataProvider: dateAndonInfoList, addClassNames: true, color: "#FFFFFF", marginLeft: 0, categoryField: "dt", categoryAxis: { parseDates: true, minPeriod: "DD", autoGridCount: false, gridCount: 50, gridAlpha: 0.1, gridColor: "#FFFFFF", axisColor: "#555555", dateFormats: [{ period: 'DD', format: 'DD' }, { period: 'WW', format: 'MMM DD' }, { period: 'MM', format: 'MMM' }, { period: 'YYYY', format: 'YYYY'}] }, 
-						valueAxes: [{ id: "a1", title: "", gridAlpha: 0, axisAlpha: 0 }, 
-							{ id: "a2", position: "right", gridAlpha: 0, axisAlpha: 0, labelsEnabled: false}], 
+						valueAxes: [{ id: "a1", integersOnly: true, title: "", gridAlpha: 0, axisAlpha: 0 }, 
+							{ id: "a2", integersOnly: true, position: "right", gridAlpha: 0, axisAlpha: 0, labelsEnabled: false}], 
 						graphs: [{ id: "g1", valueField: "itemChaCount", type: "column", fillAlphas: 0.9, valueAxis: "a1", labelOffset: -18,/* labelText: "[[value]] 회",*//* balloonText: "[[value]] 번",*/ legendValueText: "[[value]] Count", legendPeriodValueText: "total: [[value.sum]] Count", lineColor: "#BDC3C7", alphaField: "alpha" },
 							{ id: "g2", valueField: "itemChaTm", type: "line", valueAxis: "a2", lineColor: "#f9fcfc", bullet: "round", bulletSize: 11, lineThickness: 3, legendValueText: "[[description]]/[[value]] 분", labelText: "[[itemChaTm]] 분", labelPosition: "right", balloonText: "Time:[[value]]", showBalloon: true, animationPlayed: true}], chartCursor: { zoomable: false, categoryBalloonDateFormat: "DD", cursorAlpha: 0, valueBalloonsEnabled: false} });
 				}

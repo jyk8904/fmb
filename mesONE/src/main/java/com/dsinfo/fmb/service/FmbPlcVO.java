@@ -20,6 +20,10 @@ public class FmbPlcVO extends MBasAbsVO {
 	private String eqpt_sts3;
 	private String sts_dttm;
 	private String prod_dt;
+	private String tag_id;
+	private String str_dttm;
+	private String end_dttm;
+	private String alam_nm;
 	private String d_count;
 	private String n_count;
 	private String t_count;
@@ -30,10 +34,45 @@ public class FmbPlcVO extends MBasAbsVO {
 	}
 
 	//메소드명 지정방식 :  Camel Case
+	
+	
+
+	public String getTagId() {
+		return tag_id;
+	}
+
+	public void setTagId(String tag_id) {
+		this.tag_id = tag_id;
+	}
+
+	public String getStrDttm() {
+		return str_dttm;
+	}
+
+	public void setStrDttm(String str_dttm) {
+		this.str_dttm = str_dttm;
+	}
+
+	public String getEndDttm() {
+		return end_dttm;
+	}
+
+	public void setEndDttm(String end_dttm) {
+		this.end_dttm = end_dttm;
+	}
+
+	public String getAlamNm() {
+		return alam_nm;
+	}
+
+	public void setAlamNm(String alam_nm) {
+		this.alam_nm = alam_nm;
+	}
+
 	public String getEqptCd() {
 		return eqpt_cd;
 	}
-
+	
 	public void setEqptCd(String eqpt_cd) {
 		this.eqpt_cd = eqpt_cd;
 	}

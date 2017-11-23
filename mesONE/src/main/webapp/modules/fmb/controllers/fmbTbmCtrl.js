@@ -60,7 +60,8 @@ angular
     		promise = null;
     	}
     	,function(data){
-    		alert('fail: '+ data)
+    		console.log('fail'+data);
+    		//alert('fail: '+ data)
     	});
     }      
 }]);

@@ -72,11 +72,13 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$rootScope', '$l
 		        		workerName.worker.terminate();
 		        		workerName.worker=undefined;
 			  	    }
-		        	//console.log("workerSrvc:"+pager+"로 페이지 전환")
-		        	AmCharts.clear();
-		        	//AmCharts = null;
-		           	$location.url('/'+pager);
-		        	$rootScope.$apply();
+		        	try{
+		        		AmCharts.clear();
+		        	}catch(e){
+		        	}finally{
+			           	$location.url('/'+pager);
+			        	$rootScope.$apply();
+		        	}
 				}
 	        }
 	     }  

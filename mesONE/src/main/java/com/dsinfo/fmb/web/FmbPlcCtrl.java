@@ -58,5 +58,27 @@ public class FmbPlcCtrl {
 			return new ResponseEntity<List<FmbPlcVO>>(fmbPlcVO, HttpStatus.OK);
 		}
 	}
-
+	 @RequestMapping(value = "/bas/selectFmbPlcAlarm.do", method = RequestMethod.POST)
+		public ResponseEntity<List<FmbPlcVO>> selectFmbPlcAlarm(@RequestBody  FmbPlcParamVO vo)  {
+	    	//RequestBody : JSON형태로 보낸 vo를 컬럼명이 똑같으면 FmbPlcParamVO형태로 알아서 매핑,변환
+			List<FmbPlcVO> fmbPlcVO = null;
+			System.out.println("selectFmbPlcAlarm.do로 이동");
+			try {
+				//mBcfBizService : select, insert, delete, update 구문과 vo를 정형화 해놓음
+				//
+				//5. sql-bas-info.xml의  id가 selectFmbPlc인 select 실행
+			
+				fmbPlcVO = (List<FmbPlcVO>) mBcfBizService.select("sql-bas-info.selectFmbPlcAlarm",vo);
+				 
+				System.out.println("vo" +vo);
+		/*		log.info(vo.getEqptCd());
+				log.error(vo.getEqptCd());*/
+				
+				return new ResponseEntity<List<FmbPlcVO>>(fmbPlcVO, HttpStatus.OK);
+				//7.응답받은 result 리턴
+			} catch (Exception ie) {
+				log.error("FmbPlcController:selectFmbPlc=>" +  ie.toString());
+				return new ResponseEntity<List<FmbPlcVO>>(fmbPlcVO, HttpStatus.OK);
+			}
+		}
 }
