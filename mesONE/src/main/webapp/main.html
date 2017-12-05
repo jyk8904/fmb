@@ -12,6 +12,7 @@
  * @see
  -->
 <!DOCTYPE html>
+
 <html ng-app="app">
 <head>
 <meta charset="utf-8" />
@@ -390,8 +391,7 @@
 			<!-- mdDrtv slide -->
 			<div slide 
 			data="alarmList" 
-			id='marquee'
-				 ng-if="showBar1==true">
+			id='marquee' ng-if="showBar1==true">
 				<ul ng-repeat="alarm in alarmList track by $index" id='banner' class="simply-scroll-list"
 					style="background-color: #333;" ng-style="{'width':alarmListWdth}">
 					<li ng-if="alarmList[$index].tagId==''" marquee-banner alarm-list="alarmList"
@@ -400,7 +400,7 @@
 					</li>
 					<li ng-if="alarmList[$index].tagId!=''" marquee-banner alarm-list="alarmList"
 						ng-style="{'width':alarm.wdth}">
-						<strong>{{alarm.lineNm}}라인 상세알람 {{alarm.alamNm}}{{alarm.strDttm.substr(0,19)}}</strong>
+						<strong>{{alarm.lineNm}}라인 {{alarm.alamNm}} {{alarm.strDttm.substr(0,19)}}</strong>
 					</li>
 				</ul>
 			</div>
@@ -416,8 +416,7 @@
 	</div>
 	</bc-form-footer> 
 	<!-- 모달 body --> 
-	<modal id="p
-	ageSetting" title="페이지 전환 설정"	 visible="vm.showModal">
+	<modal id="pageSetting" title="페이지 전환 설정"	 visible="vm.showModal">
 	<form name="settingForm">
 		<table style="margin-left: 35px;">
 			<tr>

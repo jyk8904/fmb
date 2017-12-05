@@ -118,7 +118,7 @@ angular
 		  A: ''
 	 	, B: ''
 	 	, C: ''
-	 	, Comd: ''
+	 	, Comb: ''
 	};
 	
     self.showModal = false;
@@ -214,11 +214,11 @@ angular
         });
     }
 
-	//워커 스타트
-	workerList.workerStart(workerList.worker, "worker.js");
-	//워커 온메세진
-	workerList.workerOnmessage(workerList.worker, function(){getData(); dataChk();} );
-	  
+		 //워커 스타트
+	    workerList.workerStart(workerList.worker, "worker.js");
+		//워커 온메세진
+		workerList.workerOnmessage(workerList.worker, function(){getData(); dataChk();} );
+
 	
     // 팝업 테스트용 코드입니다....
     

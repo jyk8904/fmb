@@ -70,7 +70,10 @@ angular
    		   sessionStorage.setItem("login", true);
    		   self.id= sessionStorage.getItem("id")//로그인
    		   $scope.loginChk= true;
-   		   $location.url('/FmbMon')
+   		   $timeout(function(){
+   			 $location.url('/FmbMon')
+   		   }, 5000);
+   		   
    	   }else{//세션정보없고, 자동로그인 아님
    		  //로그인페이지으로 이동
    		   $scope.loginChk = false;
@@ -80,9 +83,13 @@ angular
    	}else{//세션정보가 있는경우
    		self.id = sessionStorage.getItem("id");
    		$scope.loginChk=true;
-   		$location.url('/FmbMon')
+   		console.log($location.url())
+   		if($location.url()==''){
+   			  $timeout(function(){
+			   $location.url('/FmbMon')
+		   }, 5000);
+   		}
    	}
-   	
    	//개발모드일경우 알람바 미표시
    $rootScope.$watch('showBar', function(newVal){
 	   if(newVal=='/FmbMode'){
@@ -204,11 +211,9 @@ angular
    function defaultLotationSetting(){
 	   for(var j =0; j<pageList.length; j++){ // 기본설정값 지정
 		   //console.log(pageList[j])
-		   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(10), "switchNum": Number(1),  "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
+		   	self.Setting[j] = {"pageSeq":j+1, "dataTime": Number(20), "switchNum": Number(1),  "pageNm":pageList[j].pageNm, "pageNmKr":pageList[j].pageNmKr,  "switcher" : true}
 		  //console.log(self.Setting[j])
 	   }
-	 	self.Setting[0].dataTime= Number(30);//0번째 페이지의 default시간 30초로 지정
-	 	self.Setting[1].dataTime= Number(30);//0번째 페이지의 default시간 30초로 지정
 	   if(localStorage.getItem('SettingTime')!=null){
 		   var SettingLS = JSON.parse(localStorage.getItem('SettingTime'));
 		   //console.log(self.Setting);
@@ -226,7 +231,6 @@ angular
 				   }
 			   }
 		   }
-		  //console.log(self.Setting);
 	   }else{
 		  	localStorage.setItem('SettingTime', JSON.stringify(self.Setting));		//로컬스토리지 저장
 	   }
@@ -260,7 +264,6 @@ angular
 		  rotationChk = null;
 		  
 		  //전환설정창을 나갈때 워커 시작.
-	    	//workerList.worker.sts = '';	//페이지 전환 여부  상태(워커스타트)
 	    	self.switchPage = workerList.worker.sts;
 	    	var curPageSeq;			
 	    	var curPage = $location.url();
@@ -469,8 +472,6 @@ angular
     	
     	curPageSeq = null;
     	curPage = null;
-    	
-    	
     }	
     
     /*로그인*/

@@ -75,6 +75,7 @@ angular.module('app').factory('CmmWorkerSrvc',  ['CmmFactSrvc','$rootScope', '$l
 		        	try{
 		        		AmCharts.clear();
 		        	}catch(e){
+		        		console.log("amchart clear 오류 ")
 		        	}finally{
 			           	$location.url('/'+pager);
 			        	$rootScope.$apply();
