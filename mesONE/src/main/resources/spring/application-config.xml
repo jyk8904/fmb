@@ -32,18 +32,18 @@
 		
 		
 		<!-- 센트랄 서버 접속 -->
-     	<property name="url" value="jdbc:sqlserver://10.10.50.107;databaseName=CTRCH" />		
+    <!--  	<property name="url" value="jdbc:sqlserver://10.10.50.107;databaseName=CTRCH" />		
 		<property name="username" value="opcdb" />
-		<property name="password" value="opcctr#10" />
+		<property name="password" value="opcctr#10" /> -->
 		 
  		<!-- dsinfo 서버 외부접속 -->
 		<!-- <property name="url" value="jdbc:sqlserver://106.247.231.186:1444;databaseName=CTRCH" /> -->
 		<!-- 로컬 서버 접속 -->
 		<!-- <property name="url" value="jdbc:sqlserver://localhost:3306;databaseName=OPCDB" /> -->		
 		<!-- dsinfo 서버 내부접속 -->
-  	 <!-- <property name="url" value="jdbc:sqlserver://192.168.1.201:1444;databaseName=CTRCH2" />
+  	<property name="url" value="jdbc:sqlserver://192.168.1.201:1444;databaseName=CTRCH2" />
  		<property name="username" value="sa" />
-		<property name="password" value="dsinfo!12" /> -->
+		<property name="password" value="dsinfo!12" />
 	</bean>
 	
 	
